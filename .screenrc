@@ -1,0 +1,14 @@
+source /etc/screenrc
+
+defscrollback 5000
+
+caption always '%{gk}[ %H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+
+defutf8 on
+
+bind j focus down
+bind k focus up
+bind t focus top
+bind b focus bottom
+
+bell_msg 'Bell in indow %n^G'
