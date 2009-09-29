@@ -2,7 +2,7 @@ HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
 
-source $HOME/.aliases
+[[ -f ${HOME}/.aliases ]] && source $HOME/.aliases
 
 bindkey -e
 zstyle :compinstall filename '$HOME.zshrc'
