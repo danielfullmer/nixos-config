@@ -1,4 +1,4 @@
-[[ -f ${HOME}/.aliases.local ]] && source -f ${HOME}/.aliases.local
+[[ -f ${HOME}/.aliases.local ]] && source ${HOME}/.aliases.local
 
 alias ls='ls --color'
 alias ll='ls -l --color'
