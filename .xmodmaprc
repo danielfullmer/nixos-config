@@ -1,0 +1,3 @@
+remove Lock = Caps_Lock
+clear Mod4
+add Mod4 = Caps_Lock

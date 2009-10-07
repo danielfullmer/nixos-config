@@ -12,7 +12,7 @@ compinit
 
 autoload -U promptinit
 promptinit
-prompt gentoo
+prompt suse
 
 # SCREEN CAPTION/HARDSTATUS
 case ${TERM} in
