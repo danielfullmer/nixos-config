@@ -1,7 +1,0 @@
-[[ -f ${HOME}/.aliases.local ]] && source ${HOME}/.aliases.local
-
-alias ls='ls --color'
-alias ll='ls -l --color'
-alias l='schedtool -D -e ionice -c3'
-alias h='schedtool -F -p1 -e ionice -c1'
-alias nfo='iconv -f IBM866'
