@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/pyflakes-pathogen"]
 	path = .vim/bundle/pyflakes-pathogen
 	url = https://github.com/mitechie/pyflakes-pathogen.git
+[submodule ".vim/bundle/AutoComplPop"]
+	path = .vim/bundle/AutoComplPop
+	url = https://github.com/vim-scripts/AutoComplPop.git
