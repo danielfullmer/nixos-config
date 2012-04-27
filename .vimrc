@@ -35,6 +35,7 @@ noremap <C-l> <C-W>l
 
 noremap <leader>n :NERDTreeToggle<CR>
 noremap <leader>t :TlistToggle<CR>
+noremap <leader>g :GundoToggle<CR>
 
 "Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<CR>
