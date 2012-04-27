@@ -1,0 +1,27 @@
+[submodule ".vim/vim-latex"]
+	path = .vim/vim-latex
+	url = git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+[submodule ".vim/bundle/vim-pathogen"]
+	path = .vim/bundle/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule ".vim/bundle/vim-ipython"]
+	path = .vim/bundle/vim-ipython
+	url = https://github.com/ivanov/vim-ipython.git
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule ".vim/bundle/vim-fugitive"]
+	path = .vim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule ".vim/bundle/pytest"]
+	path = .vim/bundle/pytest
+	url = https://github.com/alfredodeza/pytest.vim.git
+[submodule ".vim/bundle/ropevim"]
+	path = .vim/bundle/ropevim
+	url = https://github.com/sontek/rope-vim.git
+[submodule ".vim/bundle/gundo"]
+	path = .vim/bundle/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule ".vim/bundle/taglist"]
+	path = .vim/bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim.git

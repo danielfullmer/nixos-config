@@ -10,3 +10,5 @@ alias vdmplayer='mplayer -vc ffh264vdpau -vo vdpau'
 alias vi='vim'
 
 PS1='[\u@\h \W]\$ '
+
+#exec `which ipython` --profile=pysh --no-confirm-exit --no-banner
