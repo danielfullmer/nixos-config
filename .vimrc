@@ -49,6 +49,8 @@ nmap <silent><Leader>tn <Esc>:Pytest next<CR>
 nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
 nmap <silent><Leader>te <Esc>:Pytest error<CR>
 
+nmap <silent><Leader>ts <Esc>:Pytest session<CR>
+
 "Pressing ,ss will toggle and untoggle spell checking
 noremap <leader>ss :setlocal spell!<CR>
 noremap <leader>sn ]s
