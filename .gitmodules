@@ -25,3 +25,6 @@
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule ".vim/bundle/pyflakes-pathogen"]
+	path = .vim/bundle/pyflakes-pathogen
+	url = https://github.com/mitechie/pyflakes-pathogen.git
