@@ -20,6 +20,7 @@ set encoding=utf8
 set mousemodel=popup
 set hlsearch
 set laststatus=2
+"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " Other options
 set tags+=~/.vim/systags
