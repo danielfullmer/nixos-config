@@ -33,16 +33,28 @@ noremap <C-k> <C-W>k
 noremap <C-h> <C-W>h
 noremap <C-l> <C-W>l
 
-noremap <leader>n :NERDTreeToggle<CR>
-noremap <leader>t :TlistToggle<CR>
-noremap <leader>g :GundoToggle<CR>
+noremap <left> <Esc>:bn<cr>
+noremap <right> <Esc>:bn<cr>
+
+noremap <leader>n <Esc>:NERDTreeToggle<CR>
+noremap <leader>l <Esc>:TlistToggle<CR>
+noremap <leader>g <Esc>:GundoToggle<CR>
+
+" Execute the tests
+nmap <silent><Leader>tf <Esc>:Pytest file<CR>
+nmap <silent><Leader>tc <Esc>:Pytest class<CR>
+nmap <silent><Leader>tm <Esc>:Pytest method<CR>
+" cycle through test errors
+nmap <silent><Leader>tn <Esc>:Pytest next<CR>
+nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
+nmap <silent><Leader>te <Esc>:Pytest error<CR>
 
 "Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<CR>
-map <leader>sn ]s
-map <leader>sp [s
-"map <leader>sa zg
-map <leader>s? z=
+noremap <leader>ss :setlocal spell!<CR>
+noremap <leader>sn ]s
+noremap <leader>sp [s
+"noremap <leader>sa zg
+noremap <leader>s? z=
 
 " Filetypes
 filetype plugin on
