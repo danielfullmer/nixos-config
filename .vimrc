@@ -33,8 +33,10 @@ noremap <C-k> <C-W>k
 noremap <C-h> <C-W>h
 noremap <C-l> <C-W>l
 
-noremap <left> <Esc>:bn<cr>
-noremap <right> <Esc>:bn<cr>
+noremap <left> <Esc>:tabn<cr>
+noremap <right> <Esc>:tabp<cr>
+noremap <down> <Esc>:bn<cr>
+noremap <up> <Esc>:bp<cr>
 
 noremap <leader>n <Esc>:NERDTreeToggle<CR>
 noremap <leader>l <Esc>:TlistToggle<CR>
