@@ -33,8 +33,8 @@ noremap <C-k> <C-W>k
 noremap <C-h> <C-W>h
 noremap <C-l> <C-W>l
 
-noremap <left> <Esc>:tabn<cr>
-noremap <right> <Esc>:tabp<cr>
+noremap <left> <Esc>:tabp<cr>
+noremap <right> <Esc>:tabn<cr>
 noremap <down> <Esc>:bn<cr>
 noremap <up> <Esc>:bp<cr>
 
