@@ -4,7 +4,8 @@ call pathogen#infect()
 "call pathogen#helptags()
 
 " Colorscheme
-colorscheme darkspectrum
+colorscheme inkpot
+"colorscheme darkspectrum
 "colorscheme darkbone
 "colorscheme tango2
 
@@ -21,6 +22,7 @@ set mousemodel=popup
 set hlsearch
 set laststatus=2
 "set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set guioptions-=mT
 
 " Other options
 set tags+=~/.vim/systags
