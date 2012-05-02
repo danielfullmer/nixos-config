@@ -22,7 +22,8 @@ set mousemodel=popup
 set hlsearch
 set laststatus=2
 "set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-set guioptions-=mT
+set guioptions-=m
+set guioptions-=T
 
 " Other options
 set tags+=~/.vim/systags
