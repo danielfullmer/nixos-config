@@ -23,6 +23,7 @@ set hlsearch
 set laststatus=2
 "set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set guioptions=
+set number
 
 " Other options
 set tags+=~/.vim/systags
