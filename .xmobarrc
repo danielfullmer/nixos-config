@@ -1,0 +1,18 @@
+Config { font = "xft:Monospace:size=11:antialias=false"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , commands = [ Run Weather "KSDF" ["-t"," <tempF>F","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
+                    , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Swap [] 10
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Com "uname" ["-n"] "" 36000
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , lowerOnStart = True
+       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | %eth0% | %KSDF% | <fc=#00ff00>%uname%</fc> | <fc=#ee9a00>%date%</fc>"
+       }
