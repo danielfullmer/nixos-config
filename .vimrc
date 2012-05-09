@@ -13,8 +13,7 @@ colorscheme inkpot
 set et
 set sts=4
 set sw=4
-
-set so=4
+set tw=80
 
 " UI options
 set encoding=utf8
@@ -24,6 +23,7 @@ set laststatus=2
 "set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set guioptions=
 set number
+set scrolloff=4
 
 " Other options
 set tags+=~/.vim/systags
