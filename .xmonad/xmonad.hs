@@ -26,7 +26,7 @@ myManageHook = composeAll . concat $
       ]
     ]
   where
-    classFloats = ["MPlayer"]
+    classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
 myLayoutHook = tiled ||| Mirror tiled ||| Full
