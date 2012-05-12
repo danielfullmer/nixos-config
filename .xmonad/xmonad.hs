@@ -1,10 +1,11 @@
 import System.IO
 
 import XMonad
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.DynamicLog
+import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Util.Run (spawnPipe)
@@ -29,7 +30,7 @@ myManageHook = composeAll . concat $
     classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
-myLayoutHook = smartBorders $ tiled ||| Mirror tiled ||| Full
+myLayoutHook = smartBorders $ tiled ||| Mirror tiled ||| Full ||| Grid
     where
         tiled = Tall nmaster delta ratio
         nmaster = 1
