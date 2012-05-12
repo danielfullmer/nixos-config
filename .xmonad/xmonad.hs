@@ -29,7 +29,7 @@ myManageHook = composeAll . concat $
     classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
-myLayoutHook = tiled ||| Mirror tiled ||| Full
+myLayoutHook = smartBorders $ tiled ||| Mirror tiled ||| Full
     where
         tiled = Tall nmaster delta ratio
         nmaster = 1
@@ -41,8 +41,6 @@ myConfig = defaultConfig
         { terminal = "gnome-terminal"
         , manageHook = myManageHook
         , layoutHook = myLayoutHook
-        , logHook = fadeInactiveLogHook 0.95
-        , borderWidth = 0
         }
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
