@@ -35,6 +35,8 @@ noremap <leader>n <Esc>:NERDTreeToggle<CR>
 noremap <leader>l <Esc>:TlistToggle<CR>
 noremap <leader>g <Esc>:GundoToggle<CR>
 
+let g:pep8_map='<leader>8'
+
 " Execute the tests
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
