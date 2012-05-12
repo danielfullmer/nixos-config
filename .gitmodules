@@ -34,3 +34,6 @@
 [submodule ".vim/bundle/pep8"]
 	path = .vim/bundle/pep8
 	url = https://github.com/vim-scripts/pep8.git
+[submodule ".vim/bundle/Gist"]
+	path = .vim/bundle/Gist
+	url = https://github.com/vim-scripts/Gist.vim
