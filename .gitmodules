@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/Gist"]
 	path = .vim/bundle/Gist
 	url = https://github.com/vim-scripts/Gist.vim
+[submodule ".vim/bundle/haskellmode-vim"]
+	path = .vim/bundle/haskellmode-vim
+	url = https://github.com/lukerandall/haskellmode-vim.git
