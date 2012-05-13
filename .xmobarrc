@@ -1,7 +1,7 @@
 Config { font = "xft:Monospace:size=11:antialias=false"
        , bgColor = "black"
        , fgColor = "grey"
-       , position = TopW L 97
+       , position = TopW L 95
        , commands = [ Run Weather "KSDF" ["-t"," <tempF>F","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
