@@ -8,6 +8,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
+import XMonad.Util.EZConfig
 import XMonad.Util.Run (spawnPipe)
 
 -- Command to launch the bar.
@@ -43,6 +44,8 @@ myConfig = defaultConfig
         { terminal = "gnome-terminal"
         , manageHook = myManageHook
         , layoutHook = myLayoutHook
-        }
+        } `additionalKeysP`
+        [ ("M-c", spawn "chromium")
+        ]
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
