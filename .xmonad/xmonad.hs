@@ -6,7 +6,6 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
-import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
@@ -33,7 +32,7 @@ myManageHook = composeAll . concat $
     classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
-myLayoutHook = layoutHints . smartBorders $ tiled ||| Mirror tiled ||| Full ||| Grid
+myLayoutHook = smartBorders $ tiled ||| Mirror tiled ||| Full ||| Grid
     where
         tiled = Tall nmaster delta ratio
         nmaster = 1
