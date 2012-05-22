@@ -1,4 +1,5 @@
 import System.IO
+import Data.Ratio ((%))
 
 import XMonad
 import XMonad.Hooks.DynamicLog
@@ -6,6 +7,7 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
+import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
@@ -32,12 +34,13 @@ myManageHook = composeAll . concat $
     classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
-myLayoutHook = smartBorders $ tiled ||| Mirror tiled ||| Full ||| Grid
-    where
-        tiled = Tall nmaster delta ratio
-        nmaster = 1
-        delta = 3/100
-        ratio = 1/2
+myLayoutHook = smartBorders $ withIM (1%7) (Role "buddy_list") $
+    tiled ||| Mirror tiled ||| Full ||| Grid
+  where
+    tiled = Tall nmaster delta ratio
+    nmaster = 1
+    delta = 3/100
+    ratio = 1/2
 
 -- Configuration
 myConfig = defaultConfig
