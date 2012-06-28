@@ -25,12 +25,6 @@
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
-[submodule ".vim/bundle/pyflakes-pathogen"]
-	path = .vim/bundle/pyflakes-pathogen
-	url = https://github.com/mitechie/pyflakes-pathogen.git
-[submodule ".vim/bundle/pep8"]
-	path = .vim/bundle/pep8
-	url = https://github.com/vim-scripts/pep8.git
 [submodule ".vim/bundle/Gist"]
 	path = .vim/bundle/Gist
 	url = https://github.com/vim-scripts/Gist.vim
@@ -46,3 +40,6 @@
 [submodule ".vim/bundle/neocomplcache"]
 	path = .vim/bundle/neocomplcache
 	url = https://github.com/Shougo/neocomplcache
+[submodule "/home/danielrf/.vim/bundle/syntastic"]
+	path = /home/danielrf/.vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
