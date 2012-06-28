@@ -20,6 +20,10 @@ set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
 set dictionary=/usr/share/dict/words
 
+" Plugin options
+let g:pep8_map='<leader>8'
+let g:neocomplcache_enable_at_startup=1
+
 " Key bindings
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
@@ -34,8 +38,6 @@ noremap <up> <Esc>:bp<cr>
 noremap <leader>n <Esc>:NERDTreeToggle<CR>
 noremap <leader>l <Esc>:TlistToggle<CR>
 noremap <leader>g <Esc>:GundoToggle<CR>
-
-let g:pep8_map='<leader>8'
 
 " Execute the tests
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
@@ -56,11 +58,3 @@ noremap <leader>sp [s
 noremap <leader>s? z=
 
 let g:haddock_browser = "chrome"
-
-" Control-Space for omnifunc
-inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-            \ "\<lt>C-n>" :
-            \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-            \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-            \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
-imap <C-@> <C-Space>
