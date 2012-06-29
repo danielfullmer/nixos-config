@@ -10,3 +10,7 @@ bind j focus down
 bind k focus up
 bind t focus top
 bind b focus bottom
+
+termcapinfo xterm*|rxvt*|kterm*|Eterm*|gnome* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+defhstatus "^Et"
+hardstatus off

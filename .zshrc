@@ -20,6 +20,9 @@ case ${TERM} in
 		precmd () {
                     echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"
                 }
+		preexec () {
+                    echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~} $1\007"
+                }
 		;;
 	screen*)
 		precmd () {
