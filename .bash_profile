@@ -2,6 +2,6 @@
 # ~/.bash_profile
 #
 
-export EDITOR="/usr/bin/vim"
+[[ -f ~/.profile ]] && . ~/.profile
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
