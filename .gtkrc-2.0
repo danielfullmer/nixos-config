@@ -1,5 +1,5 @@
 gtk-theme-name="Adwaita"
-gtk-key-theme-name="Vi"
+#gtk-key-theme-name="Vi"
 
 style "vimfix" {
   bg[NORMAL] = "#242424" # this matches my gvim theme 'Normal' bg color.
