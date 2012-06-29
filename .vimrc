@@ -15,6 +15,13 @@ set hlsearch
 set laststatus=2
 set scrolloff=4
 
+" Colorscheme
+colorscheme darkbone
+"colorscheme darkspectrum
+"colorscheme inkpot
+"colorscheme tango2
+"colorscheme lucius
+
 " Other options
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
