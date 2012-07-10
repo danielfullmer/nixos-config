@@ -1,5 +1,11 @@
 eval "`/usr/bin/dbus-launch --auto-syntax`"
 
+eval "`gnome-keyring-daemon`"
+export GNOME_KEYRING_CONTROL
+export GNOME_KEYRING_PID
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+
 source "${HOME}/.xinitrc.local"
 
 xset -dpms
