@@ -3,6 +3,10 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
+set et
+set sts=4
+set sw=4
+
 " Filetypes
 filetype plugin on
 filetype indent on
