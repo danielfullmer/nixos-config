@@ -34,7 +34,7 @@ myManageHook = composeAll . concat $
     classFloats = ["MPlayer", "Vlc"]
     titleFloats = []
 
-myLayoutHook = smartBorders $ withIM (1%7) (Role "buddy_list") $
+myLayoutHook = smartBorders $ withIM (1%7) (Or (Role "contact_list") (Role "buddy_list")) $
     tiled ||| Mirror tiled ||| Full ||| Grid
   where
     tiled = Tall nmaster delta ratio
