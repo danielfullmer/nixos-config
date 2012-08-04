@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/textobj-word-column"]
 	path = .vim/bundle/textobj-word-column
 	url = https://github.com/coderifous/textobj-word-column.vim.git
+[submodule ".vim/bundle/sparkup"]
+	path = .vim/bundle/sparkup
+	url = https://github.com/bingaman/vim-sparkup.git
