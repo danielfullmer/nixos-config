@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/vimux-pyutils"]
 	path = .vim/bundle/vimux-pyutils
 	url = https://github.com/julienr/vimux-pyutils.git
+[submodule ".vim/bundle/textobj-word-column"]
+	path = .vim/bundle/textobj-word-column
+	url = https://github.com/coderifous/textobj-word-column.vim.git
