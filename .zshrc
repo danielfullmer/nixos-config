@@ -36,5 +36,5 @@ esac
 
 # TERM env variable
 if [[ "$COLORTERM" == "gnome-terminal" ]]; then
-	export TERM=gnome-256color
+	export TERM=xterm-256color
 fi
