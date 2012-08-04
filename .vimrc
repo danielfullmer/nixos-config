@@ -43,10 +43,10 @@ let g:neocomplcache_enable_at_startup=1
 " Key bindings
 let mapleader=","
 
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
+noremap <C-M-j> <C-W>j
+noremap <C-M-k> <C-W>k
+noremap <C-M-h> <C-W>h
+noremap <C-M-l> <C-W>l
 
 noremap <left> <Esc>:tabp<cr>
 noremap <right> <Esc>:tabn<cr>
@@ -74,6 +74,7 @@ noremap <leader>sp [s
 noremap <leader>s? z=
 
 " Vimux bindings
+let g:VimuxOrientation="h"
 noremap <leader>rp <Esc>:VimuxPromptCommand<CR>
 noremap <leader>rl <Esc>:VimuxRunLastCommand<CR>
 noremap <leader>ri <Esc>:VimuxInspectRunner<CR>
