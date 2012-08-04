@@ -68,4 +68,11 @@ noremap <leader>sp [s
 "noremap <leader>sa zg
 noremap <leader>s? z=
 
+" Vimux bindings
+noremap <leader>rp <Esc>:VimuxPromptCommand<CR>
+noremap <leader>rl <Esc>:VimuxRunLastCommand<CR>
+noremap <leader>ri <Esc>:VimuxInspectRunner<CR>
+noremap <leader>rx <Esc>:VimuxCloseRunner<CR>
+noremap <leader>rs <Esc>:VimuxInterruptRunner<CR>
+
 let g:haddock_browser = "chrome"
