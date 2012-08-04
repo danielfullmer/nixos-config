@@ -20,11 +20,13 @@ set laststatus=2
 set scrolloff=4
 
 " Colorscheme
-colorscheme darkbone
+set background="dark"
+"colorscheme darkbone
 "colorscheme darkspectrum
 "colorscheme inkpot
 "colorscheme tango2
 "colorscheme lucius
+colorscheme moria
 
 " Other options
 set tags+=~/.vim/systags
