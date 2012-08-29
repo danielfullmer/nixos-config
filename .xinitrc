@@ -6,7 +6,7 @@ export GNOME_KEYRING_PID
 export SSH_AUTH_SOCK
 export GPG_AGENT_INFO
 
-source "${HOME}/.xinitrc.local"
+[[ -e "${HOME}/.xinitrc.local" ]] && source "${HOME}/.xinitrc.local"
 
 xset -dpms
 xsetroot -cursor_name left_ptr
