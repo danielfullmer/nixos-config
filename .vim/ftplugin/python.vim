@@ -4,7 +4,7 @@ setlocal softtabstop=4
 setlocal shiftwidth=4
 setlocal textwidth=79
 setlocal colorcolumn=79
-set foldcolumn=2
+"set foldcolumn=2
 
 " Fold routines for python code, version 3.2
 " Source: http://www.vim.org/scripts/script.php?script_id=2527
