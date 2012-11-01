@@ -14,10 +14,10 @@ syntax on
 
 " UI options
 set encoding=utf8
-set number
+"set number
 set hlsearch
 set laststatus=2
-set scrolloff=4
+set scrolloff=1
 
 " Colorscheme
 set background="dark"
