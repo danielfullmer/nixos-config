@@ -14,5 +14,6 @@ xmodmap "${HOME}/.xmodmaprc" &
 
 xcompmgr &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height 20 &
+/usr/lib/gnome-settings-daemon/gnome-settings-daemon &
 
 ck-launch-session xmonad
