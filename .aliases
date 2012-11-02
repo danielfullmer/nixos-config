@@ -1,2 +1,3 @@
 alias ls="ls --color"
 alias vi="vim"
+alias nfo="iconv -f IBM775
