@@ -16,4 +16,6 @@ xcompmgr &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height 20 &
 /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
 
+redshift -l 40.23:111.66 &
+
 ck-launch-session xmonad
