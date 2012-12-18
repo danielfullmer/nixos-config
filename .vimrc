@@ -19,6 +19,10 @@ set hlsearch
 set laststatus=2
 set scrolloff=1
 
+" Mouse
+set mouse=a
+set ttymouse=xterm2
+
 " Colorscheme
 set background="dark"
 "colorscheme darkbone
