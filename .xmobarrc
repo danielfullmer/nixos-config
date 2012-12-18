@@ -1,12 +1,13 @@
-Config { font = "xft:Monospace:size=11:antialias=false"
+Config { font = "xft:Monospace:size=10:antialias=true"
        , bgColor = "black"
        , fgColor = "grey"
        , position = TopW L 95
        , commands = [ Run Weather "KSDF" ["-t"," <tempF>F","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run DynNetwork ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
+                    , Run Battery ["-t","Batt: <acstatus> <left>% / <timeleft>"] 60
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     , Run Com "uname" ["-n"] "" 36000
                     , Run StdinReader
@@ -14,5 +15,5 @@ Config { font = "xft:Monospace:size=11:antialias=false"
        , sepChar = "%"
        , alignSep = "}{"
        , lowerOnStart = True
-       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | %eth0% | %KSDF% | <fc=#00ff00>%uname%</fc> | <fc=#ee9a00>%date%</fc>"
+       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | %battery% | %dynnetwork% | %KSDF% | <fc=#00ff00>%uname%</fc> | <fc=#ee9a00>%date%</fc>"
        }
