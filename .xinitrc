@@ -17,5 +17,6 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true --expa
 /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
 
 redshift -l 40.23:111.66 &
+gnome-sound-widget &
 
 ck-launch-session xmonad
