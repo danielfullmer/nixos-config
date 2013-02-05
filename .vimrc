@@ -1,16 +1,39 @@
-" Pathogen, auto-load modules
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
+set nocompatible
 
-set et
-set sts=4
-set sw=4
+" Vundle packages!
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'AutomaticLaTexPlugin'
+Bundle 'Colour-Sampler-Pack'
+Bundle 'wincent/Command-T'
+Bundle 'spolu/dwm.vim'
+Bundle 'mattn/gist-vim'
+Bundle 'sjl/gundo.vim'
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'alfredodeza/pytest.vim'
+Bundle 'rstacruz/sparkup'
+Bundle 'scrooloose/syntastic'
+Bundle 'taglist.vim'
+Bundle 'coderifous/textobj-word-column.vim'
+Bundle 'agate/vim-align'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-fugitive'
+Bundle 'ivanov/vim-ipython'
+Bundle 'benmills/vimux'
+Bundle 'Valloric/YouCompleteMe'
 
 " Filetypes
 filetype plugin on
 filetype indent on
 syntax on
+
+" Default tab spacing
+set et
+set sts=4
+set sw=4
 
 " UI options
 set encoding=utf8
@@ -39,10 +62,6 @@ set grepprg=grep\ -nH\ $*
 set dictionary=/usr/share/dict/words
 set nobackup
 set noswapfile
-
-" Plugin options
-let g:pep8_map='<leader>8'
-let g:neocomplcache_enable_at_startup=1
 
 " Key bindings
 let mapleader=","
