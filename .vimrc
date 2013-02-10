@@ -75,15 +75,6 @@ noremap <leader>n <Esc>:NERDTreeToggle<CR>
 noremap <leader>l <Esc>:TlistToggle<CR>
 noremap <leader>g <Esc>:GundoToggle<CR>
 
-" Execute the tests
-"nmap <silent><Leader>tf <Esc>:Pytest file<CR>
-"nmap <silent><Leader>tc <Esc>:Pytest class<CR>
-"nmap <silent><Leader>tm <Esc>:Pytest method<CR>
-"nmap <silent><Leader>tn <Esc>:Pytest next<CR>
-"nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
-"nmap <silent><Leader>te <Esc>:Pytest error<CR>
-"nmap <silent><Leader>ts <Esc>:Pytest session<CR>
-
 "Pressing ,ss will toggle and untoggle spell checking
 noremap <leader>ss :setlocal spell!<CR>
 noremap <leader>sn ]s
