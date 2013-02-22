@@ -91,3 +91,5 @@ noremap <leader>rx <Esc>:VimuxCloseRunner<CR>
 noremap <leader>rs <Esc>:VimuxInterruptRunner<CR>
 
 let g:haddock_browser = "chrome"
+
+let b:atp_Viewer = "evince"
