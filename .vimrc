@@ -90,6 +90,7 @@ noremap <leader>ri <Esc>:VimuxInspectRunner<CR>
 noremap <leader>rx <Esc>:VimuxCloseRunner<CR>
 noremap <leader>rs <Esc>:VimuxInterruptRunner<CR>
 
+" Plugin options
 let g:haddock_browser = "chrome"
-
 let b:atp_Viewer = "evince"
+let g:EasyMotion_leader_key = "\\"
