@@ -53,8 +53,9 @@ set background="dark"
 "colorscheme inkpot
 "colorscheme tango2
 "colorscheme lucius
-colorscheme moria
+"colorscheme moria
 "colorscheme xoria256
+colorscheme jellybeans
 
 " Other options
 set tags+=~/.vim/systags
