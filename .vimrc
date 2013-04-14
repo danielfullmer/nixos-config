@@ -7,7 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'AutomaticLaTexPlugin'
 Bundle 'Colour-Sampler-Pack'
-Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
 Bundle 'spolu/dwm.vim'
 Bundle 'mattn/gist-vim'
 Bundle 'sjl/gundo.vim'
