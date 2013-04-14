@@ -38,3 +38,5 @@ esac
 if [[ "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
+
+[[ -f "${HOME}/.zshrc.local" ]] && source "${HOME}/.zshrc.local"
