@@ -48,7 +48,7 @@ set mouse=a
 set ttymouse=xterm2
 
 " Colorscheme
-set background="dark"
+"set background="dark"
 "colorscheme darkbone
 "colorscheme darkspectrum
 "colorscheme inkpot
@@ -56,7 +56,8 @@ set background="dark"
 "colorscheme lucius
 "colorscheme moria
 "colorscheme xoria256
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme vividchalk
 
 " Other options
 set tags+=~/.vim/systags
