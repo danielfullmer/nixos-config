@@ -5,26 +5,44 @@ filetype off
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 Bundle 'gmarik/vundle'
-Bundle 'AutomaticLaTexPlugin'
+
+" UI
 Bundle 'Colour-Sampler-Pack'
-Bundle 'kien/ctrlp.vim'
 Bundle 'spolu/dwm.vim'
-Bundle 'mattn/gist-vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'lukerandall/haskellmode-vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'alfredodeza/pytest.vim'
-Bundle 'rstacruz/sparkup'
-Bundle 'scrooloose/syntastic'
-Bundle 'taglist.vim'
-Bundle 'coderifous/textobj-word-column.vim'
-Bundle 'agate/vim-align'
+
+" Text/File Navigation
+Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
+
+" Code Completion/Naviation
+Bundle 'scrooloose/nerdtree'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'taglist.vim'
+
+" Editing
+Bundle 'agate/vim-align'
+Bundle 'coderifous/textobj-word-column.vim'
+
+" GIT
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'mattn/gist-vim'
+
+" Coding
+Bundle 'scrooloose/syntastic'
+Bundle 'editorconfig/editorconfig-vim'
+
+" Languages
+Bundle 'AutomaticLaTexPlugin'
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'alfredodeza/pytest.vim'
+Bundle 'rstacruz/sparkup'
+Bundle 'lukaszb/vim-web-indent'
 Bundle 'ivanov/vim-ipython'
+
+" Misc
 Bundle 'benmills/vimux'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'sjl/gundo.vim'
 
 " Filetypes
 filetype plugin on
