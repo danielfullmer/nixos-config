@@ -27,6 +27,7 @@ Bundle 'coderifous/textobj-word-column.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'mattn/gist-vim'
+Bundle 'vitaly/vim-gitignore'
 
 " Coding
 Bundle 'scrooloose/syntastic'
