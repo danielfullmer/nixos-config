@@ -38,6 +38,7 @@ Bundle 'editorconfig/editorconfig-vim'
 " Python
 Bundle 'alfredodeza/pytest.vim'
 Bundle 'ivanov/vim-ipython'
+Bundle 'julienr/vimux-pyutils'
 
 " Haskell
 Bundle 'lukerandall/haskellmode-vim'
@@ -112,12 +113,12 @@ noremap <leader>sp [s
 noremap <leader>s? z=
 
 " Vimux bindings
-let g:VimuxOrientation="h"
-noremap <leader>rp <Esc>:VimuxPromptCommand<CR>
-noremap <leader>rl <Esc>:VimuxRunLastCommand<CR>
-noremap <leader>ri <Esc>:VimuxInspectRunner<CR>
-noremap <leader>rx <Esc>:VimuxCloseRunner<CR>
-noremap <leader>rs <Esc>:VimuxInterruptRunner<CR>
+noremap <leader>vp <Esc>:VimuxPromptCommand<CR>
+noremap <leader>vl <Esc>:VimuxRunLastCommand<CR>
+noremap <leader>vi <Esc>:VimuxInspectRunner<CR>
+noremap <leader>vx <Esc>:VimuxCloseRunner<CR>
+vmap <leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
+nmap <leader>vs vip<leader>vs<CR>
 
 " Plugin options
 let g:haddock_browser = "chrome"
