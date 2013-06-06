@@ -7,6 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " UI
+Bundle 'CSApprox'
 Bundle 'Colour-Sampler-Pack'
 Bundle 'spolu/dwm.vim'
 
@@ -67,6 +68,7 @@ set mouse=a
 set ttymouse=xterm2
 
 " Colorscheme
+set t_Co=256
 "set background="dark"
 "colorscheme darkbone
 "colorscheme darkspectrum
