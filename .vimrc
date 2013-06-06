@@ -9,6 +9,8 @@ Bundle 'gmarik/vundle'
 " UI
 Bundle 'CSApprox'
 Bundle 'Colour-Sampler-Pack'
+Bundle 'Lokaltog/powerline'
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " Text/File Navigation
 Bundle 'kien/ctrlp.vim'
