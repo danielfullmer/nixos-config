@@ -44,5 +44,9 @@ plugins=(archlinux git github tmux python pip virtualenv systemd themes)
 
 source $ZSH/oh-my-zsh.sh
 
+if [[ "$COLORTERM" == "gnome-terminal" ]]; then
+	export TERM=xterm-256color
+fi
+
 # Customize to your needs...
 export PATH=$PATH:/home/danielrf/.gem/ruby/2.0.0/bin:/home/danielrf/.local/bin:/home/danielrf/.cabal/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl

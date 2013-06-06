@@ -69,7 +69,6 @@ set mouse=a
 set ttymouse=xterm2
 
 " Colorscheme
-set t_Co=256
 "set background="dark"
 "colorscheme darkbone
 "colorscheme darkspectrum
