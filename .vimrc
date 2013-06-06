@@ -96,27 +96,27 @@ set noswapfile
 " Key bindings
 let mapleader=","
 
-noremap <left> <Esc>:tabp<cr>
-noremap <right> <Esc>:tabn<cr>
-noremap <down> <Esc>:bn<cr>
-noremap <up> <Esc>:bp<cr>
+map <left> <Esc>:tabp<cr>
+map <right> <Esc>:tabn<cr>
+map <down> <Esc>:bn<cr>
+map <up> <Esc>:bp<cr>
 
-noremap <leader>n <Esc>:NERDTreeToggle<CR>
-noremap <leader>l <Esc>:TlistToggle<CR>
-noremap <leader>g <Esc>:GundoToggle<CR>
+map <leader>n <Esc>:NERDTreeToggle<CR>
+map <leader>l <Esc>:TlistToggle<CR>
+map <leader>g <Esc>:GundoToggle<CR>
 
 "Pressing ,ss will toggle and untoggle spell checking
-noremap <leader>ss :setlocal spell!<CR>
-noremap <leader>sn ]s
-noremap <leader>sp [s
-"noremap <leader>sa zg
-noremap <leader>s? z=
+map <leader>ss :setlocal spell!<CR>
+map <leader>sn ]s
+map <leader>sp [s
+"map <leader>sa zg
+map <leader>s? z=
 
 " Vimux bindings
-noremap <leader>vp <Esc>:VimuxPromptCommand<CR>
-noremap <leader>vl <Esc>:VimuxRunLastCommand<CR>
-noremap <leader>vi <Esc>:VimuxInspectRunner<CR>
-noremap <leader>vx <Esc>:VimuxCloseRunner<CR>
+map <leader>vp <Esc>:VimuxPromptCommand<CR>
+map <leader>vl <Esc>:VimuxRunLastCommand<CR>
+map <leader>vi <Esc>:VimuxInspectRunner<CR>
+map <leader>vx <Esc>:VimuxCloseRunner<CR>
 vmap <leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
 nmap <leader>vs vip<leader>vs<CR>
 
