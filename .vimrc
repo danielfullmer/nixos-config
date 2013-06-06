@@ -65,8 +65,7 @@ set sw=4
 
 " UI options
 set encoding=utf8
-"set number
-set hlsearch
+set relativenumber
 set laststatus=2
 set scrolloff=1
 
