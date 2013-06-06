@@ -35,13 +35,19 @@ Bundle 'vitaly/vim-gitignore'
 Bundle 'scrooloose/syntastic'
 Bundle 'editorconfig/editorconfig-vim'
 
-" Languages
-Bundle 'AutomaticLaTexPlugin'
-Bundle 'lukerandall/haskellmode-vim'
+" Python
 Bundle 'alfredodeza/pytest.vim'
+Bundle 'ivanov/vim-ipython'
+
+" Haskell
+Bundle 'lukerandall/haskellmode-vim'
+
+" HTML
 Bundle 'rstacruz/sparkup'
 Bundle 'lukaszb/vim-web-indent'
-Bundle 'ivanov/vim-ipython'
+
+" LaTeX
+Bundle 'AutomaticLaTexPlugin'
 
 " Misc
 Bundle 'benmills/vimux'
