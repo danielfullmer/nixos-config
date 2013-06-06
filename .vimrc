@@ -9,7 +9,6 @@ Bundle 'gmarik/vundle'
 " UI
 Bundle 'CSApprox'
 Bundle 'Colour-Sampler-Pack'
-Bundle 'spolu/dwm.vim'
 
 " Text/File Navigation
 Bundle 'kien/ctrlp.vim'
