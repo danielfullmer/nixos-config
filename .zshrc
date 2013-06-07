@@ -40,7 +40,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(archlinux git github tmux python pip virtualenv systemd themes)
+plugins=(archlinux git github python pip virtualenv systemd themes)
 
 source $ZSH/oh-my-zsh.sh
 
