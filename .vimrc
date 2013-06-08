@@ -1,4 +1,5 @@
 set nocompatible
+set shell=/bin/bash
 
 " Vundle packages!
 filetype off
