@@ -15,6 +15,7 @@ xmodmap "${HOME}/.xmodmaprc" &
 xcompmgr &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height request &
 /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
+VBoxClient --seamless &
 
 redshift -l 40.23:111.66 &
 gnome-sound-widget &
