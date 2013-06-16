@@ -20,4 +20,4 @@ VBoxClient --seamless &
 redshift -l 40.23:111.66 &
 gnome-sound-widget &
 
-ck-launch-session xmonad
+xmonad
