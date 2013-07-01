@@ -40,6 +40,7 @@ Bundle 'editorconfig/editorconfig-vim'
 Bundle 'alfredodeza/pytest.vim'
 Bundle 'ivanov/vim-ipython'
 Bundle 'julienr/vimux-pyutils'
+Bundle 'davidhalter/jedi-vim'
 
 " Haskell
 Bundle 'lukerandall/haskellmode-vim'
