@@ -1,63 +1,68 @@
 set nocompatible
 set shell=/bin/bash
 
-" Vundle packages!
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-Bundle 'gmarik/vundle'
+" NeoBundle packages!
+set rtp+=~/.vim/bundle/neobundle.vim/
+call neobundle#rc()
 
 " UI
-Bundle 'CSApprox'
-Bundle 'Colour-Sampler-Pack'
-Bundle 'Lokaltog/powerline'
+NeoBundle 'CSApprox'
+NeoBundle 'Colour-Sampler-Pack'
+NeoBundle 'Lokaltog/powerline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " For async stuff
-Bundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build': {
+    \   'windows': 'make -f make_mingw32.mak',
+    \   'cygwin': 'make -f make_cygwin.mak',
+    \   'mac': 'make -f make_mac.mak',
+    \   'unix': 'make -f make_unix.mak',
+    \   },
+    \ }
 
 " Text/File Navigation
-Bundle 'Shougo/unite.vim'
-Bundle 'Lokaltog/vim-easymotion'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 
 " Code Completion/Naviation
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'taglist.vim'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'taglist.vim'
 
 " Editing
-Bundle 'agate/vim-align'
-Bundle 'coderifous/textobj-word-column.vim'
+NeoBundle 'agate/vim-align'
+NeoBundle 'coderifous/textobj-word-column.vim'
 
 " GIT
-Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'mattn/gist-vim'
-Bundle 'vitaly/vim-gitignore'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'vitaly/vim-gitignore'
 
 " Coding
-Bundle 'scrooloose/syntastic'
-Bundle 'editorconfig/editorconfig-vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'editorconfig/editorconfig-vim'
 
 " Python
-Bundle 'alfredodeza/pytest.vim'
-Bundle 'ivanov/vim-ipython'
-Bundle 'julienr/vimux-pyutils'
-Bundle 'davidhalter/jedi-vim'
+NeoBundle 'alfredodeza/pytest.vim'
+NeoBundle 'ivanov/vim-ipython'
+NeoBundle 'julienr/vimux-pyutils'
+NeoBundle 'davidhalter/jedi-vim'
 
 " Haskell
-Bundle 'lukerandall/haskellmode-vim'
+NeoBundle 'lukerandall/haskellmode-vim'
 
 " HTML
-Bundle 'rstacruz/sparkup'
-Bundle 'lukaszb/vim-web-indent'
+NeoBundle 'rstacruz/sparkup'
+NeoBundle 'lukaszb/vim-web-indent'
 
 " LaTeX
-Bundle 'AutomaticLaTexPlugin'
+NeoBundle 'AutomaticLaTexPlugin'
 
 " Misc
-Bundle 'benmills/vimux'
-Bundle 'sjl/gundo.vim'
+NeoBundle 'benmills/vimux'
+NeoBundle 'sjl/gundo.vim'
 
 " Filetypes
 filetype plugin on
@@ -140,3 +145,6 @@ nmap <leader>vs vip<leader>vs<CR>
 let g:haddock_browser = "chrome"
 let b:atp_Viewer = "evince"
 let g:EasyMotion_leader_key = "\\"
+
+" NeoBundle says this is required
+filetype plugin indent on
