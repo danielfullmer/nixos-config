@@ -21,8 +21,8 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Lokaltog/vim-easymotion'
 
 " Code Completion/Naviation
+Bundle 'Shougo/neocomplete.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'taglist.vim'
 
 " Editing
@@ -125,6 +125,9 @@ let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<CR>
 nnoremap <space>s :Unite -quick-match buffer<CR>
 
+" Neocomplete
+let g:neocomplete#enable_at_startup = 1
+
 " Vimux bindings
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
 map <leader>vl <Esc>:VimuxRunLastCommand<CR>
@@ -133,7 +136,7 @@ map <leader>vx <Esc>:VimuxCloseRunner<CR>
 vmap <leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
 nmap <leader>vs vip<leader>vs<CR>
 
-" Plugin options
+" Others...
 let g:haddock_browser = "chrome"
 let b:atp_Viewer = "evince"
 let g:EasyMotion_leader_key = "\\"
