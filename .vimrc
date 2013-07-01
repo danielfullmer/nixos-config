@@ -13,8 +13,11 @@ Bundle 'Colour-Sampler-Pack'
 Bundle 'Lokaltog/powerline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
+" For async stuff
+Bundle 'Shougo/vimproc.vim'
+
 " Text/File Navigation
-Bundle 'kien/ctrlp.vim'
+Bundle 'Shougo/unite.vim'
 Bundle 'Lokaltog/vim-easymotion'
 
 " Code Completion/Naviation
@@ -113,6 +116,14 @@ map <leader>sn ]s
 map <leader>sp [s
 "map <leader>sa zg
 map <leader>s? z=
+
+" Unite
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
+nnoremap <space>/ :Unite grep:.<CR>
+let g:unite_source_history_yank_enable = 1
+nnoremap <space>y :Unite history/yank<CR>
+nnoremap <space>s :Unite -quick-match buffer<CR>
 
 " Vimux bindings
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
