@@ -49,6 +49,7 @@ NeoBundle 'alfredodeza/pytest.vim'
 NeoBundle 'ivanov/vim-ipython'
 NeoBundle 'julienr/vimux-pyutils'
 NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'michaeljsmith/vim-indent-object'
 
 " Haskell
 NeoBundle 'lukerandall/haskellmode-vim'
