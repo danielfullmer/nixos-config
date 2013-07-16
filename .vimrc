@@ -9,6 +9,7 @@ call neobundle#rc()
 NeoBundle 'CSApprox'
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'Lokaltog/powerline'
+"NeoBundle 'bling/vim-airline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " For async stuff
@@ -26,7 +27,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 
 " Code Completion/Naviation
-NeoBundle 'Shougo/neocomplete.vim'
+"NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'taglist.vim'
 
@@ -89,13 +90,14 @@ set ttymouse=xterm2
 "set background="dark"
 "colorscheme darkbone
 "colorscheme darkspectrum
+colorscheme darkZ
 "colorscheme inkpot
 "colorscheme tango2
 "colorscheme lucius
 "colorscheme moria
 "colorscheme xoria256
 "colorscheme jellybeans
-colorscheme vividchalk
+"colorscheme vividchalk
 
 " Other options
 set tags+=~/.vim/systags
