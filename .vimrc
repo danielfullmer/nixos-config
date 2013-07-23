@@ -72,9 +72,10 @@ filetype indent on
 syntax on
 
 " Default tab spacing
-set et
-set sts=4
-set sw=4
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+set shiftround
 
 " UI options
 set encoding=utf8
