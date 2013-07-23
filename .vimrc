@@ -137,6 +137,10 @@ nnoremap <space>s :Unite -quick-match buffer<CR>
 " Neocomplete
 let g:neocomplete#enable_at_startup = 1
 
+" Python
+let g:jedi#auto_vim_configuration = 0
+set completeopt="menu"
+
 " Vimux bindings
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
 map <leader>vl <Esc>:VimuxRunLastCommand<CR>
