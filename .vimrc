@@ -46,6 +46,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'editorconfig/editorconfig-vim'
 
 " Python
+NeoBundle 'klen/python-mode'
 NeoBundle 'alfredodeza/pytest.vim'
 NeoBundle 'ivanov/vim-ipython'
 NeoBundle 'julienr/vimux-pyutils'
@@ -140,6 +141,10 @@ let g:neocomplete#enable_at_startup = 1
 " Python
 let g:jedi#auto_vim_configuration = 0
 set completeopt="menu"
+let g:pymode_doc = 0
+let g:pymode_run = 0
+let g:pymode_lint = 0
+let g:pymode_rope = 0
 
 " Vimux bindings
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
