@@ -157,7 +157,7 @@ nmap <leader>vs vip<leader>vs<CR>
 " Others...
 let g:haddock_browser = "chrome"
 let b:atp_Viewer = "evince"
-let g:EasyMotion_leader_key = "\\"
+let g:EasyMotion_leader_key = "<space>"
 
 " NeoBundle says this is required
 filetype plugin indent on
