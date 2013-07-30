@@ -80,7 +80,6 @@ set shiftround
 
 " UI options
 set encoding=utf8
-set relativenumber
 set laststatus=2
 set scrolloff=1
 
