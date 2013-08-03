@@ -65,6 +65,7 @@ NeoBundle 'AutomaticLaTexPlugin'
 
 " Misc
 NeoBundle 'benmills/vimux'
+NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'sjl/gundo.vim'
 
 " Filetypes
@@ -146,7 +147,14 @@ let g:pymode_run = 0
 let g:pymode_lint = 0
 let g:pymode_rope = 0
 
-" Vimux bindings
+" Tmux-related bindings
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
 map <leader>vl <Esc>:VimuxRunLastCommand<CR>
 map <leader>vi <Esc>:VimuxInspectRunner<CR>
