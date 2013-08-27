@@ -29,7 +29,6 @@ NeoBundle 'Lokaltog/vim-easymotion'
 " Code Completion/Naviation
 "NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'taglist.vim'
 
 " Editing
 NeoBundle 'agate/vim-align'
