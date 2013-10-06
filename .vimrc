@@ -60,7 +60,7 @@ NeoBundle 'rstacruz/sparkup'
 NeoBundle 'lukaszb/vim-web-indent'
 
 " LaTeX
-NeoBundle 'AutomaticLaTexPlugin'
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 
 " Misc
 NeoBundle 'benmills/vimux'
