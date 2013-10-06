@@ -27,7 +27,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 
 " Code Completion/Naviation
-"NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'scrooloose/nerdtree'
 
 " Editing
