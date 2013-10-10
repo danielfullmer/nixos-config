@@ -124,7 +124,7 @@ map <leader>g <Esc>:GundoToggle<CR>
 map <leader>ss :setlocal spell!<CR>
 map <leader>sn ]s
 map <leader>sp [s
-"map <leader>sa zg
+map <leader>sa zg
 map <leader>s? z=
 
 " Unite
