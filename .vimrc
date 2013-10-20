@@ -25,6 +25,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 " Text/File Navigation
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'justinmk/vim-sneak'
 
 " Code Completion/Naviation
 NeoBundle 'Shougo/neocomplete.vim'
