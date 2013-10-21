@@ -13,7 +13,7 @@ antigen bundle vagrant
 antigen bundle virtualenv
 antigen bundle zsh-users/zsh-syntax-highlighting
 
-if [[ "$COLORTERM" == "gnome-terminal" ]]; then
+if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
 
