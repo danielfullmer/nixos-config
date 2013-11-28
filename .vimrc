@@ -140,9 +140,9 @@ nnoremap <space>s :Unite -quick-match buffer<CR>
 let g:neocomplete#enable_at_startup = 1
 
 " Neosnippet
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_or_jump)
+imap <C-j> <Plug>(neosnippet_expand_or_jump)
+smap <C-j> <Plug>(neosnippet_expand_or_jump)
+xmap <C-j> <Plug>(neosnippet_expand_or_jump)
 
 " Python
 let g:jedi#auto_vim_configuration = 0
