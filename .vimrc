@@ -145,7 +145,12 @@ smap <C-j> <Plug>(neosnippet_expand_or_jump)
 xmap <C-j> <Plug>(neosnippet_expand_or_jump)
 
 " Python
+autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_enable = 0
+
 set completeopt="menu"
 let g:pymode_doc = 0
 let g:pymode_run = 0
