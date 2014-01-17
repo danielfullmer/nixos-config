@@ -3,6 +3,7 @@ source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundle archlinux
+antigen bundle docker
 antigen bundle colored-man
 antigen bundle git
 antigen bundle github
