@@ -1,0 +1,7 @@
+[user]
+	email = daniel.fullmer@byu.edu
+	name = Daniel Fullmer
+[push]
+	default = simple
+[branch]
+	autosetuprebase = always
