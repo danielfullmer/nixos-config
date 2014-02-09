@@ -81,6 +81,8 @@ map <leader>n <Esc>:NERDTreeToggle<CR>
 " Editing {{{
 NeoBundle 'agate/vim-align'
 NeoBundle 'coderifous/textobj-word-column.vim'
+NeoBundle 'editorconfig/editorconfig-vim'
+" }}}
 
 " Default tab spacing
 set expandtab
