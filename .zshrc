@@ -1,20 +1,7 @@
-source $HOME/.antigen/antigen.zsh
-
-antigen use oh-my-zsh
-
-antigen bundle archlinux
-antigen bundle docker
-antigen bundle colored-man
-antigen bundle git
-antigen bundle github
-antigen bundle pip
-antigen bundle python
-antigen bundle systemd
-antigen bundle vagrant
-antigen bundle virtualenv
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-DISABLE_CORRECTION="true"
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
 if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
