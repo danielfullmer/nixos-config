@@ -34,4 +34,7 @@ xmodmap .Xmodmap
 
 [ -e "$HOME/.xinitrc.local" ] && source "$HOME/.xinitrc.local"
 
-exec xmonad
+#exec xmonad
+
+sxhkd &
+exec bspwm
