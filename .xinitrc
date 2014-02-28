@@ -18,6 +18,9 @@ export GNOME_KEYRING_PID
 export SSH_AUTH_SOCK
 export GPG_AGENT_INFO
 
+xrdb -merge "$HOME/.Xresources"
+xsettingsd &
+
 xcompmgr &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height request &
 VBoxClient --seamless &
