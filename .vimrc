@@ -130,7 +130,7 @@ let g:haddock_browser = "chrome"
 " }}}
 
 " HTML {{{
-NeoBundle 'rstacruz/sparkup'
+NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 NeoBundle 'lukaszb/vim-web-indent'
 " }}}
 
