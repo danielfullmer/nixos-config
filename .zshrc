@@ -6,3 +6,6 @@ fi
 if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
+
+# Extra aliases
+alias hgit="GIT_DIR=~/.dotfiles git"
