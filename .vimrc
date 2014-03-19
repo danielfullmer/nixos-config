@@ -139,6 +139,11 @@ NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 let b:atp_Viewer = "evince"
 " }}}
 
+" Pandoc {{{
+NeoBundle 'vim-pandoc/vim-pantondoc'
+NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+" }}}
+
 " Misc {{{
 NeoBundle 'benmills/vimux'
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
