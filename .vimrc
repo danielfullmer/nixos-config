@@ -28,23 +28,16 @@ set number
 set relativenumber
 set laststatus=2
 set scrolloff=1
+set conceallevel=2
 
 " Mouse
 set mouse=a
 set ttymouse=xterm2
 
 " Colorscheme
-"set background="dark"
-"colorscheme darkbone
-"colorscheme darkspectrum
-colorscheme darkZ
-"colorscheme inkpot
-"colorscheme tango2
-"colorscheme lucius
-"colorscheme moria
-"colorscheme xoria256
-"colorscheme jellybeans
-"colorscheme vividchalk
+colorscheme jellybeans
+hi clear Conceal
+hi Conceal ctermfg=107 guifg=#99ad6a
 
 map <left> <Esc>:tabp<cr>
 map <right> <Esc>:tabn<cr>
@@ -137,6 +130,7 @@ NeoBundle 'lukaszb/vim-web-indent'
 " LaTeX {{{
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 let b:atp_Viewer = "evince"
+let g:tex_conceal = "admgs"
 " }}}
 
 " Pandoc {{{
@@ -163,11 +157,6 @@ nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 NeoBundle 'sjl/gundo.vim'
 map <leader>g <Esc>:GundoToggle<CR>
 " }}}
-
-" Filetypes
-filetype plugin on
-filetype indent on
-syntax on
 
 " Other options
 set tags+=~/.vim/systags
