@@ -88,7 +88,6 @@ set shiftround
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'mattn/gist-vim'
-NeoBundle 'vitaly/vim-gitignore'
 " }}}
 
 " General Coding {{{
