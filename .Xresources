@@ -6,9 +6,9 @@ Xft.autohint:       true
 Xft.hintstyle:      full
 
 !! URXVT
-urxvt*font:         xft:DejaVu Sans Mono:size=10
-urxvt*boldFont:     xft:DejaVu Sans Mono:bold:size=10
-urxvt*italicFont:   xft:DejaVu Sans Mono:italic:size=10
+urxvt*font:         xft:DejaVu Sans Mono for Powerline:size=10, xft:DevaVu Sans Mono:size=10
+urxvt*boldFont:     xft:DejaVu Sans Mono for Powerline:bold:size=10, xft:DevaVu Sans Mono:bold:size=10
+urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=10, xft:DevaVu Sans Mono:italic:size=10
 
 urxvt.scrollBar:    false
 
