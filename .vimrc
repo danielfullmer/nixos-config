@@ -157,6 +157,12 @@ NeoBundle 'sjl/gundo.vim'
 map <leader>g <Esc>:GundoToggle<CR>
 " }}}
 
+
+" Filetypes
+filetype plugin on
+filetype indent on
+syntax on
+
 " Other options
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
