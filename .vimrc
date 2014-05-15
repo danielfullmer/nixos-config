@@ -1,8 +1,17 @@
+" vim: foldmethod=marker
+" Options {{{
 set nocompatible
 set shell=/bin/bash
 set encoding=utf8
+let mapleader=","
 
-" NeoBundle packages!
+set tags+=~/.vim/systags
+set grepprg=grep\ -nH\ $*
+set dictionary=/usr/share/dict/words
+set nobackup
+set noswapfile
+" }}}
+" NeoBundle packages! {{{
 set rtp+=~/.vim/bundle/neobundle.vim/
 call neobundle#rc()
 
@@ -15,7 +24,7 @@ NeoBundle 'Shougo/vimproc.vim', {
     \   'unix': 'make -f make_unix.mak',
     \   },
     \ }
-
+" }}}
 " UI {{{
 NeoBundle 'CSApprox'
 NeoBundle 'Colour-Sampler-Pack'
@@ -23,7 +32,6 @@ NeoBundle 'Lokaltog/powerline'
 "NeoBundle 'bling/vim-airline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
-" UI options
 set number
 set relativenumber
 set laststatus=2
@@ -44,7 +52,6 @@ map <right> <Esc>:tabn<cr>
 map <down> <Esc>:bn<cr>
 map <up> <Esc>:bp<cr>
 " }}}
-
 " Text/File Navigation {{{
 NeoBundle 'Shougo/unite.vim'
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -57,7 +64,6 @@ nnoremap <space>s :Unite -quick-match buffer<CR>
 NeoBundle 'Lokaltog/vim-easymotion'
 let g:EasyMotion_leader_key = "<space>"
 " }}}
-
 " Code Completion/Navigation {{{
 NeoBundle 'Shougo/neocomplete.vim'
 let g:neocomplete#enable_at_startup = 1
@@ -70,31 +76,33 @@ xmap <C-j> <Plug>(neosnippet_expand_or_jump)
 NeoBundle 'scrooloose/nerdtree'
 map <leader>n <Esc>:NERDTreeToggle<CR>
 " }}}
-
 " Editing {{{
 NeoBundle 'agate/vim-align'
 NeoBundle 'coderifous/textobj-word-column.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
-" }}}
 
-" Default tab spacing
+"Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<CR>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+" }}}
+" Default tab spacing {{{
 set expandtab
 set softtabstop=4
 set shiftwidth=4
 set shiftround
 " }}}
-
 " GIT {{{
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'mattn/gist-vim'
 " }}}
-
 " General Coding {{{
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'editorconfig/editorconfig-vim'
 " }}}
-
 " Python {{{
 NeoBundle 'klen/python-mode'
 set completeopt="menu"
@@ -115,28 +123,23 @@ let g:jedi#popup_select_first = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#completions_enable = 0
 " }}}
-
 " Haskell {{{
 NeoBundle 'lukerandall/haskellmode-vim'
 let g:haddock_browser = "chrome"
 " }}}
-
 " HTML {{{
 NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 NeoBundle 'lukaszb/vim-web-indent'
 " }}}
-
 " LaTeX {{{
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 let b:atp_Viewer = "evince"
 let g:tex_conceal = "admgs"
 " }}}
-
 " Pandoc {{{
 NeoBundle 'vim-pandoc/vim-pantondoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 " }}}
-
 " Misc {{{
 NeoBundle 'benmills/vimux'
 map <leader>vp <Esc>:VimuxPromptCommand<CR>
@@ -155,26 +158,9 @@ nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
 NeoBundle 'sjl/gundo.vim'
 map <leader>g <Esc>:GundoToggle<CR>
-" }}}
 
-
-" Filetypes
+" Filetypes. NeoBundle says we need to do this at the end
 filetype plugin on
 filetype indent on
 syntax on
-
-" Other options
-set tags+=~/.vim/systags
-set grepprg=grep\ -nH\ $*
-set dictionary=/usr/share/dict/words
-set nobackup
-set noswapfile
-
-let mapleader=","
-
-"Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<CR>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" }}}
