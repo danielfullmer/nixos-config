@@ -78,6 +78,7 @@ map <leader>n <Esc>:NERDTreeToggle<CR>
 " }}}
 " Editing {{{
 NeoBundle 'agate/vim-align'
+NeoBundle 'tpope/vim-abolish'
 NeoBundle 'coderifous/textobj-word-column.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
 
@@ -102,6 +103,7 @@ NeoBundle 'mattn/gist-vim'
 " General Coding {{{
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'tpope/vim-commentary'
 " }}}
 " Python {{{
 NeoBundle 'klen/python-mode'
