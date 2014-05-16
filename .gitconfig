@@ -5,3 +5,7 @@
 	default = simple
 [branch]
 	autosetuprebase = always
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
