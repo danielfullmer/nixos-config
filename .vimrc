@@ -26,7 +26,6 @@ NeoBundle 'Shougo/vimproc.vim', {
     \ }
 " }}}
 " UI {{{
-NeoBundle 'CSApprox'
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'Lokaltog/powerline'
 "NeoBundle 'bling/vim-airline'
@@ -162,7 +161,5 @@ NeoBundle 'sjl/gundo.vim'
 map <leader>g <Esc>:GundoToggle<CR>
 
 " Filetypes. NeoBundle says we need to do this at the end
-filetype plugin on
-filetype indent on
-syntax on
+filetype plugin indent on
 " }}}
