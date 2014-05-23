@@ -31,6 +31,10 @@ NeoBundle 'Lokaltog/powerline'
 "NeoBundle 'bling/vim-airline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
+NeoBundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_auto_colors=0
+let g:indent_guides_enable_on_vim_startup=1
+
 set number
 set relativenumber
 set laststatus=2
@@ -43,6 +47,8 @@ set ttymouse=xterm2
 
 " Colorscheme
 colorscheme jellybeans
+hi IndentGuidesOdd ctermbg=234
+hi IndentGuidesEven ctermbg=235
 hi clear Conceal
 hi Conceal ctermfg=107 guifg=#99ad6a
 
