@@ -134,6 +134,9 @@ let g:jedi#completions_enable = 0
 NeoBundle 'lukerandall/haskellmode-vim'
 let g:haddock_browser = "chrome"
 " }}}
+" Go {{{
+NeoBundle 'jnwhiteh/vim-golang'
+" }}}
 " HTML {{{
 NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 NeoBundle 'lukaszb/vim-web-indent'
