@@ -103,6 +103,7 @@ set shiftround
 " GIT {{{
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 " }}}
 " General Coding {{{
