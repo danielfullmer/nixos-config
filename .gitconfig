@@ -9,3 +9,5 @@
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [merge]
 	tool = fugitive
+[github]
+	user = danielfullmer
