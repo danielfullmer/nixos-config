@@ -8,4 +8,4 @@ if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 fi
 
 # Extra aliases
-alias hgit="GIT_DIR=~/.dotfiles git"
+alias hgit="GIT_DIR=\"${HOME}/.dotfiles\" GIT_WORK_TREE=\"${HOME}\" git"
