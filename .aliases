@@ -1,3 +1,5 @@
 alias ls="ls --color"
 alias vi="vim"
 alias nfo="iconv -f IBM775"
+alias hgit="GIT_DIR=\"${HOME}/.dotfiles\" GIT_WORK_TREE=\"${HOME}\" git"
+alias vdmplayer='mplayer -vc ffh264vdpau -vo vdpau'
