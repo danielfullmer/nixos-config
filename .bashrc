@@ -9,4 +9,5 @@ source "${HOME}/.aliases"
 
 PS1='[\u@\h \W]\$ '
 
-#exec `which ipython` --profile=pysh --no-confirm-exit --no-banner
+# Load up ipython pysh if available
+which ipython > /dev/null && exec `which ipython` --profile=pysh
