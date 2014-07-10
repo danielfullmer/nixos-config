@@ -66,6 +66,10 @@ let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<CR>
 nnoremap <space>s :Unite -quick-match buffer<CR>
 
+" Using ag as recursive command.
+let g:unite_source_rec_async_command =
+\ 'ag --follow --nocolor --nogroup -g ""'
+
 NeoBundle 'Lokaltog/vim-easymotion'
 let g:EasyMotion_leader_key = "<space>"
 " }}}
