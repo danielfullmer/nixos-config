@@ -42,6 +42,7 @@ set relativenumber
 set laststatus=2
 set scrolloff=1
 set conceallevel=2
+set cursorline
 
 " Mouse
 set mouse=a
