@@ -139,7 +139,7 @@ let g:jedi#completions_enable = 0
 " }}}
 " Haskell {{{
 NeoBundle 'lukerandall/haskellmode-vim'
-let g:haddock_browser = "chrome"
+let g:haddock_browser = "xdg-open"
 " }}}
 " Go {{{
 NeoBundle 'jnwhiteh/vim-golang'
