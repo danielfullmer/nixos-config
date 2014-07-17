@@ -152,7 +152,7 @@ let b:atp_Viewer = "evince"
 let g:tex_conceal = "admgs"
 " }}}
 " Pandoc {{{
-NeoBundle 'vim-pandoc/vim-pantondoc'
+NeoBundle 'vim-pandoc/vim-pandoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 " }}}
 " Misc {{{
