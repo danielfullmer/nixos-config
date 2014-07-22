@@ -27,13 +27,22 @@ NeoBundle 'Shougo/vimproc.vim', {
 " }}}
 " UI {{{
 NeoBundle 'Colour-Sampler-Pack'
+
+"" Colorscheme
+"colorscheme jellybeans
+"hi clear Conceal
+"hi Conceal ctermfg=107 guifg=#99ad6a
+NeoBundle 'chriskempson/base16-vim'
+set background=dark
+colorscheme base16-eighties
+
+NeoBundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_auto_colors=1
+let g:indent_guides_enable_on_vim_startup=1
+
 NeoBundle 'Lokaltog/powerline'
 "NeoBundle 'bling/vim-airline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-
-NeoBundle 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_auto_colors=0
-let g:indent_guides_enable_on_vim_startup=1
 
 NeoBundle 'merlinrebrovic/focus.vim'
 
@@ -53,13 +62,6 @@ set showbreak=»»
 " Mouse
 set mouse=a
 set ttymouse=xterm2
-
-" Colorscheme
-colorscheme jellybeans
-hi IndentGuidesOdd ctermbg=234
-hi IndentGuidesEven ctermbg=235
-hi clear Conceal
-hi Conceal ctermfg=107 guifg=#99ad6a
 
 map <left> <Esc>:tabp<cr>
 map <right> <Esc>:tabn<cr>
