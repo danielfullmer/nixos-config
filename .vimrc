@@ -44,6 +44,12 @@ set scrolloff=1
 set conceallevel=2
 set cursorline
 
+set list
+set listchars=trail:·,tab:»·,precedes:«,extends:»
+
+set linebreak
+set showbreak=»»
+
 " Mouse
 set mouse=a
 set ttymouse=xterm2
