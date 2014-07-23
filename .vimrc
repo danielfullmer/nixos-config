@@ -99,6 +99,7 @@ map <leader>n <Esc>:NERDTreeToggle<CR>
 " Editing {{{
 NeoBundle 'agate/vim-align'
 NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-surround'
 NeoBundle 'coderifous/textobj-word-column.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
 
