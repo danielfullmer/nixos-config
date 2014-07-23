@@ -19,6 +19,7 @@ export SSH_AUTH_SOCK
 export GPG_AGENT_INFO
 
 xrdb -merge "$HOME/.Xresources"
+xrdb -merge "$HOME/.base16-xresources/base16-eighties.dark.xresources"
 xsettingsd &
 
 xcompmgr &

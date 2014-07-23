@@ -12,42 +12,6 @@ urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=10, xft:DevaV
 
 urxvt.scrollBar:    false
 
-!URxvt*background:         #2e3436
-!URxvt*foreground:         #eeeeec
-URxvt*background:         [95]#000000
-URxvt*foreground:         #eeeeec
-
-! Tango color palette
-URxvt*cursorColor:        #8ae234
-! foreground color for underline
-URxvt*colorUL:            #8ae234
-! line color for underline
-URxvt*underlineColor:     #92659a
-! black dark/light
-URxvt*color0:             #2e3436
-URxvt*color8:             #6e706b
-! red dark/light
-URxvt*color1:             #cc0000
-URxvt*color9:             #ef2929
-! green dark/light
-URxvt*color2:             #4e9a06
-URxvt*color10:            #8ae234
-! yellow dark/light
-URxvt*color3:             #edd400
-URxvt*color11:            #fce94f
-! blue dark/light
-URxvt*color4:             #3465a4
-URxvt*color12:            #729fcf
-! magenta dark/light
-URxvt*color5:             #92659a
-URxvt*color13:            #c19fbe
-! cyan dark/light
-URxvt*color6:             #07c7ca
-URxvt*color14:            #63e9e9
-! white dark/light
-URxvt*color7:             #d3d7cf
-URxvt*color15:            #eeeeec
-
 urxvt.perl-ext-common: default,matcher
 urxvt.url-launcher: /usr/bin/xdg-open
 urxvt.matcher.button: 1
