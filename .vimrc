@@ -29,16 +29,16 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'Colour-Sampler-Pack'
 
 "" Colorscheme
-"colorscheme jellybeans
-"hi clear Conceal
-"hi Conceal ctermfg=107 guifg=#99ad6a
 NeoBundle 'chriskempson/base16-vim'
 set background=dark
+let base16colorspace=256
 colorscheme base16-eighties
 
 NeoBundle 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_auto_colors=1
+let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
+hi IndentGuidesEven ctermbg=19
+hi IndentGuidesOdd ctermbg=0
 
 NeoBundle 'Lokaltog/powerline'
 "NeoBundle 'bling/vim-airline'
