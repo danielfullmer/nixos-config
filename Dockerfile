@@ -45,7 +45,7 @@ RUN sed -Ei 's/(\%admin ALL=\(ALL\) )ALL/\1 NOPASSWD:ALL/' /etc/sudoers
 
 # Default password: admin
 RUN useradd -s /bin/zsh danielrf -G sudo,admin,docker -p sa1aY64JOY94w
-RUN git clone --separate-git-dir /home/danielrf/.dotfiles --recursive https://github.com/danielfullmer/dotfiles.git /home/danielrf && rm /home/danielrf/.git
+ADD . /home/danielrf/
 RUN chown -R danielrf:danielrf /home/danielrf
 
 USER danielrf
@@ -55,8 +55,6 @@ ENV HOME /home/danielrf
 ENV SHELL /bin/zsh
 ENV TERM xterm-256color
 
-RUN GIT_DIR=/home/danielrf/.dotfiles git submodule init
-RUN GIT_DIR=/home/danielrf/.dotfiles git submodule update --recursive
 RUN .vim/bundle/neobundle.vim/bin/neoinstall
 
 CMD ["zsh", "--login"]
