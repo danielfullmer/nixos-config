@@ -40,6 +40,7 @@ WORKDIR /home/danielrf
 
 ENV HOME /home/danielrf
 ENV LC_ALL en_US.UTF-8
+ENV USER danielrf
 ENV SHELL /bin/zsh
 ENV TERM xterm-256color
 
