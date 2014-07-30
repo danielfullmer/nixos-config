@@ -32,10 +32,7 @@ RUN sed -Ei 's/adm:x:4:/admin:x:4:admin/' /etc/group && sed -Ei 's/(\%admin ALL=
 # Default password: admin
 RUN useradd -s /bin/zsh danielrf -G sudo,admin,docker -p sa1aY64JOY94w
 
-ADD . /home/danielrf/
-RUN chown -R danielrf:danielrf /home/danielrf
-
-USER danielrf
+ADD . /home/danielrf
 WORKDIR /home/danielrf
 
 ENV HOME /home/danielrf
@@ -44,6 +41,9 @@ ENV USER danielrf
 ENV SHELL /bin/zsh
 ENV TERM xterm-256color
 
-RUN .vim/bundle/neobundle.vim/bin/neoinstall
+RUN /home/danielrf/.vim/bundle/neobundle.vim/bin/neoinstall
+RUN chown -R danielrf:danielrf /home/danielrf
+
+USER danielrf
 
 CMD ["zsh", "--login"]
