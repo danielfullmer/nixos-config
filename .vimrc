@@ -166,6 +166,7 @@ let g:tex_conceal = "admgs"
 " Pandoc {{{
 NeoBundle 'vim-pandoc/vim-pandoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+let g:pandoc_syntax_dont_use_conceal_for_rules = ['atx', 'titleblock']
 " }}}
 " Misc {{{
 NeoBundle 'benmills/vimux'
