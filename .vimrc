@@ -199,7 +199,6 @@ inoremap 7 &
 inoremap 8 *
 inoremap 9 (
 inoremap 0 )
-inoremap - _
 " and then the opposite
 inoremap ! 1
 inoremap @ 2
@@ -211,5 +210,4 @@ inoremap & 7
 inoremap * 8
 inoremap ( 9
 inoremap ) 0
-inoremap _ -
 " }}}
