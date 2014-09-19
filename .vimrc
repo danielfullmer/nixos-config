@@ -185,8 +185,10 @@ nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 
 map <leader>g <Esc>:GundoToggle<CR>
 
-let b:atp_Viewer = "evince"
 let g:tex_conceal = "admgs"
+let g:LatexBox_latexmk_async = 1
+let g:LatexBox_latexmk_preview_continuously = 1
+let g:LatexBox_quickfix = 2
 
 " map each number to its shift-key character
 inoremap 1 !
