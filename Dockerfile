@@ -41,7 +41,7 @@ ENV USER danielrf
 ENV SHELL /bin/zsh
 ENV TERM xterm-256color
 
-RUN /home/danielrf/.vim/bundle/neobundle.vim/bin/neoinstall
+RUN vim -c PlugInstall -c qall
 RUN chown -R danielrf:danielrf /home/danielrf
 
 USER danielrf
