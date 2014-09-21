@@ -2,7 +2,7 @@
 # bspwm hotkeys
 #
 
-alt + q
+alt + shift + q
 	bspc quit
 
 ### Monitor ###
