@@ -26,7 +26,6 @@ xcompmgr &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height request &
 VBoxClient --seamless &
 
-redshift -l 40:111 -t 6000:3700 &
 gnome-sound-widget &
 
 xset -dpms
