@@ -103,7 +103,7 @@ patch.antialiased      : True    # render patches in antialised (no jaggies)
 # The font.size property is the default font size for text, given in pts.
 # 12pt is the standard value.
 #
-font.family          : monospace
+#font.family          : monospace
 #font.style          : normal
 #font.variant        : normal
 #font.weight         : medium
@@ -118,7 +118,7 @@ font.size           : 10.0
 #font.sans-serif     : Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
 #font.cursive        : Apple Chancery, Textile, Zapf Chancery, Sand, cursive
 #font.fantasy        : Comic Sans MS, Chicago, Charcoal, Impact, Western, fantasy
-font.monospace      : Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
+#font.monospace      : Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
 
 ### TEXT
 # text properties used by text.Text.  See
