@@ -24,6 +24,7 @@ Plug 'Lokaltog/vim-easymotion'
 " Code Completion/Navigation {{{
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdtree'
 " }}}
 " Editing {{{
@@ -135,7 +136,8 @@ nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
 nnoremap <space>/ :Unite grep:.<CR>
 let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<CR>
-nnoremap <space>s :Unite -quick-match buffer<CR>
+nnoremap <space>b :Unite -quick-match buffer<CR>
+nnoremap <space>s :Unite neosnippet<CR>
 
 " Using ag as recursive command.
 let g:unite_source_rec_async_command =
@@ -144,9 +146,14 @@ let g:unite_source_rec_async_command =
 let g:EasyMotion_leader_key = "<space>"
 
 let g:neocomplete#enable_at_startup = 1
-imap <C-j> <Plug>(neosnippet_expand_or_jump)
-smap <C-j> <Plug>(neosnippet_expand_or_jump)
-xmap <C-j> <Plug>(neosnippet_expand_or_jump)
+let g:neosnippet#enable_preview = 1
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
+
 map <leader>n <Esc>:NERDTreeToggle<CR>
 
 "Pressing ,ss will toggle and untoggle spell checking
