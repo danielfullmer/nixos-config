@@ -42,7 +42,6 @@ Plug 'mattn/gist-vim'
 " }}}
 " General Coding {{{
 Plug 'scrooloose/syntastic'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 " }}}
 " Python {{{
