@@ -8,6 +8,7 @@ if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 fi
 
 source "${HOME}/.base16-shell/base16-eighties.dark.sh"
+source "${HOME}/.zshrc.prompt"
 
 # Extra aliases
 source "${HOME}/.aliases"

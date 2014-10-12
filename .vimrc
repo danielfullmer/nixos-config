@@ -11,8 +11,12 @@ Plug 'Colour-Sampler-Pack'
 " Colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Lokaltog/powerline'
-"Plug 'bling/vim-airline'
+Plug 'bling/vim-airline'
+Plug 'edkolev/promptline.vim'
+":PromptlineSnapshot ~/.zshrc.prompt airline
+Plug 'edkolev/tmuxline.vim'
+":Tmuxline airline
+":TmuxlineSnapshot ~/.tmux.line
 
 Plug 'merlinrebrovic/focus.vim'
 
@@ -105,8 +109,6 @@ let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 hi IndentGuidesEven ctermbg=19
 hi IndentGuidesOdd ctermbg=0
-
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 set number
 set relativenumber
