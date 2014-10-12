@@ -145,6 +145,8 @@ let g:unite_source_rec_async_command =
 \ 'ag --follow --nocolor --nogroup -g ""'
 
 let g:EasyMotion_leader_key = "<space>"
+nmap s <Plug>(easymotion-s)
+nmap S <Plug>(easymotion-s2)
 
 let g:neocomplete#enable_at_startup = 1
 let g:neosnippet#enable_preview = 1
