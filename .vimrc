@@ -129,11 +129,6 @@ set showbreak=»»
 set mouse=a
 set ttymouse=xterm2
 
-map <left> <Esc>:tabp<cr>
-map <right> <Esc>:tabn<cr>
-map <down> <Esc>:bn<cr>
-map <up> <Esc>:bp<cr>
-
 "map number to its shift-key character
 set iminsert=1
 set imsearch=1
