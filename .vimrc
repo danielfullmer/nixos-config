@@ -129,33 +129,6 @@ set showbreak=»»
 set mouse=a
 set ttymouse=xterm2
 
-"map number to its shift-key character
-set iminsert=1
-set imsearch=1
-lnoremap 1 !
-lnoremap 2 @
-lnoremap 3 #
-lnoremap 4 $
-lnoremap 5 %
-lnoremap 6 ^
-lnoremap 7 &
-lnoremap 8 *
-lnoremap 9 (
-lnoremap 0 )
-lnoremap - _
-" and then the opposite
-lnoremap ! 1
-lnoremap @ 2
-lnoremap # 3
-lnoremap $ 4
-lnoremap % 5
-lnoremap ^ 6
-lnoremap & 7
-lnoremap * 8
-lnoremap ( 9
-lnoremap ) 0
-lnoremap _ -
-
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
 nnoremap <space>/ :Unite grep:.<CR>
