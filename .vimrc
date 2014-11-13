@@ -68,7 +68,7 @@ Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plug 'lukaszb/vim-web-indent'
 " }}}
 " LaTeX {{{
-Plug 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'lervag/vim-latex'
 " }}}
 " Pandoc {{{
 Plug 'vim-pandoc/vim-pandoc'
