@@ -103,7 +103,7 @@ set shiftround
 
 set background=dark
 let base16colorspace=256
-colorscheme base16-eighties
+colorscheme base16-monokai
 
 let g:airline_powerline_fonts=1
 
