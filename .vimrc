@@ -35,7 +35,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'agate/vim-align'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
-Plug 'coderifous/textobj-word-column.vim'
 Plug 'editorconfig/editorconfig-vim'
 " }}}
 " GIT {{{
@@ -53,8 +52,6 @@ Plug 'klen/python-mode'
 Plug 'alfredodeza/pytest.vim'
 Plug 'ivanov/vim-ipython'
 Plug 'julienr/vimux-pyutils'
-Plug 'michaeljsmith/vim-indent-object'
-
 Plug 'davidhalter/jedi-vim'
 " }}}
 " Haskell {{{
@@ -185,16 +182,6 @@ map <leader>vx <Esc>:VimuxCloseRunner<CR>
 vmap <leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
 nmap <leader>vs vip<leader>vs<CR>
 
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <Esc>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <Esc>j :TmuxNavigateDown<cr>
-nnoremap <silent> <Esc>k :TmuxNavigateUp<cr>
-nnoremap <silent> <Esc>l :TmuxNavigateRight<cr>
-
 map <leader>g <Esc>:GundoToggle<CR>
 
 let g:tex_conceal = "admgs"
@@ -202,4 +189,64 @@ let g:tex_flavor = "latex"
 let g:LatexBox_latexmk_async = 1
 let g:LatexBox_latexmk_preview_continuously = 1
 let g:LatexBox_quickfix = 2
+
+" Keymap Asetmak {{{
+" Change from HJKL to HNIO
+" l = i (insert)
+" j = o (begin new line)
+" k = n (next)
+
+" Up/down/left/right
+" Always go down/up one line regardless of "set wrap". Is that a sane default?
+nnoremap h h|xnoremap h h|onoremap h h|
+nnoremap n gj|xnoremap n gj|onoremap n gj|
+nnoremap i gk|xnoremap i gk|onoremap i gk|
+nnoremap o l|xnoremap o l|onoremap o l|
+
+" Turbo navigation
+" Works with counts, see ":help complex-repeat"
+nnoremap <silent> H @='5h'<CR>|xnoremap <silent> H @='5h'<CR>|onoremap <silent> H @='5h'<CR>|
+nnoremap <silent> N @='5gj'<CR>|xnoremap <silent> N @='5gj'<CR>|onoremap <silent> N @='5gj'<CR>|
+nnoremap <silent> I @='5gk'<CR>|xnoremap <silent> I @='5gk'<CR>|onoremap <silent> I @='5gk'<CR>|
+nnoremap <silent> O @='5l'<CR>|xnoremap <silent> O @='5l'<CR>|onoremap <silent> O @='5l'<CR>|
+
+" Insert/Newline
+nnoremap l i|
+nnoremap L I|
+nnoremap j o|
+nnoremap J O|
+" Make insert/add work also in visual line mode like in visual block mode
+xnoremap <silent> <expr> l (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
+xnoremap <silent> <expr> L (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
+xnoremap <silent> <expr> j (mode() =~# "[V]" ? "\<C-V>0o$O" : "O")
+xnoremap <silent> <expr> J (mode() =~# "[V]" ? "\<C-V>0o$O" : "O")
+
+" inneR text objects
+" e.g. dip (delete inner paragraph) is now dlp
+onoremap l i
+
+" Search
+nnoremap k n|xnoremap k n|onoremap k n|
+noremap K N|xnoremap K N|onoremap K N|
+
+" Window handling
+nnoremap <C-W>h <C-W>h|xnoremap <C-W>h <C-W>h|
+nnoremap <C-W>H <C-W>H|xnoremap <C-W>H <C-W>H|
+nnoremap <C-W>n <C-W>j|xnoremap <C-W>n <C-W>j|
+nnoremap <C-W>N <C-W>J|xnoremap <C-W>N <C-W>J|
+nnoremap <C-W>i <C-W>k|xnoremap <C-W>i <C-W>k|
+nnoremap <C-W>I <C-W>K|xnoremap <C-W>I <C-W>K|
+nnoremap <C-W>o <C-W>l|xnoremap <C-W>o <C-W>l|
+nnoremap <C-W>O <C-W>L|xnoremap <C-W>O <C-W>L|
+
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-n> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-i> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-o> :TmuxNavigateRight<cr>
+nnoremap <silent> <Esc>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <Esc>n :TmuxNavigateDown<cr>
+nnoremap <silent> <Esc>i :TmuxNavigateUp<cr>
+nnoremap <silent> <Esc>o :TmuxNavigateRight<cr>
+
 " }}}
