@@ -83,6 +83,7 @@ set nocompatible
 set shell=/bin/bash
 set encoding=utf8
 let mapleader=","
+set timeoutlen=500
 
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
@@ -116,6 +117,7 @@ set laststatus=2
 set scrolloff=1
 set conceallevel=2
 set cursorline
+set title
 
 set list
 set listchars=trail:·,tab:»·,precedes:«,extends:»
