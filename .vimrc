@@ -84,6 +84,9 @@ set shell=/bin/bash
 set encoding=utf8
 let mapleader=","
 set timeoutlen=500
+set wildmenu
+set lazyredraw
+set incsearch
 
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
@@ -112,7 +115,7 @@ hi IndentGuidesEven ctermbg=18
 hi IndentGuidesOdd ctermbg=0
 
 set number
-set relativenumber
+"set relativenumber
 set laststatus=2
 set scrolloff=1
 set conceallevel=2
@@ -194,6 +197,8 @@ let g:LatexBox_quickfix = 2
 
 " Keymap Asetmak {{{
 " Change from HJKL to HNIO
+
+nnoremap ; :
 
 " Up/down/left/right
 " Always go down/up one line regardless of "set wrap". Is that a sane default?
