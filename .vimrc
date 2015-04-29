@@ -131,17 +131,17 @@ set ttymouse=xterm2
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
-nnoremap <space>/ :Unite grep:.<CR>
+nnoremap <leader>/ :Unite grep:.<CR>
 let g:unite_source_history_yank_enable = 1
-nnoremap <space>y :Unite history/yank<CR>
-nnoremap <space>b :Unite -quick-match buffer<CR>
-nnoremap <space>s :Unite neosnippet<CR>
+nnoremap <leader>y :Unite history/yank<CR>
+nnoremap <leader>b :Unite -quick-match buffer<CR>
+nnoremap <leader>s :Unite neosnippet<CR>
 
 " Using ag as recursive command.
 let g:unite_source_rec_async_command =
 \ 'ag --follow --nocolor --nogroup -g ""'
 
-let g:EasyMotion_leader_key = "<space>"
+"let g:EasyMotion_leader_key = "<space>"
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
@@ -194,9 +194,6 @@ let g:LatexBox_quickfix = 2
 
 " Keymap Asetmak {{{
 " Change from HJKL to HNIO
-" l = i (insert)
-" j = o (begin new line)
-" k = n (next)
 
 " Up/down/left/right
 " Always go down/up one line regardless of "set wrap". Is that a sane default?
@@ -212,24 +209,23 @@ nnoremap <silent> N @='5gj'<CR>|xnoremap <silent> N @='5gj'<CR>|onoremap <silent
 nnoremap <silent> I @='5gk'<CR>|xnoremap <silent> I @='5gk'<CR>|onoremap <silent> I @='5gk'<CR>|
 nnoremap <silent> O @='5l'<CR>|xnoremap <silent> O @='5l'<CR>|onoremap <silent> O @='5l'<CR>|
 
-" Insert/Newline
-nnoremap l i|
-nnoremap L I|
-nnoremap j o|
-nnoremap J O|
+" Start new lines / append / insert
+nnoremap <C-h> I|
+nnoremap <C-n> o|
+nnoremap <C-i> O|
+nnoremap <C-o> A|
+
 " Make insert/add work also in visual line mode like in visual block mode
-xnoremap <silent> <expr> l (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
-xnoremap <silent> <expr> L (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
-xnoremap <silent> <expr> j (mode() =~# "[V]" ? "\<C-V>0o$O" : "O")
-xnoremap <silent> <expr> J (mode() =~# "[V]" ? "\<C-V>0o$O" : "O")
+nnoremap <space> i
+xnoremap <silent> <expr> <space> (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
 
 " inneR text objects
-" e.g. dip (delete inner paragraph) is now dlp
-onoremap l i
+" e.g. dip (delete inner paragraph) is now drp
+onoremap r i
 
 " Search
 nnoremap k n|xnoremap k n|onoremap k n|
-noremap K N|xnoremap K N|onoremap K N|
+nnoremap K N|xnoremap K N|onoremap K N|
 
 " Window handling
 nnoremap <C-W>h <C-W>h|xnoremap <C-W>h <C-W>h|
