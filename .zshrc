@@ -20,7 +20,9 @@ if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
 
-source "${HOME}/.base16-shell/base16-monokai.dark.sh"
+BASE16_SHELL="${HOME}/.base16-shell/base16-tomorrow.light.sh"
+[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+
 source "${HOME}/.zshrc.prompt"
 
 # Extra aliases

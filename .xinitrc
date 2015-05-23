@@ -19,7 +19,7 @@ export SSH_AUTH_SOCK
 export GPG_AGENT_INFO
 
 xrdb -merge "$HOME/.Xresources"
-xrdb -merge "$HOME/.base16-xresources/base16-monokai.dark.256.xresources"
+xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.light.256.xresources
 xsettingsd &
 
 xcompmgr &

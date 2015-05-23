@@ -102,17 +102,18 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 
-set background=dark
+set background=light
 let base16colorspace=256
-colorscheme base16-monokai
+let g:base16_shell_path="$HOME/.base16-shell/"
+colorscheme base16-tomorrow
 
 let g:airline_powerline_fonts=1
 
 set colorcolumn=+1
-let g:indent_guides_auto_colors=0
+let g:indent_guides_auto_colors=1
 let g:indent_guides_enable_on_vim_startup=1
-hi IndentGuidesEven ctermbg=18
-hi IndentGuidesOdd ctermbg=0
+"hi IndentGuidesEven ctermbg=18
+"hi IndentGuidesOdd ctermbg=0
 
 set number
 "set relativenumber
