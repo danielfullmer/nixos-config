@@ -102,7 +102,7 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 
-set background=light
+set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/.base16-shell/"
 colorscheme base16-tomorrow
