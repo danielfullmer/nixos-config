@@ -19,6 +19,7 @@ Plug 'edkolev/tmuxline.vim'
 ":TmuxlineSnapshot ~/.tmux.line
 
 Plug 'merlinrebrovic/focus.vim'
+Plug 'ryanoasis/vim-devicons'
 
 " }}}
 " Text/File Navigation {{{
