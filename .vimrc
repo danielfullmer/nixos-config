@@ -81,7 +81,6 @@ Plug 'sjl/gundo.vim'
 call plug#end()
 " Options {{{
 set nocompatible
-set shell=/bin/bash
 set encoding=utf8
 let mapleader=","
 set timeoutlen=500
