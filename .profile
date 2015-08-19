@@ -1,4 +1,4 @@
-export EDITOR="/usr/bin/vim"
+export EDITOR="vim"
 export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 export GOPATH="$HOME/go"
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.cabal/bin:$PATH"

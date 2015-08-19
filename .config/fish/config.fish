@@ -4,6 +4,6 @@ switch (echo $COLORTERM)
 end
 
 if status --is-login
-    set EDITOR /usr/bin/vim
+    set EDITOR vim
     set PATH $HOME/.local/bin $HOME/.cabal/bin $PATH
 end

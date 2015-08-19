@@ -13,5 +13,5 @@ urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=10, xft:DevaV
 urxvt.scrollBar:    false
 
 urxvt.perl-ext-common: default,matcher
-urxvt.url-launcher: /usr/bin/xdg-open
+urxvt.url-launcher: xdg-open
 urxvt.matcher.button: 1
