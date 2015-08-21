@@ -26,11 +26,11 @@ in {
         30.0.0.34 wrench
         '';
 
-    nix.distributedBuilds = true;
-    nix.buildMachines = [
-        { hostName = "nyquist"; maxJobs = 8; sshKey = "/home/danielrf/.ssh/id_rsa"; system="x86_64-linux"; }
-        { hostName = "bellman"; maxJobs = 4; sshKey = "/home/danielrf/.ssh/id_rsa"; system="x86_64-linux"; }
-    ];
+#    nix.distributedBuilds = true;
+#    nix.buildMachines = [
+#        { hostName = "nyquist"; maxJobs = 8; sshKey = "/home/danielrf/.ssh/id_rsa"; system="x86_64-linux"; }
+#        { hostName = "bellman"; maxJobs = 4; sshKey = "/home/danielrf/.ssh/id_rsa"; system="x86_64-linux"; }
+#    ];
 
     users = {
         extraGroups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
