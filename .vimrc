@@ -81,6 +81,7 @@ Plug 'sjl/gundo.vim'
 call plug#end()
 " Options {{{
 set nocompatible
+set backspace=indent,eol,start
 set encoding=utf8
 let mapleader=","
 set timeoutlen=500
