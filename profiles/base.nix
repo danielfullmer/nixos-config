@@ -56,7 +56,9 @@ in {
     };
 
     environment.systemPackages = (with pkgs; [
+        binutils
         pciutils
+        usbutils
 
         git
         tmux
