@@ -4,6 +4,7 @@
   imports = [
     ../profiles/base.nix
     ../profiles/desktop.nix
+    ../profiles/gaming.nix
     ../profiles/qemu-kvm.nix
   ];
 
