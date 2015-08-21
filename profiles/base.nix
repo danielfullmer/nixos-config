@@ -39,7 +39,7 @@ in {
                 description     = "Vagrant User";
                 name            = "danielrf";
                 group           = "danielrf";
-                extraGroups     = [ "users" "wheel" "vboxsf" "docker"];
+                extraGroups     = [ "users" "wheel" "vboxsf" "docker" "libvirtd"];
                 home            = "/home/danielrf";
                 createHome      = true;
                 #useDefaultShell = true;
