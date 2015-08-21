@@ -32,7 +32,9 @@
     rxvt_unicode
 
     chromiumBeta
+  ]);
 
-    mendeley
+  fonts.fonts = (with pkgs; [
+    powerline-fonts
   ]);
 }
