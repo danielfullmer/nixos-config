@@ -36,10 +36,10 @@ in {
         extraGroups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
         extraUsers  = [
             {
-                description     = "Vagrant User";
+                description     = "Daniel Fullmer";
                 name            = "danielrf";
                 group           = "danielrf";
-                extraGroups     = [ "users" "wheel" "vboxsf" "docker" "libvirtd"];
+                extraGroups     = [ "users" "wheel" "video" "audio" "vboxsf" "docker" "libvirtd"];
                 home            = "/home/danielrf";
                 createHome      = true;
                 #useDefaultShell = true;
