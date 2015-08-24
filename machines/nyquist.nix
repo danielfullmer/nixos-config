@@ -5,7 +5,7 @@
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
     ../profiles/virtualbox-guest.nix
-    ../profiles/desktop.nix
+    ../profiles/academic.nix
   ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" ];
