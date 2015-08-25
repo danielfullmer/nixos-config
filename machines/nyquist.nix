@@ -19,8 +19,8 @@
 
   swapDevices = [ ];
 
-  #nix.maxJobs = 8;
-  nix.buildCores = 0;
+  nix.maxJobs = 2;
+  nix.buildCores = 4;
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -28,6 +28,5 @@
   boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "nyquist";
-
-  networking.interfaces.zt0 = { ip4 = [ { address = "30.0.0.127"; prefixLength = 24; } ]; };
+  networking.hostId = "d8ab690e";
 }

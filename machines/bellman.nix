@@ -5,6 +5,7 @@
     ../profiles/base.nix
     ../profiles/desktop.nix
     ../profiles/gaming.nix
+    ../profiles/academic.nix
     ../profiles/qemu-kvm.nix
   ];
 
@@ -32,8 +33,8 @@
     [ { device = "/dev/disk/by-uuid/f728dfb8-dfe8-4c0e-afbb-dca0b4c3b49a"; }
     ];
 
-  nix.maxJobs = 8;
-  nix.buildCores = 0;
+  nix.maxJobs = 4;
+  nix.buildCores = 8;
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -43,6 +44,4 @@
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
-
-  networking.interfaces.zt0 = { ip4 = [ { address = "30.0.0.138"; prefixLength = 24; } ]; };
 }
