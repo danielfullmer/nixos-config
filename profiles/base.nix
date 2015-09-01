@@ -22,11 +22,12 @@ in {
     30.0.0.34 wrench
     '';
 
-  nix.distributedBuilds = true;
-  nix.buildMachines = [
-      { hostName = "nyquist"; maxJobs = 4; sshUser = "danielrf"; sshKey = "/home/danielrf/.ssh/id_rsa"; system = "x86_64-linux"; }
-      { hostName = "bellman"; maxJobs = 8; sshUser = "danielrf"; sshKey = "/home/danielrf/.ssh/id_rsa"; system = "x86_64-linux"; supportedFeatures = ["kvm"]; }
-  ];
+#  nix.distributedBuilds = true;
+#  nix.buildMachines = [
+#      { hostName = "bellman"; maxJobs = 8; speedFactor = 1; sshUser = "danielrf"; sshKey = "/home/danielrf/.ssh/id_rsa"; system = "x86_64-linux"; supportedFeatures = ["kvm"]; }
+#      { hostName = "nyquist"; maxJobs = 4; speedFactor = 2; sshUser = "danielrf"; sshKey = "/home/danielrf/.ssh/id_rsa"; system = "x86_64-linux"; }
+#  ];
+#  nix.requireSignedBinaryCaches = false; # TODO: Figure out how to make work
 
   users = {
     extraGroups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
