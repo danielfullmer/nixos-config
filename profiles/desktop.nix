@@ -13,7 +13,6 @@
   nixpkgs.config.vim.gui = "auto";
 
   hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.systemWide = true;
 
   environment.systemPackages = (with pkgs; [
     bspwm
