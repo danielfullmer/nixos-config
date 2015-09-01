@@ -22,10 +22,10 @@
       device = "/dev/disk/by-uuid/fab9b0c5-521e-4b53-8433-41e51ddc238d";
       fsType = "ext4";
     };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/6dc76b28-47e2-46b1-aa24-639fd5d56661";
-      fsType = "ext4";
-    };
+#    "/boot" = {
+#      device = "/dev/disk/by-uuid/6dc76b28-47e2-46b1-aa24-639fd5d56661";
+#      fsType = "ext4";
+#    };
   };
 
 
