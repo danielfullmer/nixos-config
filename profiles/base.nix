@@ -48,7 +48,6 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
-    #vim.gui = "no";
   };
 
     environment.systemPackages = (with pkgs; [

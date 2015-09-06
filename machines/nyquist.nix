@@ -29,4 +29,7 @@
 
   networking.hostName = "nyquist";
   networking.hostId = "d8ab690e";
+
+  environment.noXlibs = true;
+  nixpkgs.config.vim.gui = "no";
 }
