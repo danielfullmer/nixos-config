@@ -44,6 +44,8 @@ in {
     ];
   };
 
+  time.timeZone = "America/New_York";
+
   security.sudo.wheelNeedsPassword = false;
 
   nixpkgs.config = {
