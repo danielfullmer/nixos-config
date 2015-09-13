@@ -8,6 +8,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/ssh-agent
     zgen oh-my-zsh plugins/sudo
+    zgen oh-my-zsh plugins/taskwarrior
     zgen load zsh-users/zsh-syntax-highlighting
 
     zgen load zsh-users/zsh-completions
