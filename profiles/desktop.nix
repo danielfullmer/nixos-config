@@ -35,8 +35,4 @@
 
     chromiumBeta
   ]);
-
-  fonts.fonts = (with pkgs; [
-    powerline-fonts
-  ]);
 }
