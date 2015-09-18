@@ -12,6 +12,8 @@ urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=10, xft:DevaV
 
 urxvt.scrollBar:    false
 
-urxvt.perl-ext-common: default,matcher
+urxvt.perl-ext-common: default,matcher,font-size
 urxvt.url-launcher: xdg-open
 urxvt.matcher.button: 1
+urxvt.keysym.C-Up:     perl:font-size:increase
+urxvt.keysym.C-Down:   perl:font-size:decrease
