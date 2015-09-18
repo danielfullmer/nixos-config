@@ -44,7 +44,7 @@ myLayoutHook = smartBorders $ withIM (1%7) (Or (Role "contact_list") (Role "budd
 
 -- Configuration
 myConfig = defaultConfig
-        { terminal = "gnome-terminal"
+        { terminal = "urxvt"
         , manageHook = myManageHook
         , layoutHook = myLayoutHook
         } `additionalKeysP`
