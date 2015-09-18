@@ -3,9 +3,10 @@
 {
   imports = [
     ../profiles/base.nix
+    ../profiles/syncthing.nix
     ../profiles/desktop.nix
     ../profiles/gaming.nix
-    ../profiles/academic.nix
+#    ../profiles/academic.nix
     ../profiles/qemu-kvm.nix
   ];
 
