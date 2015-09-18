@@ -29,10 +29,13 @@
     trayer
     dmenu
 
+    libnotify
+
     gnome3.gnome_keyring
 
-    rxvt_unicode
+    rxvt_unicode-with-plugins
 
+    zathura
     chromiumBeta
   ]);
 }
