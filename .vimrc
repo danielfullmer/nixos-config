@@ -134,6 +134,16 @@ set showbreak=»»
 set mouse=a
 set ttymouse=xterm2
 
+" See http://sunaku.github.io/tmux-yank-osc52.html
+" copy the current text selection to the system clipboard
+if has('gui_running')
+  noremap <Leader>y "+y
+else
+  " copy to attached terminal using the yank(1) script:
+  " https://github.com/sunaku/home/blob/master/bin/yank
+  noremap <silent> <Leader>y y:call system('yank', @0)<Return>
+endif
+
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
 nnoremap <leader>/ :Unite grep:.<CR>
