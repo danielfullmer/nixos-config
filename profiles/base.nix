@@ -66,32 +66,50 @@ in {
     lmodern
   ]);
 
-    environment.systemPackages = (with pkgs; [
-      binutils
-      pciutils
-      usbutils
+  environment.systemPackages = (with pkgs; [
+    binutils
+    pciutils
+    usbutils
 
-      git
-      tmux
-      zsh
-      silver-searcher
-      psmisc
-      htop
+    git
+    tmux
+    zsh
+    silver-searcher
+    psmisc
+    htop
 
-      my_vim
-      #vim
+    my_vim
+    #vim
 
-      zerotierone
-      bup
-      pandoc
+    zerotierone
+    bup
+    pandoc
 
-      bitlbee
-      weechat
+    bitlbee
+    weechat
 
-      mutt
+    mutt
 
-      python27
-      python34
-      python34Packages.ipython
-    ]);
-  }
+    (myEnvFun {
+      name = "pyenv";
+      buildInputs = with python3Packages; [
+        notebook
+        bpython
+        numpy
+        matplotlib
+        pandas
+      ];
+    })
+    #    (python3.buildEnv.override {
+    #      extraLibs = with python3Packages; [
+    #        #      ipython
+    #        notebook
+    #        bpython
+    #        numpy
+    #        matplotlib
+    #        pandas
+    #        #        sympy
+    #      ];
+    #    })
+  ]);
+}

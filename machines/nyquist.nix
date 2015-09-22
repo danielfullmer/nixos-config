@@ -32,4 +32,6 @@
 
   environment.noXlibs = true;
   nixpkgs.config.vim.gui = "no";
+
+  services.bitlbee.enable = true;
 }
