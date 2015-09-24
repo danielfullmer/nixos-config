@@ -16,23 +16,19 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/bb2758a7-77c4-43bb-ba9b-53dced8160bd";
-      fsType = "ext4";
+      device = "/dev/disk/by-uuid/f6000fab-5ae0-4e96-b645-fcaa0f1ea781";
+      fsType = "btrfs";
     };
-    "/home" = {
-      device = "/dev/disk/by-uuid/fab9b0c5-521e-4b53-8433-41e51ddc238d";
-      fsType = "ext4";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/5071-EF38";
+      fsType = "vfat";
     };
   };
 
   nix.maxJobs = 4;
   nix.buildCores = 8;
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.gummiboot.enable = true;
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
