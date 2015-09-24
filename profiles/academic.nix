@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 {
   environment.systemPackages = (with pkgs; [
-    (pkgs.texLiveAggregationFun { paths = [ pkgs.texLive pkgs.texLiveExtra pkgs.texLiveBeamer pkgs.lmodern ]; })
+    (texlive.combine {
+      inherit (texlive) scheme-medium filehook;
+    })
   ]);
 }
