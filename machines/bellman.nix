@@ -18,6 +18,7 @@
     "/" = {
       device = "/dev/disk/by-uuid/f6000fab-5ae0-4e96-b645-fcaa0f1ea781";
       fsType = "btrfs";
+      options = "ssd,discard,compress=lzo,autodefrag";
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/5071-EF38";
