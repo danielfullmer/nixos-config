@@ -6,7 +6,7 @@ if ! zgen saved; then
     zgen oh-my-zsh
 
     zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/ssh-agent
+    zgen oh-my-zsh plugins/gpg-agent
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/taskwarrior
     zgen load zsh-users/zsh-syntax-highlighting
@@ -16,6 +16,7 @@ if ! zgen saved; then
     zgen save
 fi
 
+export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
 
 if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
