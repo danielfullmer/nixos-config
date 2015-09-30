@@ -5,6 +5,7 @@
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
     ../profiles/virtualbox-guest.nix
+    ../profiles/yubikey.nix
     ../profiles/academic.nix
   ];
 
