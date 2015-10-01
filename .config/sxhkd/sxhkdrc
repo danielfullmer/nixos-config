@@ -97,7 +97,7 @@ alt + Return
 	urxvt
 
 alt + p
-	dmenu_run
+	dmenu_run -fn "DejaVu Sans Mono"
 
 alt + c
         chromium
