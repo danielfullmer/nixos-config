@@ -6,6 +6,7 @@
     ../profiles/base.nix
     ../profiles/virtualbox-guest.nix
     ../profiles/yubikey.nix
+    ../profiles/desktop.nix
     ../profiles/academic.nix
   ];
 
@@ -30,9 +31,6 @@
 
   networking.hostName = "nyquist";
   networking.hostId = "d8ab690e";
-
-  environment.noXlibs = true;
-  nixpkgs.config.vim.gui = "no";
 
   services.bitlbee.enable = true;
 }

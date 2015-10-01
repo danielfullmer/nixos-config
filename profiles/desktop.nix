@@ -7,7 +7,6 @@
     displayManager.slim.defaultUser = "danielrf";
     displayManager.sessionCommands = "sh $HOME/.xinitrc";
     desktopManager.xterm.enable = false;
-    windowManager.bspwm.enable = true;
   };
 
   nixpkgs.config.vim.gui = "auto";
@@ -23,17 +22,20 @@
     xlibs.xrdb
     xlibs.xset
     xlibs.xsetroot
+    xlibs.xdpyinfo
 
     xcompmgr
     xsettingsd
+    xclip
     trayer
     dmenu
-
     libnotify
-
-    gnome3.gnome_keyring
+    conky
 
     rxvt_unicode-with-plugins
+
+    gnome3.gnome_themes_standard
+    gnome3.adwaita-icon-theme
 
     zathura
     chromiumBeta
