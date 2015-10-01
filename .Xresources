@@ -1,19 +1,21 @@
 !! Xft
-Xft.dpi:            115
+!!Xft.dpi:            115
+!!Xft.rgba:           bgr
 Xft.antialias:      true
-Xft.rgba:           bgr
 Xft.autohint:       true
 Xft.hintstyle:      full
 
 !! URXVT
-urxvt*font:         xft:DejaVu Sans Mono for Powerline:size=10, xft:DevaVu Sans Mono:size=10
-urxvt*boldFont:     xft:DejaVu Sans Mono for Powerline:bold:size=10, xft:DevaVu Sans Mono:bold:size=10
-urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=10, xft:DevaVu Sans Mono:italic:size=10
+urxvt*font:         xft:DejaVu Sans Mono for Powerline:size=11, xft:DevaVu Sans Mono:size=11
+urxvt*boldFont:     xft:DejaVu Sans Mono for Powerline:bold:size=11, xft:DevaVu Sans Mono:bold:size=11
+urxvt*italicFont:   xft:DejaVu Sans Mono for Powerline:italic:size=11, xft:DevaVu Sans Mono:italic:size=11
 
 urxvt.scrollBar:    false
 
-urxvt.perl-ext-common: default,matcher,font-size
+urxvt.perl-ext-common: default,matcher,font-size,clipboard
 urxvt.url-launcher: xdg-open
 urxvt.matcher.button: 1
 urxvt.keysym.C-Up:     perl:font-size:increase
 urxvt.keysym.C-Down:   perl:font-size:decrease
+urxvt.keysym.Shift-Control-V: perl:clipboard:paste
+urxvt.iso14755: false

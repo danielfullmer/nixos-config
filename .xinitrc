@@ -28,9 +28,11 @@ xset -dpms
 xsetroot -cursor_name left_ptr
 xmodmap .Xmodmap
 
+[ -e "$HOME/.fehbg" ] && source "$HOME/.fehbg"
 [ -e "$HOME/.xinitrc.local" ] && source "$HOME/.xinitrc.local"
 
 #exec xmonad
 
 sxhkd &
+rm /tmp/bspwm*
 exec bspwm
