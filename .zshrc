@@ -16,8 +16,6 @@ if ! zgen saved; then
     zgen save
 fi
 
-export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
-
 if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
@@ -25,6 +23,7 @@ fi
 BASE16_SHELL="${HOME}/.base16-shell/base16-tomorrow.dark.sh"
 [[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 
+source "${HOME}/.profile"
 source "${HOME}/.zshrc.prompt"
 
 # Extra aliases

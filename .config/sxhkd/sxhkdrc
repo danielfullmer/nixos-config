@@ -94,7 +94,7 @@ alt + @button{1-3}
 #
 
 alt + Return
-	urxvt
+	termite
 
 alt + p
 	dmenu_run -fn "DejaVu Sans Mono"
