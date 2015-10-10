@@ -2,12 +2,21 @@
 {
   services.xserver = {
     enable = true;
+    xkbOptions = "compose:ralt";
     displayManager.slim.enable = true;
     displayManager.slim.autoLogin = true;
     displayManager.slim.defaultUser = "danielrf";
     displayManager.sessionCommands = "sh $HOME/.xinitrc";
     desktopManager.xterm.enable = false;
   };
+
+  fonts.fonts = (with pkgs; [
+    powerline-fonts
+    font-awesome-ttf
+    corefonts
+    dejavu_fonts
+    lmodern
+  ]);
 
   nixpkgs.config.vim.gui = "auto";
 
@@ -27,9 +36,10 @@
     xcompmgr
     xsettingsd
     xclip
-    trayer
-    dmenu
+
     libnotify
+    dmenu
+    bar-xft
     conky
 
     rxvt_unicode-with-plugins
@@ -40,4 +50,10 @@
     zathura
     chromiumBeta
   ]);
+
+  environment.variables = {
+    BROWSER = "chromium";
+    GTK_IM_MODULE = "xim"; # For compose key
+    QT_IM_MODULE = "xim";
+  };
 }

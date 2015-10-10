@@ -62,13 +62,6 @@ in {
     allowUnfree = true;
   };
 
-  fonts.fonts = (with pkgs; [
-    powerline-fonts
-    corefonts
-    dejavu_fonts
-    lmodern
-  ]);
-
   environment.systemPackages = (with pkgs; [
     binutils
     pciutils
@@ -115,4 +108,8 @@ in {
     #      ];
     #    })
   ]);
+
+  environment.variables = {
+    EDITOR = "vim";
+  };
 }
