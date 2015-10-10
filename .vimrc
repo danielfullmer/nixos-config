@@ -145,17 +145,17 @@ endif
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
-nnoremap <leader>/ :Unite grep:.<CR>
+nnoremap <space>/ :Unite grep:.<CR>
 let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :Unite history/yank<CR>
-nnoremap <leader>b :Unite -quick-match buffer<CR>
-nnoremap <leader>s :Unite neosnippet<CR>
+nnoremap <space>y :Unite history/yank<CR>
+nnoremap <space>b :Unite -quick-match buffer<CR>
+nnoremap <space>s :Unite neosnippet<CR>
 
 " Using ag as recursive command.
 let g:unite_source_rec_async_command =
 \ 'ag --follow --nocolor --nogroup -g ""'
 
-"let g:EasyMotion_leader_key = "<space>"
+let g:EasyMotion_leader_key = "<space>"
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
@@ -203,61 +203,14 @@ map <leader>g <Esc>:GundoToggle<CR>
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 
-" Keymap Asetmak {{{
-" Change from HJKL to HNIO
-
-nnoremap ; :
-
-" Up/down/left/right
-" Always go down/up one line regardless of "set wrap". Is that a sane default?
-nnoremap h h|xnoremap h h|onoremap h h|
-nnoremap n gj|xnoremap n gj|onoremap n gj|
-nnoremap i gk|xnoremap i gk|onoremap i gk|
-nnoremap o l|xnoremap o l|onoremap o l|
-
-" Turbo navigation
-" Works with counts, see ":help complex-repeat"
-nnoremap <silent> H @='5h'<CR>|xnoremap <silent> H @='5h'<CR>|onoremap <silent> H @='5h'<CR>|
-nnoremap <silent> N @='5gj'<CR>|xnoremap <silent> N @='5gj'<CR>|onoremap <silent> N @='5gj'<CR>|
-nnoremap <silent> I @='5gk'<CR>|xnoremap <silent> I @='5gk'<CR>|onoremap <silent> I @='5gk'<CR>|
-nnoremap <silent> O @='5l'<CR>|xnoremap <silent> O @='5l'<CR>|onoremap <silent> O @='5l'<CR>|
-
-" Start new lines / append / insert
-nnoremap <C-h> I|
-nnoremap <C-n> o|
-nnoremap <C-i> O|
-nnoremap <C-o> A|
-
-" Make insert/add work also in visual line mode like in visual block mode
-nnoremap <space> i
-xnoremap <silent> <expr> <space> (mode() =~# "[V]" ? "\<C-V>0o$I" : "I")
-
-" inneR text objects
-" e.g. dip (delete inner paragraph) is now drp
-onoremap r i
-
-" Search
-nnoremap k n|xnoremap k n|onoremap k n|
-nnoremap K N|xnoremap K N|onoremap K N|
-
-" Window handling
-nnoremap <C-W>h <C-W>h|xnoremap <C-W>h <C-W>h|
-nnoremap <C-W>H <C-W>H|xnoremap <C-W>H <C-W>H|
-nnoremap <C-W>n <C-W>j|xnoremap <C-W>n <C-W>j|
-nnoremap <C-W>N <C-W>J|xnoremap <C-W>N <C-W>J|
-nnoremap <C-W>i <C-W>k|xnoremap <C-W>i <C-W>k|
-nnoremap <C-W>I <C-W>K|xnoremap <C-W>I <C-W>K|
-nnoremap <C-W>o <C-W>l|xnoremap <C-W>o <C-W>l|
-nnoremap <C-W>O <C-W>L|xnoremap <C-W>O <C-W>L|
-
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-n> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-i> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-o> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <Esc>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <Esc>n :TmuxNavigateDown<cr>
-nnoremap <silent> <Esc>i :TmuxNavigateUp<cr>
-nnoremap <silent> <Esc>o :TmuxNavigateRight<cr>
+nnoremap <silent> <Esc>j :TmuxNavigateDown<cr>
+nnoremap <silent> <Esc>k :TmuxNavigateUp<cr>
+nnoremap <silent> <Esc>l :TmuxNavigateRight<cr>
 
 " }}}
