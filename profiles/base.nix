@@ -69,7 +69,6 @@ in {
     psmisc
     htop
 
-    zsh
     tmux
 
     silver-searcher
@@ -110,6 +109,8 @@ in {
     #      ];
     #    })
   ]);
+
+  programs.zsh.enable = true;
 
   environment.variables = {
     EDITOR = "vim";
