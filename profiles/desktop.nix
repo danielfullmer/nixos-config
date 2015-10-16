@@ -40,9 +40,13 @@
     libnotify
     dmenu
     bar-xft
+    termite
+    stalonetray
     conky
 
     rxvt_unicode-with-plugins
+
+    pavucontrol
 
     gnome3.gnome_themes_standard
     gnome3.adwaita-icon-theme

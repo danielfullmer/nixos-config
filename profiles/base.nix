@@ -66,24 +66,26 @@ in {
     binutils
     pciutils
     usbutils
-
-    git
-    tmux
-    zsh
-    silver-searcher
     psmisc
     htop
+
+    zsh
+    tmux
+
+    silver-searcher
+    git
 
     my_vim
     #vim
 
     zerotierone
-    bup
     pandoc
+
+    gnupg21
+    keybase
 
     bitlbee
     weechat
-
     mutt
 
     (myEnvFun {
