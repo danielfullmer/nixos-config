@@ -83,6 +83,7 @@ super + shift + {h,j,k,l}
 alt + button{1-3}
 	bspc pointer -g {move,resize_side,resize_corner}
 
+# Remove this at some point when sxhkd is updated in nixos
 alt + !button{1-3}
 	bspc pointer -t %i %i
 
