@@ -11,13 +11,15 @@ in {
   services.openssh.enable = true;
   services.dbus.enable = true;
 
+  networking.domain = "controlnet";
+
   services.zerotierone.enable = true;
+  networking.firewall.trustedInterfaces = [ "zt0" ];
   networking.extraHosts = ''
     30.0.0.48 devnull
     30.0.0.154 sysc-2
-    30.0.0.200 chromebook
     30.0.0.127 nyquist
-    30.0.0.138 bellman
+    30.0.0.222 bellman
     30.0.0.158 plexbox
     30.0.0.34 wrench
     '';
@@ -53,6 +55,8 @@ in {
       }
     ];
   };
+
+  services.cron.mailto = "cgibreak@gmail.com";
 
   time.timeZone = "America/New_York";
 

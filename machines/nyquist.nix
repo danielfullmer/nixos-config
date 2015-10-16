@@ -6,6 +6,7 @@
     ../profiles/base.nix
     ../profiles/virtualbox-guest.nix
     ../profiles/yubikey.nix
+    ../profiles/ssmtp.nix
     ../profiles/desktop.nix
     ../profiles/academic.nix
   ];
