@@ -52,6 +52,7 @@
     gnome3.adwaita-icon-theme
 
     zathura
+    mendeley
     chromiumBeta
   ]);
 
