@@ -8,8 +8,8 @@
       ln -fs ${../dotfiles/Xmodmap} .Xmodmap
       ln -fs ${../dotfiles/Xresources} .Xresources
       ln -fs ${../dotfiles/aliases} .aliases
-      ln -fs ${../dotfiles/base16-shell} .base16-shell
-      ln -fs ${../dotfiles/base16-xresources} .base16-xresources
+      ln -fns ${../dotfiles/base16-shell} .base16-shell
+      ln -fns ${../dotfiles/base16-xresources} .base16-xresources
       ln -fs ${../dotfiles/bash_profile} .bash_profile
       ln -fs ${../dotfiles/bashrc} .bashrc
       mkdir -p .config/{bspwm,fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
