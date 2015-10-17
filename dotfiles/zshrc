@@ -2,6 +2,8 @@ if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
 
+bindkey -e # Use emacs keys
+
 fpath=("${HOME}/.zsh-completions/src" $fpath)
 autoload -U compinit && compinit
 source "${HOME}/.zsh-history-substring-search/zsh-history-substring-search.zsh"
