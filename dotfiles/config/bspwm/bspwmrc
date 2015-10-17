@@ -1,0 +1,20 @@
+#! /bin/sh
+
+bspc config border_width        2
+bspc config focused_border_color red
+bspc config presel_border_color green
+bspc config window_gap          3
+bspc config top_padding         -3
+bspc config bottom_padding      -3
+bspc config left_padding        -3
+bspc config right_padding       -3
+bspc config split_ratio         0.52
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+
+bspc monitor -d • • • • •
+
+bspc rule -a Gimp desktop=^8 follow=on floating=on
+bspc rule -a mplayer2 floating=on
+
+$HOME/.config/panel/panel &

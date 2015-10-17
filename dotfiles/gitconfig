@@ -1,0 +1,12 @@
+[user]
+	email = daniel.fullmer@yale.edu
+	name = Daniel Fullmer
+	signingkey = EF6B0CB0
+[push]
+	default = simple
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
+[github]
+	user = danielfullmer
