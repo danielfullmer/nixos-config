@@ -1,24 +1,11 @@
-source "${HOME}/.zgen/zgen.zsh"
-
-if ! zgen saved; then
-    echo "Creating a zgen save"
-
-    zgen oh-my-zsh
-
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/gpg-agent
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/taskwarrior
-    zgen load zsh-users/zsh-syntax-highlighting
-
-    zgen load zsh-users/zsh-completions
-
-    zgen save
-fi
-
 if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
+
+fpath=("${HOME}/.zsh-completions/src" $fpath)
+autoload -U compinit && compinit
+source "${HOME}/.zsh-history-substring-search/zsh-history-substring-search.zsh"
+source "${HOME}/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 BASE16_SHELL="${HOME}/.base16-shell/base16-tomorrow.dark.sh"
 [[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
