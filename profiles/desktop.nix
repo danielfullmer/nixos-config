@@ -39,11 +39,14 @@
 
     libnotify
     dmenu
-    bar-xft
-    termite
     stalonetray
-    conky
 
+    # Panel-related
+    bar-xft
+    conky
+    xtitle
+
+    termite
     rxvt_unicode-with-plugins
 
     pavucontrol
