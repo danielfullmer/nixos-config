@@ -9,6 +9,7 @@
     ../profiles/ssmtp.nix
     ../profiles/desktop.nix
     ../profiles/academic.nix
+    ../profiles/homedir.nix
   ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" ];

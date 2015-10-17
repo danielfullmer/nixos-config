@@ -10,6 +10,7 @@
     ../profiles/academic.nix
     ../profiles/qemu-kvm.nix
     ../profiles/postfix.nix
+    ../profiles/homedir.nix
   ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
