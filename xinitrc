@@ -18,7 +18,7 @@ xrdb -merge "$HOME/.Xresources"
 xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.dark.256.xresources"
 xsettingsd &
 
-xcompmgr &
+compton -c -C -f -D 5 --backend glx --vsync opengl-swc -b
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height request &
 VBoxClient --seamless &
 
