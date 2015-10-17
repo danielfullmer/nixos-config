@@ -18,7 +18,7 @@ mkfifo "$PANEL_FIFO"
 bspc config top_padding $PANEL_HEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
-conky -c conkyrc > "$PANEL_FIFO" &
+conky -c $DIR/conkyrc > "$PANEL_FIFO" &
 
 source "$DIR/panel_colors"
 
