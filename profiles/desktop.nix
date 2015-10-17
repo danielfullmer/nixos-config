@@ -33,7 +33,7 @@
     xlibs.xsetroot
     xlibs.xdpyinfo
 
-    xcompmgr
+    compton
     xsettingsd
     xclip
 
