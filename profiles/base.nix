@@ -117,6 +117,9 @@ in {
 
   programs.zsh.enable = true;
 
+  # Use gpg-agent in the xinitrc instead of system-wide ssh-agent
+  programs.ssh.startAgent = false;
+
   environment.variables = {
     EDITOR = "vim";
   };
