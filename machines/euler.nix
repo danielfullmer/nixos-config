@@ -83,5 +83,10 @@
     '';
   };
   services.xserver.wacom.enable = true;
-  services.xserver.multitouch.enable = true;
+
+  services.synergy.client = {
+    enable = true;
+    screenName = "euler";
+    serverAddress = "sysc-2";
+  };
 }
