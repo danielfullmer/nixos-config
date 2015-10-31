@@ -36,4 +36,11 @@
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
+
+  services.xserver.videoDrivers = [ "ati_unfree" ];
+#  services.xserver.xrandrHeads = ["DFP6" "DFP7"];
+
+  services.xserver.monitorSection = ''
+    DisplaySize 597 336
+  '';
 }
