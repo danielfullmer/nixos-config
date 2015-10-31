@@ -19,12 +19,13 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8f641f65-010b-4f03-8e52-7533d8a70750";
+    { device = "/dev/disk/by-label/euler";
       fsType = "btrfs";
+      options = "ssd,discard,compress=lzo,autodefrag";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/980E-BB8A";
+    { device = "/dev/disk/by-uuid/508F-B0FC";
       fsType = "vfat";
     };
 
