@@ -31,7 +31,8 @@
 
   swapDevices = [ ];
 
-  nix.maxJobs = 4;
+  nix.maxJobs = 2;
+  nix.buildCores = 4;
 
   # Use the gummiboot efi boot loader.
   boot.loader.gummiboot.enable = true;
