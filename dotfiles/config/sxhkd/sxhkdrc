@@ -98,7 +98,7 @@ alt + Return
 	termite
 
 alt + p
-	dmenu_run -fn "DejaVu Sans Mono"
+	dmenu_run -fn "DejaVu Sans Mono 12"
 
 alt + c
         chromium
