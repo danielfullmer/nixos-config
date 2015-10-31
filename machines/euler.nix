@@ -68,6 +68,18 @@
     HandleLidSwitch=ignore
   '';
 
+  # X doesn't detect the right screen size / DPI
+  # 12.3in diagonal, 2734x1824 resolution
+  # DisplaySize is in mm
+  services.xserver.monitorSection = ''
+    DisplaySize 260 173
+  '';
+
+  environment.variables = {
+    GDK_SCALE = "2"; # Scale UI elements
+    GDK_DPI_SCALE = "0.5"; # Reverse scale the fonts
+  };
+
   services.xserver.synaptics = {
     enable = true;
     twoFingerScroll = true;
