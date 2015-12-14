@@ -1,15 +1,15 @@
 [submodule "base16-shell"]
-	path = dotfiles/base16-shell
+	path = dotfiles/.base16-shell
 	url = https://github.com/chriskempson/base16-shell
 [submodule "base16-xresources"]
-	path = dotfiles/base16-xresources
+	path = dotfiles/.base16-xresources
 	url = https://github.com/chriskempson/base16-xresources
 [submodule "zsh-completions"]
-	path = dotfiles/zsh-completions
+	path = dotfiles/.zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
 [submodule "zsh-syntax-highlighting"]
-	path = dotfiles/zsh-syntax-highlighting
+	path = dotfiles/.zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
 [submodule "zsh-history-substring-search"]
-	path = dotfiles/zsh-history-substring-search
+	path = dotfiles/.zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search
