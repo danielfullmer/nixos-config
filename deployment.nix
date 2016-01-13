@@ -5,4 +5,7 @@
   nyquist =
     { config, pkgs, ... }:
     { imports = [ machines/nyquist.nix ]; };
+  euler =
+    { config, pkgs, ... }:
+    { imports = [ machines/euler.nix ]; };
 }

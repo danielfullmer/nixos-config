@@ -4,7 +4,7 @@
   imports = [
     ../profiles/base.nix
     ../profiles/yubikey.nix
-#    ../profiles/syncthing.nix
+    ../profiles/syncthing.nix
     ../profiles/ssmtp.nix
     ../profiles/desktop.nix
     ../profiles/academic.nix
@@ -38,15 +38,16 @@
   boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_4_2;
+  boot.kernelPackages = pkgs.linuxPackages_testing;
   nixpkgs.config.packageOverrides = pkgs: {
-    linux_4_2 = pkgs.linux_4_2.override {
+    linux_testing = pkgs.linux_testing.override {
       kernelPatches = [
-        { patch = ../patches/linux-wily-surface.patch;
+        { patch = ../patches/linux-surface.patch;
           name = "surface-pro-4";
           extraConfig = ''
             I2C_DESIGNWARE_PLATFORM m
             X86_INTEL_LPSS y
+            SURFACE_PRO_BUTTON m
           '';
         }
       ];
