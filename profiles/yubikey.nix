@@ -13,7 +13,13 @@
   # For smartcards
   services.pcscd.enable = true;
 
+  # Use gpg-agent in the xinitrc instead of system-wide ssh-agent
+  programs.ssh.startAgent = false;
+
   environment.systemPackages = (with pkgs; [
+    gnupg21
+    keybase
+
     yubico-piv-tool
     yubikey-personalization
   ]);

@@ -2,8 +2,10 @@ if [[ "$TERM" == "xterm" && "$COLORTERM" == "gnome-terminal" ]]; then
 	export TERM=xterm-256color
 fi
 
-export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
-gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
+if [[ -x "$(command -v gpg-connect-agent)" ]]; then
+    export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+    gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
+fi
 
 bindkey -e # Use emacs keys
 

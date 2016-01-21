@@ -9,7 +9,6 @@ let
   });
 in {
   services.openssh.enable = true;
-  services.dbus.enable = true;
 
   networking.domain = "controlnet";
 
@@ -87,9 +86,6 @@ in {
     zerotierone
     pandoc
 
-    gnupg21
-    keybase
-
     bitlbee
     weechat
     mutt
@@ -118,9 +114,6 @@ in {
   ]);
 
   programs.zsh.enable = true;
-
-  # Use gpg-agent in the xinitrc instead of system-wide ssh-agent
-  programs.ssh.startAgent = false;
 
   environment.variables = {
     EDITOR = "vim";
