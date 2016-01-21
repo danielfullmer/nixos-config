@@ -23,6 +23,7 @@ in {
     30.0.0.158 plexbox
     30.0.0.34 wrench
     30.0.0.86 euler
+    30.0.0.84 gauss
     '';
 
 #  nix.distributedBuilds = true;

@@ -8,4 +8,7 @@
   euler =
     { config, pkgs, ... }:
     { imports = [ machines/euler.nix ]; };
+  gauss =
+    { config, pkgs, ... }:
+    { imports = [ machines/gauss.nix ]; };
 }
