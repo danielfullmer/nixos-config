@@ -25,6 +25,9 @@ in {
     30.0.0.84 gauss
     '';
 
+  nix.extraOptions = ''
+    auto-optimize-store = true
+  '';
 #  nix.distributedBuilds = true;
 #  nix.buildMachines = [
 #      { hostName = "bellman"; maxJobs = 8; speedFactor = 1; sshUser = "danielrf"; sshKey = "/home/danielrf/.ssh/id_rsa"; system = "x86_64-linux"; supportedFeatures = ["kvm"]; }
