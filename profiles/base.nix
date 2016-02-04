@@ -19,7 +19,6 @@ in {
     30.0.0.154 sysc-2
     30.0.0.127 nyquist
     30.0.0.222 bellman
-    30.0.0.158 plexbox
     30.0.0.34 wrench
     30.0.0.86 euler
     30.0.0.84 gauss
