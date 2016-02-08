@@ -103,6 +103,9 @@ alt + p
 alt + c
         chromium
 
+alt + d
+        /home/danielrf/.local/bin/rofi-pdf ~/Mendeley\ Desktop
+
 # make sxhkd reload its configuration files:
 alt + Escape
 	pkill -USR1 -x sxhkd

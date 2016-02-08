@@ -39,6 +39,7 @@
 
     libnotify
     dmenu
+    rofi
     stalonetray
 
     # Panel-related

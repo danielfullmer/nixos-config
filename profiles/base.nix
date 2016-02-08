@@ -91,6 +91,7 @@ in {
     bitlbee
     weechat
     mutt
+    taskwarrior
 
     (myEnvFun {
       name = "pyenv";
