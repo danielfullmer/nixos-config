@@ -53,6 +53,7 @@ in {
   services.cron.mailto = "cgibreak@gmail.com";
 
   time.timeZone = "America/New_York";
+  time.hardwareClockInLocalTime = true;
 
   security.sudo.wheelNeedsPassword = false;
 
