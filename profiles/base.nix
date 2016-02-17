@@ -84,6 +84,7 @@ in {
 
     my_vim
     #vim
+    emacs
 
     zerotierone
     pandoc
@@ -96,9 +97,11 @@ in {
     (myEnvFun {
       name = "pyenv";
       buildInputs = with python3Packages; [
+        ipython
         notebook
         bpython
         numpy
+        #sympy
         matplotlib
         pandas
       ];
