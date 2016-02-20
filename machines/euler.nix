@@ -21,7 +21,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-label/euler";
       fsType = "btrfs";
-      options = "ssd,discard,compress=lzo,autodefrag";
+      options = [ "ssd" "discard" "compress=lzo" "autodefrag" ];
     };
 
   fileSystems."/boot" =
