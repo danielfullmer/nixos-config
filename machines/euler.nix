@@ -44,11 +44,6 @@
       kernelPatches = [
         { patch = ../patches/linux-surface.patch;
           name = "surface-pro-4";
-          extraConfig = ''
-            I2C_DESIGNWARE_PLATFORM m
-            X86_INTEL_LPSS y
-            SURFACE_PRO_BUTTON m
-          '';
         }
       ];
     };
@@ -66,7 +61,7 @@
   services.acpid.enable = true;
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
-    HandleLidSwitch=ignore
+    HandleLidSwitch=suspend
   '';
 
   # X doesn't detect the right screen size / DPI
