@@ -60,8 +60,8 @@
       ln -fs ${../dotfiles}/.zshenv
       ln -fs ${../dotfiles}/.zshrc
       ln -fs ${../dotfiles}/.zshrc.prompt
+      ln -fns ${../dotfiles}/.zsh-autosuggestions
       ln -fns ${../dotfiles}/.zsh-completions
-      ln -fns ${../dotfiles}/.zsh-history-substring-search
       ln -fns ${../dotfiles}/.zsh-syntax-highlighting
     '';
   };

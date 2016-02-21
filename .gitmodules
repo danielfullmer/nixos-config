@@ -10,6 +10,6 @@
 [submodule "zsh-syntax-highlighting"]
 	path = dotfiles/.zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "zsh-history-substring-search"]
-	path = dotfiles/.zsh-history-substring-search
-	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "machines/.zsh-autosuggestions"]
+	path = dotfiles/.zsh-autosuggestions
+	url = https://github.com/tarruda/zsh-autosuggestions

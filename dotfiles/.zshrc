@@ -11,7 +11,7 @@ bindkey -e # Use emacs keys
 
 fpath=("${HOME}/.zsh-completions/src" $fpath)
 autoload -U compinit && compinit
-source "${HOME}/.zsh-history-substring-search/zsh-history-substring-search.zsh"
+source "${HOME}/.zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "${HOME}/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 BASE16_SHELL="${HOME}/.base16-shell/base16-tomorrow.dark.sh"
