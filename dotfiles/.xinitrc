@@ -4,6 +4,9 @@
 #
 # Executed by startx (run your window manager from here)
 
+# TODO: This file is no longer used. This has been moved to nixos displayManager.sessionCommands
+# This is here for reference purposes. I should remove it when the new setup is stable.
+
 # Start xinitrc stuff
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/*; do

@@ -3,11 +3,28 @@
   services.xserver = {
     enable = true;
     xkbOptions = "compose:ralt";
-    displayManager.slim.enable = true;
-    displayManager.slim.autoLogin = true;
-    displayManager.slim.defaultUser = "danielrf";
-    displayManager.sessionCommands = "sh $HOME/.xinitrc";
-    desktopManager.xterm.enable = false;
+
+    displayManager = {
+      slim = {
+        enable = true;
+        autoLogin = true;
+        defaultUser = "danielrf";
+      };
+
+      sessionCommands = ''
+        ${pkgs.xorg.xrdb}/bin/xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.dark.256.xresources"
+      '';
+    };
+
+    windowManager = {
+      default = "bspwm";
+      bspwm.enable = true;
+    };
+
+    desktopManager = {
+      default = "none";
+      xterm.enable = false;
+    };
   };
 
   fonts.fonts = (with pkgs; [
@@ -27,14 +44,7 @@
     bspwm
     sxhkd
 
-    xlibs.xmodmap
-    xlibs.xrdb
-    xlibs.xset
-    xlibs.xsetroot
-    xlibs.xdpyinfo
-
     compton
-    xsettingsd
     xclip
 
     libnotify
