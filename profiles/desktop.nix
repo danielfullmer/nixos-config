@@ -35,6 +35,16 @@
     lmodern
   ]);
 
+  services.redshift = {
+    enable = true;
+    latitude = "41";
+    longitude = "-73";
+      temperature = {
+        day = 5500;
+        night = 3700;
+      };
+  };
+
   nixpkgs.config.vim.gui = "auto";
 
   hardware.pulseaudio.enable = true;
