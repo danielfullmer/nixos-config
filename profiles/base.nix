@@ -32,8 +32,8 @@ in {
   };
 
   users = {
-    extraGroups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
-    extraUsers  = [
+    groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
+    users  = [
       {
         description     = "Daniel Fullmer";
         name            = "danielrf";
