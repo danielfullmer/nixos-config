@@ -13,8 +13,12 @@
   # For smartcards
   services.pcscd.enable = true;
 
-  # Use gpg-agent in the xinitrc instead of system-wide ssh-agent
+  # Use gpg-agent instead of system-wide ssh-agent
   programs.ssh.startAgent = false;
+  environment.extraInit = ''
+    export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+    gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
+  '';
 
   environment.systemPackages = (with pkgs; [
     gnupg21

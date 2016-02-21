@@ -41,13 +41,9 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = (with pkgs; [
-    bspwm
-    sxhkd
-
     compton
     xclip
 
-    libnotify
     dmenu
     rofi
     stalonetray

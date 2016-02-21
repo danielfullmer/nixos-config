@@ -10,7 +10,6 @@
       ln -fs ${../dotfiles}/.aliases
       ln -fns ${../dotfiles}/.base16-shell
       ln -fns ${../dotfiles}/.base16-xresources
-      ln -fs ${../dotfiles}/.bash_profile
       ln -fs ${../dotfiles}/.bashrc
       mkdir -p .config/{bspwm,fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
       chown danielrf:danielrf .config .config/{bspwm,fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
@@ -24,7 +23,6 @@
       ln -fs ${../dotfiles}/.config/panel/panel .config/panel/panel
       ln -fs ${../dotfiles}/.config/panel/panel_bar .config/panel/panel_bar
       ln -fs ${../dotfiles}/.config/panel/panel_colors .config/panel/panel_colors
-      ln -fs ${../dotfiles}/.dircolors
       mkdir -p .fonts
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
@@ -38,7 +36,6 @@
       ln -fs ${../dotfiles}/.local/bin/yank .local/bin/yank
       ln -fs ${../dotfiles}/.local/bin/git-latexdiff .local/bin/git-latexdiff
       ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
-      ln -fs ${../dotfiles}/.profile
       ln -fs ${../dotfiles}/.screenrc
       ln -fs ${../dotfiles}/.taskrc
       ln -fs ${../dotfiles}/.tmux.conf
@@ -56,7 +53,6 @@
       chown danielrf:danielrf .xmonad
       ln -fs ${../dotfiles}/.xmonad/xmonad.hs .xmonad/xmonad.hs
       ln -fs ${../dotfiles}/.xsettingsd
-      ln -fs ${../dotfiles}/.profile
       ln -fs ${../dotfiles}/.zshenv
       ln -fs ${../dotfiles}/.zshrc
       ln -fs ${../dotfiles}/.zshrc.prompt

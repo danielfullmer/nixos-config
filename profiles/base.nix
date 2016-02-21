@@ -113,6 +113,11 @@ in {
   programs.zsh.enable = true;
 
   environment.variables = {
-    EDITOR = "vim";
-  };
+      EDITOR = "vim";
+    };
+
+  environment.extraInit = ''
+    export PATH="$HOME/.local/bin:$PATH"
+    eval $(${pkgs.coreutils}/bin/dircolors "${../dotfiles/dircolors}")
+  '';
 }
