@@ -11,19 +11,32 @@
         defaultUser = "danielrf";
       };
 
-      sessionCommands = ''
-        ${pkgs.xorg.xrdb}/bin/xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.dark.256.xresources"
-      '';
     };
 
     windowManager = {
-      default = "bspwm";
-      bspwm.enable = true;
+      default = "my-bspwm";
+      session = [ {
+        name = "my-bspwm";
+        start = ''
+          ${pkgs.sxhkd}/bin/sxhkd &
+          ${pkgs.bspwm}/bin/bspwm &
+          waitPID=$!
+        '';
+      } ];
     };
 
     desktopManager = {
-      default = "none";
+      default = "desktop";
       xterm.enable = false;
+      session = [ {
+        name = "desktop";
+        start = ''
+          ${pkgs.xorg.xrdb}/bin/xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.dark.256.xresources"
+          ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
+
+          ${../dotfiles}/.config/panel/panel &
+        '';
+      } ];
     };
   };
 

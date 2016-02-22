@@ -16,5 +16,3 @@ bspc monitor -d • • • • •
 
 bspc rule -a Gimp desktop=^8 follow=on floating=on
 bspc rule -a mplayer2 floating=on
-
-$HOME/.config/panel/panel &
