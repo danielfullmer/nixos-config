@@ -64,6 +64,8 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = (with pkgs; [
+    bspwm
+
     compton
     xclip
 
