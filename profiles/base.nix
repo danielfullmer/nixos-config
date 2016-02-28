@@ -84,30 +84,6 @@ in {
     weechat
     mutt
     taskwarrior
-
-    (myEnvFun {
-      name = "pyenv";
-      buildInputs = with python3Packages; [
-        ipython
-        notebook
-        bpython
-        numpy
-        #sympy
-        matplotlib
-        pandas
-      ];
-    })
-    #    (python3.buildEnv.override {
-    #      extraLibs = with python3Packages; [
-    #        #      ipython
-    #        notebook
-    #        bpython
-    #        numpy
-    #        matplotlib
-    #        pandas
-    #        #        sympy
-    #      ];
-    #    })
   ]);
 
   programs.zsh.enable = true;
