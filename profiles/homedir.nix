@@ -11,9 +11,8 @@
       ln -fns ${../dotfiles}/.base16-shell
       ln -fns ${../dotfiles}/.base16-xresources
       ln -fs ${../dotfiles}/.bashrc
-      mkdir -p .config/{bspwm,fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
-      chown danielrf:danielrf .config .config/{bspwm,fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
-      ln -fs ${../dotfiles}/.config/bspwm/bspwmrc .config/bspwm/bspwmrc
+      mkdir -p .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
+      chown danielrf:danielrf .config .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
       ln -fs ${../dotfiles}/.config/fish/config.fish .config/fish/config.fish
       ln -fs ${../dotfiles}/.config/gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
