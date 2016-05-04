@@ -39,6 +39,7 @@
       ln -fs ${../dotfiles}/.taskrc
       ln -fs ${../dotfiles}/.tmux.conf
       ln -fs ${../dotfiles}/.tmux.line
+      ln -fs ${../dotfiles}/.tmux-fingers
       mkdir -p .vim/{autoload,ftdetect,indent,syntax}
       chown danielrf:danielrf .vim .vim/{autoload,ftdetect,indent,syntax}
       ln -fs ${../dotfiles}/.vim/autoload/plug.vim .vim/autoload/plug.vim
