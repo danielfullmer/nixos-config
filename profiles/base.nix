@@ -94,6 +94,6 @@ in {
 
   environment.extraInit = ''
     export PATH="$HOME/.local/bin:$PATH"
-    eval $(${pkgs.coreutils}/bin/dircolors "${../dotfiles/dircolors}")
+    eval $(${pkgs.coreutils}/bin/dircolors "${../dotfiles}/.dircolors")
   '';
 }
