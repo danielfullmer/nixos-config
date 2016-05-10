@@ -59,6 +59,7 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
+    packageOverrides = (pkgs: import ../pkgs { inherit pkgs; });
   };
 
   environment.systemPackages = (with pkgs; [
@@ -86,14 +87,22 @@ in {
     taskwarrior
   ]);
 
-  programs.zsh.enable = true;
-
   environment.variables = {
-      EDITOR = "vim";
-    };
+    EDITOR = "vim";
+  };
+
+  programs.zsh.enable = true;
+  environment.etc."zshrc.local".text = import ../pkgs/zsh/zshrc.nix { inherit pkgs; };
 
   environment.extraInit = ''
     export PATH="$HOME/.local/bin:$PATH"
     eval $(${pkgs.coreutils}/bin/dircolors "${../dotfiles}/.dircolors")
   '';
+
+  environment.shellAliases = {
+    ls = "ls --color";
+    vi = "vim";
+    nfo="iconv -f IBM775";
+    t = "task";
+  };
 }

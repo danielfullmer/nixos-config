@@ -8,9 +8,6 @@
       ln -fs ${../dotfiles}/.Xmodmap
       ln -fs ${../dotfiles}/.Xresources
       ln -fs ${../dotfiles}/.aliases
-      ln -fns ${../dotfiles}/.base16-shell
-      ln -fns ${../dotfiles}/.base16-xresources
-      ln -fs ${../dotfiles}/.bashrc
       mkdir -p .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
       chown danielrf:danielrf .config .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
       ln -fs ${../dotfiles}/.config/fish/config.fish .config/fish/config.fish
@@ -53,12 +50,6 @@
       chown danielrf:danielrf .xmonad
       ln -fs ${../dotfiles}/.xmonad/xmonad.hs .xmonad/xmonad.hs
       ln -fs ${../dotfiles}/.xsettingsd
-      ln -fs ${../dotfiles}/.zshenv
-      ln -fs ${../dotfiles}/.zshrc
-      ln -fs ${../dotfiles}/.zshrc.prompt
-      ln -fns ${../dotfiles}/.zsh-autosuggestions
-      ln -fns ${../dotfiles}/.zsh-completions
-      ln -fns ${../dotfiles}/.zsh-syntax-highlighting
     '';
   };
 }

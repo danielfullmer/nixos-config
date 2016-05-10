@@ -57,8 +57,9 @@
       session = [ {
         name = "desktop";
         start = ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge "$HOME/.base16-xresources/base16-tomorrow.dark.256.xresources"
-          ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
+          (${pkgs.xorg.xrdb}/bin/xrdb -merge "${pkgs.base16}/xresources/base16-tomorrow.dark.256.xresources") &
+          (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
+          (${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
         '';
       } ];
     };
