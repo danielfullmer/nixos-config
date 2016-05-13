@@ -113,7 +113,7 @@
 
     zathura
     mendeley
-    chromiumBeta
+    chromium
   ]);
 
   environment.variables = {
