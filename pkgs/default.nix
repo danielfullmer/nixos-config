@@ -1,8 +1,6 @@
 { pkgs }:
 
 rec {
-  base16 = pkgs.callPackage ./base16.nix {};
-
   # Fix an issue with newer versions of gcc
   zerotierone = pkgs.lib.overrideDerivation pkgs.zerotierone (attrs: {
     patches = [
