@@ -4,7 +4,6 @@
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
-    ../profiles/virtualbox-guest.nix
     ../profiles/yubikey.nix
     ../profiles/ssmtp.nix
     ../profiles/desktop.nix
@@ -33,6 +32,8 @@
 
   networking.hostName = "nyquist";
   networking.hostId = "d8ab690e";
+
+  virtualisation.virtualbox.guest.enable = true;
 
   services.bitlbee.enable = true;
 }
