@@ -6,20 +6,20 @@ alt + shift + q
 	bspc quit
 
 ### Monitor ###
-# Focus / move window to a monitor
+# Focus / move node to a monitor
 alt + {_,shift + }{w,e}
-        bspc {monitor -f,window -m} {left,right}
+        bspc {monitor -f,node -m} {west,east}
 
 ### Desktop ###
-# Focus / move window to a desktop
+# Focus / move node to a desktop
 alt + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
+	bspc {desktop -f,node -d} ^{1-9,10}
 #
 # Circulate leaves of the tree of the selected desktop
 alt + {comma,period}
 	bspc desktop -C {backward,forward}
 
-# Balance windows on desktop
+# Balance nodes on desktop
 alt + b
 	bspc desktop -B
 
@@ -28,50 +28,50 @@ alt + shift + f
 
 
 ### Windows ###
-# Focus / move window
+# Focus / move node
 alt + {_,shift + }{h,j,k,l}
-	bspc window -{f,s} {left,down,up,right}
+	bspc node -{f,s} {west,south,north,east}
 
 alt + {_,shift + }c
-	bspc window -f {next,prev}
+	bspc node -f {next,prev}
 
-# Close / kill selected window
+# Close / kill selected node
 alt + {_,shift +} x
-	bspc window {-c,-k}
+	bspc node {-c,-k}
 
-# Toggle status of window
+# Toggle status of node
 alt + {f,s,t}
-	bspc window -t {floating,fullscreen,sticky}
+	bspc node -t {floating,fullscreen,sticky}
 
-# Increase size of current window
+# Increase size of current node
 alt + ctrl + {h,j,k,l}
-	bspc window -e {left -20,down +20,up -20,right +20}
+	bspc node -e {west -20,south +20,north -20,east +20}
 
-# Decrease size of current window
+# Decrease size of current node
 alt + ctrl + shift + {h,j,k,l}
-	bspc window -e {right -20,up +20,down -20,left +20}
+	bspc node -e {east -20,north +20,south -20,west +20}
 
-### Splitting windows ###
+### Splitting nodes ###
 
-# Preselect the splitting area of current window
+# Preselect the splitting area of current node
 super + {h,j,k,l}
-	bspc window -p {left,down,up,right}
+	bspc node -p {west,south,north,east}
 
-# Cancel preselect of window / desktop
+# Cancel preselect of node / desktop
 super + {_,shift + }space
-	bspc {window -p cancel,desktop -c}
+	bspc {node -p cancel,desktop -c}
 
-# Set splitting ratio of current window
+# Set splitting ratio of current node
 super + {1-9}
-	bspc window -r 0.{1-9}
+	bspc node -r 0.{1-9}
 
-### Rotating windows ###
+### Rotating nodes ###
 
 super + ctrl + {h,l}
         bspc desktop -R {270,90}
 
 super + shift + {h,j,k,l}
-        bspc window -R {left,down,up,right} 90
+        bspc node -R {west,south,north,east} 90
 
 
 ###
