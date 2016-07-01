@@ -32,7 +32,7 @@
   nix.maxJobs = 4;
   nix.buildCores = 8;
 
-  boot.loader.gummiboot.enable = true;
+  boot.loader.systemd-boot.enable = true;
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
