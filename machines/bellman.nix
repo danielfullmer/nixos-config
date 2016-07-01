@@ -39,8 +39,8 @@
   networking.wireless.enable = true;
 
   services.acpid.enable = true;
-  services.xserver.videoDrivers = [ "amd-non-free" ];
-#  services.xserver.xrandrHeads = ["DFP6" "DFP7"];
+  services.xserver.videoDrivers = [ "ati_unfree" ];
+  services.xserver.xrandrHeads = ["DFP6" "DFP7"];
 
   services.xserver.monitorSection = ''
     DisplaySize 597 336
