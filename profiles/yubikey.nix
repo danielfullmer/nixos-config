@@ -24,6 +24,8 @@
     gnupg21
     keybase
 
+    pass
+
     yubico-piv-tool
     yubikey-personalization
   ]);
