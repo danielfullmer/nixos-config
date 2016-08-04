@@ -6,16 +6,17 @@
 # collection-latexextra
     })
 
-    (pythonFull.buildEnv.override {
+    (python.buildEnv.override {
       extraLibs = with pythonPackages; [
         jupyter
         bpython
         numpy
-        #sympy
+        sympy
         matplotlib
         seaborn
         pandas
       ];
+      ignoreCollisions = true;
     })
   ]);
 }
