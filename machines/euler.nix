@@ -52,7 +52,8 @@
   networking.hostName = "euler";
   networking.hostId = "56c53b14";
 
-  networking.wireless.enable = true;
+  #networking.wireless.enable = true;
+  networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
 

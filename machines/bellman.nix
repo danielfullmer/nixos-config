@@ -16,6 +16,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ pkgs.linuxPackages.rtl8812au ];
+  hardware.enableAllFirmware = true;  # For any other wifi firmware
 
   fileSystems = {
     "/" = {
@@ -36,7 +37,8 @@
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
-  networking.wireless.enable = true;
+  #networking.wireless.enable = true;
+  networking.networkmanager.enable = true;
 
   services.acpid.enable = true;
   services.xserver.videoDrivers = [ "ati_unfree" ];
