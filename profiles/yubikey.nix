@@ -24,7 +24,7 @@
     gnupg21
     keybase
 
-    pass
+    (pass.override { gnupg = pkgs.gnupg21; })
 
     yubico-piv-tool
     yubikey-personalization
