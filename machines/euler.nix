@@ -15,7 +15,12 @@
   boot.initrd.kernelModules = [ "hid-multitouch" ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" "hid-multitouch" ];
-  boot.kernelParams = [ "i915.preliminary_hw_support=1" ]; # Remove in kernel 4.3?
+  boot.kernelParams = [
+    "i915.preliminary_hw_support=1" # Remove in kernel 4.3?
+    "i915.enable_guc_submission=Y"
+    "i915.guc_log_level=3"
+  ];
+  boot.blacklistedKernelModules = [ "mei_itouch_hid" ]; # Blacklist since it often crashes
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -38,16 +43,35 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_testing;
-  nixpkgs.config.packageOverrides = pkgs: {
-    linux_testing = pkgs.linux_testing.override {
-      kernelPatches = [
-        { patch = ../patches/linux-surface.patch;
-          name = "surface-pro-4";
-        }
-      ];
-    };
-  };
+  boot.kernelPackages = pkgs.linuxPackagesFor
+    # I could not get the overrideDerivation to work.
+    # This is messy, but it seems to work.
+    (import <nixpkgs/pkgs/os-specific/linux/kernel/generic.nix> {
+      stdenv = pkgs.stdenv;
+      perl = pkgs.perl;
+      buildLinux = pkgs.buildLinux;
+
+      version = "4.6.7";
+      extraMeta.branch = "4.6";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "npjohnson";
+        repo = "linux-surface";
+        # branch: "linux-4.6.y"
+        rev = "e7eaca4b8ddeeabcb307017838918f34c7ceecaa";
+        sha256 = "0zq87ipj5xj74nvph1qgh7z0yrc69sw3hb84ailw03q91kc87sy1";
+      };
+
+      # From README-IPTS.md of the repo below
+      extraConfig = "INTEL_MEI_ITOUCH m";
+
+      features.iwlwifi = true;
+      features.efiBootStub = true;
+      features.needsCifsUtils = true;
+      features.canDisableNetfilterConntrackHelpers = true;
+      features.netfilterRPFilter = true;
+   })
+   pkgs.linuxPackages_4_6;
 
   networking.hostName = "euler";
   networking.hostId = "56c53b14";
