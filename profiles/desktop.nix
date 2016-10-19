@@ -73,6 +73,7 @@
     corefonts
     dejavu_fonts
     lmodern
+    source-code-pro
   ]);
 
   services.redshift = {
