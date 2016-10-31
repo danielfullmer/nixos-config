@@ -4,16 +4,6 @@
     enable = true;
     xkbOptions = "compose:ralt";
 
-    displayManager = {
-# slim is broken at the moment with AMD drivers
-#      slim = {
-#        enable = true;
-#        autoLogin = true;
-#        defaultUser = "danielrf";
-#      };
-
-      lightdm.enable = true;
-    };
 
     windowManager = {
       default = "my-bspwm";

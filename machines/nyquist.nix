@@ -7,6 +7,7 @@
     ../profiles/yubikey.nix
     ../profiles/ssmtp.nix
     ../profiles/desktop.nix
+    ../profiles/autologin.nix
     ../profiles/academic.nix
     ../profiles/homedir.nix
   ];

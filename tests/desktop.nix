@@ -1,18 +1,17 @@
 import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
-  name = "base";
+  name = "desktop";
 
   machine = { config, pkgs, ... }: {
     imports = [
       ../profiles/base.nix
-      ../profiles/yubikey.nix
       ../profiles/desktop.nix
+      ../profiles/autologin.nix
       ../profiles/homedir.nix
     ];
   };
 
   testScript =
     ''
-      startAll;
       $machine->waitForX;
       $machine->sleep(5);
       $machine->sendKeys("alt-ret");
