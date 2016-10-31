@@ -1,0 +1,8 @@
+language: nix
+script:
+- nix-channel --update
+- nixos-rebuild build -I nixos-config=machines/bellman.nix
+- nixos-rebuild build -I nixos-config=machines/nyquist.nix
+- nixos-rebuild build -I nixos-config=machines/euler.nix
+- nixos-rebuild build -I nixos-config=machines/gauss.nix
+- nix-build tests/desktop.nix
