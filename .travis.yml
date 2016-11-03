@@ -3,6 +3,4 @@ script:
 - export NIX_PATH=nixpkgs=https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
 - nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/bellman.nix
 - nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/nyquist.nix
-- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/euler.nix
-- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/gauss.nix
 - nix-build tests/desktop.nix
