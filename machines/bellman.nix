@@ -6,6 +6,7 @@
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/desktop.nix
+    ../profiles/autologin.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/qemu-kvm.nix
@@ -15,7 +16,7 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ pkgs.linuxPackages.rtl8812au ];
+  boot.extraModulePackages = [ pkgs.linuxPackages_latest.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
 
   fileSystems = {
@@ -41,10 +42,15 @@
   networking.networkmanager.enable = true;
 
   services.acpid.enable = true;
-  services.xserver.videoDrivers = [ "ati_unfree" ];
-  services.xserver.xrandrHeads = ["DFP6" "DFP7"];
 
-  services.xserver.monitorSection = ''
-    DisplaySize 597 336
-  '';
+  # Use AMDGPU support. Needs kernel >=4.6.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPatches = [ {
+    name = "amdgpu-config";
+    patch = "";
+    # Sea Island (Hawaii, 390x) support. TODO: Add southern island (7970) support w/ kernel 4.9. "DRM_AMDGPU_SI y"
+    extraConfig = "DRM_AMDGPU_CIK y";
+  } ];
+  boot.kernelParams = [ "amdgpu.exp_hw_support=1" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 }
