@@ -4,20 +4,20 @@ let
   zsh-autosuggestions = pkgs.fetchFromGitHub {
     owner = "tarruda";
     repo = "zsh-autosuggestions";
-    rev = "87facd9b85630f288433aa0a20a963cffc612ee5";
-    sha256 = "0rkdcswqm5wlwrmb7vhj6099a8lsrw01zlzb5pj75pk24j22p4df";
+    rev = "fedc22e9bbd046867860e772d7d6787f5dae9d4c";
+    sha256 = "0mnwyz4byvckrslzqfng5c0cx8ka0y12zcy52kb7amg3l07jrls4";
   };
   zsh-completions = pkgs.fetchFromGitHub {
     owner = "zsh-users";
     repo = "zsh-completions";
-    rev = "69e89c5e4a1eae49325314df3718f0c734536e2a";
-    sha256 = "1j2kgdlh8fykc8kghyd7as2m5j4hm71jqd660d0hf2dvy8svv35s";
+    rev = "44e821b7032bcaea90cbdaa724e94b8e3e98ddd1";
+    sha256 = "0s9y4v8cgpjsipxfaaxsmcbkc6g0kndhwm64aj7bffnz88jkh55v";
   };
   zsh-syntax-highlighting = pkgs.fetchFromGitHub {
     owner = "zsh-users";
     repo = "zsh-syntax-highlighting";
-    rev = "e8af14fe1f6f1b60062b67d8a70daabd9df6a8be";
-    sha256 = "1jkkwyk06k1hqk854bd5q39dkmmlfda4sp5xcd3ww404wyi7kpwp";
+    rev = "9396ad5c5f9cc40f461e59fe1c5fd2cb70d9b723";
+    sha256 = "0mx6q52ixcv8yvgjy2nxfv1qd08mk8gn3s7pjr9ixv3rqf7mqm6n";
   };
 in
 ''
