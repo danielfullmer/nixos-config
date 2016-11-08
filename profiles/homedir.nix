@@ -15,7 +15,6 @@
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
       ln -fs ${../dotfiles}/.config/sxhkd/sxhkdrc .config/sxhkd/sxhkdrc
       ln -fs ${../dotfiles}/.config/termite/config .config/termite/config
-      mkdir -p .fonts
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
       chown danielrf:danielrf .gnupg

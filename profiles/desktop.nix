@@ -57,14 +57,21 @@
     };
   };
 
-  fonts.fonts = (with pkgs; [
-    powerline-fonts
-    font-awesome-ttf
-    corefonts
-    dejavu_fonts
-    lmodern
-    source-code-pro
-  ]);
+  fonts = {
+    fontconfig = {
+      enable = true;
+      ultimate.preset = "ultimate4";
+      ultimate.substitutions = "combi";
+    };
+    fonts = (with pkgs; [
+      powerline-fonts
+      font-awesome-ttf
+      corefonts
+      dejavu_fonts
+      lmodern
+      source-code-pro
+    ]);
+  };
 
   services.redshift = {
     enable = true;
