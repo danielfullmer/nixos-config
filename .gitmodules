@@ -1,3 +1,0 @@
-[submodule "dotfiles/.tmux-fingers"]
-	path = dotfiles/.tmux-fingers
-	url = https://github.com/morantron/tmux-fingers

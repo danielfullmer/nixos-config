@@ -1,3 +1,14 @@
+{ pkgs }:
+
+let
+  tmux-fingers = pkgs.fetchFromGitHub {
+    owner = "Morantron";
+    repo = "tmux-fingers";
+    rev = "7c8356dc07dac3418073cd38d2c862e4fa8eead0";
+    sha256 = "0qy29bzj170gz52hmi7bpdmskp2b0d0vcywhxsh9kvh2q9a477kz";
+  };
+in
+''
 set-option -g prefix C-a
 
 set-option -g default-terminal "screen-256color"
@@ -26,11 +37,15 @@ bind -n M-s split-window -v
 bind v split-window -h
 bind -n M-v split-window -h
 
-# Smart pane switching with awareness of vim splits
-bind -n M-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys M-h) || tmux select-pane -L"
-bind -n M-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys M-n) || tmux select-pane -D"
-bind -n M-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys M-i) || tmux select-pane -U"
-bind -n M-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys M-o) || tmux select-pane -R"
+# Smart pane switching with awareness of Vim splits.
+# See: https://github.com/christoomey/vim-tmux-navigator
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE \'^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$\'"
+bind-key -n M-h if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
+bind-key -n M-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
+bind-key -n M-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
+bind-key -n M-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
+bind-key -n M-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
 
 bind -rn M-H resize-pane -L 3
 bind -rn M-J resize-pane -R 3
@@ -55,9 +70,8 @@ bind-key -n M-Y choose-buffer 'run-shell "tmux save-buffer -b \"%%\" - | yank > 
 
 ##
 
-bind-key r source-file ~/.tmux.conf
-
 # Default binding is: C-a F
-run-shell ~/.tmux-fingers/tmux-fingers.tmux
+run-shell ${tmux-fingers}/tmux-fingers.tmux
 
-source-file ~/.tmux.line
+source-file ${./tmux.line}
+''

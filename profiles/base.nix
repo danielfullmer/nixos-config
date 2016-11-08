@@ -93,6 +93,7 @@ in {
 
   programs.zsh.enable = true;
   environment.etc."zshrc.local".text = import ../pkgs/zsh/zshrc.nix { inherit pkgs; };
+  environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
   environment.extraInit = ''
     export PATH="$HOME/.local/bin:$PATH"
