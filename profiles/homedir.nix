@@ -9,16 +9,12 @@
       ln -fs ${../dotfiles}/.Xresources
       ln -fs ${../dotfiles}/.aliases
       mkdir -p .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
-      chown danielrf:danielrf .config .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
+      chown danielrf:danielrf .config .config/{fish,gtk-3.0,matplotlib,sxhkd,termite}
       ln -fs ${../dotfiles}/.config/fish/config.fish .config/fish/config.fish
       ln -fs ${../dotfiles}/.config/gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
       ln -fs ${../dotfiles}/.config/sxhkd/sxhkdrc .config/sxhkd/sxhkdrc
       ln -fs ${../dotfiles}/.config/termite/config .config/termite/config
-      ln -fs ${../dotfiles}/.config/panel/conkyrc .config/panel/conkyrc
-      ln -fs ${../dotfiles}/.config/panel/panel .config/panel/panel
-      ln -fs ${../dotfiles}/.config/panel/panel_bar .config/panel/panel_bar
-      ln -fs ${../dotfiles}/.config/panel/panel_colors .config/panel/panel_colors
       mkdir -p .fonts
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
