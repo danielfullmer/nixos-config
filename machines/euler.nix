@@ -44,13 +44,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackagesFor
-    # I could not get the overrideDerivation to work.
-    # This is messy, but it seems to work.
-    (import <nixpkgs/pkgs/os-specific/linux/kernel/generic.nix> {
-      stdenv = pkgs.stdenv;
-      perl = pkgs.perl;
-      buildLinux = pkgs.buildLinux;
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage <nixpkgs/pkgs/os-specific/linux/kernel/generic.nix> {
+      inherit (pkgs) stdenv perl buildLinux;
 
       version = "4.6.7";
       extraMeta.branch = "4.6";
@@ -63,16 +58,17 @@
         sha256 = "0zq87ipj5xj74nvph1qgh7z0yrc69sw3hb84ailw03q91kc87sy1";
       };
 
-      # From README-IPTS.md of the repo below
+      # From README-IPTS.md of the repo above
       extraConfig = "INTEL_MEI_ITOUCH m";
+
+      kernelPatches = [];
 
       features.iwlwifi = true;
       features.efiBootStub = true;
       features.needsCifsUtils = true;
       features.canDisableNetfilterConntrackHelpers = true;
       features.netfilterRPFilter = true;
-   })
-   pkgs.linuxPackages_4_6;
+   });
 
   networking.hostName = "euler";
   networking.hostId = "56c53b14";
