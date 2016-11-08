@@ -1,83 +1,92 @@
-" vim: foldmethod=marker
-" vim-plug packages! {{{
-call plug#begin('~/.vim/bundle')
+# vim: foldmethod=marker
+{ pkgs }:
+{
+  # See http://beyermatthias.de/blog/2015/11/25/how-to-setup-neo-vim-on-nixos/
+  vam = {
+    knownPlugins = pkgs.vimPlugins // (pkgs.callPackage ./plugins.nix {});
 
-" For async stuff
-Plug 'Shougo/vimproc.vim', {'do': 'make -f make_unix.mak'}
-" }}}
-" UI {{{
-Plug 'Colour-Sampler-Pack'
+    pluginDictionaries = [
+      { name = "vimproc"; }
 
-" Colorscheme
-Plug 'chriskempson/base16-vim'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'bling/vim-airline'
-Plug 'edkolev/promptline.vim'
-":PromptlineSnapshot ~/.zshrc.prompt airline
-Plug 'edkolev/tmuxline.vim'
-":Tmuxline airline
-":TmuxlineSnapshot ~/.tmux.line
-
-Plug 'merlinrebrovic/focus.vim'
-
-" }}}
-" Text/File Navigation {{{
-Plug 'Shougo/unite.vim'
-Plug 'Lokaltog/vim-easymotion'
-" }}}
-" Code Completion/Navigation {{{
-Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'scrooloose/nerdtree'
-" }}}
-" Editing {{{
-Plug 'agate/vim-align'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-surround'
-Plug 'editorconfig/editorconfig-vim'
-" }}}
-" GIT {{{
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim'
-" }}}
-" General Coding {{{
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-commentary'
-" }}}
-" Python {{{
-Plug 'klen/python-mode'
-Plug 'alfredodeza/pytest.vim'
-Plug 'ivanov/vim-ipython'
-Plug 'julienr/vimux-pyutils'
-Plug 'davidhalter/jedi-vim'
-" }}}
-" Haskell {{{
-Plug 'lukerandall/haskellmode-vim'
-" }}}
-" Go {{{
-Plug 'jnwhiteh/vim-golang'
-" }}}
-" HTML {{{
-Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plug 'lukaszb/vim-web-indent'
-" }}}
-" LaTeX {{{
-Plug 'lervag/vimtex'
-" }}}
-" Pandoc {{{
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-" }}}
-" Misc {{{
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'sjl/gundo.vim'
-" }}}
-
-call plug#end()
+      # UI {{{
+      { name = "Colour-Sampler-Pack"; }
+      # { name = "vim-indent-guides"; }
+      { name = "airline"; }
+      #" Colorscheme
+      # Plug 'chriskempson/base16-vim'
+      # Plug 'edkolev/promptline.vim'
+      # ":PromptlineSnapshot ~/.zshrc.prompt airline
+      # Plug 'edkolev/tmuxline.vim'
+      # ":Tmuxline airline
+      # ":TmuxlineSnapshot ~/.tmux.line
+      #
+      # Plug 'merlinrebrovic/focus.vim'
+      # }}}
+      # Text/File Navigation {{{
+      { name = "unite"; }
+      { name = "easymotion"; }
+      # }}}
+      # Code Completion/Navigation {{{
+      { name = "neocomplete"; }
+      # TODO: Consider deocomplete
+      { name = "neosnippet"; }
+      #Plug 'Shougo/neosnippet-snippets'
+      { name = "The_NERD_tree"; }
+      # }}}
+      # Editing {{{
+      { name = "align"; }
+      # Plug 'tpope/vim-abolish'
+      { name = "surround"; }
+      { name = "editorconfig-vim"; }
+      # }}}
+      # GIT {{{
+      { name = "fugitive"; }
+      { name = "gitgutter"; }
+      { name = "webapi-vim"; }
+      { name = "gist-vim"; }
+      #" }}}
+      #" General Coding {{{
+      { name = "syntastic"; }
+      { name = "commentary"; }
+      #" }}}
+      #" Python {{{
+      #Plug 'klen/python-mode'
+      #Plug 'alfredodeza/pytest.vim'
+      { name = "ipython"; }
+      #Plug 'julienr/vimux-pyutils'
+      #Plug 'davidhalter/jedi-vim'
+      # TODO: Consider deoplete-jedi
+      #" }}}
+      #" Haskell {{{
+      #Plug 'lukerandall/haskellmode-vim'
+      #" }}}
+      #" Go {{{
+      #Plug 'jnwhiteh/vim-golang'
+      #" }}}
+      #" HTML {{{
+      #Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+      #Plug 'lukaszb/vim-web-indent'
+      #" }}}
+      #" LaTeX {{{
+      #Plug 'lervag/vimtex'
+      { name = "vimtex"; }
+      #" }}}
+      #" Pandoc {{{
+      #Plug 'vim-pandoc/vim-pandoc'
+      #Plug 'vim-pandoc/vim-pandoc-syntax'
+      { name = "vim-pandoc"; }
+      { name = "vim-pandoc-syntax"; }
+      #" }}}
+      #" Misc {{{
+      #Plug 'benmills/vimux'
+      #Plug 'christoomey/vim-tmux-navigator'
+      { name = "tmux-navigator"; }
+      #Plug 'sjl/gundo.vim'
+      { name = "gundo"; }
+      #" }}}
+    ];
+  };
+  customRC = ''
 " Options {{{
 set nocompatible
 set backspace=indent,eol,start
@@ -105,15 +114,15 @@ set shiftround
 set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/.base16-shell/"
-colorscheme base16-tomorrow
+"colorscheme base16-tomorrow
 
 let g:airline_powerline_fonts=1
 
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1
 let g:indent_guides_enable_on_vim_startup=1
-"hi IndentGuidesEven ctermbg=18
-"hi IndentGuidesOdd ctermbg=0
+hi IndentGuidesEven ctermbg=18
+hi IndentGuidesOdd ctermbg=0
 
 set number
 "set relativenumber
@@ -131,7 +140,9 @@ set showbreak=»»
 
 " Mouse
 set mouse=a
-set ttymouse=xterm2
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " See http://sunaku.github.io/tmux-yank-osc52.html
 " copy the current text selection to the system clipboard
@@ -153,7 +164,7 @@ nnoremap <space>s :Unite neosnippet<CR>
 
 " Using ag as recursive command.
 let g:unite_source_rec_async_command =
-\ 'ag --follow --nocolor --nogroup -g ""'
+\ '${pkgs.ag}/bin/ag --follow --nocolor --nogroup -g ""'
 
 let g:EasyMotion_leader_key = "<space>"
 nmap s <Plug>(easymotion-s)
@@ -214,3 +225,5 @@ nnoremap <silent> <Esc>k :TmuxNavigateUp<cr>
 nnoremap <silent> <Esc>l :TmuxNavigateRight<cr>
 
 " }}}
+  '';
+}

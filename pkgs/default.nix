@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs ? (import <nixpkgs> {}) }:
 
 rec {
 ### Example to patch a derivation
@@ -10,4 +10,6 @@ rec {
 #      })
 #    ];
 #  });
+
+  neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
 }

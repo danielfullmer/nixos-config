@@ -1,13 +1,5 @@
 { config, pkgs, lib, ... }:
-let
-  my_vim = lib.overrideDerivation pkgs.vim_configurable (o: {
-    luaSupport = true;
-    pythonSupport = true;
-    python3Support = true;
-    rubySupport = true;
-    tclSupport = true;
-  });
-in {
+{
   services.openssh.enable = true;
 
   networking.domain = "controlnet";
@@ -74,8 +66,7 @@ in {
     silver-searcher
     git
 
-    my_vim
-    #vim
+    neovim
     emacs
 
     zerotierone

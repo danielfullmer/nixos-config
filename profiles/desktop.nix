@@ -76,8 +76,6 @@
       };
   };
 
-  nixpkgs.config.vim.gui = "auto";
-
   hardware.pulseaudio.enable = true;
   security.rtkit.enable = true;
 

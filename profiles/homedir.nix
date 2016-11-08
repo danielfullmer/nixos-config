@@ -34,13 +34,6 @@
       ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
       ln -fs ${../dotfiles}/.screenrc
       ln -fs ${../dotfiles}/.taskrc
-      mkdir -p .vim/{autoload,ftdetect,indent,syntax}
-      chown danielrf:danielrf .vim .vim/{autoload,ftdetect,indent,syntax}
-      ln -fs ${../dotfiles}/.vim/autoload/plug.vim .vim/autoload/plug.vim
-      ln -fs ${../dotfiles}/.vim/ftdetect/proto.vim .vim/ftdetect/proto.vim
-      ln -fs ${../dotfiles}/.vim/indent/python.vim .vim/indent/python.vim
-      ln -fs ${../dotfiles}/.vim/syntax/proto.vim .vim/syntax/proto.vim
-      ln -fs ${../dotfiles}/.vimrc
       ln -fs ${../dotfiles}/.xinitrc
       ln -fs ${../dotfiles}/.xmobarrc
       mkdir -p .xmonad
