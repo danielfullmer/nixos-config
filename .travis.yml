@@ -2,7 +2,7 @@ language: nix
 env:
 - NIX_PATH=nixpkgs=https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
 script:
-- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/bellman.nix
-- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/nyquist.nix
-- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/euler.nix
+- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/bellman.nix 2>/dev/null
+- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/nyquist.nix 2>/dev/null
+- nix-build "<nixpkgs/nixos>" -A system -I nixos-config=machines/euler.nix 2>/dev/null
 - nix-build tests/desktop.nix
