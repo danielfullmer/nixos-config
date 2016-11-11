@@ -6,6 +6,8 @@
 # collection-latexextra
     })
 
+    git-latexdiff
+
     (python.buildEnv.override {
       extraLibs = with pythonPackages; [
         jupyter

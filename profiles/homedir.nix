@@ -25,7 +25,6 @@
       mkdir -p .local/bin
       chown danielrf:danielrf .local .local/bin
       ln -fs ${../dotfiles}/.local/bin/yank .local/bin/yank
-      ln -fs ${../dotfiles}/.local/bin/git-latexdiff .local/bin/git-latexdiff
       ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
       ln -fs ${../dotfiles}/.screenrc
       ln -fs ${../dotfiles}/.taskrc
