@@ -109,6 +109,9 @@ alt + c
 alt + d
         /home/danielrf/.local/bin/rofi-pdf ~/Mendeley\ Desktop
 
+alt + e
+        emacsclient -c
+
 # make sxhkd reload its configuration files:
 alt + Escape
 	pkill -USR1 -x sxhkd
