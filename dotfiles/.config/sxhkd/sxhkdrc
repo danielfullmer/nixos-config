@@ -95,7 +95,7 @@ alt + @button{1-3}
 #
 
 alt + Return
-	termite
+	st
 
 alt + r
 	dmenu_run -fn "DejaVu Sans Mono 12"

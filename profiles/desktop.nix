@@ -105,6 +105,7 @@
 
     termite
     rxvt_unicode-with-plugins
+    st
 
     pavucontrol
 
