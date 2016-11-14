@@ -14,4 +14,8 @@ rec {
 #  });
 
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
+
+  termite = (pkgs.termite.override {
+    configFile = (import termite/config.nix { inherit theme; });
+  });
 }

@@ -8,12 +8,11 @@
       ln -fs ${../dotfiles}/.Xmodmap
       ln -fs ${../dotfiles}/.Xresources
       ln -fs ${../dotfiles}/.aliases
-      mkdir -p .config/gtk-3.0,matplotlib,sxhkd,termite,panel}
-      chown danielrf:danielrf .config .config/{gtk-3.0,matplotlib,sxhkd,termite}
+      mkdir -p .config/gtk-3.0,matplotlib,sxhkd,panel}
+      chown danielrf:danielrf .config .config/{gtk-3.0,matplotlib,sxhkd}
       ln -fs ${../dotfiles}/.config/gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
       ln -fs ${../dotfiles}/.config/sxhkd/sxhkdrc .config/sxhkd/sxhkdrc
-      ln -fs ${../dotfiles}/.config/termite/config .config/termite/config
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
       chown danielrf:danielrf .gnupg
