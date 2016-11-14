@@ -1,4 +1,6 @@
-{ pkgs ? (import <nixpkgs> {}) }:
+{ pkgs ? (import <nixpkgs> {}),
+  theme ? (import ../profiles/theme.nix {})
+}:
 
 rec {
 ### Example to patch a derivation

@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
+
+let
+  theme = (import ../profiles/theme.nix {});
+in
 {
   imports = [
       <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-      ../profiles/base.nix
+      (import ../profiles/base.nix { inherit theme; })
       ../profiles/homedir.nix
     ];
 

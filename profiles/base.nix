@@ -1,3 +1,5 @@
+{ theme }:
+
 { config, pkgs, lib, ... }:
 {
   services.openssh.enable = true;
@@ -83,11 +85,11 @@
   };
 
   programs.zsh.enable = true;
-  environment.etc."zshrc.local".text = import ../pkgs/zsh/zshrc.nix { inherit pkgs; };
+  programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { inherit pkgs theme; };
 
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
-    eval sh ${pkgs.base16}/shell/base16-tomorrow.dark.sh
+    eval sh ${pkgs.base16}/shell/base16-${theme.base16Theme}.dark.sh
   '';
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
