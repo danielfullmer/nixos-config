@@ -1,6 +1,6 @@
 { }:
 {
-  base16Theme = "eighties";
+  base16Theme = "irblack";
   fontName = "DejaVu Sans Mono for Powerline";
-  fontSize = "14";
+  fontSize = "12";
 }
