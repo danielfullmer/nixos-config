@@ -8,9 +8,8 @@
       ln -fs ${../dotfiles}/.Xmodmap
       ln -fs ${../dotfiles}/.Xresources
       ln -fs ${../dotfiles}/.aliases
-      mkdir -p .config/{fish,gtk-3.0,matplotlib,sxhkd,termite,panel}
-      chown danielrf:danielrf .config .config/{fish,gtk-3.0,matplotlib,sxhkd,termite}
-      ln -fs ${../dotfiles}/.config/fish/config.fish .config/fish/config.fish
+      mkdir -p .config/gtk-3.0,matplotlib,sxhkd,termite,panel}
+      chown danielrf:danielrf .config .config/{gtk-3.0,matplotlib,sxhkd,termite}
       ln -fs ${../dotfiles}/.config/gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
       ln -fs ${../dotfiles}/.config/sxhkd/sxhkdrc .config/sxhkd/sxhkdrc
