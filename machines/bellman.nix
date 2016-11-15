@@ -10,6 +10,7 @@ in
     ../profiles/syncthing.nix
     (import ../profiles/desktop.nix { inherit theme; })
     ../profiles/autologin.nix
+    ../profiles/pulseaudio.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/qemu-kvm.nix
