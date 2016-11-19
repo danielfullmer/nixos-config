@@ -11,7 +11,6 @@ in
     ../profiles/ssmtp.nix
     (import ../profiles/desktop.nix { inherit theme; })
     ../profiles/autologin.nix
-    ../profiles/pulseaudio.nix
     ../profiles/academic.nix
     ../profiles/homedir.nix
   ];
