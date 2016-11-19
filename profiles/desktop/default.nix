@@ -1,4 +1,4 @@
-{ theme }:
+{ theme ? (import ../../themes) }:
 
 { config, pkgs, lib, ... }:
 {
