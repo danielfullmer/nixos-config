@@ -1,5 +1,5 @@
 { pkgs ? (import <nixpkgs> {}),
-  theme ? (import ../profiles/theme.nix {})
+  theme ? (import ../themes)
 }:
 
 rec {

@@ -1,5 +1,5 @@
 let
-  theme = (import ../profiles/theme.nix {});
+  theme = (import ../themes);
 in
 import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
   name = "desktop";

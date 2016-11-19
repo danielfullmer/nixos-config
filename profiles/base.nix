@@ -89,7 +89,7 @@
 
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
-    eval sh ${pkgs.base16}/shell/base16-${theme.base16Theme}.dark.sh
+    eval sh ${pkgs.base16}/shell/base16-${theme.name}.dark.sh
   '';
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };

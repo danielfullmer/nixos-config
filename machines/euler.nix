@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  theme = (import ../profiles/theme.nix {});
+  theme = (import ../themes);
 in
 {
   imports = [

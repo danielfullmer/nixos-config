@@ -32,7 +32,7 @@ autoload -U compinit && compinit
 source "${zsh-autosuggestions}/zsh-autosuggestions.zsh"
 source "${zsh-syntax-highlighting}/zsh-syntax-highlighting.zsh"
 
-source "${pkgs.base16}/shell/base16-${theme.base16Theme}.dark.sh"
+source "${pkgs.base16}/shell/base16-${theme.name}.dark.sh"
 
 source "${./zshrc.prompt}"
 ''

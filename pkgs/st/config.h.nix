@@ -84,7 +84,7 @@ static char termname[] = "st-256color";
 static unsigned int tabspaces = 8;
 
 /* Color Theme */
-#include "${pkgs.base16}/st/base16-${theme.base16Theme}.dark.c"
+#include "${pkgs.base16}/st/base16-${theme.name}.dark.c"
 static unsigned int defaultrcs = 257;
 
 /*
