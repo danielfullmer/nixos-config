@@ -8,7 +8,7 @@ in
     (import ../profiles/base.nix { inherit theme; })
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
-    (import ../profiles/desktop.nix { inherit theme; })
+    (import ../profiles/desktop { inherit theme; })
     ../profiles/autologin.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix

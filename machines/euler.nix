@@ -9,7 +9,7 @@ in
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/ssmtp.nix
-    (import ../profiles/desktop.nix { inherit theme; })
+    (import ../profiles/desktop { inherit theme; })
     ../profiles/autologin.nix
     ../profiles/academic.nix
     ../profiles/homedir.nix

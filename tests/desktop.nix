@@ -7,7 +7,7 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
   machine = { config, pkgs, ... }: {
     imports = [
       (import ../profiles/base.nix { inherit theme; })
-      (import ../profiles/desktop.nix { inherit theme; })
+      (import ../profiles/desktop { inherit theme; })
       ../profiles/autologin.nix
       ../profiles/homedir.nix
     ];

@@ -13,7 +13,7 @@
       session = [ rec {
         name = "my-bspwm";
 
-        bspwmConfig =  pkgs.writeScript "bspwmrc" ''
+        bspwmConfig = pkgs.writeScript "bspwmrc" ''
           #!/bin/sh
           ${pkgs.bspwm}/bin/bspc config border_width        2
           ${pkgs.bspwm}/bin/bspc config focused_border_color red
@@ -33,11 +33,10 @@
           ${pkgs.bspwm}/bin/bspc rule -a mplayer2 floating=on
 
           # This needs to happen after the bspc's above
-          ${../dotfiles}/.config/panel/panel
+          ${import ./panel/panel.nix { inherit pkgs theme; }}
         '';
 
         start = ''
-          rm /tmp/bspwm*
           ${pkgs.sxhkd}/bin/sxhkd &
           ${pkgs.bspwm}/bin/bspwm -c ${bspwmConfig} &
           waitPID=$!
@@ -105,11 +104,6 @@
     rofi
     stalonetray
 
-    # Panel-related
-    bar-xft
-    conky
-    xtitle
-
     termite
     rxvt_unicode-with-plugins
     st
@@ -128,5 +122,7 @@
     BROWSER = "chromium";
     GTK_IM_MODULE = "xim"; # For compose key
     QT_IM_MODULE = "xim";
+
+    BSPWM_SOCKET = "/run/user/$UID/bspwm-socket"; # TODO: Include X display number to make unique
   };
 }
