@@ -23,4 +23,6 @@
   termite = (pkgs.termite.override {
     configFile = (import termite/config.nix { inherit theme; });
   });
+
+  zcash = pkgs.callPackage ./zcash {};
 }

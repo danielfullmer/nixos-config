@@ -1,0 +1,25 @@
+From 01354e527240547f0b2fbf1a6df322cf4ee8ae39 Mon Sep 17 00:00:00 2001
+From: Daniel Fullmer <daniel.fullmer@yale.edu>
+Date: Sat, 16 Apr 2016 15:16:46 -0400
+Subject: [PATCH] Boost -mt extension is deprecated
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 5d062a1..eb87a26 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -714,7 +714,7 @@ CPPFLAGS="-I$LIBSNARK_INCDIR $CPPFLAGS"
+ AC_CHECK_HEADER([libsnark/gadgetlib1/gadget.hpp],,AC_MSG_ERROR(libsnark headers missing))
+ AC_CHECK_LIB([snark],[main],LIBSNARK_LIBS=-lsnark, [AC_MSG_ERROR(libsnark missing)], [-lgmpxx])
+ 
+-LIBZCASH_LIBS="-lsnark -lgmp -lgmpxx -lboost_system-mt -lcrypto -lsodium -fopenmp"
++LIBZCASH_LIBS="-lsnark -lgmp -lgmpxx -lboost_system -lcrypto -lsodium -fopenmp"
+ 
+ AC_CHECK_LIB([crypto],[RAND_egd],[],[
+   AC_ARG_WITH([libressl],
+-- 
+2.8.0
+
