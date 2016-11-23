@@ -1,4 +1,4 @@
-{ pkgs,
+{ pkgs ? (import <nixpkgs>),
   theme ? (import ../themes)
 }:
 
@@ -13,7 +13,8 @@
 #    ];
 #  });
 
-  neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
+  # TODO: If I override this with the same name there is an issue with the neovim-qt derivation
+  nvim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
 
   st = (pkgs.st.override {
     conf = (import st/config.h.nix { inherit pkgs theme; });

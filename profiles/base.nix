@@ -65,7 +65,7 @@
     silver-searcher
     git
 
-    neovim
+    nvim
     emacs
 
     zerotierone
