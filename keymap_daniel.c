@@ -9,7 +9,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      GRV,    Q,    W,    D,    F,    K,                             P,    U,    R,    L, SCLN, BSLS,  \
      TAB,    A,    S,    E,    T,    G,                             Y,    N,    I,    O,    H, QUOT,  \
     LSFT,    Z,    X,    C,    V,    B,  DEL, HOME,  PGUP, RCTL,    J,    M, COMM,  DOT, SLSH, RSFT,  \
-      NO,   NO,   NO, LEFT, RGHT,              END,  PGDN,             DOWN,   UP, LBRC, RBRC,   NO,  \
+    LGUI,   NO,   NO, LEFT, RGHT,              END,  PGDN,             DOWN,   UP,   NO, RALT, RCTL,  \
                                    FN1,  FN2, LALT,  RGUI,  ENT,  FN3                                 \
     ),
 
