@@ -1,8 +1,8 @@
-{ pkgs ? (import <nixpkgs> {}),
+{ pkgs,
   theme ? (import ../themes)
 }:
 
-rec {
+{
 ### Example to patch a derivation
 #  zerotierone = pkgs.lib.overrideDerivation pkgs.zerotierone (attrs: {
 #    patches = [

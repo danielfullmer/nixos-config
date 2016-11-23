@@ -51,10 +51,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = (pkgs: import ../pkgs { inherit pkgs; });
-  };
+  nixpkgs.config = import ../pkgs/config.nix;
 
   environment.systemPackages = (with pkgs; [
     binutils
