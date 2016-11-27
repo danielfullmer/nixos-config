@@ -27,7 +27,9 @@
           ${pkgs.bspwm}/bin/bspc config borderless_monocle  true
           ${pkgs.bspwm}/bin/bspc config gapless_monocle     true
 
-          ${pkgs.bspwm}/bin/bspc monitor -d • • • • •
+          for name in `bspc query -M`; do
+            ${pkgs.bspwm}/bin/bspc monitor $name -d • • • •
+          done
 
           ${pkgs.bspwm}/bin/bspc rule -a Gimp desktop=^8 follow=on floating=on
           ${pkgs.bspwm}/bin/bspc rule -a mplayer2 floating=on
