@@ -12,17 +12,39 @@
     ../profiles/homedir.nix
   ];
 
-  hardware.enableAllFirmware = true;
-  boot.initrd.kernelModules = [ "hid-multitouch" ];
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
-  boot.kernelModules = [ "kvm-intel" "hid-multitouch" ];
-  boot.kernelParams = [
-    "i915.preliminary_hw_support=1" # Remove in kernel 4.3?
-    "i915.enable_guc_submission=Y"
-    "i915.guc_log_level=3"
-  ];
-  boot.blacklistedKernelModules = [ "mei_itouch_hid" ]; # Blacklist since it often crashes
-  boot.extraModulePackages = [ ];
+  # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
+  boot = {
+    # Use the gummiboot efi boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+
+    kernelPackages = pkgs.linuxPackages_testing;
+
+    # These patches came from https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
+    kernelPatches = [
+      { name = "IPTS";
+        patch = ../pkgs/surface-pro-firmware/ipts.patch;
+        extraConfig = "INTEL_IPTS m";
+      }
+      { name = "type-cover";
+        patch = ../pkgs/surface-pro-firmware/type-cover.patch;
+      }
+    ];
+
+    initrd.kernelModules = [ "hid-multitouch" ];
+    initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+    kernelModules = [ "kvm-intel" "hid-multitouch" ];
+    kernelParams = [
+      #"resume=/dev/mapper/lvm--quatermain-swap"
+      "noresume"
+    ];
+    extraModulePackages = [ ];
+  };
+
+  hardware = {
+    enableAllFirmware = true;
+    firmware = [ pkgs.surface-pro-firmware ];
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/euler";
@@ -39,36 +61,6 @@
 
   nix.maxJobs = 2;
   nix.buildCores = 4;
-
-  # Use the gummiboot efi boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.callPackage <nixpkgs/pkgs/os-specific/linux/kernel/generic.nix> {
-      inherit (pkgs) stdenv perl buildLinux;
-
-      version = "4.6.7";
-      extraMeta.branch = "4.6";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "npjohnson";
-        repo = "linux-surface";
-        # branch: "linux-4.6.y"
-        rev = "e7eaca4b8ddeeabcb307017838918f34c7ceecaa";
-        sha256 = "0zq87ipj5xj74nvph1qgh7z0yrc69sw3hb84ailw03q91kc87sy1";
-      };
-
-      # From README-IPTS.md of the repo above
-      extraConfig = "INTEL_MEI_ITOUCH m";
-
-      kernelPatches = [];
-
-      features.iwlwifi = true;
-      features.efiBootStub = true;
-      features.needsCifsUtils = true;
-      features.canDisableNetfilterConntrackHelpers = true;
-      features.netfilterRPFilter = true;
-   });
 
   networking.hostName = "euler";
   networking.hostId = "56c53b14";
