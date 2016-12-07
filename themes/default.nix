@@ -1,7 +1,7 @@
 rec {
   # Base16 colors
-  name = "irblack";
-  colors = (import ./colors/base16-irblack.nix);
+  name = "isotope";
+  colors = (import ./colors/base16-isotope.nix);
 
   # Default fonts
   fontName = "DejaVu Sans Mono for Powerline";
