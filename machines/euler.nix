@@ -95,21 +95,7 @@
     GDK_DPI_SCALE = "0.5"; # Reverse scale the fonts
   };
 
-  services.xserver.synaptics = {
-    enable = true;
-    twoFingerScroll = true;
-    palmDetect = true;
-    buttonsMap = [ 1 3 2 ];
-    fingersMap = [ 1 3 2 ];
-    minSpeed = "0.8";
-    maxSpeed = "1.4";
-    additionalOptions = ''
-    MatchDevicePath "/dev/input/event*"
-    Option "vendor" "045e"
-    Option "product" "07e8"
-    '';
-  };
-  services.xserver.wacom.enable = true;
+  services.xserver.libinput.enable = true;
 
   services.synergy.client = {
     enable = true;
