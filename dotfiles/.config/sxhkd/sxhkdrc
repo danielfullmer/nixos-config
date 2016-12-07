@@ -87,6 +87,15 @@ alt + @button{1-3}
 	bspc pointer -u
 
 #
+# audio
+#
+XF86AudioRaiseVolume
+	amixer sset Master 1000+ unmute
+
+XF86AudioLowerVolume
+	amixer sset Master 1000- unmute
+
+#
 # wm independent hotkeys
 #
 
