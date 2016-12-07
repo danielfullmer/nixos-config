@@ -25,7 +25,10 @@
   });
 
   termite = (pkgs.termite.override {
-    configFile = (import termite/config.nix { inherit theme; });
+    configFile = pkgs.writeTextFile {
+      name = "termite-config";
+      text = (import termite/config.nix { inherit pkgs theme; });
+    };
   });
 
   zcash = pkgs.callPackage ./zcash {};
