@@ -26,8 +26,13 @@
         patch = ../pkgs/surface-pro-firmware/ipts.patch;
         extraConfig = "INTEL_IPTS m";
       }
+      # This patch should be in 4.10
       { name = "type-cover";
         patch = ../pkgs/surface-pro-firmware/type-cover.patch;
+      }
+      # See https://bugzilla.kernel.org/show_bug.cgi?id=188351
+      { name = "mwifiex-panic-fix";
+        patch = ../pkgs/surface-pro-firmware/mwifiex-panic-fix.patch;
       }
     ];
 
