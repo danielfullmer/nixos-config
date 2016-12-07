@@ -5,7 +5,7 @@ rec {
 
   # Default fonts
   fontName = "DejaVu Sans Mono for Powerline";
-  fontSize = "12";
+  fontSize = "10";
 }
 
 # base00 - Default Background
