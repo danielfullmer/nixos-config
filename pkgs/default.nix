@@ -1,8 +1,8 @@
-{ pkgs ? (import <nixpkgs>),
+{ pkgs ? (import <nixpkgs> {}),
   theme ? (import ../themes)
 }:
 
-{
+with pkgs; {
 ### Example to patch a derivation
 #  zerotierone = pkgs.lib.overrideDerivation pkgs.zerotierone (attrs: {
 #    patches = [
@@ -13,23 +13,23 @@
 #    ];
 #  });
 
-  neofetch = pkgs.callPackage ./neofetch {};
+  neofetch = callPackage ./neofetch {};
 
   # TODO: If I override this with the same name there is an issue with the neovim-qt derivation
-  nvim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
+  nvim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs; }); };
 
-  surface-pro-firmware = pkgs.callPackage ./surface-pro-firmware {};
+  surface-pro-firmware = callPackage ./surface-pro-firmware {};
 
-  st = (pkgs.st.override {
+  st = (st.override {
     conf = (import st/config.h.nix { inherit pkgs theme; });
   });
 
-  termite = (pkgs.termite.override {
+  termite = (termite.override {
     configFile = pkgs.writeTextFile {
       name = "termite-config";
       text = (import termite/config.nix { inherit pkgs theme; });
     };
   });
 
-  zcash = pkgs.callPackage ./zcash {};
+  zcash = callPackage ./zcash {};
 }
