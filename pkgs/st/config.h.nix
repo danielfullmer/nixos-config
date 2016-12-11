@@ -1,12 +1,12 @@
-{ pkgs, theme }:
-''
+{ theme }:
+with theme; ''
 /*
  * appearance
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 /* static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true"; */
-static char font[] = "${theme.fontName}:size=${theme.fontSize}";
+static char font[] = "${fontName}:size=${toString fontSize}";
 static int borderpx = 2;
 
 /*
@@ -84,7 +84,9 @@ static char termname[] = "st-256color";
 static unsigned int tabspaces = 8;
 
 /* Color Theme */
-#include "${pkgs.base16}/st/base16-${theme.name}.dark.c"
+'' +
+(import (./. + "/theme.${brightness}.nix") { inherit colors; }) +
+''
 static unsigned int defaultrcs = 257;
 
 /*

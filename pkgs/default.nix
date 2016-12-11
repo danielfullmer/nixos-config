@@ -1,6 +1,6 @@
 { pkgs ? (import <nixpkgs> {}),
-  theme ? (import ../themes)
-}:
+  theme ? (import ../themes) }:
+
 
 with pkgs; {
 ### Example to patch a derivation
@@ -21,7 +21,7 @@ with pkgs; {
   surface-pro-firmware = callPackage ./surface-pro-firmware {};
 
   st = (st.override {
-    conf = (import st/config.h.nix { inherit pkgs theme; });
+    conf = (import st/config.h.nix { inherit theme; });
   });
 
   termite = (termite.override {

@@ -1,11 +1,14 @@
 { config, lib, pkgs, ... }:
 
+let
+  theme = import ../themes;
+in
 {
   imports = [
-    (import ../profiles/base.nix {})
+    (import ../profiles/base.nix { inherit theme; })
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
-    (import ../profiles/desktop {})
+    (import ../profiles/desktop { inherit theme; })
     ../profiles/autologin.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix

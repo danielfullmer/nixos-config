@@ -1,7 +1,7 @@
 { pkgs, theme }:
 
-''
+with theme; ''
 [options]
-font = ${theme.fontName} ${theme.fontSize}
+font = ${fontName} ${toString fontSize}
 
-'' + (builtins.readFile "${pkgs.base16}/termite/base16-${theme.name}.dark.config")
+'' + (import (./. + "/theme.${brightness}.nix") { inherit colors; })

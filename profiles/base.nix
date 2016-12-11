@@ -1,4 +1,4 @@
-{ theme ? (import ../themes) }:
+{ theme }:
 
 { config, pkgs, lib, ... }:
 {
@@ -51,7 +51,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.config = import ../pkgs/config.nix;
+  nixpkgs.config = import ../pkgs/config.nix { inherit pkgs theme; };
 
   environment.systemPackages = (with pkgs; [
     binutils
@@ -85,9 +85,13 @@
   programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { inherit pkgs theme; };
 
   programs.fish.enable = true;
-  programs.fish.interactiveShellInit = ''
-    eval sh ${pkgs.base16}/shell/base16-${theme.name}.dark.sh
-  '';
+  programs.fish.interactiveShellInit = let
+    themeScript = pkgs.writeTextFile {
+      name = "fishTheme";
+      text = import (../pkgs/shell + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+    };
+    in
+    "eval sh ${themeScript}";
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 

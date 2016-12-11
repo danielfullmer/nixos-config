@@ -1,4 +1,4 @@
-{ theme ? (import ../../themes) }:
+{ theme }:
 
 { config, pkgs, lib, ... }:
 {
@@ -51,8 +51,14 @@
       xterm.enable = false;
       session = [ {
         name = "desktop";
-        start = ''
-          (${pkgs.xorg.xrdb}/bin/xrdb -merge "${pkgs.base16}/xresources/base16-${theme.name}.dark.256.xresources") &
+        start =
+          let xresourcesFile = pkgs.writeTextFile {
+              name = "xresources";
+              text = import (../../pkgs/xresources + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+            };
+          in
+          ''
+          (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
           (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
           (${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
         '';

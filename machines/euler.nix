@@ -1,12 +1,16 @@
 { config, lib, pkgs, ... }:
 
+let
+  oldTheme = import ../themes;
+  theme = oldTheme // { fontSize = oldTheme.fontSize - 1; };
+in
 {
   imports = [
-    (import ../profiles/base.nix {})
+    (import ../profiles/base.nix { inherit theme; })
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/ssmtp.nix
-    (import ../profiles/desktop {})
+    (import ../profiles/desktop { inherit theme; })
     ../profiles/autologin.nix
     ../profiles/academic.nix
     ../profiles/homedir.nix

@@ -1,11 +1,11 @@
 rec {
   # Base16 colors
-  name = "isotope";
-  colors = (import ./colors/base16-isotope.nix);
+  colors = import ./colors/base16-isotope.nix;
+  brightness = "dark";
 
   # Default fonts
   fontName = "DejaVu Sans Mono for Powerline";
-  fontSize = "10";
+  fontSize = 10;
 }
 
 # base00 - Default Background
