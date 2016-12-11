@@ -94,6 +94,7 @@
     "eval sh ${themeScript}";
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
+  environment.etc."zathurarc".text = import (../pkgs/zathura + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
 
   environment.extraInit = ''
     export PATH="$HOME/.local/bin:$PATH"
