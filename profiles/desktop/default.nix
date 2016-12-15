@@ -13,7 +13,13 @@
       session = [ rec {
         name = "my-bspwm";
 
-        bspwmConfig = pkgs.writeScript "bspwmrc" ''
+        bspwmConfig =
+          let bspwmTheme = pkgs.writeTextFile {
+              name = "bspwmTheme";
+              text = import (../../pkgs/bspwm + "/theme.${theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=theme.colors; };
+            };
+          in
+        pkgs.writeScript "bspwmrc" ''
           #!/bin/sh
           ${pkgs.bspwm}/bin/bspc config border_width        2
           ${pkgs.bspwm}/bin/bspc config focused_border_color red
@@ -33,6 +39,8 @@
 
           ${pkgs.bspwm}/bin/bspc rule -a Gimp desktop=^8 follow=on floating=on
           ${pkgs.bspwm}/bin/bspc rule -a mplayer2 floating=on
+
+          source ${bspwmTheme}
 
           # This needs to happen after the bspc's above
           ${import ./panel/panel.nix { inherit pkgs theme; }}
