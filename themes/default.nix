@@ -4,7 +4,8 @@ rec {
   brightness = "dark";
 
   # Default fonts
-  fontName = "DejaVu Sans Mono for Powerline";
+  fontName = "DejaVu Sans";
+  termFontName = "DejaVu Sans Mono for Powerline";
   fontSize = 10;
 }
 

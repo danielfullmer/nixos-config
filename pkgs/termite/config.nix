@@ -2,6 +2,6 @@
 
 with theme; ''
 [options]
-font = ${fontName} ${toString fontSize}
+font = ${termFontName} ${toString fontSize}
 
 '' + (import (./. + "/theme.${brightness}.nix") { inherit colors; })

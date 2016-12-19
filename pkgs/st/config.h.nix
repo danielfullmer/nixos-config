@@ -6,7 +6,7 @@ with theme; ''
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 /* static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true"; */
-static char font[] = "${fontName}:size=${toString fontSize}";
+static char font[] = "${termFontName}:size=${toString fontSize}";
 static int borderpx = 2;
 
 /*

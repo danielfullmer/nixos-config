@@ -23,7 +23,7 @@ ${pkgs.xtitle}/bin/xtitle -sf 'T%s' > "$PANEL_FIFO" &
 
 ${import ./panel_bar.nix { inherit pkgs theme; }} < "$PANEL_FIFO" | \
     ${pkgs.bar-xft}/bin/lemonbar \
-        -f "${theme.fontName}" -f "FontAwesome" \
+        -f "${theme.termFontName}" -f "FontAwesome" \
         -F "${COLOR_FOREGROUND}" \
         -B "${COLOR_BACKGROUND}" \
     | while read line; do eval "$line"; done &
