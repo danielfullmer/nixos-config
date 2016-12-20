@@ -13,6 +13,7 @@ in
     (import ../profiles/desktop { inherit theme; })
     ../profiles/autologin.nix
     ../profiles/academic.nix
+    ../profiles/gdrive.nix
     ../profiles/homedir.nix
   ];
 
