@@ -7,6 +7,10 @@ rec {
   fontName = "DejaVu Sans";
   termFontName = "DejaVu Sans Mono for Powerline";
   fontSize = 10;
+
+  # GTK
+  gtkTheme = "Adapta-Eta";
+  gtkIconTheme = "Adwaita";
 }
 
 # base00 - Default Background

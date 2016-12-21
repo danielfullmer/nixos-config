@@ -138,10 +138,47 @@
     gnome3.gnome_themes_standard
     gnome3.adwaita-icon-theme
 
+    adapta-gtk-theme
+
     zathura
     mendeley
     google-chrome
   ]);
+
+  ### THEMES ###
+  # Note: Use package "awf" to test gtk themes
+  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-theme-name = ${theme.gtkTheme}
+    gtk-icon-theme-name = ${theme.gtkIconTheme}
+    gtk-font-name = ${theme.fontName} ${toString theme.fontSize}
+  '';
+
+  # Theme script inspired by bennofs/etc-nixos in desktop.nix
+  environment.extraInit = ''
+    # Remove local user overrides (for determinism, causes hard to find bugs)
+    rm -f ~/.config/gtk-3.0/settings.ini ~/.config/Trolltech.conf
+
+    # GTK3: add /etc/xdg/gtk-3.0 to search path for settings.ini
+    # We use /etc/xdg/gtk-3.0/settings.ini to set the icon and theme name for GTK 3
+    export XDG_CONFIG_DIRS="/etc/xdg:$XDG_CONFIG_DIRS"
+
+    # GTK2 theme + icon theme
+    export GTK2_RC_FILES="${pkgs.writeText "gtkrc2Theme" ''
+      gtk-theme-name = "${theme.gtkTheme}"
+      gtk-icon-theme-name = "${theme.gtkIconTheme}"
+      gtk-font-name = "${theme.fontName} ${toString theme.fontSize}"
+    ''}:$GTK2_RC_FILES"
+
+    # Set GTK_PATH so that GTK+ can find the theme engines.
+    export GTK_PATH="${config.system.path}/lib/gtk-2.0:${config.system.path}/lib/gtk-3.0"
+
+    # Set GTK_DATA_PREFIX so that GTK+ can find the Xfce themes.
+    export GTK_DATA_PREFIX=${config.system.path}
+
+    # SVG loader for pixbuf (needed for GTK svg icon themes)
+    export GDK_PIXBUF_MODULE_FILE=$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)
+  '';
 
   environment.variables = {
     BROWSER = "google-chrome-stable";
