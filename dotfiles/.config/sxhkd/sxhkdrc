@@ -109,7 +109,7 @@ alt + p
         passmenu -fn "DejaVu Sans Mono 12"
 
 alt + c
-        chromium
+        google-chrome-stable
 
 alt + d
         /home/danielrf/.local/bin/rofi-pdf ~/Mendeley\ Desktop

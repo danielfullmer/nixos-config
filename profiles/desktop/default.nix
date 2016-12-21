@@ -131,11 +131,11 @@
 
     zathura
     mendeley
-    chromium
+    google-chrome
   ]);
 
   environment.variables = {
-    BROWSER = "chromium";
+    BROWSER = "google-chrome-stable";
     GTK_IM_MODULE = "xim"; # For compose key
     QT_IM_MODULE = "xim";
 
