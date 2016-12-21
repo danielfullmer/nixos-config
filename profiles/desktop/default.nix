@@ -68,7 +68,9 @@
           ''
           (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
           (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
-          (${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
+          (${pkgs.networkmanagerapplet}/bin/nm-applet) &
+          (${pkgs.pasystray}/bin/pasystray) &
+          #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
         '';
       } ];
     };
