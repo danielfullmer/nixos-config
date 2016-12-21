@@ -95,7 +95,8 @@
       corefonts
       dejavu_fonts
       lmodern
-      source-code-pro
+      #source-code-pro
+      roboto
     ]);
   };
 

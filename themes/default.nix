@@ -4,8 +4,8 @@ rec {
   brightness = "dark";
 
   # Default fonts
-  fontName = "DejaVu Sans";
-  termFontName = "DejaVu Sans Mono for Powerline";
+  fontName = "Roboto";
+  termFontName = "Roboto Mono";
   fontSize = 10;
 
   # GTK
