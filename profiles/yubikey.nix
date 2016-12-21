@@ -5,7 +5,8 @@
     ACTION!="add|change", GOTO="u2f_end"
 
     # Yubico YubiKey
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", TAG+="uaccess"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", GROUP="wheel", MODE="0660"
+    # TODO: Try to replace group/mode with just TAG+="uaccess"
 
     LABEL="u2f_end"
   '';
