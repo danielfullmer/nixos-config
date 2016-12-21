@@ -8,7 +8,14 @@
 
 
     windowManager = {
-      default = "my-bspwm";
+      #default = "my-bspwm";
+      default = "i3";
+
+      i3.enable = true;
+      i3.configFile = pkgs.writeTextFile {
+        name = "i3config";
+        text = import ./i3config.nix { inherit pkgs theme; };
+      };
 
       session = [ rec {
         name = "my-bspwm";
