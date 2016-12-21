@@ -146,6 +146,8 @@
     google-chrome
   ]);
 
+  environment.etc."zathurarc".text = import (../../pkgs/zathura + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+
   ### THEMES ###
   # Note: Use package "awf" to test gtk themes
   environment.etc."xdg/gtk-3.0/settings.ini".text = ''
