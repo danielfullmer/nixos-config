@@ -87,6 +87,21 @@ in
     HandlePowerKey=suspend
     HandleLidSwitch=suspend
   '';
+  environment.etc."systemd/sleep.conf".text = ''
+    [Sleep]
+    SuspendState=freeze
+  '';
+
+  # Powertop suggested options
+  boot.extraModprobeConfig = "options snd_hda_intel power_save=1 power_save_controller=Y";
+  boot.kernel.sysctl = {
+    "kernel.nmi_watchdog" = 0;
+    "vm.dirty_writeback_centisecs" = 1500;
+  };
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", DEVPATH=="*/0000:0?:??.?", TEST=="power/control", ATTR{power/control}="auto"
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+  '';
 
   # X doesn't detect the right screen size / DPI
   # 12.3in diagonal, 2734x1824 resolution
