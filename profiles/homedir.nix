@@ -5,20 +5,14 @@
     dotfiles = lib.stringAfter [ "users" ]
     ''
       cd /home/danielrf
-      ln -fs ${../dotfiles}/.Xmodmap
-      ln -fs ${../dotfiles}/.Xresources
-      ln -fs ${../dotfiles}/.aliases
-      mkdir -p .config/{gtk-3.0,matplotlib,sxhkd,panel}
-      chown danielrf:danielrf .config .config/{gtk-3.0,matplotlib,sxhkd}
-      ln -fs ${../dotfiles}/.config/gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
+      mkdir -p .config/{matplotlib,sxhkd,panel}
+      chown danielrf:danielrf .config .config/{matplotlib,sxhkd}
       ln -fs ${../dotfiles}/.config/matplotlib/matplotlibrc .config/matplotlib/matplotlibrc
       ln -fs ${../dotfiles}/.config/sxhkd/sxhkdrc .config/sxhkd/sxhkdrc
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
       chown danielrf:danielrf .gnupg
       ln -fs ${../dotfiles}/.gnupg/gpg-agent.conf .gnupg/gpg-agent.conf
-      ln -fs ${../dotfiles}/.gtkrc-2.0
-      ln -fs ${../dotfiles}/.gvimrc
       ln -fs ${../dotfiles}/.latexmkrc
       mkdir -p .local/bin
       chown danielrf:danielrf .local .local/bin
@@ -26,7 +20,6 @@
       ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
       ln -fs ${../dotfiles}/.screenrc
       ln -fs ${../dotfiles}/.taskrc
-      ln -fs ${../dotfiles}/.xinitrc
       ln -fs ${../dotfiles}/.xmobarrc
       mkdir -p .xmonad
       chown danielrf:danielrf .xmonad

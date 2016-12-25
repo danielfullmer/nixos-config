@@ -74,6 +74,7 @@
           in
           ''
           (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
+          (${pkgs.xorg.xmodmap}/bin/xmodmap "${./Xmodmap}") &
           (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
           (${pkgs.networkmanagerapplet}/bin/nm-applet) &
           (${pkgs.pasystray}/bin/pasystray) &

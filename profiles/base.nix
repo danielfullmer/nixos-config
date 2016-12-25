@@ -99,7 +99,7 @@
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
   environment.shellInit = ''
-    eval $(${pkgs.coreutils}/bin/dircolors "${../dotfiles}/.dircolors")
+    eval $(${pkgs.coreutils}/bin/dircolors "${./dircolors}")
   '';
 
   environment.extraInit = ''
