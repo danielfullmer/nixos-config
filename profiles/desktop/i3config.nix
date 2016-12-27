@@ -10,7 +10,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:${theme.termFontName} ${toString theme.fontSize}
+font pango:${theme.fontName} ${toString theme.fontSize}
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -21,8 +21,8 @@ bindsym $mod+Return exec ${pkgs.termite}/bin/termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec ${pkgs.dmenu}/bin/dmenu_run -fn "${theme.termFontName} ${toString theme.fontSize}"
-bindsym $mod+p exec passmenu -fn "${theme.termFontName} ${toString theme.fontSize}"
+bindsym $mod+d exec ${pkgs.dmenu}/bin/dmenu_run -fn "${theme.fontName} ${toString theme.fontSize}"
+bindsym $mod+p exec passmenu -fn "${theme.fontName} ${toString theme.fontSize}"
 
 bindsym XF86AudioRaiseVolume exec amixer sset Master 1000+ unmute
 bindsym XF86AudioLowerVolume exec amixer sset Master 1000- unmute
