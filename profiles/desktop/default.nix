@@ -135,6 +135,8 @@
     rxvt_unicode-with-plugins
     st
 
+    mpv
+
     pavucontrol
 
     gnome3.gnome_themes_standard
@@ -191,4 +193,10 @@
 
     BSPWM_SOCKET = "/run/user/$UID/bspwm-socket"; # TODO: Include X display number to make unique
   };
+
+  # HW accelerated video playback
+  environment.variables.MPV_HOME = "/etc/mpv";
+  environment.etc."mpv/mpv.conf".text = ''
+    hwdec=auto
+  '';
 }

@@ -123,6 +123,9 @@ in
     screenName = "euler";
     serverAddress = "sysc-2";
   };
+  # Intel VAAPI support for hardware accelerated video playback
+  hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+  nixpkgs.config.mpv.vaapiSupport = true;
 
   environment.systemPackages = with pkgs; [ xorg.xbacklight ];
 }
