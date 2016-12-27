@@ -123,4 +123,6 @@ in
     screenName = "euler";
     serverAddress = "sysc-2";
   };
+
+  environment.systemPackages = with pkgs; [ xorg.xbacklight ];
 }
