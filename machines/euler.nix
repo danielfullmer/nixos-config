@@ -23,7 +23,7 @@ in
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_testing;
+    kernelPackages = pkgs.linuxPackages_4_9;
 
     # These patches came from https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
     kernelPatches = [
