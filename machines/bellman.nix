@@ -3,7 +3,7 @@
 let
   theme = import ../themes;
 in
-{
+rec {
   imports = [
     (import ../profiles/base.nix { inherit theme; })
     ../profiles/yubikey.nix
@@ -20,7 +20,7 @@ in
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ pkgs.linuxPackages_latest.rtl8812au ];
+  boot.extraModulePackages = [ boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
 
   fileSystems = {
@@ -48,13 +48,17 @@ in
   services.acpid.enable = true;
 
   # Use AMDGPU support. Needs kernel >=4.6.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_4_9;
   boot.kernelPatches = [ {
     name = "amdgpu-config";
     patch = "";
-    # Sea Island (Hawaii, 390x) support. TODO: Add southern island (7970) support w/ kernel 4.9. "DRM_AMDGPU_SI y"
-    extraConfig = "DRM_AMDGPU_CIK y";
+    # Support for Sea Island (Hawaii, 390x) and Southern island (7970) w/ kernel 4.9.
+    extraConfig = ''
+      DRM_AMDGPU_CIK y
+      DRM_AMDGPU_SI y
+    '';
   } ];
   boot.kernelParams = [ "amdgpu.exp_hw_support=1" ];
+  #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 }
