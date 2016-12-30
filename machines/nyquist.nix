@@ -25,6 +25,11 @@ in
       fsType = "ext4";
     };
 
+  fileSystems."/drf36" = {
+    device = "drf36";
+    fsType = "vboxsf";
+  };
+
   swapDevices = [ ];
 
   nix.maxJobs = 2;
