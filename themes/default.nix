@@ -1,6 +1,6 @@
 rec {
   # Base16 colors
-  colors = import ./colors/base16-isotope.nix;
+  colors = import ./colors/base16-chalk.nix;
   brightness = "dark";
 
   # Default fonts
