@@ -13,6 +13,8 @@ with pkgs; {
 #    ];
 #  });
 
+  duplicity = duplicity.override { inherit gnupg; };
+
   neofetch = callPackage ./neofetch {};
 
   # TODO: If I override this with the same name there is an issue with the neovim-qt derivation
