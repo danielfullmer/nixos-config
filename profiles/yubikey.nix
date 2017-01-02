@@ -22,11 +22,9 @@
   '';
 
   environment.systemPackages = (with pkgs; [
-    gnupg21
+    gnupg
     keybase
-
-    (pass.override { gnupg = pkgs.gnupg21; })
-
+    pass
     yubico-piv-tool
     yubikey-personalization
   ]);
