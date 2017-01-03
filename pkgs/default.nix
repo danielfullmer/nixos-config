@@ -35,5 +35,17 @@ with pkgs; {
     };
   });
 
+  my_qemu = lib.overrideDerivation qemu_kvm (attrs: {
+      patches = [
+        (fetchurl {
+          name = "qemu-vcpu-affinity";
+          url = https://github.com/justinvdk/qemu/commit/7d49a826417029df257604e62f7226b0cc4f5b7d.patch;
+          sha256 = "07ah72rqdv6945d9gcv1xgcvbs7kx4qa3av9162sjsd1ws16shhc";
+        })
+
+        ./qemu/input-linux-default-off.patch
+      ] ++ attrs.patches;
+    });
+
   zcash = callPackage ./zcash {};
 }

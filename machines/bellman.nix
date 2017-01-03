@@ -12,7 +12,6 @@ rec {
     ../profiles/autologin.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix
-    ../profiles/qemu-kvm.nix
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     ../profiles/homedir.nix
