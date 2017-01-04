@@ -19,7 +19,23 @@
     # These seem to help, but hopefully might not be necessary in the future
     "video=efifb:off"
     "amdgpu.dpm=0"
+
+    # CPU isolation stuff
+    "isolcpus=1-3,4-7"
+    "nohz_full=1-3,4-7"
+    "rcu_nocbs=1-3,4-7"
   ];
+
+  # This can be verified to be working if "Local Timer Interrupts" in /proc/interrupts is low for isolated cpus.
+  boot.kernelPatches = [ {
+    name = "enable-nohz-full";
+    patch = "";
+    extraConfig = "NO_HZ_FULL y";
+  } ];
+
+  # TODO: Use a cpuset instead of isolcpu.
+  # See https://access.redhat.com/solutions/1445073
+  # Make a script to enable exclusive CPU access for qemu--so it can be enabled/disabled at will.
 
   # Force use of second AMD card
   services.xserver.deviceSection = "BusId \"2:00:0\"";
@@ -32,6 +48,12 @@
   # https://www.reddit.com/r/VFIO/comments/4vqnnv/qemu_command_line_cpu_pinning/
   # https://www.reddit.com/r/VFIO/comments/4ytcao/just_want_to_rant_on_my_vfio_experience/
   # https://nm.reddit.com/r/VFIO/comments/5hmvlr/sharing_keyboardmouse_directly_with_spice/
+  # https://www.reddit.com/r/VFIO/comments/4fjsie/howto_passing_through_an_entire_block_device/
+  #
+  # https://lwn.net/Articles/656807/
+  # http://www.breakage.org/2013/11/15/nohz_fullgodmode/
+  # https://wiki.fd.io/view/VPP/How_To_Optimize_Performance_(System_Tuning)
+  # https://lwn.net/Articles/549592/
   #
   # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
   systemd.services.qemu-windows = {
@@ -52,22 +74,24 @@
       vfiobind 0000:01:00.1
       vfiobind 0000:00:14.0 # USB 3 controller
 
-      ${pkgs.my_qemu}/bin/qemu-kvm \
+      ${pkgs.my_qemu}/bin/qemu-system-x86_64 \
         -name win10 \
+        -enable-kvm \
         -m 8G \
         -mem-path /dev/hugepages \
         -mem-prealloc \
-        -cpu host,kvm=off,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
         -smp sockets=1,cores=6,threads=1 \
-        -vcpu vcpunum=0,affinity=0 \
-        -vcpu vcpunum=1,affinity=1 \
-        -vcpu vcpunum=2,affinity=2 \
-        -vcpu vcpunum=3,affinity=3 \
-        -vcpu vcpunum=4,affinity=4 \
-        -vcpu vcpunum=5,affinity=5 \
+        -vcpu vcpunum=0,affinity=1 \
+        -vcpu vcpunum=1,affinity=2 \
+        -vcpu vcpunum=2,affinity=3 \
+        -vcpu vcpunum=3,affinity=5 \
+        -vcpu vcpunum=4,affinity=6 \
+        -vcpu vcpunum=5,affinity=7 \
         -device vfio-pci,host=01:00.0,multifunction=on \
         -device vfio-pci,host=01:00.1 \
-        -drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,format=raw,if=virtio \
+        -drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
+        -device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
         -nographic \
         -monitor unix:/run/qemu-windows.socket,server,nowait \
         -net nic,model=virtio \
@@ -89,10 +113,10 @@
       KillMode = "mixed";
       KillSignal = "WINCH";
 
-      # Use round-robin scheduling. Since the VM threads have affinity for the first 3 cores,
-      # we should always have at least one available to for the rest of the overall linux system.
+      # Use FIFO scheduling. Since the VM threads have affinity for the first 3 cores,
+      # we should always have at least one available for the rest of the overall linux system.
       # I normally wouldn't worry about this, but the HTC Vive can't handle delays from the underlying system and still hit framerate.
-      CPUSchedulingPolicy = "rr";
+      CPUSchedulingPolicy = "fifo";
       CPUSchedulingPriority = "50";
     };
   };
