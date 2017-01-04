@@ -1,0 +1,11 @@
+diff -ur qemu-2.7.0-orig/ui/input-linux.c qemu-2.7.0/ui/input-linux.c
+--- qemu-2.7.0-orig/ui/input-linux.c	2017-01-02 22:43:08.764993913 -0500
++++ qemu-2.7.0/ui/input-linux.c	2017-01-02 22:44:13.596854932 -0500
+@@ -406,7 +406,6 @@
+     }
+ 
+     qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
+-    input_linux_toggle_grab(il);
+     QTAILQ_INSERT_TAIL(&inputs, il, next);
+     il->initialized = true;
+     return;
