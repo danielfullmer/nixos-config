@@ -1,16 +1,12 @@
 { config, lib, pkgs, ... }:
 
-let
-  oldTheme = import ../themes;
-  theme = oldTheme // { fontSize = oldTheme.fontSize - 1; };
-in
 {
   imports = [
-    (import ../profiles/base.nix { inherit theme; })
+    ../profiles/base.nix
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/ssmtp.nix
-    (import ../profiles/desktop { inherit theme; })
+    ../profiles/desktop/default.nix
     ../profiles/autologin.nix
     ../profiles/academic.nix
     ../profiles/gdrive.nix
@@ -109,6 +105,8 @@ in
   services.xserver.monitorSection = ''
     DisplaySize 260 173
   '';
+
+  theme.fontSize = 9;
 
   fonts.fontconfig.dpi = 267;
   environment.variables = {

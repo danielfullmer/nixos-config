@@ -1,13 +1,10 @@
-let
-  theme = (import ../themes);
-in
 import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
   name = "desktop";
 
   machine = { config, pkgs, ... }: {
     imports = [
-      (import ../profiles/base.nix { inherit theme; })
-      (import ../profiles/desktop { inherit theme; })
+      ../profiles/base.nix
+      ../profiles/desktop/default.nix
       ../profiles/autologin.nix
       ../profiles/homedir.nix
     ];

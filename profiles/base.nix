@@ -1,7 +1,7 @@
-{ theme }:
-
 { config, pkgs, lib, ... }:
 {
+  imports = [ ../modules/theme.nix ];
+
   services.openssh.enable = true;
 
   networking.domain = "controlnet";
@@ -54,7 +54,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.config = import ../pkgs/config.nix { inherit pkgs theme; };
+  nixpkgs.config = import ../pkgs/config.nix { pkgs=pkgs; theme=config.theme; };
 
   environment.systemPackages = (with pkgs; [
     binutils
@@ -85,13 +85,13 @@
   };
 
   programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { inherit pkgs theme; };
+  programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { pkgs=pkgs; theme=config.theme; };
 
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = let
     themeScript = pkgs.writeTextFile {
       name = "fishTheme";
-      text = import (../pkgs/shell + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+      text = import (../pkgs/shell + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
     };
     in
     "eval sh ${themeScript}";

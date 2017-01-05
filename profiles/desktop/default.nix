@@ -1,5 +1,3 @@
-{ theme }:
-
 { config, pkgs, lib, ... }:
 {
   services.xserver = {
@@ -14,7 +12,7 @@
       i3.enable = true;
       i3.configFile = pkgs.writeTextFile {
         name = "i3config";
-        text = import ./i3config.nix { inherit pkgs theme; };
+        text = import ./i3config.nix { pkgs=pkgs; theme=config.theme; };
       };
 
       session = [ rec {
@@ -23,7 +21,7 @@
         bspwmConfig =
           let bspwmTheme = pkgs.writeTextFile {
               name = "bspwmTheme";
-              text = import (../../pkgs/bspwm + "/theme.${theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=theme.colors; };
+              text = import (../../pkgs/bspwm + "/theme.${config.theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=config.theme.colors; };
             };
           in
         pkgs.writeScript "bspwmrc" ''
@@ -50,7 +48,7 @@
           source ${bspwmTheme}
 
           # This needs to happen after the bspc's above
-          ${import ./panel/panel.nix { inherit pkgs theme; }}
+          ${import ./panel/panel.nix { pkgs=pkgs; theme=config.theme; }}
         '';
 
         start = ''
@@ -69,7 +67,7 @@
         start =
           let xresourcesFile = pkgs.writeTextFile {
               name = "xresources";
-              text = import (../../pkgs/xresources + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+              text = import (../../pkgs/xresources + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
             };
           in
           ''
@@ -149,15 +147,15 @@
     google-chrome
   ]);
 
-  environment.etc."zathurarc".text = import (../../pkgs/zathura + "/theme.${theme.brightness}.nix") { colors=theme.colors; };
+  environment.etc."zathurarc".text = import (../../pkgs/zathura + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
 
   ### THEMES ###
   # Note: Use package "awf" to test gtk themes
   environment.etc."xdg/gtk-3.0/settings.ini".text = ''
     [Settings]
-    gtk-theme-name = ${theme.gtkTheme}
-    gtk-icon-theme-name = ${theme.gtkIconTheme}
-    gtk-font-name = ${theme.fontName} ${toString theme.fontSize}
+    gtk-theme-name = ${config.theme.gtkTheme}
+    gtk-icon-theme-name = ${config.theme.gtkIconTheme}
+    gtk-font-name = ${config.theme.fontName} ${toString config.theme.fontSize}
   '';
 
   # Theme script inspired by bennofs/etc-nixos in desktop.nix
@@ -171,9 +169,9 @@
 
     # GTK2 theme + icon theme
     export GTK2_RC_FILES="${pkgs.writeText "gtkrc2Theme" ''
-      gtk-theme-name = "${theme.gtkTheme}"
-      gtk-icon-theme-name = "${theme.gtkIconTheme}"
-      gtk-font-name = "${theme.fontName} ${toString theme.fontSize}"
+      gtk-theme-name = "${config.theme.gtkTheme}"
+      gtk-icon-theme-name = "${config.theme.gtkIconTheme}"
+      gtk-font-name = "${config.theme.fontName} ${toString config.theme.fontSize}"
     ''}:$GTK2_RC_FILES"
 
     # Set GTK_PATH so that GTK+ can find the theme engines.
