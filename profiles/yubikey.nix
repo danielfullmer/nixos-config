@@ -21,6 +21,9 @@
     gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
   '';
 
+  # To use, append the output of pamu2fcfg to ~/.config/Yubico/u2f_keys
+  security.pam.enableU2F = true;
+
   environment.systemPackages = (with pkgs; [
     gnupg
     keybase
