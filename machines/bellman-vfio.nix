@@ -120,4 +120,27 @@
       CPUSchedulingPriority = "50";
     };
   };
+
+  services.xserver.desktopManager.extraSessionCommands =
+    let synergyConfigFile = pkgs.writeText "synergy.conf" ''
+      section: screens
+          bellman:
+          devnull-PC:
+          euler-win:
+      end
+      section: aliases
+      end
+      section: links
+      bellman:
+          right = devnull-PC
+          down = euler-win
+      devnull-PC:
+          left = bellman
+      euler-win:
+          up = bellman
+      end
+    '';
+    in ''
+      (${pkgs.synergy}/bin/synergys -c ${synergyConfigFile}) &
+    '';
 }
