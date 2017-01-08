@@ -21,7 +21,7 @@
     "amdgpu.dpm=0"
 
     # CPU isolation stuff
-    "isolcpus=1-3,4-7"
+    #"isolcpus=1-3,4-7"
     "nohz_full=1-3,4-7"
     "rcu_nocbs=1-3,4-7"
   ];
@@ -72,11 +72,16 @@
 
       vfiobind 0000:01:00.0 # 390x
       vfiobind 0000:01:00.1
-      vfiobind 0000:00:14.0 # USB 3 controller
+      #vfiobind 0000:00:14.0 # USB 3 controller
+      vfiobind 0000:06:00.0 # USB 3 controller
+
+      export QEMU_AUDIO_DRV=pa
+      export QEMU_PA_SERVER=/run/user/1000/pulse/native
 
       ${pkgs.my_qemu}/bin/qemu-system-x86_64 \
         -name win10 \
         -enable-kvm \
+        -rtc base=localtime \
         -m 8G \
         -mem-path /dev/hugepages \
         -mem-prealloc \
@@ -96,8 +101,7 @@
         -monitor unix:/run/qemu-windows.socket,server,nowait \
         -net nic,model=virtio \
         -net user \
-        -usb \
-        -device vfio-pci,host=00:14.0 \
+        -device vfio-pci,host=06:00.0 \
         -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd,grab_all=yes \
         -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse
     '';
