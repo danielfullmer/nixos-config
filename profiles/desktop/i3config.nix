@@ -54,11 +54,10 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+s split h
-
-# split in vertical orientation
-bindsym $mod+v split v
+# split in horizontal/vertical orientation.
+# i3 has the opposite definition as tmux, but I reverse it here to make consistent.
+bindsym $mod+s split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
