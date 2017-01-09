@@ -87,6 +87,7 @@ with lib;
             (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
             (${pkgs.networkmanagerapplet}/bin/nm-applet) &
             (${pkgs.pasystray}/bin/pasystray) &
+            (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
             #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
             ${config.services.xserver.desktopManager.extraSessionCommands}
