@@ -15,8 +15,7 @@ with pkgs; {
 
   duplicity = duplicity.override { inherit gnupg; };
 
-  # TODO: If I override this with the same name there is an issue with the neovim-qt derivation
-  nvim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
+  neovim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
   surface-pro-firmware = callPackage ./surface-pro-firmware {};
 
