@@ -76,10 +76,11 @@ with lib;
         session = [ {
           name = "desktop";
           start =
-            let xresourcesFile = pkgs.writeTextFile {
-                name = "xresources";
-                text = import (../../pkgs/xresources + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
-              };
+            let
+              xresourcesFile = pkgs.writeText "xresources"
+                (import (../../pkgs/xresources + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; });
+              dunstFile = pkgs.writeText "dunstFile"
+                (import ./dunstrc.nix { pkgs=pkgs; theme=config.theme; });
             in
             ''
             (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
@@ -88,6 +89,7 @@ with lib;
             (${pkgs.networkmanagerapplet}/bin/nm-applet) &
             (${pkgs.pasystray}/bin/pasystray) &
             (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
+            (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
             #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
             ${config.services.xserver.desktopManager.extraSessionCommands}
@@ -142,6 +144,7 @@ with lib;
       dmenu
       rofi
       stalonetray
+      dunst
 
       termite
       rxvt_unicode-with-plugins
