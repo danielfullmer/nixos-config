@@ -1,5 +1,5 @@
 # vim: foldmethod=marker
-{ pkgs }:
+{ pkgs, theme }:
 {
   # See http://beyermatthias.de/blog/2015/11/25/how-to-setup-neo-vim-on-nixos/
   vam = {
@@ -14,7 +14,6 @@
       # { name = "vim-indent-guides"; }
       { name = "airline"; }
       #" Colorscheme
-      # Plug 'chriskempson/base16-vim'
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
       # Plug 'edkolev/tmuxline.vim'
@@ -112,10 +111,12 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 
-set background=dark
+set background=${theme.brightness}
 let base16colorspace=256
-let g:base16_shell_path="$HOME/.base16-shell/"
-"colorscheme base16-tomorrow
+if !has('gui_running')
+  execute "silent !/bin/sh ${import ../shell/theme.script.nix { inherit pkgs theme; }}"
+endif
+source ${pkgs.writeText "vimTheme" (import (./. + "/theme.${theme.brightness}.nix") { colors=theme.colors; })}
 
 let g:airline_powerline_fonts=1
 

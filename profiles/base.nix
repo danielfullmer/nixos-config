@@ -88,13 +88,9 @@
   programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { pkgs=pkgs; theme=config.theme; };
 
   programs.fish.enable = true;
-  programs.fish.interactiveShellInit = let
-    themeScript = pkgs.writeTextFile {
-      name = "fishTheme";
-      text = import (../pkgs/shell + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
-    };
-    in
-    "eval sh ${themeScript}";
+  programs.fish.interactiveShellInit = ''
+    eval sh ${import ../pkgs/shell/theme.script.nix { pkgs=pkgs; theme=config.theme; }}
+  '';
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
