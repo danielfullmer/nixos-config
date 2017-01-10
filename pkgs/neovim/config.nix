@@ -118,7 +118,9 @@ if !has('gui_running')
 endif
 source ${pkgs.writeText "vimTheme" (import (./. + "/theme.${theme.brightness}.nix") { colors=theme.colors; })}
 
+let g:airline_theme="base16_nixos_configured"
 let g:airline_powerline_fonts=1
+source ${pkgs.writeText "airlineTheme" (import (./airline + "/theme.${theme.brightness}.nix") { colors=theme.colors; })}
 
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1
