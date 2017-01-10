@@ -21,8 +21,8 @@ bindsym $mod+Return exec ${pkgs.termite}/bin/termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec ${pkgs.dmenu}/bin/dmenu_run -fn "${theme.fontName} ${toString theme.fontSize}"
-bindsym $mod+p exec passmenu -fn "${theme.fontName} ${toString theme.fontSize}"
+bindsym $mod+d exec ${pkgs.dmenu}/bin/dmenu_run -fn "${theme.fontName}-${toString theme.titleFontSize}"
+bindsym $mod+p exec passmenu -fn "${theme.fontName}-${toString theme.titleFontSize}"
 
 bindsym XF86AudioRaiseVolume exec amixer sset Master 1000+ unmute
 bindsym XF86AudioLowerVolume exec amixer sset Master 1000- unmute

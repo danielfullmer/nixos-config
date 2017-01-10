@@ -7,6 +7,7 @@ rec {
   fontName = "Roboto";
   termFontName = "Roboto Mono";
   fontSize = 10;
+  titleFontSize = 14; # Example value. See theme.nix
 
   # GTK
   gtkTheme = "Adapta-Eta";

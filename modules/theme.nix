@@ -32,6 +32,11 @@ in
       default = defaultTheme.fontSize;
     };
 
+    titleFontSize = mkOption {
+      type = types.int;
+      default = config.theme.fontSize + 4; # This allows changing only fontSize if desired.
+    };
+
     gtkTheme = mkOption {
       type = types.str;
       default = defaultTheme.gtkTheme;
