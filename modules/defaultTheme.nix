@@ -1,6 +1,7 @@
 rec {
   # Base16 colors
-  colors = import ./colors/base16-chalk.nix;
+  base16Name = "chalk";
+  colors = import (./colors + "/base16-${base16Name}.nix");
   brightness = "dark";
 
   # Default fonts

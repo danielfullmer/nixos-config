@@ -7,9 +7,14 @@ let
 in
 {
   options.theme = {
+    base16Name = mkOption {
+      type = types.str;
+      default = defaultTheme.base16Name;
+    };
+
     colors = mkOption {
       type = types.attrsOf types.str;
-      default = defaultTheme.colors;
+      default = import (./colors + "/base16-${config.theme.base16Name}.nix");
     };
 
     brightness = mkOption {
