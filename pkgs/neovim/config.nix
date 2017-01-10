@@ -6,6 +6,7 @@
     knownPlugins = pkgs.vimPlugins // (pkgs.callPackage ./plugins.nix {});
 
     pluginDictionaries = [
+      { name = "vim2nix"; }
       { name = "vimproc"; }
 
       # UI {{{
