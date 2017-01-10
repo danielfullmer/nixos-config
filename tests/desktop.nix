@@ -10,7 +10,6 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
     ];
   };
 
-  # Use our overrides for neofetch
   testScript = with pkgs // (import ../pkgs { inherit pkgs; });
     ''
       $machine->waitForX;
@@ -20,8 +19,7 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
       $machine->sleep(5);
       $machine->screenshot("startup");
 
-      # Need to explicitly reference the config file
-      $machine->succeed("su - danielrf -s /bin/sh -c 'DISPLAY=:0 ${termite}/bin/termite -t Termite -e \"${neofetch}/bin/neofetch --config ${neofetch}/share/neofetch/config\" --hold &'");
+      $machine->succeed("su - danielrf -s /bin/sh -c 'DISPLAY=:0 ${termite}/bin/termite -t Termite -e \"${screenfetch}/bin/screenfetch\" --hold &'");
       $machine->waitForWindow(qr/Termite/);
       $machine->sleep(10);
       $machine->screenshot("terminal");
