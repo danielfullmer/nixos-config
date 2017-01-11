@@ -112,6 +112,8 @@ with lib;
         lmodern
         #source-code-pro
         roboto
+        roboto-mono
+        roboto-slab
       ]);
     };
 
