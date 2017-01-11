@@ -140,6 +140,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command ${pkgs.i3status}/bin/i3status --config ${./i3status.config}
+        font pango:${theme.fontName} ${toString theme.titleFontSize}
 ''
 + import (../../pkgs/i3bar + "/theme.${theme.brightness}.nix") { colors=theme.colors; }
 + ''
