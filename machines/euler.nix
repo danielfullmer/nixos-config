@@ -106,7 +106,7 @@
     DisplaySize 260 173
   '';
 
-  theme.fontSize = 9;
+  theme.fontSize = 8;
 
   fonts.fontconfig.dpi = 267;
   environment.variables = {
