@@ -39,7 +39,7 @@
         home            = "/home/danielrf";
         createHome      = true;
         password        = "changeme";
-        shell           = "/run/current-system/sw/bin/fish";
+        shell           = "/run/current-system/sw/bin/zsh";
         openssh.authorizedKeys.keys = [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey"
         ];
@@ -84,13 +84,21 @@
     EDITOR = "vim";
   };
 
-  programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = import ../pkgs/zsh/zshrc.nix { pkgs=pkgs; theme=config.theme; };
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true;
+    enableAutosuggestions = true;
+    promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
+    interactiveShellInit = import (../pkgs/shell + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
+  };
 
-  programs.fish.enable = true;
-  programs.fish.interactiveShellInit = ''
-    eval sh ${import ../pkgs/shell/theme.script.nix { pkgs=pkgs; theme=config.theme; }}
-  '';
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      eval sh ${import ../pkgs/shell/theme.script.nix { pkgs=pkgs; theme=config.theme; }}
+    '';
+  };
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
