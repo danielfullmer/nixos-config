@@ -58,6 +58,11 @@ rec {
   #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
+  services.xserver.deviceSection = ''
+    Option "DRI3" "1"
+    Option "TearFree" "on"
+  '';
+
   # For Seiki 4K monitor
   # TODO: Add modeline for 1080p at 120Hz
   fonts.fontconfig.dpi = 115;
