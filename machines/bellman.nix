@@ -54,7 +54,16 @@ rec {
       DRM_AMDGPU_SI y
     '';
   } ];
-  boot.kernelParams = [ "amdgpu.exp_hw_support=1" ];
+  boot.kernelParams = [ "amdgpu.exp_hw_support=1" "amdgpu.audio=0" ];
   #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # For Seiki 4K monitor
+  # TODO: Add modeline for 1080p at 120Hz
+  fonts.fontconfig.dpi = 115;
+  fonts.fontconfig.subpixel.rgba = "bgr";
+  services.xserver.monitorSection = ''
+    DisplaySize 698 393
+  '';
+  theme.fontSize = 12;
 }
