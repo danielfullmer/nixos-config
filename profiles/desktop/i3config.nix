@@ -12,6 +12,12 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:${theme.fontName} ${toString theme.fontSize}
 
+# 1 pixel window borders
+new_window pixel 1
+
+# If only one window visible, hide borders
+hide_edge_borders smart
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
