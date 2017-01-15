@@ -13,6 +13,8 @@ with pkgs; {
 #    ];
 #  });
 
+  browserpass = callPackage ./browserpass {};
+
   duplicity = duplicity.override { inherit gnupg; };
 
   neovim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };

@@ -203,6 +203,19 @@ with lib;
       export GDK_PIXBUF_MODULE_FILE=$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)
     '';
 
+    environment.etc."opt/chrome/native-messaging-hosts/com.dannyvankooten.browserpass.json".text = ''
+      {
+        "name": "com.dannyvankooten.browserpass",
+        "description": "Browserpass binary for the Chrome extension",
+        "path": "${pkgs.browserpass}/bin/browserpass",
+        "type": "stdio",
+        "allowed_origins": [
+          "chrome-extension://jegbgfamcgeocbfeebacnkociplhmfbk/",
+          "chrome-extension://klfoddkbhleoaabpmiigbmpbjfljimgb/"
+        ]
+      }
+    '';
+
     environment.variables = {
       BROWSER = "google-chrome-stable";
       GTK_IM_MODULE = "xim"; # For compose key
