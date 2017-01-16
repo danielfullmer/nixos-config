@@ -45,15 +45,6 @@ rec {
 
   # Use AMDGPU support. Needs kernel >=4.6.
   boot.kernelPackages = pkgs.linuxPackages_4_9;
-  boot.kernelPatches = [ {
-    name = "amdgpu-config";
-    patch = "";
-    # Support for Sea Island (Hawaii, 390x) and Southern island (7970) w/ kernel 4.9.
-    extraConfig = ''
-      DRM_AMDGPU_CIK y
-      DRM_AMDGPU_SI y
-    '';
-  } ];
   boot.kernelParams = [ "amdgpu.exp_hw_support=1" "amdgpu.audio=0" ];
   #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
