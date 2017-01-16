@@ -6,8 +6,8 @@ rec {
 
   # Default fonts
   fontName = "Roboto";
-  termFontName = "Roboto Mono";
-  fontSize = 10;
+  termFontName = "Roboto Mono for Powerline";
+  fontSize = 10; # Suggestion: set fontSize = 0.45 * distance to monitor
   titleFontSize = 14; # Example value. See theme.nix
 
   # GTK
