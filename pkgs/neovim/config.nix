@@ -217,6 +217,7 @@ map <leader>g <Esc>:GundoToggle<CR>
 
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
+let g:vimtex_fold_enabled = 1
 
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
