@@ -11,6 +11,8 @@ in
 ''
 set-option -g prefix C-a
 
+set-option -g set-titles on
+set-option -g set-titles-string '#{pane_title}'
 set-option -g default-terminal "screen-256color"
 
 set-option -g base-index 1
