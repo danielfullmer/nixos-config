@@ -1,11 +1,29 @@
-diff -ur qemu-2.7.0-orig/ui/input-linux.c qemu-2.7.0/ui/input-linux.c
---- qemu-2.7.0-orig/ui/input-linux.c	2017-01-02 22:43:08.764993913 -0500
-+++ qemu-2.7.0/ui/input-linux.c	2017-01-02 22:44:13.596854932 -0500
-@@ -406,7 +406,6 @@
+From 40e80b70bb1356eaf812ff125082160f59b83f4f Mon Sep 17 00:00:00 2001
+From: Daniel Fullmer <danielrf12@gmail.com>
+Date: Fri, 27 Jan 2017 23:53:25 -0500
+Subject: [PATCH] Set input-linux to default off
+
+---
+ ui/input-linux.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/ui/input-linux.c b/ui/input-linux.c
+index f345317794..7e2f932e7a 100644
+--- a/ui/input-linux.c
++++ b/ui/input-linux.c
+@@ -412,12 +412,6 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
      }
  
      qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
--    input_linux_toggle_grab(il);
+-    if (il->keycount) {
+-        /* delay grab until all keys are released */
+-        il->grab_request = true;
+-    } else {
+-        input_linux_toggle_grab(il);
+-    }
      QTAILQ_INSERT_TAIL(&inputs, il, next);
      il->initialized = true;
      return;
+-- 
+2.11.0
+

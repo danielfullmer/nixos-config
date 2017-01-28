@@ -1,0 +1,238 @@
+From 543e50c5e857681741162a6f27a15e6cfc0acdd5 Mon Sep 17 00:00:00 2001
+From: Justin van der Krieken <justin@vdkrieken.com>
+Date: Mon, 3 Oct 2016 00:04:47 +0200
+Subject: [PATCH] vcpu patch
+
+---
+ cpus.c          | 49 +++++++++++++++++++++++++++++++++++++++
+ qemu-options.hx | 10 ++++++++
+ vl.c            | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 131 insertions(+)
+
+diff --git a/cpus.c b/cpus.c
+index 71a82e5004..82e82e4007 100644
+--- a/cpus.c
++++ b/cpus.c
+@@ -56,6 +56,9 @@
+ #ifdef CONFIG_LINUX
+ 
+ #include <sys/prctl.h>
++#include <unistd.h>
++#include <stdint.h>
++#include <inttypes.h>
+ 
+ #ifndef PR_MCE_KILL
+ #define PR_MCE_KILL 33
+@@ -1493,10 +1496,42 @@ static void qemu_hax_start_vcpu(CPUState *cpu)
+     }
+ }
+ 
++#define QEMU_AFFINITY_DEBUG // Justin todo: deze weg
++#ifdef QEMU_AFFINITY_DEBUG
++static void print_cpu_mask(pthread_t t,int cpuindex,int flag)
++{
++  int i = 0;
++  cpu_set_t cpuset;
++  uint64_t mask_low = 0;
++  uint64_t mask_high = 0;
++  CPU_ZERO(&cpuset);
++  /* Get the current CPU Mask */
++  pthread_getaffinity_np(t, sizeof(cpu_set_t), &cpuset);
++
++  for (i = 0; i< 128; i++){
++       if (CPU_ISSET(i, &cpuset)){
++          if (i < 64)
++             mask_low = mask_low | ((uint64_t)1 << i);
++          else
++             mask_high = mask_high | ((uint64_t)1 << (i-64));
++       }
++   }
++
++   if (flag == 0)
++          printf ("QEMU DEBUG:: Original CPU mask 0x%016"PRIx64"%016"PRIx64" for VCPU %d\n",mask_high,mask_low,cpuindex);
++   else
++          printf ("QEMU DEBUG:: New CPU mask 0x%016"PRIx64"%016"PRIx64" for VCPU %d\n",mask_high,mask_low,cpuindex);
++}
++#endif
++
++extern int vcpu_affinity[];
++
+ static void qemu_kvm_start_vcpu(CPUState *cpu)
+ {
+     char thread_name[VCPU_THREAD_NAME_SIZE];
+ 
++    cpu_set_t cpuset;
++
+     cpu->thread = g_malloc0(sizeof(QemuThread));
+     cpu->halt_cond = g_malloc0(sizeof(QemuCond));
+     qemu_cond_init(cpu->halt_cond);
+@@ -1504,6 +1539,20 @@ static void qemu_kvm_start_vcpu(CPUState *cpu)
+              cpu->cpu_index);
+     qemu_thread_create(cpu->thread, thread_name, qemu_kvm_cpu_thread_fn,
+                        cpu, QEMU_THREAD_JOINABLE);
++
++#ifdef QEMU_AFFINITY_DEBUG
++    print_cpu_mask((cpu->thread)->thread,cpu->cpu_index,0);
++#endif
++    if (vcpu_affinity[cpu->cpu_index] != -1) {
++        printf("QEMU INFO:: Pinning vcpu %d to Physical CPU %d\n",cpu->cpu_index, vcpu_affinity[cpu->cpu_index]);
++        CPU_ZERO(&cpuset);
++        CPU_SET(vcpu_affinity[cpu->cpu_index], &cpuset);
++        pthread_setaffinity_np((cpu->thread)->thread, sizeof(cpu_set_t), &cpuset);
++#ifdef QEMU_AFFINITY_DEBUG
++        print_cpu_mask((cpu->thread)->thread,cpu->cpu_index,1);
++#endif
++    }
++
+     while (!cpu->created) {
+         qemu_cond_wait(&qemu_cpu_cond, &qemu_global_mutex);
+     }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 588e5beab3..049038a187 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -117,6 +117,16 @@ given, the total number of CPUs @var{n} can be omitted. @var{maxcpus}
+ specifies the maximum number of hotpluggable CPUs.
+ ETEXI
+ 
++DEF("vcpu", HAS_ARG, QEMU_OPTION_vcpu,
++    "-vcpu [vcpunum=]n[,affinity=affinity]\n"
++    "-vcpu [vcpunum=]n[,affinity=affinity]\n", QEMU_ARCH_ALL)
++STEXI
++@item -vcpu [vcpunum=]@var{n}[,affinity=@var{affinity}]
++@itemx -vcpu [vcpunum=]@var{n}[,affinity=@var{affinity}]
++@findex -vcpu
++VCPU Affinity. If specified, specify for all the CPUs.
++ETEXI
++
+ DEF("numa", HAS_ARG, QEMU_OPTION_numa,
+     "-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node]\n"
+     "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node]\n", QEMU_ARCH_ALL)
+diff --git a/vl.c b/vl.c
+index 68e8c003d1..db51c5b869 100644
+--- a/vl.c
++++ b/vl.c
+@@ -129,6 +129,8 @@ int main(int argc, char **argv)
+ #define MAX_VIRTIO_CONSOLES 1
+ #define MAX_SCLP_CONSOLES 1
+ 
++#define MAX_VCPUS 32
++
+ static const char *data_dir[16];
+ static int data_dir_idx;
+ const char *bios_name = NULL;
+@@ -161,6 +163,8 @@ int smp_cpus = 1;
+ int max_cpus = 1;
+ int smp_cores = 1;
+ int smp_threads = 1;
++int vcpu_affinity[MAX_VCPUS];
++int num_affinity = 0;
+ int acpi_enabled = 1;
+ int no_hpet = 0;
+ int fd_bootchk = 1;
+@@ -1221,6 +1225,61 @@ static void default_drive(int enable, int snapshot, BlockInterfaceType type,
+ 
+ }
+ 
++static QemuOptsList qemu_vcpu_opts = {
++    .name = "vcpu-opts",
++    .implied_opt_name = "vcpunum",
++    .head = QTAILQ_HEAD_INITIALIZER(qemu_vcpu_opts.head),
++    .desc = {
++        {
++            .name = "vcpunum",
++            .type = QEMU_OPT_NUMBER,
++        }, {
++            .name = "affinity",
++            .type = QEMU_OPT_NUMBER,
++       },
++        { /*End of list */ }
++    },
++};
++
++static int parse_vcpu(void *opaque, QemuOpts *opts, Error **errp)
++{
++   if (opts){
++     unsigned vcpu = qemu_opt_get_number(opts,"vcpunum",0);
++     unsigned affinity = qemu_opt_get_number(opts,"affinity",0);
++
++     if (vcpu < smp_cores) {
++             if (vcpu_affinity[vcpu] == -1){
++                    vcpu_affinity[vcpu] = affinity;
++            }
++             else {
++               error_report("Duplicate affinity statement for vcpu %d\n",vcpu);
++               return -1;
++             }
++            num_affinity += 1;
++     }
++     else {
++       error_report("VCPU %d is more than allowed %d VCPUs in the system\n",vcpu,smp_cores);
++       return -1;
++     }
++   }
++   return 0;
++}
++
++static void parse_vcpu_opts(MachineClass *mc)
++{
++    int i;
++    for (i = 0; i < MAX_VCPUS; i++)
++      vcpu_affinity[i] = -1;
++
++    if (qemu_opts_foreach(qemu_find_opts("vcpu-opts"), parse_vcpu, NULL, NULL)) {
++        exit(1);
++    }
++
++    if (num_affinity != smp_cores) {
++      fprintf(stderr, "Warning: affinity is not specified for some (%d) of the %d smp cores. Will be using default mask\n", (smp_cores-num_affinity), smp_cores);
++    }
++}
++
+ static QemuOptsList qemu_smp_opts = {
+     .name = "smp-opts",
+     .implied_opt_name = "cpus",
+@@ -3003,6 +3062,11 @@ int main(int argc, char **argv, char **envp)
+     module_call_init(MODULE_INIT_TRACE);
+ 
+     qemu_init_cpu_list();
++
++    printf("*****************************************************************\n");
++    printf("**    QEMU   - MODIFIED FOR CPU AFFINITY                       **\n");
++    printf("*****************************************************************\n");
++
+     qemu_init_cpu_loop();
+     qemu_mutex_lock_iothread();
+ 
+@@ -3030,6 +3094,7 @@ int main(int argc, char **argv, char **envp)
+     qemu_add_opts(&qemu_machine_opts);
+     qemu_add_opts(&qemu_mem_opts);
+     qemu_add_opts(&qemu_smp_opts);
++    qemu_add_opts(&qemu_vcpu_opts);
+     qemu_add_opts(&qemu_boot_opts);
+     qemu_add_opts(&qemu_sandbox_opts);
+     qemu_add_opts(&qemu_add_fd_opts);
+@@ -3744,6 +3809,12 @@ int main(int argc, char **argv, char **envp)
+                     exit(1);
+                 }
+                 break;
++            case QEMU_OPTION_vcpu:
++                if (!qemu_opts_parse_noisily(qemu_find_opts("vcpu-opts"),
++                                             optarg, true)) {
++                    exit(1);
++                }
++                break;
+             case QEMU_OPTION_vnc:
+                 vnc_parse(optarg, &error_fatal);
+                 break;
+@@ -4151,6 +4222,7 @@ int main(int argc, char **argv, char **envp)
+         exit(1);
+     }
+ 
++    parse_vcpu_opts(machine_class);
+     /*
+      * Get the default machine options from the machine if it is not already
+      * specified either by the configuration file or by the command line.
+-- 
+2.11.0
+
