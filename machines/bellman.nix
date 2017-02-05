@@ -15,21 +15,29 @@ rec {
   ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "bcache" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
 
+  # NOTE: Using bcache + LVM
+  # bcache on: ata-ST2000DM006-2DM164_W4Z4BH2E-part2 and ata-WDC_WD5000AAKS-22TMA0_WD-WCAPW3279067
+  # bcache ssd is: ata-OCZ-AGILITY4_OCZ-CS8UXT0MD692SSR2
+  # LVM on top of each of those, combined into a single volume group
+  # Try to move windows off of faster 500gb SSD, and then switch to that one.
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/f6000fab-5ae0-4e96-b645-fcaa0f1ea781";
+      device = "/dev/mapper/VolGroup0-main";
       fsType = "btrfs";
-      options = [ "ssd" "discard" "compress=lzo" "autodefrag" ];
+      options = [ "compress" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/5071-EF38";
+      device = "/dev/disk/by-uuid/3AF1-2802";
       fsType = "vfat";
     };
   };
+
+  swapDevices = [ { device = "/dev/mapper/VolGroup0-swap"; } ];
 
   nix.maxJobs = 4;
   nix.buildCores = 8;

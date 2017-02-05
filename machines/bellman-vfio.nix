@@ -95,8 +95,7 @@
         -vcpu vcpunum=5,affinity=7 \
         -device vfio-pci,host=01:00.0,multifunction=on \
         -device vfio-pci,host=01:00.1 \
-        -drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
-        -device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
+        -drive file=/dev/mapper/VolGroup0-windows,if=ide,format=raw,aio=native,cache=none,id=hd0 \
         -nographic \
         -monitor unix:/run/qemu-windows.socket,server,nowait \
         -net nic,model=virtio \
@@ -105,6 +104,8 @@
         -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd,grab_all=yes \
         -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse
     '';
+    #-drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
+    #-device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
 
     preStop = ''
       echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
