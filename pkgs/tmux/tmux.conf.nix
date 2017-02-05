@@ -4,8 +4,8 @@ let
   tmux-fingers = pkgs.fetchFromGitHub {
     owner = "Morantron";
     repo = "tmux-fingers";
-    rev = "7c8356dc07dac3418073cd38d2c862e4fa8eead0";
-    sha256 = "0qy29bzj170gz52hmi7bpdmskp2b0d0vcywhxsh9kvh2q9a477kz";
+    rev = "d4f086de291ed6dc5759540675179453b5b62b75";
+    sha256 = "07lkqlrrfw54zaql2amp4z93jrhdrnn6q0j4993wwymrn7jah7hm";
   };
 in
 ''
