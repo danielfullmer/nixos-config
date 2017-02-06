@@ -86,7 +86,7 @@
         -mem-path /dev/hugepages \
         -mem-prealloc \
         -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
-        -smp sockets=1,cores=6,threads=1 \
+        -smp 6,sockets=1,cores=3,threads=2 \
         -vcpu vcpunum=0,affinity=1 \
         -vcpu vcpunum=1,affinity=2 \
         -vcpu vcpunum=2,affinity=3 \

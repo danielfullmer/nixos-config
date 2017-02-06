@@ -156,7 +156,7 @@ index 68e8c003d1..db51c5b869 100644
 +     unsigned vcpu = qemu_opt_get_number(opts,"vcpunum",0);
 +     unsigned affinity = qemu_opt_get_number(opts,"affinity",0);
 +
-+     if (vcpu < smp_cores) {
++     if (vcpu < max_cpus) {
 +             if (vcpu_affinity[vcpu] == -1){
 +                    vcpu_affinity[vcpu] = affinity;
 +            }
