@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 {
+  #services.udev.packages = [ pkgs.libu2f-host ];
   services.udev.extraRules = ''
     # From https://github.com/Yubico/libu2f-host/blob/master/70-u2f.rules
     ACTION!="add|change", GOTO="u2f_end"
@@ -30,5 +31,14 @@
     pass
     yubico-piv-tool
     yubikey-personalization
+    yubioath-desktop
+
+    keybase
+    kbfs
+  ] ++ lib.optionals (config.services.xserver.enable) [
+    yubioath-desktop
+    yubikey-personalization-gui
   ]);
+
+  services.xserver.desktopManager.extraSessionCommands = lib.optionalString (config.services.xserver.enable) "(yubioath-gui -t) &";
 }
