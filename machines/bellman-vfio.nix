@@ -85,7 +85,7 @@
         -m 8G \
         -mem-path /dev/hugepages \
         -mem-prealloc \
-        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_runtime \
         -smp 6,sockets=1,cores=3,threads=2 \
         -vcpu vcpunum=0,affinity=1 \
         -vcpu vcpunum=1,affinity=2 \
@@ -95,17 +95,18 @@
         -vcpu vcpunum=5,affinity=7 \
         -device vfio-pci,host=01:00.0,multifunction=on \
         -device vfio-pci,host=01:00.1 \
-        -drive file=/dev/mapper/VolGroup0-windows,if=ide,format=raw,aio=native,cache=none,id=hd0 \
+        -drive file=/dev/VolGroup0/windows2,if=virtio,format=raw,aio=native,cache=none,id=hd0 \
         -nographic \
         -monitor unix:/run/qemu-windows.socket,server,nowait \
         -net nic,model=virtio \
         -net user \
         -device vfio-pci,host=06:00.0 \
-        -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd,grab_all=yes \
+        -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-04d9_a097-event-kbd,grab_all=yes \
         -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse
     '';
     #-drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
     #-device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
+    #-drive file=/dev/mapper/VolGroup0-windows,if=ide,format=raw,aio=native,cache=none,id=hd0 \
 
     preStop = ''
       echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
