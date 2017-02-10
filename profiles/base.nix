@@ -62,6 +62,8 @@
     usbutils
     psmisc
     htop
+    ncdu
+    bmon
 
     tmux
 
