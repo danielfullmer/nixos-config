@@ -34,4 +34,6 @@ in
       options = [ "_netdev" ];
     };
   };
+
+  environment.systemPackages = with pkgs; [ rclone ];
 }
