@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 {
-  imports = [ ../modules/theme.nix ];
+  imports = [
+    ../modules/theme.nix
+    ../modules/desktop.nix
+  ];
 
   services.openssh.enable = true;
 
