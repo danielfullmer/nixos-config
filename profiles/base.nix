@@ -1,4 +1,7 @@
 { config, pkgs, lib, ... }:
+let
+  ssh-yubikey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey";
+in
 {
   imports = [
     ../modules/theme.nix
@@ -33,21 +36,19 @@
 
   users = {
     groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
-    users  = [
-      {
+    users = {
+      danielrf = {
         description     = "Daniel Fullmer";
-        name            = "danielrf";
         group           = "danielrf";
         extraGroups     = [ "users" "wheel" "video" "audio" "networkmanager" "vboxsf" "docker" "libvirtd"];
         home            = "/home/danielrf";
         createHome      = true;
         password        = "changeme";
         shell           = "/run/current-system/sw/bin/zsh";
-        openssh.authorizedKeys.keys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey"
-        ];
-      }
-    ];
+        openssh.authorizedKeys.keys = [ ssh-yubikey ];
+      };
+      root.openssh.authorizedKeys.keys = [ ssh-yubikey ];
+    };
   };
 
   services.cron.mailto = "cgibreak@gmail.com";
