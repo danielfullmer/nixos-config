@@ -26,12 +26,11 @@
   security.pam.enableU2F = true;
 
   environment.systemPackages = (with pkgs; [
-    gnupg
-    keybase
-    pass
     yubico-piv-tool
     yubikey-personalization
-    yubioath-desktop
+
+    gnupg
+    pass
 
     keybase
     kbfs
@@ -40,5 +39,5 @@
     yubikey-personalization-gui
   ]);
 
-  services.xserver.desktopManager.extraSessionCommands = lib.optionalString (config.services.xserver.enable) "(yubioath-gui -t) &";
+  services.xserver.desktopManager.extraSessionCommands = "(yubioath-gui -t) &";
 }
