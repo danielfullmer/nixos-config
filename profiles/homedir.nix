@@ -25,6 +25,7 @@
       chown danielrf:danielrf .xmonad
       ln -fs ${../dotfiles}/.xmonad/xmonad.hs .xmonad/xmonad.hs
       ln -fs ${../dotfiles}/.xsettingsd
+      touch .zshrc
     '';
   };
 }
