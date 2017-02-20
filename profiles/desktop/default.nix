@@ -81,7 +81,6 @@ with lib;
           (${pkgs.pasystray}/bin/pasystray) &
           (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
           (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
-          (${pkgs.rescuetime}/bin/rescuetime) &
           #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
           ${config.services.xserver.desktopManager.extraSessionCommands}
