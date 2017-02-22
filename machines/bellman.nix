@@ -60,7 +60,10 @@ rec {
   # Enable vulkan support
   # Test with "vulkaninfo"
   nixpkgs.config.packageOverrides = (p: {
-    mesa_drivers = (p.mesa_noglu.override { enableRadv=true; }).drivers;
+    mesa_drivers = (p.mesa_noglu.override {
+      enableRadv = true;
+      enableTextureFloats = true;
+    }).drivers;
   });
   environment.systemPackages = [ pkgs.vulkan-loader ];
 
