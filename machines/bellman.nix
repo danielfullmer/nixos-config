@@ -6,7 +6,6 @@ rec {
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/desktop/default.nix
-    ../profiles/autologin.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/postfix.nix

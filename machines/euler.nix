@@ -7,7 +7,6 @@
     ../profiles/syncthing.nix
     ../profiles/ssmtp.nix
     ../profiles/desktop/default.nix
-    ../profiles/autologin.nix
     ../profiles/academic.nix
     ../profiles/gdrive.nix
     ../profiles/homedir.nix

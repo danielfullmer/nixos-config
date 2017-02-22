@@ -7,6 +7,8 @@ with lib;
     enable = true;
     xkbOptions = "compose:ralt";
 
+    displayManager.lightdm.enable = true;
+
     windowManager = {
       #default = "my-bspwm";
       default = "i3";

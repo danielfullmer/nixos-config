@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 {
-  services.xserver.displayManager.slim = {
+  services.xserver.displayManager.lightdm.autoLogin = {
     enable = true;
-    autoLogin = true;
-    defaultUser = "danielrf";
+    user = "danielrf";
   };
 }
