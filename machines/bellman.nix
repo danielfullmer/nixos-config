@@ -57,6 +57,13 @@ rec {
   #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
+  # Enable vulkan support
+  # Test with "vulkaninfo"
+  nixpkgs.config.packageOverrides = (p: {
+    mesa_drivers = (p.mesa_noglu.override { enableRadv=true; }).drivers;
+  });
+  environment.systemPackages = [ pkgs.vulkan-loader ];
+
   services.xserver.deviceSection = ''
     Option "DRI3" "1"
     Option "TearFree" "on"
