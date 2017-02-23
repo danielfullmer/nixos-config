@@ -45,5 +45,7 @@ with pkgs; {
       ] ++ attrs.patches;
     });
 
+  vkcube = callPackage ./vkcube {};
+
   zcash = callPackage ./zcash {};
 }

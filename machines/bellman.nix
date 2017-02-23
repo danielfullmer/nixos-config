@@ -57,7 +57,7 @@ rec {
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Enable vulkan support
-  # Test with "vulkaninfo"
+  # Test with "vulkaninfo" and "vkcube"
   nixpkgs.config.packageOverrides = (p: {
     mesa_drivers = (p.mesa_noglu.override {
       enableRadv = true;
