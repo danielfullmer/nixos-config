@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoconf, automake, libtool, pkgconfig
+{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig
 , libdrm, libpng, wayland, libxcb, mesa, vulkan-loader
 }:
 
@@ -12,12 +12,11 @@ stdenv.mkDerivation {
     sha256 = "1638wzi5ay0z1h3gskld5xivq3ijg1shfsdrhgwgl9gh8iji66cm";
   };
 
-  preBuild = "./autogen.sh";
-
   installPhase = ''
     mkdir -p $out/bin
     cp vkcube $out/bin
   '';
 
-  buildInputs = [ autoconf automake libtool pkgconfig libdrm libpng wayland libxcb mesa vulkan-loader ];
+  nativeBuildInputs = [ autoreconfHook pkgconfig ];
+  buildInputs = [ libdrm libpng wayland libxcb mesa vulkan-loader ];
 }
