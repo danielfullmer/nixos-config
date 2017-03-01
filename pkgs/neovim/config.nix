@@ -48,6 +48,7 @@
       #" General Coding {{{
       { name = "syntastic"; }
       { name = "commentary"; }
+      { name = "FastFold"; }
       #" }}}
       #" Python {{{
       #Plug 'klen/python-mode'
