@@ -19,6 +19,8 @@ with pkgs; {
 
   neovim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
+  proselint = callPackage ./proselint {};
+
   surface-pro-firmware = callPackage ./surface-pro-firmware {};
 
   st = (st.override {
