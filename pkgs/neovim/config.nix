@@ -1,18 +1,19 @@
 # vim: foldmethod=marker
 { pkgs, theme }:
-{
-  # See http://beyermatthias.de/blog/2015/11/25/how-to-setup-neo-vim-on-nixos/
-  vam = {
-    knownPlugins = pkgs.vimPlugins // (pkgs.callPackage ./plugins.nix {});
 
-    pluginDictionaries = [
-      { name = "vim2nix"; }
-      { name = "vimproc"; }
+let
+  myVimPlugins = pkgs.callPackage ./plugins.nix {};
+in
+{
+  packages.myVimPackage = with pkgs.vimPlugins; with myVimPlugins; {
+    start = [
+      vim2nix
+      vimproc
 
       # UI {{{
-      { name = "Colour-Sampler-Pack"; }
-      # { name = "vim-indent-guides"; }
-      { name = "airline"; }
+      Colour-Sampler-Pack
+      # vim-indent-guides
+      airline
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
@@ -23,37 +24,37 @@
       # Plug 'merlinrebrovic/focus.vim'
       # }}}
       # Text/File Navigation {{{
-      { name = "unite"; }
-      { name = "easymotion"; }
+      unite
+      easymotion
       # }}}
       # Code Completion/Navigation {{{
-      { name = "neocomplete"; }
+      neocomplete
       # TODO: Consider deocomplete
-      { name = "neosnippet"; }
+      neosnippet
       #Plug 'Shougo/neosnippet-snippets'
-      { name = "The_NERD_tree"; }
+      The_NERD_tree
       # }}}
       # Editing {{{
-      { name = "align"; }
+      align
       # Plug 'tpope/vim-abolish'
-      { name = "surround"; }
-      { name = "editorconfig-vim"; }
+      surround
+      editorconfig-vim
       # }}}
       # GIT {{{
-      { name = "fugitive"; }
-      { name = "gitgutter"; }
-      { name = "webapi-vim"; }
-      { name = "gist-vim"; }
+      fugitive
+      gitgutter
+      webapi-vim
+      gist-vim
       #" }}}
       #" General Coding {{{
-      { name = "syntastic"; }
-      { name = "commentary"; }
-      { name = "FastFold"; }
+      syntastic
+      commentary
+      FastFold
       #" }}}
       #" Python {{{
       #Plug 'klen/python-mode'
       #Plug 'alfredodeza/pytest.vim'
-      { name = "ipython"; }
+      ipython
       #Plug 'julienr/vimux-pyutils'
       #Plug 'davidhalter/jedi-vim'
       # TODO: Consider deoplete-jedi
@@ -69,26 +70,23 @@
       #Plug 'lukaszb/vim-web-indent'
       #" }}}
       #" LaTeX {{{
-      #Plug 'lervag/vimtex'
-      { name = "vimtex"; }
+      vimtex
       #" }}}
       #" Pandoc {{{
-      #Plug 'vim-pandoc/vim-pandoc'
-      #Plug 'vim-pandoc/vim-pandoc-syntax'
-      { name = "vim-pandoc"; }
-      { name = "vim-pandoc-syntax"; }
+      vim-pandoc
+      vim-pandoc-syntax
       #" }}}
       #" Misc {{{
       #Plug 'benmills/vimux'
-      #Plug 'christoomey/vim-tmux-navigator'
-      { name = "tmux-navigator"; }
-      #Plug 'sjl/gundo.vim'
-      { name = "gundo"; }
+      tmux-navigator
+      gundo
       #" }}}
     ];
   };
   customRC = ''
-" Options {{{
+" Load packages early
+packloadall
+
 set nocompatible
 set backspace=indent,eol,start
 set encoding=utf8
@@ -229,7 +227,5 @@ nnoremap <silent> <Esc>h :TmuxNavigateLeft<cr>
 nnoremap <silent> <Esc>j :TmuxNavigateDown<cr>
 nnoremap <silent> <Esc>k :TmuxNavigateUp<cr>
 nnoremap <silent> <Esc>l :TmuxNavigateRight<cr>
-
-" }}}
   '';
 }
