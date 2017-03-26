@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-rec {
+{
   imports = [
     ../profiles/base.nix
     ../profiles/yubikey.nix
@@ -16,7 +16,7 @@ rec {
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "bcache" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ boot.kernelPackages.rtl8812au ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
 
   # NOTE: Using bcache + LVM
