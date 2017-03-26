@@ -92,11 +92,6 @@ with lib;
   };
 
   fonts = {
-    fontconfig = {
-      enable = true;
-      ultimate.preset = "ultimate4";
-      ultimate.substitutions = "combi";
-    };
     fonts = (with pkgs; [
       powerline-fonts
       font-awesome-ttf
