@@ -51,5 +51,13 @@ in
       type = types.str;
       default = defaultTheme.gtkIconTheme;
     };
+
+    background = mkOption {
+      type = types.str;
+      default = toString (pkgs.fetchurl {
+        url = "http://i.imgur.com/S16TU7B.jpg";
+        sha256 = "0kx499ngd5l1jjs0425h79w8bs97cqhpfghfwff25n33xlkdyi0f";
+      });
+    };
   };
 }

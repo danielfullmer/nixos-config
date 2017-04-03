@@ -7,7 +7,10 @@ with lib;
     enable = true;
     xkbOptions = "compose:ralt";
 
-    displayManager.lightdm.enable = true;
+    displayManager.lightdm = {
+      enable = true;
+      background = config.theme.background;
+    };
 
     windowManager = {
       #default = "my-bspwm";
