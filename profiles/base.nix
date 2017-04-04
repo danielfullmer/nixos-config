@@ -28,6 +28,20 @@ in
     30.0.0.84 gauss
     '';
 
+  # X11 and GPG forwarding for SSH
+  # See https://wiki.gnupg.org/AgentForwarding
+  # TODO: /run/user/ path is not correct if UID is different across hosts
+  programs.ssh.extraConfig = ''
+    Host bellman nyquist euler
+    ForwardAgent yes
+    ForwardX11 yes
+    RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
+  '';
+  services.openssh.forwardX11 = true;
+  services.openssh.extraConfig = ''
+    StreamLocalBindUnlink yes
+  '';
+
   nix = {
     extraOptions = ''
       auto-optimize-store = true

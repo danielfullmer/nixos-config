@@ -18,6 +18,7 @@
   programs.ssh.startAgent = false;
   environment.loginShellInit = ''
     export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    gpgconf --create-socketdir
     gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
   '';
 
