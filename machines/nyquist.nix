@@ -42,4 +42,5 @@
   virtualisation.virtualbox.guest.enable = true;
 
   services.bitlbee.enable = true;
+  services.plex.enable = true;
 }
