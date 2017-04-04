@@ -114,6 +114,7 @@
   };
 
   services.xserver.libinput.enable = true;
+  services.redshift.enable = true;
 
   services.synergy.client = {
     enable = true;

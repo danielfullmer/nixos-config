@@ -71,6 +71,8 @@
     Option "TearFree" "on"
   '';
 
+  services.redshift.enable = true;
+
   # For Seiki 4K monitor
   # TODO: Add modeline for 1080p at 120Hz
   fonts.fontconfig.dpi = 115;

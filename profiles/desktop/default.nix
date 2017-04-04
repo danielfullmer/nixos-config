@@ -109,7 +109,7 @@ with lib;
   };
 
   services.redshift = {
-    enable = true;
+    # Enable this in the individual machines
     latitude = "41";
     longitude = "-73";
       temperature = {
