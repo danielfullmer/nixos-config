@@ -55,6 +55,8 @@
   # https://wiki.fd.io/view/VPP/How_To_Optimize_Performance_(System_Tuning)
   # https://lwn.net/Articles/549592/
   #
+  # Ensure QueryPerformanceCounter() is quick using http://www.nvidia.com/object/timer_function_performance.html
+  #
   # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
   systemd.services.qemu-windows = {
     wantedBy = [ "multi-user.target" ];
@@ -81,11 +83,13 @@
       ${pkgs.my_qemu}/bin/qemu-system-x86_64 \
         -name win10 \
         -enable-kvm \
-        -rtc base=localtime \
+        -rtc base=localtime,driftfix=slew \
+        -no-hpet \
+        -global kvm-pit.lost_tick_policy=discard \
         -m 8G \
         -mem-path /dev/hugepages \
         -mem-prealloc \
-        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_runtime \
+        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_vapic,hv_runtime,migratable=no,+invtsc \
         -smp 6,sockets=1,cores=3,threads=2 \
         -vcpu vcpunum=0,affinity=1 \
         -vcpu vcpunum=1,affinity=2 \
