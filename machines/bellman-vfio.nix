@@ -108,7 +108,10 @@
     #-device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
     #-drive file=/dev/mapper/VolGroup0-windows,if=ide,format=raw,aio=native,cache=none,id=hd0 \
 
+    # Press the poweroff button twice. Sometimes the first press is needed to wake up--or something like that.
     preStop = ''
+      echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
+      sleep 2
       echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
     '';
 
