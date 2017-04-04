@@ -16,7 +16,7 @@
 
   # Use gpg-agent instead of system-wide ssh-agent
   programs.ssh.startAgent = false;
-  environment.extraInit = ''
+  environment.loginShellInit = ''
     export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
     gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
   '';
