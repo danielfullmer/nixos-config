@@ -101,7 +101,7 @@
         -net nic,model=virtio \
         -net user \
         -device vfio-pci,host=06:00.0 \
-        -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-04d9_a097-event-kbd,grab_all=yes \
+        -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd,grab_all=yes \
         -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse
     '';
     #-drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
