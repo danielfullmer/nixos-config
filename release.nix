@@ -9,6 +9,8 @@ in
   }
 }:
 
+with pkgs'.lib;
+
 let
   nixos = nixpkgs + /nixos;
 in
@@ -18,5 +20,5 @@ in
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
 
-  tests.desktop = import (nixos + "/tests/make-test.nix") (import ./tests/desktop.nix);
+  tests.desktop = hydraJob (import ./tests/desktop.nix {});
 }
