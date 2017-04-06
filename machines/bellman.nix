@@ -9,6 +9,7 @@
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/postfix.nix
+    ../profiles/hydra.nix
     ../profiles/gdrive.nix
     ../profiles/homedir.nix
   ];
@@ -88,12 +89,4 @@
   });
 
 
-  services.hydra = {
-    enable = true;
-    hydraURL = "http://bellman:3000/";
-    notificationSender = "cgibreak@gmail.com";
-    smtpHost = "bellman";
-    useSubstitutes = true;
-    buildMachinesFiles = [];
-  };
 }
