@@ -82,6 +82,8 @@
 
       ${pkgs.my_qemu}/bin/qemu-system-x86_64 \
         -name win10 \
+        -nodefaults \
+        -vga virtio \
         -enable-kvm \
         -rtc base=localtime,driftfix=slew \
         -no-hpet \
