@@ -4,4 +4,4 @@ with theme; ''
 [options]
 font = ${termFontName} ${toString fontSize}
 
-'' + (import (./. + "/theme.${brightness}.nix") { inherit colors; })
+'' + (import (../../modules/theme/templates + "/termite.${brightness}.nix") { inherit colors; })

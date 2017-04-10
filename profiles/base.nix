@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ../modules/theme.nix
+    ../modules/theme
     ../modules/desktop.nix
   ];
 
@@ -120,14 +120,18 @@ in
     enableSyntaxHighlighting = true;
     enableAutosuggestions = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
-    interactiveShellInit = import (../pkgs/shell + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
+    interactiveShellInit = import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
   };
 
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
-      eval sh ${import ../pkgs/shell/theme.script.nix { pkgs=pkgs; theme=config.theme; }}
-    '';
+    interactiveShellInit =
+      let shellThemeScript = pkgs.writeScript "shellTheme"
+        (import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; });
+      in
+      ''
+        eval sh ${shellThemeScript}
+      '';
   };
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };

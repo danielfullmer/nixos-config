@@ -236,4 +236,4 @@
 #
 # vim: ft=cfg
 ''
-+ import (../../pkgs/dunst + "/theme.${theme.brightness}.nix") { colors=theme.colors; }
++ import (../../modules/theme/templates + "/dunst.${theme.brightness}.nix") { colors=theme.colors; }

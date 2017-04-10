@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> {},
-  theme ? import ../modules/defaultTheme.nix }:
+  theme ? import ../modules/theme/defaultTheme.nix }:
 
 
 with pkgs; {

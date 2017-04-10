@@ -85,7 +85,7 @@ static unsigned int tabspaces = 8;
 
 /* Color Theme */
 '' +
-(import (./. + "/theme.${brightness}.nix") { inherit colors; }) +
+(import (../../modules/theme/templates + "/st.${brightness}.nix") { inherit colors; }) +
 ''
 static unsigned int defaultrcs = 257;
 

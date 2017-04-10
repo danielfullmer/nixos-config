@@ -28,7 +28,7 @@ with lib;
         bspwmConfig =
           let bspwmTheme = pkgs.writeTextFile {
               name = "bspwmTheme";
-              text = import (../../pkgs/bspwm + "/theme.${config.theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=config.theme.colors; };
+              text = import (../../modules/theme/templates + "/bspwm.${config.theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=config.theme.colors; };
             };
           in
         pkgs.writeScript "bspwmrc" ''
@@ -74,7 +74,7 @@ with lib;
         start =
           let
             xresourcesFile = pkgs.writeText "xresources"
-              (import (../../pkgs/xresources + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; });
+              (import (../../modules/theme/templates + "/xresources.${config.theme.brightness}.nix") { colors=config.theme.colors; });
             dunstFile = pkgs.writeText "dunstFile"
               (import ./dunstrc.nix { pkgs=pkgs; theme=config.theme; });
           in
@@ -157,7 +157,7 @@ with lib;
     google-chrome
   ]);
 
-  environment.etc."zathurarc".text = import (../../pkgs/zathura + "/theme.${config.theme.brightness}.nix") { colors=config.theme.colors; };
+  environment.etc."zathurarc".text = import (../../modules/theme/templates + "/zathura.${config.theme.brightness}.nix") { colors=config.theme.colors; };
 
   ### THEMES ###
   # Note: Use package "awf" to test gtk themes

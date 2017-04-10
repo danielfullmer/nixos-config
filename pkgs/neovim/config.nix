@@ -3,6 +3,7 @@
 
 let
   myVimPlugins = pkgs.callPackage ./plugins.nix {};
+  shellThemeScript = pkgs.writeScript "shellTheme" (import (../../modules/theme/templates + "/shell.${theme.brightness}.nix") { colors=theme.colors; });
 in
 {
   packages.myVimPackage = with pkgs.vimPlugins; with myVimPlugins; {
@@ -113,13 +114,13 @@ set shiftround
 set background=${theme.brightness}
 let base16colorspace=256
 if !has('gui_running')
-  execute "silent !/bin/sh ${import ../shell/theme.script.nix { inherit pkgs theme; }}"
+  execute "silent !/bin/sh ${shellThemeScript}"
 endif
-source ${pkgs.writeText "vimTheme" (import (./. + "/theme.${theme.brightness}.nix") { colors=theme.colors; })}
+source ${pkgs.writeText "vimTheme" (import (../../modules/theme/templates + "/neovim.${theme.brightness}.nix") { colors=theme.colors; })}
 
 let g:airline_theme="base16_nixos_configured"
 let g:airline_powerline_fonts=1
-source ${pkgs.writeText "airlineTheme" (import (./airline + "/theme.${theme.brightness}.nix") { colors=theme.colors; })}
+source ${pkgs.writeText "airlineTheme" (import (../../modules/theme/templates + "/airline.${theme.brightness}.nix") { colors=theme.colors; })}
 
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1

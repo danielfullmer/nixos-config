@@ -1,6 +1,6 @@
 { pkgs, theme }:
 
-import (../../pkgs/i3 + "/theme.${theme.brightness}.nix") { colors=theme.colors; }
+import (../../modules/theme/templates + "/i3.${theme.brightness}.nix") { colors=theme.colors; }
 + ''
 # i3 config file (v4)
 #
@@ -148,7 +148,7 @@ bar {
         status_command ${pkgs.i3status}/bin/i3status --config ${./i3status.config}
         font pango:${theme.fontName} ${toString theme.titleFontSize}
 ''
-+ import (../../pkgs/i3bar + "/theme.${theme.brightness}.nix") { colors=theme.colors; }
++ import (../../modules/theme/templates + "/i3bar.${theme.brightness}.nix") { colors=theme.colors; }
 + ''
 }
 ''
