@@ -9,7 +9,6 @@
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/postfix.nix
-    ../profiles/hydra.nix
     ../profiles/gdrive.nix
     ../profiles/homedir.nix
   ];
@@ -89,4 +88,17 @@
   });
 
 
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://${config.networking.hostName}:3000/";
+    notificationSender = "cgibreak@gmail.com";
+    smtpHost = "${config.networking.hostName}";
+    useSubstitutes = true;
+    buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
+  };
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/home/danielrf/nixrc/secrets/bellman-nix-serve.sec";
+  };
 }
