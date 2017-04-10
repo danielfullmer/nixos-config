@@ -44,6 +44,7 @@
       "noresume"
     ];
     extraModulePackages = [ ];
+    blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
   };
 
   hardware = {
