@@ -14,7 +14,7 @@ in
   networking.domain = "controlnet";
 
   boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs = true;
+  #boot.tmpOnTmpfs = true;
 
   services.zerotierone.enable = true;
   networking.firewall.trustedInterfaces = [ "zt0" ];
