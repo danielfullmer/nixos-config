@@ -40,4 +40,6 @@
   ]);
 
   services.xserver.desktopManager.extraSessionCommands = "(yubioath-gui -t) &";
+
+  programs.keybase.enable = true;
 }
