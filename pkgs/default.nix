@@ -2,7 +2,7 @@
   theme ? import ../modules/theme/defaultTheme.nix }:
 
 
-with pkgs; {
+rec {
 ### Example to patch a derivation
 #  zerotierone = pkgs.lib.overrideDerivation pkgs.zerotierone (attrs: {
 #    patches = [
@@ -13,39 +13,40 @@ with pkgs; {
 #    ];
 #  });
 
-  browserpass = callPackage ./browserpass {};
+  browserpass = pkgs.callPackage ./browserpass {};
 
-  duplicity = duplicity.override { inherit gnupg; };
+  duplicity = pkgs.duplicity.override { inherit (pkgs) gnupg; };
 
-  neovim = neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
+  neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
-  surface-pro-firmware = callPackage ./surface-pro-firmware {};
+  surface-pro-firmware = pkgs.callPackage ./surface-pro-firmware {};
 
-  st = (st.override {
+  st = (pkgs.st.override {
     conf = (import st/config.h.nix { inherit theme; });
   });
 
-  termite = (termite.override {
+  termite = (pkgs.termite.override {
     configFile = pkgs.writeTextFile {
       name = "termite-config";
       text = (import termite/config.nix { inherit pkgs theme; });
     };
   });
 
-  my_qemu = lib.overrideDerivation qemu_kvm (attrs: {
-      patches = [
-     #   (fetchurl {
-     #     name = "qemu-vcpu-affinity";
-     #     url = https://github.com/justinvdk/qemu/commit/7d49a826417029df257604e62f7226b0cc4f5b7d.patch;
-     #     sha256 = "07ah72rqdv6945d9gcv1xgcvbs7kx4qa3av9162sjsd1ws16shhc";
-     #   })
+  my_qemu = pkgs.lib.overrideDerivation pkgs.qemu_kvm (attrs: {
+    patches = [
+   #   (fetchurl {
+   #     name = "qemu-vcpu-affinity";
+   #     url = https://github.com/justinvdk/qemu/commit/7d49a826417029df257604e62f7226b0cc4f5b7d.patch;
+   #     sha256 = "07ah72rqdv6945d9gcv1xgcvbs7kx4qa3av9162sjsd1ws16shhc";
+   #   })
 
-        ./qemu/vcpu.patch
-        ./qemu/input-linux-default-off.patch
-      ] ++ attrs.patches;
-    });
+      ./qemu/vcpu.patch
+      ./qemu/input-linux-default-off.patch
+    ] ++ attrs.patches;
+  });
 
-  vkcube = callPackage ./vkcube {};
 
-  zcash = callPackage ./zcash {};
+  vkcube = pkgs.callPackage ./vkcube {};
+
+  zcash = pkgs.callPackage ./zcash {};
 }
