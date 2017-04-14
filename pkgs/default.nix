@@ -4,7 +4,7 @@
 
 rec {
 ### Example to patch a derivation
-#  zerotierone = pkgs.lib.overrideDerivation pkgs.zerotierone (attrs: {
+#  zerotierone = pkgs.zerotierone.overrideAttrs (attrs: {
 #    patches = [
 #      (pkgs.fetchurl {
 #        url = "https://github.com/zerotier/ZeroTierOne/commit/039790cf267cb67a5130fb82caf97998d8b0959e.patch";
@@ -32,7 +32,7 @@ rec {
     };
   });
 
-  my_qemu = pkgs.lib.overrideDerivation pkgs.qemu_kvm (attrs: {
+  my_qemu = pkgs.qemu_kvm.overrideAttrs (attrs: {
     patches = [
    #   (fetchurl {
    #     name = "qemu-vcpu-affinity";
