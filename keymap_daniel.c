@@ -41,7 +41,7 @@ enum function_id {
 /*
  * Fn action definition
  */
-const uint16_t PROGMEM fn_actions[] = {
+const action_t PROGMEM fn_actions[] = {
     ACTION_FUNCTION(TEENSY_KEY),                    // FN0
 
     // Dual-role keys on thumbs
