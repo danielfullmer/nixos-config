@@ -18,18 +18,17 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_9;
+    kernelPackages = pkgs.linuxPackages_4_10;
 
     # These patches came from https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
     kernelPatches = [
-      { name = "IPTS";
-        patch = ../pkgs/surface-pro-firmware/ipts.patch;
-        extraConfig = "INTEL_IPTS m";
-      }
-      # This patch should be in 4.10
-      { name = "type-cover";
-        patch = ../pkgs/surface-pro-firmware/type-cover.patch;
-      }
+      # TODO: Patch doesn't apply against 4.10:
+      # https://github.com/ipts-linux-org/ipts-linux-new/issues/3
+      # { name = "IPTS";
+      #   patch = ../pkgs/surface-pro-firmware/ipts.patch;
+      #   extraConfig = "INTEL_IPTS m";
+      # }
+
       # See https://bugzilla.kernel.org/show_bug.cgi?id=188351
       { name = "mwifiex-panic-fix";
         patch = ../pkgs/surface-pro-firmware/mwifiex-panic-fix.patch;
