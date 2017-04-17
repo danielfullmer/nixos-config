@@ -1,1 +1,1 @@
-localhost x86_64-linux /var/lib/hydra/queue-runner/.ssh/id_rsa 4 5 kvm,nixos-test
+localhost i686-linux,x86_64-linux /var/lib/hydra/queue-runner/.ssh/id_rsa 4 5 kvm,nixos-test
