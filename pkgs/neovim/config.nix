@@ -9,6 +9,7 @@ in
   packages.myVimPackage = with pkgs.vimPlugins; with myVimPlugins; {
     start = [
       vim2nix
+      vim-nix
       vimproc
 
       # UI {{{
