@@ -99,6 +99,6 @@
 
   services.nix-serve = {
     enable = true;
-    secretKeyFile = "/home/danielrf/nixrc/secrets/bellman-nix-serve.sec";
+    secretKeyFile = "/home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 }
