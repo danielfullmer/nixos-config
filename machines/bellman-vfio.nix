@@ -40,8 +40,6 @@
   # Force use of second AMD card
   services.xserver.deviceSection = "BusId \"2:00:0\"";
 
-  environment.systemPackages = with pkgs; [ my_qemu ];
-
   # See these resources:
   # https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
   # http://www.linux-kvm.org/page/Tuning_KVM
@@ -58,83 +56,9 @@
   # Ensure QueryPerformanceCounter() is quick using http://www.nvidia.com/object/timer_function_performance.html
   #
   # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
-  systemd.services.qemu-windows = {
-    wantedBy = [ "multi-user.target" ];
 
-    script = ''
-      vfiobind() {
-          dev="$1"
-          vendor=$(cat /sys/bus/pci/devices/$dev/vendor)
-          device=$(cat /sys/bus/pci/devices/$dev/device)
-          if [ -e /sys/bus/pci/devices/$dev/driver ]; then
-              echo $dev > /sys/bus/pci/devices/$dev/driver/unbind
-          fi
-          echo $vendor $device > /sys/bus/pci/drivers/vfio-pci/new_id
-      }
-
-      vfiobind 0000:01:00.0 # 390x
-      vfiobind 0000:01:00.1
-      #vfiobind 0000:00:14.0 # USB 3 controller
-      vfiobind 0000:06:00.0 # USB 3 controller
-
-      export QEMU_AUDIO_DRV=pa
-      export QEMU_PA_SERVER=/run/user/1000/pulse/native
-
-      ${pkgs.my_qemu}/bin/qemu-system-x86_64 \
-        -name win10 \
-        -nodefaults \
-        -vga virtio \
-        -enable-kvm \
-        -rtc base=localtime,driftfix=slew \
-        -no-hpet \
-        -global kvm-pit.lost_tick_policy=discard \
-        -m 8G \
-        -mem-path /dev/hugepages \
-        -mem-prealloc \
-        -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_vapic,hv_runtime,migratable=no,+invtsc \
-        -smp 6,sockets=1,cores=3,threads=2 \
-        -vcpu vcpunum=0,affinity=1 \
-        -vcpu vcpunum=1,affinity=2 \
-        -vcpu vcpunum=2,affinity=3 \
-        -vcpu vcpunum=3,affinity=5 \
-        -vcpu vcpunum=4,affinity=6 \
-        -vcpu vcpunum=5,affinity=7 \
-        -device vfio-pci,host=01:00.0,multifunction=on \
-        -device vfio-pci,host=01:00.1 \
-        -drive file=/dev/VolGroup0/windows2,if=virtio,format=raw,aio=native,cache=none,id=hd0 \
-        -nographic \
-        -monitor unix:/run/qemu-windows.socket,server,nowait \
-        -net nic,model=virtio \
-        -net user \
-        -device vfio-pci,host=06:00.0 \
-        -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd,grab_all=yes \
-        -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse
-    '';
-    #-drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M,if=none,format=raw,aio=native,cache=none,id=hd0 \
-    #-device virtio-scsi-pci,id=scsi -device scsi-block,drive=hd0,bus=scsi.0 \
-    #-drive file=/dev/mapper/VolGroup0-windows,if=ide,format=raw,aio=native,cache=none,id=hd0 \
-
-    # Press the poweroff button twice. Sometimes the first press is needed to wake up--or something like that.
-    preStop = ''
-      echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
-      sleep 2
-      echo system_powerdown | ${pkgs.socat}/bin/socat - UNIX-CONNECT:/run/qemu-windows.socket
-    '';
-
-    serviceConfig = {
-      # Don't actually kill with SIGTERM as by default, since we want to shut down gracefully using the above preStop.
-      # Instead, send an ignored signal to the qemu process.
-      # This is better than using KillMode=none, since this will still wait for the process to stop.
-      KillMode = "mixed";
-      KillSignal = "WINCH";
-
-      # Use FIFO scheduling. Since the VM threads have affinity for the first 3 cores,
-      # we should always have at least one available for the rest of the overall linux system.
-      # I normally wouldn't worry about this, but the HTC Vive can't handle delays from the underlying system and still hit framerate.
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = "50";
-    };
-  };
+  virtualisation.libvirtd.enable = true;
+  environment.systemPackages = [ pkgs.virtmanager ];
 
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
