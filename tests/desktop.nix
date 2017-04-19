@@ -28,7 +28,7 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
       $machine->succeed("su - danielrf -s /bin/sh -c 'DISPLAY=:0 ${termite}/bin/termite -t Termite -e \"vim ${./desktop.nix}\" --hold &'");
       $machine->waitForWindow(qr/Termite/);
       $machine->sleep(5);
-      $machine->screenshot("terminal");
+      $machine->screenshot("vim");
       $machine->succeed("su - danielrf -s /bin/sh -c 'kill `pgrep termite`'");
 
       $machine->succeed("su - danielrf -s /bin/sh -c 'DISPLAY=:0 ${awf}/bin/awf-gtk2 &'");
