@@ -1,0 +1,130 @@
+From f9527b225ee0a97da334a0a480afa40ca3c35a78 Mon Sep 17 00:00:00 2001
+From: David McFarland <corngood@gmail.com>
+Date: Sat, 8 Apr 2017 16:54:42 -0300
+Subject: [PATCH] symlink drivers
+
+---
+ src/gallium/targets/dri/Makefile.am   | 7 +++----
+ src/gallium/targets/va/Makefile.am    | 4 ++--
+ src/gallium/targets/vdpau/Makefile.am | 7 +++----
+ src/gallium/targets/xvmc/Makefile.am  | 4 ++--
+ src/mesa/drivers/dri/Makefile.am      | 7 +++----
+ 5 files changed, 13 insertions(+), 16 deletions(-)
+
+diff --git a/src/gallium/targets/dri/Makefile.am b/src/gallium/targets/dri/Makefile.am
+index 459459ebed..2ad816e730 100644
+--- a/src/gallium/targets/dri/Makefile.am
++++ b/src/gallium/targets/dri/Makefile.am
+@@ -135,14 +135,13 @@ clean-local:
+ 	done;
+ endif
+ 
+-# hardlink each megadriver instance, but don't actually have
+-# gallium_dri.so in the set of final installed files.
++# symlink each megadriver instance.
+ install-data-hook:
+ 	for i in $(TARGET_DRIVERS); do                                  \
+-		ln -f $(DESTDIR)$(dridir)/gallium_dri.so                \
++		ln -srf $(DESTDIR)$(dridir)/gallium_dri.so               \
+ 		      $(DESTDIR)$(dridir)/$${i}_dri.so;                 \
+ 	done;                                                           \
+-	$(RM) $(DESTDIR)$(dridir)/gallium_dri.*;                        \
++	$(RM) $(DESTDIR)$(dridir)/gallium_dri.la \
+ 	$(RM) -d $(DESTDIR)$(dridir) &>/dev/null || true
+ 
+ uninstall-hook:
+diff --git a/src/gallium/targets/va/Makefile.am b/src/gallium/targets/va/Makefile.am
+index afaa85bf9a..ba54eb4fc4 100644
+--- a/src/gallium/targets/va/Makefile.am
++++ b/src/gallium/targets/va/Makefile.am
+@@ -71,10 +71,10 @@ endif
+ # gallium_drv_video.so in the set of final installed files.
+ install-data-hook:
+ 	for i in $(TARGET_DRIVERS); do                                  \
+-		ln -f $(DESTDIR)$(vadir)/gallium_drv_video.so                \
++		ln -srf $(DESTDIR)$(vadir)/gallium_drv_video.so                \
+ 		      $(DESTDIR)$(vadir)/$${i}_drv_video.so;                 \
+ 	done;                                                           \
+-	$(RM) $(DESTDIR)$(vadir)/gallium_drv_video.*
++	$(RM) $(DESTDIR)$(vadir)/gallium_drv_video.la
+ 
+ uninstall-hook:
+ 	for i in $(TARGET_DRIVERS); do                                  \
+diff --git a/src/gallium/targets/vdpau/Makefile.am b/src/gallium/targets/vdpau/Makefile.am
+index cd7ef982aa..a46ca527e6 100644
+--- a/src/gallium/targets/vdpau/Makefile.am
++++ b/src/gallium/targets/vdpau/Makefile.am
+@@ -103,15 +103,14 @@ clean-local:
+ 	done;
+ endif
+ 
+-# hardlink each megadriver instance, but don't actually have
+-# libvdpau_gallium.so in the set of final installed files.
++# symlink each megadriver instance.
+ install-data-hook:
+ 	$(AM_V_GEN)dest_dir=$(DESTDIR)/$(vdpaudir);			\
+ 	for i in $(TARGET_DRIVERS); do					\
+ 		j=libvdpau_gallium.$(LIB_EXT);				\
+ 		k=libvdpau_$${i}.$(LIB_EXT);				\
+ 		l=$${k}.$(VDPAU_MAJOR).$(VDPAU_MINOR).0;		\
+-		ln -f $${dest_dir}/$${j}.$(VDPAU_MAJOR).$(VDPAU_MINOR).0 \
++		ln -srf $${dest_dir}/$${j}.$(VDPAU_MAJOR).$(VDPAU_MINOR).0 \
+ 		      $${dest_dir}/$${l};				\
+ 		ln -sf $${l}						\
+ 		       $${dest_dir}/$${k}.$(VDPAU_MAJOR).$(VDPAU_MINOR); \
+@@ -120,7 +119,7 @@ install-data-hook:
+ 		ln -sf $${l}						\
+ 		       $${dest_dir}/$${k};				\
+ 	done;								\
+-	$(RM) $${dest_dir}/libvdpau_gallium.*;				\
++	$(RM) $${dest_dir}/libvdpau_gallium.la \
+ 	$(RM) -d $${dest_dir} &>/dev/null || true
+ 
+ uninstall-hook:
+diff --git a/src/gallium/targets/xvmc/Makefile.am b/src/gallium/targets/xvmc/Makefile.am
+index e29dd6a5ca..5b4f5c5193 100644
+--- a/src/gallium/targets/xvmc/Makefile.am
++++ b/src/gallium/targets/xvmc/Makefile.am
+@@ -73,7 +73,7 @@ install-data-hook:
+ 		j=libXvMCgallium.$(LIB_EXT);				\
+ 		k=libXvMC$${i}.$(LIB_EXT);				\
+ 		l=$${k}.$(XVMC_MAJOR).$(XVMC_MINOR).0;			\
+-		ln -f $${dest_dir}/$${j}.$(XVMC_MAJOR).$(XVMC_MINOR).0	\
++		ln -srf $${dest_dir}/$${j}.$(XVMC_MAJOR).$(XVMC_MINOR).0	\
+ 		      $${dest_dir}/$${l};				\
+ 		ln -sf $${l}						\
+ 		       $${dest_dir}/$${k}.$(XVMC_MAJOR).$(XVMC_MINOR);	\
+@@ -82,7 +82,7 @@ install-data-hook:
+ 		ln -sf $${l}						\
+ 		       $${dest_dir}/$${k};				\
+ 	done;								\
+-	$(RM) $${dest_dir}/libXvMCgallium.*;				\
++	$(RM) $${dest_dir}/libXvMCgallium.la				\
+ 	$(RM) -d $${dest_dir} &>/dev/null || true
+ 
+ uninstall-hook:
+diff --git a/src/mesa/drivers/dri/Makefile.am b/src/mesa/drivers/dri/Makefile.am
+index 1c6dd08a85..088d49dc47 100644
+--- a/src/mesa/drivers/dri/Makefile.am
++++ b/src/mesa/drivers/dri/Makefile.am
+@@ -94,14 +94,13 @@ clean-local:
+ 	done;
+ endif
+ 
+-# hardlink each megadriver instance, but don't actually have
+-# mesa_dri_drivers.so in the set of final installed files.
++# symink each megadriver instance.
+ install-data-hook:
+ 	for i in $(MEGADRIVERS); do \
+-		ln -f $(DESTDIR)$(dridir)/mesa_dri_drivers.so \
++		ln -srf $(DESTDIR)$(dridir)/mesa_dri_drivers.so \
+ 		      $(DESTDIR)$(dridir)/$$i; \
+ 	done;
+-	$(RM) $(DESTDIR)$(dridir)/mesa_dri_drivers.*
++	$(RM) $(DESTDIR)$(dridir)/mesa_dri_drivers.la
+ 
+ uninstall-hook:
+ 	for i in $(MEGADRIVERS); do \
+-- 
+2.12.2
+

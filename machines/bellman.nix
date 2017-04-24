@@ -50,21 +50,9 @@
 
   services.acpid.enable = true;
 
-  # Use AMDGPU support. Needs kernel >=4.6.
-  boot.kernelPackages = pkgs.linuxPackages_4_9;
+  # Use AMDGPU support.
   boot.kernelParams = [ "amdgpu.exp_hw_support=1" "amdgpu.audio=0" ];
-  #services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
-
-  # Enable vulkan support
-  # Test with "vulkaninfo" and "vkcube"
-  nixpkgs.config.packageOverrides = (p: {
-    mesa_drivers = (p.mesa_noglu.override {
-      enableRadv = true;
-      enableTextureFloats = true;
-    }).drivers;
-  });
-  environment.systemPackages = [ pkgs.vulkan-loader ];
 
   services.xserver.deviceSection = ''
     Option "DRI3" "1"
