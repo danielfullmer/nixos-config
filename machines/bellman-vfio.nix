@@ -60,6 +60,9 @@
   virtualisation.libvirtd.enable = true;
   environment.systemPackages = [ pkgs.virtmanager ];
 
+  # By default, postgresql uses some of my huge pages! Disable this so my math is correct.
+  services.postgresql.extraConfig = "huge_pages off";
+
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
       section: screens
