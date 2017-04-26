@@ -15,7 +15,11 @@ rec {
 
   browserpass = pkgs.callPackage ./browserpass {};
 
+  dactyl-keyboard = pkgs.callPackage ./dactyl-keyboard {};
+
   duplicity = pkgs.duplicity.override { inherit (pkgs) gnupg; };
+
+  emacs = pkgs.callPackage ./emacs {};
 
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
