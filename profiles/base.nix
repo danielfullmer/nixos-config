@@ -118,7 +118,10 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntax-highlighting = {
+      enable = true;
+      highlighters = [ "main" "brackets" ];
+    };
     enableAutosuggestions = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
     interactiveShellInit = import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
