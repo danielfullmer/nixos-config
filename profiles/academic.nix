@@ -9,8 +9,8 @@
     git-latexdiff
     pythonPackages.proselint
 
-    (python.buildEnv.override {
-      extraLibs = with pythonPackages; [
+    (python3.buildEnv.override {
+      extraLibs = with python3Packages; [
         jupyter
         bpython
         numpy
