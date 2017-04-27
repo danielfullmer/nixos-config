@@ -12,28 +12,15 @@ in
     user_allow_other
   '';
 
-  fileSystems = {
-    "/mnt/gdrive" = {
-      device = "${rclonemount}#gdrive:";
-      fsType = "fuse";
-      options = [ "_netdev" ];
+  fileSystems = builtins.listToAttrs (map (remote: {
+    name = "/mnt/${remote}";
+    value = {
+      device = "${rclonemount}#${remote}:";
+        fsType = "fuse";
+        options = [ "_netdev" ];
+        noCheck = true;
     };
-    "/mnt/gdrive-enc" = {
-      device = "${rclonemount}#gdrive-enc:";
-      fsType = "fuse";
-      options = [ "_netdev" ];
-    };
-    "/mnt/gdrive2" = {
-      device = "${rclonemount}#gdrive2:";
-      fsType = "fuse";
-      options = [ "_netdev" ];
-    };
-    "/mnt/gdrive2-enc" = {
-      device = "${rclonemount}#gdrive2-enc:";
-      fsType = "fuse";
-      options = [ "_netdev" ];
-    };
-  };
+  }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
 
   environment.systemPackages = with pkgs; [ rclone ];
 }
