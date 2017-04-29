@@ -44,8 +44,10 @@ rec {
    #     sha256 = "07ah72rqdv6945d9gcv1xgcvbs7kx4qa3av9162sjsd1ws16shhc";
    #   })
 
-      ./qemu/vcpu.patch
       ./qemu/input-linux-default-off.patch
+
+   # I use libvirtd to set thread affinity instead of this patch
+   #  ./qemu/vcpu.patch
     ] ++ attrs.patches;
   });
 

@@ -1,5 +1,26 @@
 { config, lib, pkgs, ... }:
 
+# See these resources:
+# https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
+# http://www.linux-kvm.org/page/Tuning_KVM
+# https://www.reddit.com/r/VFIO/comments/4vqnnv/qemu_command_line_cpu_pinning/
+# https://www.reddit.com/r/VFIO/comments/4ytcao/just_want_to_rant_on_my_vfio_experience/
+# https://nm.reddit.com/r/VFIO/comments/5hmvlr/sharing_keyboardmouse_directly_with_spice/
+# https://www.reddit.com/r/VFIO/comments/4fjsie/howto_passing_through_an_entire_block_device/
+#
+# https://lwn.net/Articles/656807/
+# http://www.breakage.org/2013/11/15/nohz_fullgodmode/
+# https://wiki.fd.io/view/VPP/How_To_Optimize_Performance_(System_Tuning)
+# https://lwn.net/Articles/549592/
+#
+# Ensure QueryPerformanceCounter() is quick using http://www.nvidia.com/object/timer_function_performance.html
+#
+# Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
+
+let
+  kbd_path = "/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd";
+  mouse_path = "/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse";
+in
 {
   imports = [
     ./bellman.nix
@@ -33,32 +54,31 @@
     extraConfig = "NO_HZ_FULL y";
   } ];
 
-  # TODO: Use a cpuset instead of isolcpu.
-  # See https://access.redhat.com/solutions/1445073
-  # Make a script to enable exclusive CPU access for qemu--so it can be enabled/disabled at will.
-
   # Force use of second AMD card
   services.xserver.deviceSection = "BusId \"2:00:0\"";
 
-  # See these resources:
-  # https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
-  # http://www.linux-kvm.org/page/Tuning_KVM
-  # https://www.reddit.com/r/VFIO/comments/4vqnnv/qemu_command_line_cpu_pinning/
-  # https://www.reddit.com/r/VFIO/comments/4ytcao/just_want_to_rant_on_my_vfio_experience/
-  # https://nm.reddit.com/r/VFIO/comments/5hmvlr/sharing_keyboardmouse_directly_with_spice/
-  # https://www.reddit.com/r/VFIO/comments/4fjsie/howto_passing_through_an_entire_block_device/
-  #
-  # https://lwn.net/Articles/656807/
-  # http://www.breakage.org/2013/11/15/nohz_fullgodmode/
-  # https://wiki.fd.io/view/VPP/How_To_Optimize_Performance_(System_Tuning)
-  # https://lwn.net/Articles/549592/
-  #
-  # Ensure QueryPerformanceCounter() is quick using http://www.nvidia.com/object/timer_function_performance.html
-  #
-  # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
-
   virtualisation.libvirtd.enable = true;
+
   environment.systemPackages = [ pkgs.virtmanager ];
+
+  # Add my own xml file. Use mkAfter to ensure it occurs after nixos replaces the qemu path.
+  systemd.services.libvirtd.preStart = let
+    win10xml = pkgs.writeText "win10.xml" (import ./win10.xml.nix { qemu=pkgs.my_qemu; kbd_path=kbd_path; mouse_path=mouse_path; });
+  in lib.mkAfter ''
+    mkdir -p /var/lib/libvirt/qemu
+    cp ${win10xml} /var/lib/libvirt/qemu/win10.xml
+  '';
+
+  # Add permission to evdev devices
+  virtualisation.libvirtd.qemuVerbatimConfig = ''
+    cgroup_device_acl = [
+       "/dev/null", "/dev/full", "/dev/zero",
+       "/dev/random", "/dev/urandom",
+       "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+       "/dev/rtc", "/dev/hpet", "/dev/net/tun",
+       "${kbd_path}", "${mouse_path}"
+    ]
+  '';
 
   # By default, postgresql uses some of my huge pages! Disable this so my math is correct.
   services.postgresql.extraConfig = "huge_pages off";
