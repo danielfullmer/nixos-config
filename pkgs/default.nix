@@ -30,10 +30,7 @@ rec {
   });
 
   termite = (pkgs.termite.override {
-    configFile = pkgs.writeTextFile {
-      name = "termite-config";
-      text = (import termite/config.nix { inherit pkgs theme; });
-    };
+    configFile = pkgs.writeText "termite-config" (import termite/config.nix { inherit pkgs theme; });
   });
 
   my_qemu = pkgs.qemu_kvm.overrideAttrs (attrs: {
