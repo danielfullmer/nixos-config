@@ -8,6 +8,7 @@
       ln -fs ${../dotfiles}/.gitconfig
       mkdir -p .gnupg
       chown danielrf:danielrf .gnupg
+      chmod 700 .gnupg
       ln -fs ${../dotfiles}/.gnupg/gpg-agent.conf .gnupg/gpg-agent.conf
       ln -fs ${../dotfiles}/.latexmkrc
       mkdir -p .local/bin
