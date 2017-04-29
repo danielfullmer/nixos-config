@@ -13,7 +13,6 @@ with lib;
     };
 
     windowManager = {
-      #default = "my-bspwm";
       default = "i3";
 
       i3.enable = true;
@@ -21,49 +20,6 @@ with lib;
         name = "i3config";
         text = import ./i3config.nix { pkgs=pkgs; theme=config.theme; };
       };
-
-      session = [ rec {
-        name = "my-bspwm";
-
-        bspwmConfig =
-          let bspwmTheme = pkgs.writeTextFile {
-              name = "bspwmTheme";
-              text = import (../../modules/theme/templates + "/bspwm.${config.theme.brightness}.nix") { bspwm=pkgs.bspwm; colors=config.theme.colors; };
-            };
-          in
-        pkgs.writeScript "bspwmrc" ''
-          #!/bin/sh
-          ${pkgs.bspwm}/bin/bspc config border_width        2
-          ${pkgs.bspwm}/bin/bspc config focused_border_color red
-          ${pkgs.bspwm}/bin/bspc config presel_border_color green
-          ${pkgs.bspwm}/bin/bspc config window_gap          3
-          ${pkgs.bspwm}/bin/bspc config top_padding         -3
-          ${pkgs.bspwm}/bin/bspc config bottom_padding      -3
-          ${pkgs.bspwm}/bin/bspc config left_padding        -3
-          ${pkgs.bspwm}/bin/bspc config right_padding       -3
-          ${pkgs.bspwm}/bin/bspc config split_ratio         0.52
-          ${pkgs.bspwm}/bin/bspc config borderless_monocle  true
-          ${pkgs.bspwm}/bin/bspc config gapless_monocle     true
-
-          for name in `bspc query -M`; do
-            ${pkgs.bspwm}/bin/bspc monitor $name -d • • • •
-          done
-
-          ${pkgs.bspwm}/bin/bspc rule -a Gimp desktop=^8 follow=on floating=on
-          ${pkgs.bspwm}/bin/bspc rule -a mplayer2 floating=on
-
-          source ${bspwmTheme}
-
-          # This needs to happen after the bspc's above
-          ${import ./panel/panel.nix { pkgs=pkgs; theme=config.theme; }}
-        '';
-
-        start = ''
-          ${pkgs.sxhkd}/bin/sxhkd &
-          ${pkgs.bspwm}/bin/bspwm -c ${bspwmConfig} &
-          waitPID=$!
-        '';
-      } ];
     };
 
     desktopManager = {
@@ -129,8 +85,6 @@ with lib;
   security.rtkit.enable = true;
 
   environment.systemPackages = (with pkgs; [
-    bspwm
-
     compton
     xclip
 
@@ -211,8 +165,6 @@ with lib;
     BROWSER = "google-chrome-stable";
     GTK_IM_MODULE = "xim"; # For compose key
     QT_IM_MODULE = "xim";
-
-    BSPWM_SOCKET = "/run/user/$UID/bspwm-socket"; # TODO: Include X display number to make unique
   };
 
   # HW accelerated video playback
