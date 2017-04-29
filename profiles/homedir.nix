@@ -17,6 +17,7 @@
       ln -fs ${../dotfiles}/.taskrc
       ln -fns /run/current-system/sw/share/terminfo .terminfo  # TODO: See issue #19785
       touch .zshrc
+      chown danielrf:danielrf .zshrc
     '';
   };
 }
