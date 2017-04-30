@@ -51,7 +51,7 @@
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
-    <timer name='pit' tickpolicy='delay'/>
+    <timer name='pit' tickpolicy='discard'/>
     <timer name='hpet' present='no'/>
     <timer name='hypervclock' present='yes'/>
   </clock>
@@ -92,7 +92,7 @@
     <interface type='network'>
       <mac address='52:54:00:0c:20:c8'/>
       <source network='default'/>
-      <model type='rtl8139'/>
+      <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
