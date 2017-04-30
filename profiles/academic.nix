@@ -7,7 +7,7 @@
     })
 
     git-latexdiff
-    pythonPackages.proselint
+    proselint
 
     (python3.buildEnv.override {
       extraLibs = with python3Packages; [
