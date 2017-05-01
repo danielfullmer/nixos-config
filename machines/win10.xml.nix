@@ -45,9 +45,10 @@
     </hyperv>
     <vmport state='off'/>
   </features>
-  <cpu mode='host-model'>
+  <cpu mode='host-passthrough'>
     <model fallback='allow'/>
     <topology sockets='1' cores='3' threads='2'/>
+    <feature name='invtsc'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>

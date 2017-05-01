@@ -14,6 +14,7 @@
 # https://lwn.net/Articles/549592/
 #
 # Ensure QueryPerformanceCounter() is quick using http://www.nvidia.com/object/timer_function_performance.html
+# This seems to require invtsc feature enabled
 #
 # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
 
