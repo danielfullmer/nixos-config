@@ -28,8 +28,8 @@
 
   swapDevices = [ ];
 
-  nix.maxJobs = 2;
-  nix.buildCores = 4;
+  nix.maxJobs = 6;
+  nix.buildCores = 6;
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
