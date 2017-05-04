@@ -13,8 +13,6 @@ rec {
 #    ];
 #  });
 
-  browserpass = pkgs.callPackage ./browserpass {};
-
   dactyl-keyboard = pkgs.callPackage ./dactyl-keyboard {};
 
   duplicity = pkgs.duplicity.override { inherit (pkgs) gnupg; };
