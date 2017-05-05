@@ -64,6 +64,9 @@ in
       fi
     '';
 
+    environment.etc."chromium/native-messaging-hosts/io.keybase.kbnm.json".source = "${cfg.package}/etc/chrome-host.json";
+    environment.etc."opt/chrome/native-messaging-hosts/io.keybase.kbnm.json".source = "${cfg.package}/etc/chrome-host.json";
+
     services.xserver.desktopManager.extraSessionCommands = "(${pkgs.keybase-gui}/bin/keybase-gui) &";
 
     environment.systemPackages = [ pkgs.keybase-gui ];
