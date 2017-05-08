@@ -65,7 +65,9 @@ in
       danielrf = {
         description     = "Daniel Fullmer";
         group           = "danielrf";
-        extraGroups     = [ "users" "wheel" "video" "audio" "networkmanager" "vboxsf" "docker" "libvirtd"];
+        extraGroups     = [ "users" "wheel" "video" "audio" "networkmanager"
+                            "vboxsf" "docker" "libvirtd" "systemd-journal"
+                          ];
         home            = "/home/danielrf";
         createHome      = true;
         password        = "changeme";
