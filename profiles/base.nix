@@ -45,7 +45,7 @@ in
 
   nix = {
     extraOptions = ''
-      auto-optimize-store = true
+      auto-optimise-store = true
     '';
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
 
