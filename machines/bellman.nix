@@ -23,7 +23,7 @@
   # bcache on: ata-ST2000DM006-2DM164_W4Z4BH2E-part2 and ata-WDC_WD5000AAKS-22TMA0_WD-WCAPW3279067
   # bcache ssd is: ata-OCZ-AGILITY4_OCZ-CS8UXT0MD692SSR2
   # LVM on top of each of those, combined into a single volume group
-  # Try to move windows off of faster 500gb SSD, and then switch to that one.
+  # Try to move windows off of faster 500gb SSD, and then switch bcache and swap to that one.
   fileSystems = {
     "/" = {
       device = "/dev/mapper/VolGroup0-main";

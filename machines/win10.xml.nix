@@ -67,7 +67,7 @@
     <emulator>${qemu}/bin/qemu-kvm</emulator>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native' iothread='1'/>
-      <source dev='/dev/VolGroup0/windows2'/>
+      <source dev='/dev/VolGroup0/windows'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </disk>
