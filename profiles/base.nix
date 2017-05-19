@@ -44,9 +44,7 @@ in
   '';
 
   nix = {
-    extraOptions = ''
-      auto-optimise-store = true
-    '';
+    autoOptimiseStore = true;
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
 
     binaryCaches = [
