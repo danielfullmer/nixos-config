@@ -55,6 +55,9 @@ in
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "bellman-1:zgaxZSNzvCMGY5sjjgsxEC2uKn3OTW9LWEN0uhjJoO4="
     ];
+
+    daemonNiceLevel = 10; # Range: 0-19
+    daemonIONiceLevel = 5; # Range: 0-7
   };
 
   users = {
