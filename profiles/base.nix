@@ -121,7 +121,7 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    syntax-highlighting = {
+    syntaxHighlighting = {
       enable = true;
       highlighters = [ "main" "brackets" ];
     };
