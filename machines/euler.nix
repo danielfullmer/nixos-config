@@ -18,7 +18,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_10;
+    kernelPackages = pkgs.linuxPackages_4_11; # Need >= 4.10 for keyboard support
 
     # These patches came from https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
     kernelPatches = [
