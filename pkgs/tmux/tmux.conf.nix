@@ -4,8 +4,8 @@ let
   tmux-fingers = pkgs.fetchFromGitHub {
     owner = "Morantron";
     repo = "tmux-fingers";
-    rev = "d4f086de291ed6dc5759540675179453b5b62b75";
-    sha256 = "07lkqlrrfw54zaql2amp4z93jrhdrnn6q0j4993wwymrn7jah7hm";
+    rev = "0.6.2";
+    sha256 = "1k46wx1c1m5xvis98cwngjz25v1vjphy82176dibq4wz8j265h9y";
   };
 in
 ''
@@ -60,7 +60,7 @@ bind -rn M-L resize-pane -U 3
 
 # transfer copied text to attached terminal with yank:
 # https://github.com/sunaku/home/blob/master/bin/yank
-bind-key -t vi-copy y copy-pipe 'yank > #{pane_tty}'
+bind-key -Tcopy-mode-vi y send -X copy-pipe 'yank > #{pane_tty}'
 
 # transfer copied text to attached terminal with yank:
 # https://github.com/sunaku/home/blob/master/bin/yank
@@ -73,7 +73,9 @@ bind-key -n M-Y choose-buffer 'run-shell "tmux save-buffer -b \"%%\" - | yank > 
 ##
 
 # Default binding is: C-a F
-run-shell ${tmux-fingers}/tmux-fingers.tmux
+# TODO: It's broken at the moment.
+# run-shell tmux-fingers/tmux-fingers.tmux
+# set-option -g @fingers-copy-command 'yank'
 
 source-file ${./tmux.line}
 ''
