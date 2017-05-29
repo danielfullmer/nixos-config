@@ -16,11 +16,7 @@
 
   # Use gpg-agent instead of system-wide ssh-agent
   programs.ssh.startAgent = false;
-  environment.loginShellInit = ''
-    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-    gpgconf --create-socketdir
-    gpg-connect-agent updatestartuptty /bye >/dev/null 2>/dev/null
-  '';
+  programs.gnupg.agent.enable = true;
 
   # To use, append the output of pamu2fcfg to ~/.config/Yubico/u2f_keys
   security.pam.enableU2F = true;
