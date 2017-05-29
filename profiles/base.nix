@@ -6,7 +6,6 @@ in
   imports = [
     ../modules/theme
     ../modules/desktop.nix
-    ../modules/keybase.nix
   ];
 
   services.openssh.enable = true;
