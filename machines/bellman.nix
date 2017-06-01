@@ -38,6 +38,12 @@
 
   swapDevices = [ { device = "/dev/mapper/VolGroup0-swap"; } ];
 
+  # Use deadline I/O scheduler
+  # See https://wiki.debian.org/SSDOptimization
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
+  '';
+
   nix.maxJobs = 2;
   nix.buildCores = 4;
 
