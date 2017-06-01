@@ -38,8 +38,8 @@
 
   swapDevices = [ { device = "/dev/mapper/VolGroup0-swap"; } ];
 
-  nix.maxJobs = 4;
-  nix.buildCores = 8;
+  nix.maxJobs = 2;
+  nix.buildCores = 4;
 
   boot.loader.systemd-boot.enable = true;
 
