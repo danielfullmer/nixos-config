@@ -44,6 +44,8 @@
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
   '';
 
+  boot.kernel.sysctl."vm.swappiness" = 1;
+
   nix.maxJobs = 2;
   nix.buildCores = 4;
 
