@@ -16,7 +16,10 @@
 
   # Use gpg-agent instead of system-wide ssh-agent
   programs.ssh.startAgent = false;
-  programs.gnupg.agent.enable = true;
+  programs.gnupg = {
+    agent.enable = true;
+    agent.enableSSHSupport = true;
+  };
 
   # To use, append the output of pamu2fcfg to ~/.config/Yubico/u2f_keys
   security.pam.enableU2F = true;
