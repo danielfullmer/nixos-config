@@ -12,6 +12,8 @@
     ../profiles/homedir.nix
   ];
 
+  system.stateVersion = "17.03";
+
   boot.initrd.availableKernelModules = [ "ata_piix" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];

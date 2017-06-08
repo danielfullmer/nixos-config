@@ -13,6 +13,8 @@
     ../profiles/homedir.nix
   ];
 
+  system.stateVersion = "17.03";
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "bcache" ];
   boot.kernelModules = [ "kvm-intel" ];

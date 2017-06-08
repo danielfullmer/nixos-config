@@ -12,6 +12,8 @@
     ../profiles/homedir.nix
   ];
 
+  system.stateVersion = "17.03";
+
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
   boot = {
     # Use the gummiboot efi boot loader.

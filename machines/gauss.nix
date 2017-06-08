@@ -7,6 +7,8 @@
       ../profiles/homedir.nix
     ];
 
+  system.stateVersion = "17.03";
+
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
