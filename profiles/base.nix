@@ -140,6 +140,8 @@ in
       '';
   };
 
+  programs.command-not-found.enable = true;
+
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
   environment.shellInit = ''
