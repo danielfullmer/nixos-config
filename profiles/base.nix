@@ -144,7 +144,7 @@ in
 
   environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
 
-  environment.shellInit = ''
+  environment.interactiveShellInit = ''
     eval $(${pkgs.coreutils}/bin/dircolors "${./dircolors}")
   '';
 
