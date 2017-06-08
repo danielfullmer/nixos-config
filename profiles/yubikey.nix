@@ -39,10 +39,10 @@
     keybase-gui
   ]);
 
-  services.xserver.desktopManager.extraSessionCommands = ''
-    (yubioath-gui -t) &
-    (keybase-gui) &
-  '';
+  #  services.xserver.desktopManager.extraSessionCommands = ''
+  #    (yubioath-gui -t) &
+  #    (keybase-gui) &
+  #  '';
 
   services.keybase.enable = true;
   services.kbfs.enable = true;
