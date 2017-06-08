@@ -50,6 +50,4 @@ rec {
 
 
   vkcube = pkgs.callPackage ./vkcube {};
-
-  zcash = pkgs.callPackage ./zcash {};
 }
