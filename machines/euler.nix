@@ -31,6 +31,7 @@
       #   extraConfig = "INTEL_IPTS m";
       # }
     ];
+    # TODO: https://github.com/axelrtgs/linux-kernel-ipts-4.10
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
