@@ -38,7 +38,7 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/mapper/VolGroup0-swap"; } ];
+  swapDevices = [ { device = "/dev/sda1"; } ];
 
   # Use deadline I/O scheduler
   # See https://wiki.debian.org/SSDOptimization
