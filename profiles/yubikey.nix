@@ -19,6 +19,9 @@
   programs.gnupg = {
     agent.enable = true;
     agent.enableSSHSupport = true;
+    agent.enableExtraSocket = true;
+    agent.enableBrowserSocket = true;
+    dirmngr.enable = true;
   };
 
   # To use, append the output of pamu2fcfg to ~/.config/Yubico/u2f_keys
