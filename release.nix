@@ -56,11 +56,18 @@ rec {
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
 
+  tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
+  tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
+  tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
+
   nixpkgs-tested = channel {
     name = "nixpkgs-tested";
     src = <nixpkgs>;
-    constituents = [ bellman bellman-vfio nyquist euler tests.desktop ];
+    constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
   };
-
-  tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
+  config-tested = channel {
+    name = "config-tested";
+    src = ./.;
+    constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
+  };
 }
