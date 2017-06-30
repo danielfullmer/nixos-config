@@ -44,6 +44,7 @@ in
 
   nix = {
     autoOptimiseStore = true;
+    useSandbox = true;
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
 
     binaryCaches = [
