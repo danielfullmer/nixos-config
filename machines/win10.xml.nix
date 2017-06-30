@@ -149,9 +149,6 @@
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='3'/>
     </redirdev>
-    <memballoon model='virtio'>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
-    </memballoon>
   </devices>
   <qemu:commandline>
     <qemu:arg value='-object'/>
