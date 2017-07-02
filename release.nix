@@ -8,46 +8,6 @@ let
   pkgs = import nixpkgs {};
   lib = import (nixpkgs + /lib);
   nixos = nixpkgs + /nixos;
-
-  version = lib.fileContents (nixos + "/../.version");
-  versionSuffix =
-    (if stableBranch then "." else "pre") + "${toString nixpkgs.revCount}.${nixpkgs.shortRev}";
-
-  # See https://github.com/NixOS/nixpkgs/issues/17356
-  channel =
-     { name, src, constituents ? [], meta ? {}, isNixOS ? true, ... }@args:
-     pkgs.stdenv.mkDerivation ({
-       preferLocalBuild = true;
-       _hydraAggregate = true;
-
-       phases = [ "unpackPhase" "patchPhase" "installPhase" ];
-
-       patchPhase = pkgs.stdenv.lib.optionalString isNixOS ''
-         touch .update-on-nixos-rebuild
-       '';
-
-       installPhase = ''
-         mkdir -p $out/{tarballs,nix-support}
-
-         tar cJf "$out/tarballs/nixexprs.tar.xz" \
-           --owner=0 --group=0 --mtime="1970-01-01 00:00:00 UTC" \
-           --transform='s!^\.!${name}!' .
-
-         echo "channel - $out/tarballs/nixexprs.tar.xz" > "$out/nix-support/hydra-build-products"
-         echo $constituents > "$out/nix-support/hydra-aggregate-constituents"
-
-         # Propagate build failures.
-         for i in $constituents; do
-           if [ -e "$i/nix-support/failed" ]; then
-             touch "$out/nix-support/failed"
-           fi
-         done
-       '';
-
-       meta = meta // {
-         isHydraChannel = true;
-       };
-     } // removeAttrs args [ "meta" ]);
 in
 rec {
   bellman = (import nixos { configuration = ./machines/bellman.nix; }).system;
@@ -60,14 +20,19 @@ rec {
   tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
   tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
 
-  nixpkgs-tested = channel {
-    name = "nixpkgs-tested";
-    src = <nixpkgs>;
+  tested = pkgs.releaseTools.aggregate {
+    name = "tested";
     constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
   };
-  config-tested = channel {
+
+  nixpkgs-tested = pkgs.releaseTools.channel {
+    name = "nixpkgs-tested";
+    src = <nixpkgs>;
+    constituents = [ tested ];
+  };
+  config-tested = pkgs.releaseTools.channel {
     name = "config-tested";
     src = ./.;
-    constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
+    constituents = [ tested ];
   };
 }
