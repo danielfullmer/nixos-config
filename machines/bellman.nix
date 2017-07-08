@@ -40,10 +40,13 @@
 
   swapDevices = [ { device = "/dev/sda1"; } ];
 
-  # Use deadline I/O scheduler
-  # See https://wiki.debian.org/SSDOptimization
   services.udev.extraRules = ''
+    # Use deadline I/O scheduler
+    # See https://wiki.debian.org/SSDOptimization
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
+
+    # Use SSD cache even if reads are sequential
+    ACTION=="add|change", SUBSYSTEM=="block", ENV{MAJOR}=="252", ATTR{bcache/sequential_cutoff}="0"
   '';
 
   boot.kernel.sysctl."vm.swappiness" = 1;
