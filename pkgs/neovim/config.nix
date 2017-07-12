@@ -49,7 +49,7 @@ in
       gist-vim
       #" }}}
       #" General Coding {{{
-      syntastic
+      ale
       commentary
       FastFold
       #" }}}
