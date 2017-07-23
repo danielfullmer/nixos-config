@@ -1,0 +1,5 @@
+#!/bin/sh
+nox-update --quiet /run/current-system result | \
+    grep -v '\.drv : $' | \
+    sed 's|^ */nix/store/[a-z0-9]*-||' | \
+    sort -u
