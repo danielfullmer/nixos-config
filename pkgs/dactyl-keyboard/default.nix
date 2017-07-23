@@ -1,7 +1,6 @@
-{ stdenv, callPackage, runCommand, writeScript, teensy-loader-cli }:
+{ stdenv, callPackage, runCommand, writeScript, teensy-loader-cli, hid-listen }:
 let 
   firmware = callPackage ./firmware.nix {};
-  hid_listen = callPackage ./hid_listen.nix {};
   # Currently running on a Teensy 2.0, ATMEGA32U4
   dactyl-flash = writeScript "dactyl-flash" ''
     #! ${stdenv.shell}
@@ -10,5 +9,5 @@ let
 in runCommand "dactyl-keyboard" {} ''
   mkdir -p $out/bin
   cp ${dactyl-flash} $out/bin/dactyl-flash
-  ln -s ${hid_listen}/bin/hid_listen $out/bin/dactyl-listen
+  ln -s ${hid-listen}/bin/hid_listen $out/bin/dactyl-listen
 ''

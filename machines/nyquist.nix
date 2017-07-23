@@ -45,4 +45,6 @@
 
   services.bitlbee.enable = true;
   services.plex.enable = true;
+
+  environment.systemPackages = with pkgs; [ dactyl-keyboard ];
 }
