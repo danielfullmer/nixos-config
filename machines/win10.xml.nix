@@ -8,24 +8,16 @@
   <memoryBacking>
     <hugepages/>
   </memoryBacking>
-  <vcpu placement='static'>6</vcpu>
-  <iothreads>1</iothreads>
+  <vcpu placement='static'>3</vcpu>
+  <iothreads>3</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
     <vcpupin vcpu='1' cpuset='2'/>
     <vcpupin vcpu='2' cpuset='3'/>
-    <vcpupin vcpu='3' cpuset='5'/>
-    <vcpupin vcpu='4' cpuset='6'/>
-    <vcpupin vcpu='5' cpuset='7'/>
-    <emulatorpin cpuset='0'/>
+    <emulatorpin cpuset='1-3'/>
     <iothreadpin iothread='1' cpuset='1'/>
-    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='3' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='4' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='5' scheduler='fifo' priority='1'/>
-    <iothreadsched iothreads='1' scheduler='fifo' priority='1'/>
+    <iothreadpin iothread='2' cpuset='2'/>
+    <iothreadpin iothread='3' cpuset='3'/>
   </cputune>
   <os>
     <type arch='x86_64' machine='pc-i440fx-2.8'>hvm</type>
@@ -47,7 +39,7 @@
   </features>
   <cpu mode='host-passthrough'>
     <model fallback='allow'/>
-    <topology sockets='1' cores='3' threads='2'/>
+    <topology sockets='1' cores='3' threads='1'/>
     <feature name='invtsc'/>
   </cpu>
   <clock offset='localtime'>

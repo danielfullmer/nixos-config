@@ -43,9 +43,9 @@ in
     "amdgpu.dpm=0"
 
     # CPU isolation stuff
-    #"isolcpus=1-3,5-7"
-    "nohz_full=1-3,5-7"
-    "rcu_nocbs=1-3,5-7"
+    #"isolcpus=1-3"
+    "nohz_full=1-3"
+    "rcu_nocbs=1-3"
   ];
 
   # This can be verified to be working if "Local Timer Interrupts" in /proc/interrupts is low for isolated cpus.
