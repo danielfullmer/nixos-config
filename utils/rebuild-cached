@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nixos-rebuild --option extra-binary-caches "http://bellman:5000" $*

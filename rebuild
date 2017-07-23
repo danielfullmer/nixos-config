@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-NIXOS_CONFIG="`pwd`/machines/`hostname`.nix" nixos-rebuild $*
