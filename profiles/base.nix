@@ -47,9 +47,9 @@ in
     useSandbox = true;
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
 
-    binaryCaches = [
-      "https://cache.nixos.org/"
-    ] ++ lib.optional (config.networking.hostName != "bellman") "http://bellman:5000";
+    binaryCaches = [ "https://cache.nixos.org/" ];
+
+    trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "http://bellman:5000";
 
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
