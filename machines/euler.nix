@@ -15,23 +15,23 @@
   system.stateVersion = "17.03";
 
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
+  # https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
   boot = {
     # Use the gummiboot efi boot loader.
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_11; # Need >= 4.10 for keyboard support
+    kernelPackages = pkgs.linuxPackages_4_12; # Need >= 4.10 for keyboard support
 
-    # These patches came from https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
     kernelPatches = [
       # TODO: Patch doesn't apply against 4.10:
+      # TODO: https://github.com/axelrtgs/linux-kernel-ipts-4.10
       # https://github.com/ipts-linux-org/ipts-linux-new/issues/3
       # { name = "IPTS";
       #   patch = ../pkgs/surface-pro-firmware/ipts.patch;
       #   extraConfig = "INTEL_IPTS m";
       # }
     ];
-    # TODO: https://github.com/axelrtgs/linux-kernel-ipts-4.10
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
