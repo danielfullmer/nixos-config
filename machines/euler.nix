@@ -24,13 +24,10 @@
     kernelPackages = pkgs.linuxPackages_4_12; # Need >= 4.10 for keyboard support
 
     kernelPatches = [
-      # TODO: Patch doesn't apply against 4.10:
-      # TODO: https://github.com/axelrtgs/linux-kernel-ipts-4.10
-      # https://github.com/ipts-linux-org/ipts-linux-new/issues/3
-      # { name = "IPTS";
-      #   patch = ../pkgs/surface-pro-firmware/ipts.patch;
-      #   extraConfig = "INTEL_IPTS m";
-      # }
+      { name = "IPTS";
+        patch = ../pkgs/surface-pro-firmware/ipts-4.12.3.patch;
+        extraConfig = "INTEL_IPTS m";
+      }
     ];
 
     initrd.kernelModules = [ "hid-multitouch" ];
