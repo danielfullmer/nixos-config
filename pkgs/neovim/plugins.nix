@@ -17,15 +17,4 @@ in
     dependencies = [];
 
   };
-
-  ale = buildVimPluginFrom2Nix { # created by nix#NixDerivation
-    name = "ale-2017-07-12";
-    src = fetchgit {
-      url = "https://github.com/w0rp/ale";
-      rev = "588595419739e3fec9cad921824e0e07aadb440d";
-      sha256 = "15gk9hr900yjfh0rvyw9fill7qd89ck0qcp19l8wg8v4ja91x71c";
-    };
-    dependencies = [];
-
-  };
 }
