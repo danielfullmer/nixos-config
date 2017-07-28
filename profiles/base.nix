@@ -97,6 +97,9 @@ in
     ncdu
     bmon
 
+    nox
+    nix-index
+
     tmux
 
     silver-searcher
