@@ -43,6 +43,12 @@ in
   '';
 
   nix = {
+    nixPath = [ # From nixos/modules/services/misc/nix-daemon.nix
+      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos" # Removed trailing /nixpkgs, which was just a symlink to .
+      "nixos-config=/etc/nixos/configuration.nix"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
+
     autoOptimiseStore = true;
     useSandbox = true;
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
@@ -59,6 +65,10 @@ in
     daemonNiceLevel = 10; # Range: 0-19
     daemonIONiceLevel = 5; # Range: 0-7
   };
+
+  # Use the channel set with nix-channel. Should automatically get the latest
+  # tested nixkgs and nixos-configuration from hydra
+  system.autoUpgrade.enable = true;
 
   users = {
     groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];

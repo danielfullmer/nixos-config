@@ -17,22 +17,23 @@ rec {
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
-  tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
-  tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
+  #tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
+  #tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
 
   tested = pkgs.releaseTools.aggregate {
     name = "tested";
-    constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
+    #constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
+    constituents = [ bellman bellman-vfio euler tests.desktop ];
   };
 
   nixpkgs-tested = pkgs.releaseTools.channel {
-    name = "nixpkgs-tested";
+    name = "nixpkgs-tested-channel";
     src = <nixpkgs>;
     constituents = [ tested ];
   };
   config-tested = pkgs.releaseTools.channel {
-    name = "config-tested";
-    src = ./.;
+    name = "config-tested-channel";
+    src = lib.cleanSource ./.;
     constituents = [ tested ];
   };
 }
