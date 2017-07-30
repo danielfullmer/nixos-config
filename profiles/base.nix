@@ -18,6 +18,7 @@ in
 
   services.zerotierone.enable = true;
   networking.firewall.trustedInterfaces = [ "zt0" ];
+  networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
   networking.extraHosts = ''
     30.0.0.48 devnull
     30.0.0.154 sysc-2
