@@ -19,15 +19,15 @@ in
   services.zerotierone.enable = true;
   networking.firewall.trustedInterfaces = [ "zt0" ];
   networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
-  networking.extraHosts = ''
-    30.0.0.48 devnull
-    30.0.0.154 sysc-2
-    30.0.0.127 nyquist
-    30.0.0.222 bellman
-    30.0.0.34 wrench
-    30.0.0.86 euler
-    30.0.0.84 gauss
-    '';
+  networking.hosts = {
+    "30.0.0.48" = [ "devnull" ];
+    "30.0.0.154" = [ "sysc-2" ];
+    "30.0.0.127" = [ "nyquist" ];
+    "30.0.0.222" = [ "bellman" ];
+    "30.0.0.34" = [ "wrench" ];
+    "30.0.0.86" = [ "euler" ];
+    "30.0.0.84" = [ "gauss" ];
+  };
 
   # X11 and GPG forwarding for SSH
   # See https://wiki.gnupg.org/AgentForwarding
