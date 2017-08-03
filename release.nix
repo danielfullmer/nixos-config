@@ -26,11 +26,16 @@ rec {
     constituents = [ bellman bellman-vfio euler tests.desktop ];
   };
 
-  nixpkgs-tested = pkgs.releaseTools.channel {
+  nixpkgs-tested = (pkgs.releaseTools.channel {
     name = "nixpkgs-tested-channel";
-    src = <nixpkgs>;
+    src = lib.cleanSource nixpkgs;
     constituents = [ tested ];
-  };
+  }).overrideAttrs (attrs: {
+    # Hack until releaseTools.channel may be unified with nixos/lib/make-channel.nix someday
+    patchPhase = attrs.patchPhase + ''
+      echo -n ${nixpkgs.rev or nixpkgs.shortRev} > .git-revision
+    '';
+  });
   config-tested = pkgs.releaseTools.channel {
     name = "config-tested-channel";
     src = lib.cleanSource ./.;
