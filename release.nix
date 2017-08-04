@@ -28,7 +28,7 @@ rec {
 
   nixpkgs-tested = (pkgs.releaseTools.channel {
     name = "nixpkgs-tested-channel";
-    src = lib.cleanSource nixpkgs;
+    src = <nixpkgs>;
     constituents = [ tested ];
   }).overrideAttrs (attrs: {
     # Hack until releaseTools.channel may be unified with nixos/lib/make-channel.nix someday
