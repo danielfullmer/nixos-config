@@ -19,7 +19,12 @@ rec {
 
   emacs = pkgs.callPackage ./emacs {};
 
-  keybase = pkgs.callPackage ./keybase {};
+  keybase = pkgs.keybase.overrideAttrs (attrs: {
+    postInstall = ''
+      sed -e "s!@@HOST_PATH@@!$bin/bin/kbnm!" $src/go/kbnm/host_json.template > chrome-host.json
+      install -D chrome-host.json $bin/etc/chrome-host.json
+    '';
+  });
 
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
