@@ -106,4 +106,6 @@ in
     in ''
       (${pkgs.synergy}/bin/synergys -c ${synergyConfigFile}) &
     '';
+
+    networking.firewall.trustedInterfaces = [ "virbr0" ];
 }
