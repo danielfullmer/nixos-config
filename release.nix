@@ -23,7 +23,7 @@ rec {
   tested = pkgs.releaseTools.aggregate {
     name = "tested";
     #constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
-    constituents = [ bellman bellman-vfio euler tests.desktop ];
+    constituents = [ bellman bellman-vfio nyquist euler tests.desktop ];
   };
 
   nixpkgs-tested = (pkgs.releaseTools.channel {
