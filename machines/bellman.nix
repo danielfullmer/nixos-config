@@ -96,10 +96,7 @@
     smtpHost = "${config.networking.hostName}";
     useSubstitutes = true;
     buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
-  };
-
-  services.nix-serve = {
-    enable = true;
-    secretKeyFile = "/home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
+    # This is a deprecated option, but it's still used by NARInfo.pm
+    extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 }
