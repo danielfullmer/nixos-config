@@ -14,10 +14,11 @@
     <vcpupin vcpu='0' cpuset='1'/>
     <vcpupin vcpu='1' cpuset='2'/>
     <vcpupin vcpu='2' cpuset='3'/>
-    <emulatorpin cpuset='1-3'/>
-    <iothreadpin iothread='1' cpuset='1'/>
-    <iothreadpin iothread='2' cpuset='2'/>
-    <iothreadpin iothread='3' cpuset='3'/>
+    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
+    <emulatorpin cpuset='0'/>
+    <iothreadpin iothread='1' cpuset='0'/>
   </cputune>
   <os>
     <type arch='x86_64' machine='pc-i440fx-2.8'>hvm</type>
