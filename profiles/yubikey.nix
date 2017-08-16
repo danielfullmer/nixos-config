@@ -70,7 +70,4 @@
       chown danielrf:danielrf /keybase
     fi
   '';
-
-  environment.etc."chromium/native-messaging-hosts/io.keybase.kbnm.json".source = "${pkgs.keybase}/etc/chrome-host.json";
-  environment.etc."opt/chrome/native-messaging-hosts/io.keybase.kbnm.json".source = "${pkgs.keybase}/etc/chrome-host.json";
 }
