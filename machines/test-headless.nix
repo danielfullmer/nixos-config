@@ -3,7 +3,6 @@
 {
   imports = [
       ../profiles/base.nix
-      ../profiles/homedir.nix
       ../profiles/yubikey.nix
     ];
 

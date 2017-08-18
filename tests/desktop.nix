@@ -6,7 +6,6 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
       ../profiles/base.nix
       ../profiles/desktop/default.nix
       ../profiles/autologin.nix
-      ../profiles/homedir.nix
     ];
   };
 

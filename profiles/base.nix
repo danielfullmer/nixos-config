@@ -12,6 +12,11 @@ in
   services.fail2ban.enable = true;
 
   networking.domain = "controlnet";
+  networking.defaultMailServer = {
+    directDelivery = true;
+    hostName = "bellman";
+    root = "cgibreak@gmail.com";
+  };
 
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
@@ -67,10 +72,6 @@ in
     daemonIONiceLevel = 5; # Range: 0-7
   };
 
-  # Use the channel set with nix-channel. Should automatically get the latest
-  # tested nixkgs and nixos-configuration from hydra
-  system.autoUpgrade.enable = true;
-
   users = {
     groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
     users = {
@@ -107,25 +108,14 @@ in
     htop
     ncdu
     bmon
-
-    nox
-    nix-index
-
-    tmux
-
-    silver-searcher
-    git
-
-    neovim
-    emacs
+    wget
 
     zerotierone
-    pandoc
 
-    bitlbee
-    weechat
-    mutt
-    taskwarrior
+    tmux
+    silver-searcher
+    git
+    neovim
   ]);
 
   environment.variables = {
@@ -142,17 +132,6 @@ in
     enableAutosuggestions = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
     interactiveShellInit = import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
-  };
-
-  programs.fish = {
-    enable = true;
-    interactiveShellInit =
-      let shellThemeScript = pkgs.writeScript "shellTheme"
-        (import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; });
-      in
-      ''
-        eval sh ${shellThemeScript}
-      '';
   };
 
   programs.command-not-found.enable = true;
@@ -172,5 +151,26 @@ in
     vi = "vim";
     nfo="iconv -f IBM775";
     t = "task";
+  };
+
+  # This is a hack
+  system.activationScripts = {
+    dotfiles = lib.stringAfter [ "users" ]
+    ''
+      cd /home/danielrf
+      ln -fs ${../dotfiles}/.gitconfig
+      mkdir -p .gnupg
+      chown danielrf:danielrf .gnupg
+      chmod 700 .gnupg
+      ln -fs ${../dotfiles}/.latexmkrc
+      mkdir -p .local/bin
+      chown danielrf:danielrf .local .local/bin
+      ln -fs ${../dotfiles}/.local/bin/yank .local/bin/yank
+      ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
+      ln -fs ${../dotfiles}/.taskrc
+      ln -fns /run/current-system/sw/share/terminfo .terminfo  # TODO: See issue #19785
+      touch .zshrc
+      chown danielrf:danielrf .zshrc
+    '';
   };
 }

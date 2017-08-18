@@ -5,11 +5,9 @@
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
     ../profiles/yubikey.nix
-    ../profiles/ssmtp.nix
     ../profiles/desktop/default.nix
     ../profiles/academic.nix
     ../profiles/gdrive.nix
-    ../profiles/homedir.nix
   ];
 
   system.stateVersion = "17.03";

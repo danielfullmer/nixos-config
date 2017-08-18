@@ -4,7 +4,6 @@
   imports = [
       <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
       ../profiles/base.nix
-      ../profiles/homedir.nix
     ];
 
   system.stateVersion = "17.03";
