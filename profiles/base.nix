@@ -32,6 +32,7 @@ in
     "30.0.0.34" = [ "wrench" ];
     "30.0.0.86" = [ "euler" ];
     "30.0.0.84" = [ "gauss" ];
+    "30.0.0.136" = [ "banach" ];
   };
 
   # X11 and GPG forwarding for SSH
