@@ -15,7 +15,7 @@ rec {
   #bellman-steamvr = (import nixos { configuration = ./machines/bellman-steamvr.nix; }).system;
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
-  banach = (import nixos { configuration = ./machines/banach.nix; }).system;
+  #banach = (import nixos { configuration = ./machines/banach.nix; }).system;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
   #tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
