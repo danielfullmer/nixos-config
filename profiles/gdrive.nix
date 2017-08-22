@@ -4,7 +4,7 @@ let rclonemount = pkgs.writeScript "rclonemount" ''
   export PATH=${pkgs.fuse}/bin:$PATH
 
   # TODO: Remove & when rclone implements a background option (See issue #723)
-  ${pkgs.rclone}/bin/rclone mount "$1" "$2" --allow-other --config /etc/rclone.conf &
+  ${lib.getBin pkgs.rclone}/bin/rclone mount "$1" "$2" --allow-other --config /etc/rclone.conf &
 '';
 in
 {
