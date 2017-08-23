@@ -39,6 +39,7 @@
   networking.hostName = "banach";
 
   networking.wireless.enable = true;
+  networking.nameservers = [ "2001:4860:4860::8888" "2001:4860:4860::8844" ];
 
   # Disable docs
   services.nixosManual.enable = false;
