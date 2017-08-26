@@ -21,6 +21,15 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
 
+  boot.kernelPatches = [ {
+    name = "enable-latencytop";
+    patch = "";
+    extraConfig = ''
+      SCHEDSTATS y
+      LATENCYTOP y
+    '';
+  } ];
+
   # NOTE: Using bcache + LVM
   # bcache on: ata-ST2000DM006-2DM164_W4Z4BH2E-part2 and ata-WDC_WD5000AAKS-22TMA0_WD-WCAPW3279067
   # bcache ssd is: ata-OCZ-AGILITY4_OCZ-CS8UXT0MD692SSR2
