@@ -39,6 +39,22 @@
   #    (keybase-gui) &
   #  '';
 
+  systemd.services.gpg-key-import = {
+    description = "Import gpg keys";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "danielrf";
+      Group = "danielrf";
+    };
+    script = ''
+      ${lib.getBin pkgs.gnupg}/bin/gpg --import ${./secret-subkey-stubs.asc}
+      ${lib.getBin pkgs.gnupg}/bin/gpg --import-ownertrust << EOF
+      FA0ED54AE0DBF4CDC4B4FEADD1481BC2EF6B0CB0:6:
+      EOF
+    '';
+  };
+
   services.keybase.enable = true;
   services.kbfs.enable = true;
   services.kbfs.mountPoint = "/keybase";
