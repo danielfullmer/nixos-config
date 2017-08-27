@@ -5,9 +5,6 @@
   <uuid>2ca9b556-8a2a-48bb-ad29-890bca792cbb</uuid>
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>8388608</currentMemory>
-  <memoryBacking>
-    <hugepages/>
-  </memoryBacking>
   <vcpu placement='static'>3</vcpu>
   <iothreads>3</iothreads>
   <cputune>

@@ -36,8 +36,6 @@ in
     "kvm.ignore_msrs=1"
     "vfio-pci.ids=1002:67b0,1002:aac8" # Ignore AMD 390X card
 
-    "hugepages=4096" # With 2MB pages, this reserves 8G of mem
-
     # These seem to help, but hopefully might not be necessary in the future
     "video=efifb:off"
     "amdgpu.dpm=0"
@@ -80,9 +78,6 @@ in
        "${kbd_path}", "${mouse_path}"
     ]
   '';
-
-  # By default, postgresql uses some of my huge pages! Disable this so my math is correct.
-  services.postgresql.extraConfig = "huge_pages off";
 
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
