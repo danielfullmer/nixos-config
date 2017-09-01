@@ -108,7 +108,7 @@ with lib;
 
     zathura
     mendeley
-    google-chrome
+    chromium
   ]);
 
   environment.etc."zathurarc".text = import (../../modules/theme/templates + "/zathura.${config.theme.brightness}.nix") { colors=config.theme.colors; };
@@ -151,7 +151,7 @@ with lib;
   programs.browserpass.enable = true;
 
   environment.variables = {
-    BROWSER = "google-chrome-stable";
+    BROWSER = "chromium";
     GTK_IM_MODULE = "xim"; # For compose key
     QT_IM_MODULE = "xim";
   };

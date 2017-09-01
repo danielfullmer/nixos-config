@@ -149,7 +149,7 @@
     dmenu = ${pkgs.dmenu}/bin/dmenu -fn "${theme.fontName}-${toString theme.titleFontSize}" -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = ${pkgs.google-chrome}/bin/google-chrome-stable
+    browser = ${pkgs.chromium}/bin/chromium
 
     # Align icons left/right/off
     icon_position = off
