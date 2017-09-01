@@ -161,4 +161,21 @@ with lib;
   environment.etc."mpv/mpv.conf".text = ''
     hwdec=auto
   '';
+
+  # This is a user-specific hack since it is not trivial to replace the
+  # internal Compose file under ${xlibs.libX11}/share/X11/locale/*/Compose
+  # without rebuilding lots of stuff
+  system.activationScripts = {
+    xcompose = let
+      # See example at https://github.com/kragen/xcompose
+      XComposeFile = pkgs.writeTextFile {
+        name = "XCompose";
+        text = import ./XCompose.nix { inherit pkgs; };
+      };
+    in
+    lib.stringAfter [ "users" ]
+    ''
+      ln -fs ${XComposeFile} /home/danielrf/.XCompose
+    '';
+  };
 }

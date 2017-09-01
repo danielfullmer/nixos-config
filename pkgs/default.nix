@@ -46,6 +46,7 @@ rec {
     ] ++ attrs.patches;
   });
 
-
   vkcube = pkgs.callPackage ./vkcube {};
+
+  xcompose = pkgs.callPackage ./xcompose {};
 }
