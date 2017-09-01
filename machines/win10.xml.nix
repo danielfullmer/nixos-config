@@ -36,7 +36,8 @@
     <vmport state='off'/>
   </features>
   <cpu mode='host-passthrough'>
-    <model fallback='allow'/>
+    <model fallback='forbid'/>
+    <cache mode='passthrough'/>
     <topology sockets='1' cores='3' threads='1'/>
     <feature name='invtsc'/>
   </cpu>
