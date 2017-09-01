@@ -17,7 +17,7 @@ rec {
 
   duplicity = pkgs.duplicity.override { inherit (pkgs) gnupg; };
 
-  emacs = pkgs.callPackage ./emacs {};
+  #emacs = pkgs.callPackage ./emacs {};
 
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
