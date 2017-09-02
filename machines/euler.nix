@@ -15,6 +15,8 @@
 
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
   # https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
+  # More recent: https://github.com/jakeday/linux-surface
+  # https://github.com/Shadoukun/linux-surface-ipts
   boot = {
     # Use the gummiboot efi boot loader.
     loader.systemd-boot.enable = true;
@@ -24,8 +26,11 @@
 
     kernelPatches = [
       { name = "IPTS";
-        patch = ../pkgs/surface-pro-firmware/ipts-4.12.3.patch;
+        patch = ../pkgs/surface-pro-firmware/ipts-4.12.10.patch;
         extraConfig = "INTEL_IPTS m";
+      }
+      { name = "mwifiex-fix";
+        patch = ../pkgs/surface-pro-firmware/mwifiex-fix.patch;
       }
     ];
 
@@ -94,6 +99,12 @@
     # handle typing cover disconnects
     # https://www.reddit.com/r/SurfaceLinux/comments/6axyer/working_sp4_typecover_plug_and_play/
     ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="Surface Type Cover", RUN+="${pkgs.kmod}/bin/modprobe -r i2c_hid && ${pkgs.kmod}/modprobe i2c_hid"
+
+    # IPTS Touchscreen (SP4)
+    SUBSYSTEMS=="input", ATTRS{name}=="ipts 1B96:006A SingleTouch", ENV{ID_INPUT_TOUCHSCREEN}="1", SYMLINK+="input/touchscreen"
+
+    # IPTS Pen (SP4)
+    SUBSYSTEMS=="input", ATTRS{name}=="ipts 1B96:006A Pen", SYMLINK+="input/pen"
   '';
 
 
