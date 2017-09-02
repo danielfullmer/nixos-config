@@ -41,7 +41,7 @@
       #"resume=/dev/mapper/lvm--quatermain-swap"
       "noresume"
     ];
-    extraModulePackages = [ ];
+    extraModulePackages = [ config.boot.kernelPackages.rtl8812au ]; # Just in case we need a USB wifi device
     blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
   };
 
