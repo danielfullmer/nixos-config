@@ -31,6 +31,7 @@
       }
       { name = "mwifiex-fix";
         patch = ../pkgs/surface-pro-firmware/mwifiex-fix.patch;
+        extraConfig = "CFG80211_DEFAULT_PS n";
       }
     ];
 
