@@ -5764,17 +5764,6 @@ diff -Naur a/drivers/misc/mei/pci-me.c b/drivers/misc/mei/pci-me.c
  	{MEI_PCI_DEVICE(MEI_DEV_ID_SPT_H, mei_me_pch8_sps_cfg)},
  	{MEI_PCI_DEVICE(MEI_DEV_ID_SPT_H_2, mei_me_pch8_sps_cfg)},
  	{MEI_PCI_DEVICE(MEI_DEV_ID_LBG, mei_me_pch8_cfg)},
-diff -Naur a/firmware/Makefile b/firmware/Makefile
---- a/firmware/Makefile	2017-07-02 19:07:02.000000000 -0400
-+++ b/firmware/Makefile	2017-08-13 19:50:54.777235146 -0400
-@@ -135,6 +135,7 @@
- fw-shipped-$(CONFIG_USB_VICAM) += vicam/firmware.fw
- fw-shipped-$(CONFIG_VIDEO_CPIA2) += cpia2/stv0672_vp4.bin
- fw-shipped-$(CONFIG_YAM) += yam/1200.bin yam/9600.bin
-+fw-shipped-$(CONFIG_INTEL_IPTS) += intel/ipts/ipts_fw_config.bin
- 
- fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
- 
 --- a/include/linux/intel_ipts_if.h	1969-12-31 19:00:00.000000000 -0500
 +++ b/include/linux/intel_ipts_if.h	2017-08-13 19:50:54.987246441 -0400
 @@ -0,0 +1,75 @@
