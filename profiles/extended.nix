@@ -10,6 +10,10 @@
     weechat
     mutt
     taskwarrior
+
+    alot
+    notmuch
+    w3m
   ]);
 
   programs.fish = {
