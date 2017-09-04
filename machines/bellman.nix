@@ -108,4 +108,11 @@
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
+
+  # Temporary util I nixify my mail configuration
+  services.offlineimap = {
+    enable = true;
+    install = true;
+    path = [ pkgs.notmuch ];
+  };
 }
