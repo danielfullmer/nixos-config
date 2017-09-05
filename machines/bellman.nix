@@ -47,7 +47,7 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/sda1"; } ];
+  swapDevices = [ { device = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M-part1"; } ];
 
   services.udev.extraRules = ''
     # Use deadline I/O scheduler
