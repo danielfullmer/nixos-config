@@ -16,6 +16,7 @@ rec {
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
   #banach = (import nixos { configuration = ./machines/banach.nix; }).system;
+  spaceheater = (import nixos { configuration = ./machines/spaceheater.nix; }).system;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
   #tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
@@ -24,7 +25,7 @@ rec {
   tested = pkgs.releaseTools.aggregate {
     name = "tested";
     #constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
-    constituents = [ bellman bellman-vfio nyquist euler tests.desktop ];
+    constituents = [ bellman bellman-vfio nyquist euler spaceheater tests.desktop ];
   };
 
   nixpkgs-tested = (pkgs.releaseTools.channel {
