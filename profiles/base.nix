@@ -33,13 +33,14 @@ in
     "30.0.0.86" = [ "euler" ];
     "30.0.0.84" = [ "gauss" ];
     "30.0.0.156" = [ "banach" ];
+    "30.0.0.40" = [ "spaceheater" ];
   };
 
   # X11 and GPG forwarding for SSH
   # See https://wiki.gnupg.org/AgentForwarding
   # TODO: /run/user/ path is not correct if UID is different across hosts
   programs.ssh.extraConfig = ''
-    Host bellman nyquist euler
+    Host bellman nyquist euler banach spaceheater
     ForwardAgent yes
     ForwardX11 yes
     RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
