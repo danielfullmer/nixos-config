@@ -5,6 +5,8 @@
     ../profiles/base.nix
   ];
 
+  theme.base16Name = "ir-black";
+
   system.stateVersion = "17.03";
 
   boot.loader.grub.enable = true;

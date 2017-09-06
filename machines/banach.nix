@@ -6,6 +6,8 @@
     ../profiles/gdrive.nix
   ];
 
+  theme.base16Color = "isotope";
+
   system.stateVersion = "17.09";
   nixpkgs.system = "aarch64-linux";
 

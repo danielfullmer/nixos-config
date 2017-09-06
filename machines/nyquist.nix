@@ -10,6 +10,8 @@
     ../profiles/gdrive.nix
   ];
 
+  theme.base16Name = "eighties";
+
   system.stateVersion = "17.03";
 
   boot.initrd.availableKernelModules = [ "ata_piix" ];

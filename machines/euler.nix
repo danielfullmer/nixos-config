@@ -11,6 +11,8 @@
     ../profiles/gdrive.nix
   ];
 
+  theme.base16Color = "3024";
+
   system.stateVersion = "17.03";
 
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4

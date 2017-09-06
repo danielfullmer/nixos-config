@@ -13,6 +13,8 @@
     ../profiles/gdrive.nix
   ];
 
+  theme.base16Name = "materia";
+
   system.stateVersion = "17.03";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];

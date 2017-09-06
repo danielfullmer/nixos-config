@@ -6,6 +6,8 @@
       ../profiles/base.nix
     ];
 
+  theme.base16Name = "chalk";
+
   system.stateVersion = "17.03";
 
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
