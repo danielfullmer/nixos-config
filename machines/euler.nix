@@ -11,7 +11,7 @@
     ../profiles/gdrive.nix
   ];
 
-  theme.base16Color = "3024";
+  theme.base16Name = "3024";
 
   system.stateVersion = "17.03";
 

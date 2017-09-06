@@ -13,7 +13,7 @@
     ../profiles/gdrive.nix
   ];
 
-  theme.base16Name = "materia";
+  theme.base16Name = "chalk";
 
   system.stateVersion = "17.03";
 

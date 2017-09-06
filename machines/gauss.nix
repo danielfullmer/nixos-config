@@ -6,7 +6,7 @@
       ../profiles/base.nix
     ];
 
-  theme.base16Name = "chalk";
+  theme.base16Name = "ocean";
 
   system.stateVersion = "17.03";
 

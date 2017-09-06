@@ -5,7 +5,7 @@
     ../profiles/base.nix
   ];
 
-  theme.base16Name = "ir-black";
+  theme.base16Name = "irblack";
 
   system.stateVersion = "17.03";
 
