@@ -19,6 +19,8 @@ rec {
 
   #emacs = pkgs.callPackage ./emacs {};
 
+  gmailieer = pkgs.callPackage ./gmailieer {};
+
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
   surface-pro-firmware = pkgs.callPackage ./surface-pro-firmware {};
