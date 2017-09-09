@@ -105,4 +105,9 @@ in
     '';
 
     networking.firewall.trustedInterfaces = [ "virbr0" ];
+
+    services.xserver.windowManager.i3.config = ''
+      bindsym $mod+shift+o exec ${pkgs.gksu}/bin/gksudo virsh shutdown win10
+      bindsym $mod+shift+p exec ${pkgs.gksu}/bin/gksudo virsh start win10
+    '';
 }
