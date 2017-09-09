@@ -6,7 +6,7 @@
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>8388608</currentMemory>
   <vcpu placement='static'>3</vcpu>
-  <iothreads>3</iothreads>
+  <iothreads>1</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
     <vcpupin vcpu='1' cpuset='2'/>
@@ -35,11 +35,10 @@
     </hyperv>
     <vmport state='off'/>
   </features>
-  <cpu mode='host-passthrough'>
-    <model fallback='forbid'/>
-    <cache mode='passthrough'/>
+  <cpu mode='host-passthrough' check='none'>
     <topology sockets='1' cores='3' threads='1'/>
-    <feature name='invtsc'/>
+    <cache mode='passthrough'/>
+    <feature policy='require' name='invtsc'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>

@@ -79,6 +79,8 @@ in
     ]
   '';
 
+  virtualisation.libvirtd.onShutdown = "shutdown";
+
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
       section: screens
