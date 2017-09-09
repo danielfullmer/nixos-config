@@ -5,13 +5,13 @@
     ./bellman.nix
   ];
 
-  ### Status as of 2017-05-27 for 390x
+  ### Status as of 2017-09-09 for 390x
   # Boots correctly
-  # Need a version with the recent multiview commits reverted (e.g. cb208d7...)
-  # See: https://bugs.freedesktop.org/show_bug.cgi?id=102571
   # Vive needs to be plugged into USB 2
   # Detects basestation, controllers, headset.
   # Needs a version of steam with extra dependencies (see nixpkgs branch)
+  # Runs correctly--vrcompositor outputs to a window on the desktop
+  # But HTC vive does not display any image. :(
 
   boot.kernelParams = [
     "radeon.cik_support=0"
@@ -38,8 +38,8 @@
       src = pkgs.fetchFromGitHub {
         owner = "mesa3d";
         repo = "mesa";
-        rev = "64164a1313fcdf1084b0f8a9499165ee22a13aa7";
-        sha256 = "0bdblw2xh0vm2gycxzyqy5yzakaq1rin9xlm68x89l2wp58cxs5j";
+        rev = "ec8ed2f2779c30863f7478b8f5ad9654abbff346";
+        sha256 = "121m8q4d72897vcgrlg8gaxmy0fs8f7jsgckwf2ybhf9c47ag4g1";
       };
       # this nixpkg version of this patch didn't apply cleanly
       # we should probably find a less fragile way of doing this
