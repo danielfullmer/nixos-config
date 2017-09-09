@@ -16,10 +16,7 @@ with lib;
       default = "i3";
 
       i3.enable = true;
-      i3.configFile = pkgs.writeTextFile {
-        name = "i3config";
-        text = import ./i3config.nix { pkgs=pkgs; theme=config.theme; };
-      };
+      i3.config = import ./i3config.nix { pkgs=pkgs; theme=config.theme; };
     };
 
     desktopManager = {
