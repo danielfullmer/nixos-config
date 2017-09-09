@@ -60,8 +60,6 @@
     ACTION=="add|change", SUBSYSTEM=="block", ENV{MAJOR}=="252", ATTR{bcache/sequential_cutoff}="0"
   '';
 
-  boot.kernel.sysctl."vm.swappiness" = 1;
-
   nix.maxJobs = 2;
   nix.buildCores = 4;
 
