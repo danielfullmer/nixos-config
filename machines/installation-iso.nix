@@ -18,7 +18,7 @@
   networking.wireless.enable = lib.mkForce false;
   networking.networkmanager.enable = true;
 
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     gparted
     bcachefs-tools
   ];
