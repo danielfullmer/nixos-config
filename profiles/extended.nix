@@ -11,6 +11,7 @@
     mutt
     taskwarrior
 
+    gmailieer
     alot
     notmuch
     w3m
