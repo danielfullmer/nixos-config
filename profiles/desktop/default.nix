@@ -104,7 +104,6 @@ with lib;
     adapta-gtk-theme
 
     zathura
-    mendeley
     chromium
   ]);
 

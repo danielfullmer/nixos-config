@@ -9,6 +9,8 @@
     git-latexdiff
     proselint
 
+    mendeley
+
     (python3.buildEnv.override {
       extraLibs = with python3Packages; [
         jupyter
