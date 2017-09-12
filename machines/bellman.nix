@@ -15,10 +15,12 @@
 
   theme.base16Name = "chalk";
 
-  system.stateVersion = "17.03";
+  system.stateVersion = "18.03";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ata_piix" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "bcache" ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
@@ -37,11 +39,57 @@
   # bcache ssd is: ata-OCZ-AGILITY4_OCZ-CS8UXT0MD692SSR2
   # LVM on top of each of those, combined into a single volume group
   # Try to move windows off of faster 500gb SSD, and then switch bcache and swap to that one.
+
+  boot.initrd = {
+    availableKernelModules = [
+      "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
+
+      # LUKS stuff, not sure how much is needed
+      "aes_x86_64" "aesni_intel" "af_alg" "algif_skcipher" "cbc" "cryptd" "crypto_simd"
+      "dm_crypt" "ecb" "gf128mul" "glue_helper" "xts"
+
+      "bcachefs"
+    ];
+
+    # To avoid slow boot times, luksAddKey was done with --iter-time 100
+    # luks-key is in first slot in remaining devices for speed as well
+    luks.devices = [
+      # See: https://github.com/NixOS/nixpkgs/issues/24386
+      { name = "luks-key"; # No encrypted filesystem, just an encrypted 4096-bit key
+        device = "/dev/disk/by-uuid/0727144d-70bf-4f4b-bff1-b5601ef833cc";
+        preLVM = true; # Ensure the vault device is mounted first
+      }
+      { name = "hd1";
+        device = "/dev/disk/by-uuid/c2691d0f-071e-46ab-897c-555f9164322d";
+        keyFile = "/dev/mapper/luks-key";
+        keyFileSize = 4096;
+        preLVM = false;
+      }
+      { name = "hd2";
+        device = "/dev/disk/by-uuid/d9222f0e-4180-4896-83e7-347110fda931";
+        keyFile = "/dev/mapper/luks-key";
+        keyFileSize = 4096;
+        preLVM = false;
+      }
+      { name = "ssd";
+        device = "/dev/disk/by-uuid/bfe14fae-1e45-4022-8ee2-8ed1d5b200c3";
+        keyFile = "/dev/mapper/luks-key";
+        keyFileSize = 4096;
+        preLVM = false;
+      }
+    ];
+
+    postDeviceCommands = lib.mkAfter ''
+      cryptsetup luksClose /dev/mapper/luks-key
+    '';
+  };
+
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/VolGroup0-main";
-      fsType = "btrfs";
-      options = [ "compress" ];
+      # Extra / at the beginning of this device is a hack to ensure stage-1
+      # recognizes this as a "pseudodevice" and doesn't wait around for it to appear
+      device = "//dev/mapper/ssd:/dev/mapper/hd1:/dev/mapper/hd2";
+      fsType = "bcachefs";
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
@@ -49,21 +97,16 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAG469669M-part1"; } ];
+  swapDevices = [ ];
 
   services.udev.extraRules = ''
     # Use deadline I/O scheduler
     # See https://wiki.debian.org/SSDOptimization
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
-
-    # Use SSD cache even if reads are sequential
-    ACTION=="add|change", SUBSYSTEM=="block", ENV{MAJOR}=="252", ATTR{bcache/sequential_cutoff}="0"
   '';
 
   nix.maxJobs = 2;
   nix.buildCores = 4;
-
-  boot.loader.systemd-boot.enable = true;
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
@@ -115,7 +158,7 @@
       Type = "oneshot";
       User = "danielrf";
       Group = "danielrf";
-      WorkingDirectory = "/home/danielrf/Mail";
+      WorkingDirectory = "/home/danielrf/mail";
     };
   };
 
@@ -126,4 +169,6 @@
       OnCalendar = "*:0/3"; # Every 3 minutes
     };
   };
+
+  environment.systemPackages = with pkgs; [ bcachefs-tools ];
 }
