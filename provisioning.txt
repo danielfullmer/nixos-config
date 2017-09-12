@@ -1,0 +1,36 @@
+# Final steps to login to services and complete configuration
+
+$ sudo -s
+gpg-connect-agent: failed to create temporary file '/root/.gnupg/.#lk0x00000000024e95a0.bellman.1527': No such file or directory
+gpg-connect-agent: can't connect to the agent: No such file or directory
+gpg-connect-agent: error sending standard options: No agent running
+
+$ sudo mkdir /root/.gnupg
+
+nmtui # connect to wireless interface
+
+$ mkdir -p ~/.nixpkgs
+$ cd ~/.nixpkgs
+$ ln -s ../nixos-config/pkgs/config.nix
+
+# Sign into keybase
+$ keybase login
+
+# Checkout password-store (requires keybase)
+$ git clone /keybase/private/danielfullmer/secrets/password-store .password-store
+
+# Regenerate key-stubs
+$ gpg --card-status
+
+# Sign into chromium
+
+$ notmuch # Do setup procedure, use /home/danielrf/mail as directory
+# set gpg_path properly in ~/.notmuch-config
+
+$ notmuch new # generate mail/.notmuch database
+$ cd mail
+$ gmi init ....@gmail.com
+$ gmi sync # Get everything
+
+# Join zerotier
+$ sudo zerotier-cli join ${zerotier.network}
