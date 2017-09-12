@@ -17,6 +17,9 @@
     <emulatorpin cpuset='0'/>
     <iothreadpin iothread='1' cpuset='0'/>
   </cputune>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
   <os>
     <type arch='x86_64' machine='pc-i440fx-2.8'>hvm</type>
     <boot dev='hd'/>
@@ -55,9 +58,9 @@
   </pm>
   <devices>
     <emulator>${qemu}/bin/qemu-kvm</emulator>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native' iothread='1'/>
-      <source dev='/dev/VolGroup0/windows'/>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='default' io='threads' iothread='1'/>
+      <source file='/var/lib/libvirt/images/win10.img'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </disk>
@@ -136,6 +139,10 @@
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='3'/>
     </redirdev>
+    <memballoon model='virtio'>
+      <alias name='balloon0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+    </memballoon>
   </devices>
   <qemu:commandline>
     <qemu:arg value='-object'/>
