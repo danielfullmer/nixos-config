@@ -15,6 +15,10 @@
     alot
     notmuch
     w3m
+
+    pythonPackages.glances
+    nethogs
+    iotop
   ]);
 
   programs.fish = {
