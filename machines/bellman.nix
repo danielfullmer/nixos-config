@@ -99,12 +99,6 @@
 
   swapDevices = [ ];
 
-  services.udev.extraRules = ''
-    # Use deadline I/O scheduler
-    # See https://wiki.debian.org/SSDOptimization
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
-  '';
-
   nix.maxJobs = 2;
   nix.buildCores = 4;
 
