@@ -6,7 +6,7 @@
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>8388608</currentMemory>
   <vcpu placement='static'>3</vcpu>
-  <iothreads>1</iothreads>
+  <iothreads>2</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
     <vcpupin vcpu='1' cpuset='2'/>
@@ -16,6 +16,7 @@
     <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
     <emulatorpin cpuset='0'/>
     <iothreadpin iothread='1' cpuset='0'/>
+    <iothreadpin iothread='2' cpuset='0'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
