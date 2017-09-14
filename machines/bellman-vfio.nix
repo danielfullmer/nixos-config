@@ -38,7 +38,6 @@ in
 
     # These seem to help, but hopefully might not be necessary in the future
     "video=efifb:off"
-    "amdgpu.dpm=0"
 
     # CPU isolation stuff
     #"isolcpus=1-3"
