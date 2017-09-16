@@ -11,6 +11,9 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
       programs.gnupg.agent.enableSSHSupport = true;
 
       environment.systemPackages = [ pkgs.gnupg ];
+
+      # XXX: Hack
+      system.activationScripts.root-gnupg = "mkdir -p /root/.gnupg";
     };
 
   # Part of this cribbed from login.nix

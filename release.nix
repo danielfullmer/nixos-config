@@ -19,13 +19,15 @@ rec {
   spaceheater = (import nixos { configuration = ./machines/spaceheater.nix; }).system;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
-  #tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
-  #tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
+  tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
+  tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
 
   tested = pkgs.releaseTools.aggregate {
     name = "tested";
-    #constituents = [ bellman bellman-vfio nyquist euler tests.desktop tests.gpg-agent tests.gpg-agent-x11 ];
-    constituents = [ bellman bellman-vfio nyquist euler spaceheater tests.desktop ];
+    constituents = [
+      bellman bellman-vfio nyquist euler spaceheater
+      tests.desktop tests.gpg-agent tests.gpg-agent-x11
+    ];
   };
 
   nixpkgs-tested = (pkgs.releaseTools.channel {
