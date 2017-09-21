@@ -6,7 +6,7 @@
   services.xserver.modules = [ pkgs.xlibs.xf86inputjoystick ];
 
   environment.systemPackages = (with pkgs; [
-    (steam.override {newStdcpp = true; }) # Option needed for radeon drivers
+    steam
   ]);
 
   services.udev.packages = [
