@@ -112,4 +112,12 @@ in
       bindsym $mod+shift+o exec ${pkgs.gksu}/bin/gksudo virsh shutdown win10
       bindsym $mod+shift+p exec ${pkgs.gksu}/bin/gksudo virsh start win10
     '';
+
+    systemd.extraConfig = ''
+      DefaultCPUAccounting=yes
+      DefaultIOAccounting=yes
+      DefaultBlockIOAccounting=yes
+      DefaultMemoryAccounting=yes
+      DefaultTasksAccounting=yes
+    '';
 }
