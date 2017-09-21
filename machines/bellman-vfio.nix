@@ -47,9 +47,12 @@ in
 
   # This can be verified to be working if "Local Timer Interrupts" in /proc/interrupts is low for isolated cpus.
   boot.kernelPatches = [ {
-    name = "enable-nohz-full";
+    name = "vfio-config";
     patch = "";
-    extraConfig = "NO_HZ_FULL y";
+    extraConfig = ''
+      NO_HZ_FULL y
+      PREEMPT y
+    '';
   } ];
 
   # Force use of second AMD card
