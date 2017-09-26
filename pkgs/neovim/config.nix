@@ -52,6 +52,7 @@ in
       ale
       commentary
       FastFold
+      polyglot # Language pack
       #" }}}
       #" Python {{{
       #Plug 'klen/python-mode'
