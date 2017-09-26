@@ -19,7 +19,7 @@ in
   };
 
   boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs = true;
+  #boot.tmpOnTmpfs = true; # XXX: Too much memory usage
 
   services.zerotierone.enable = true;
   networking.firewall.trustedInterfaces = [ "zt0" ];
