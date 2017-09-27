@@ -109,17 +109,11 @@
 
   services.acpid.enable = true;
 
-  # Use AMDGPU support.
-  boot.kernelParams = [
-    "amdgpu.exp_hw_support=1" "amdgpu.audio=0"
-    "amdgpu.dpm=0" # Check if this hack is needed in future kernels
-  ];
-  services.xserver.videoDrivers = [ "amdgpu" "intel" ];
-
   services.xserver.deviceSection = ''
     Option "DRI3" "1"
-    Option "TearFree" "on"
   '';
+
+  services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   services.redshift.enable = true;
 

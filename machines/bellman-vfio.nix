@@ -34,15 +34,11 @@ in
     "vfio_iommu_type1.allow_unsafe_interrupts=1"
     "kvm.allow_unsafe_assigned_interrupts=1"
     "kvm.ignore_msrs=1"
-    "vfio-pci.ids=1002:67b0,1002:aac8" # Ignore AMD 390X card
-
-    # These seem to help, but hopefully might not be necessary in the future
-    "video=efifb:off"
 
     # CPU isolation stuff
-    #"isolcpus=1-3"
-    "nohz_full=1-3"
-    "rcu_nocbs=1-3"
+    #"isolcpus=1-3,5-7"
+    "nohz_full=1-3,5-7"
+    "rcu_nocbs=1-3,5-7"
   ];
 
   # This can be verified to be working if "Local Timer Interrupts" in /proc/interrupts is low for isolated cpus.
@@ -54,9 +50,6 @@ in
       PREEMPT y
     '';
   } ];
-
-  # Force use of second AMD card
-  services.xserver.deviceSection = "BusId \"2:00:0\"";
 
   virtualisation.libvirtd.enable = true;
 

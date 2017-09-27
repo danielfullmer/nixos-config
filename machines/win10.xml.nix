@@ -3,10 +3,9 @@
 <domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>2ca9b556-8a2a-48bb-ad29-890bca792cbb</uuid>
-  <memory unit='KiB'>8388608</memory>
-  <currentMemory unit='KiB'>8388608</currentMemory>
+  <memory unit='KiB'>12582912</memory>
+  <currentMemory unit='KiB'>12582912</currentMemory>
   <vcpu placement='static'>3</vcpu>
-  <iothreads>2</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
     <vcpupin vcpu='1' cpuset='2'/>
@@ -15,14 +14,14 @@
     <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
     <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
     <emulatorpin cpuset='0'/>
-    <iothreadpin iothread='1' cpuset='0'/>
-    <iothreadpin iothread='2' cpuset='0'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
   </resource>
   <os>
-    <type arch='x86_64' machine='pc-i440fx-2.8'>hvm</type>
+    <type arch='x86_64' machine='pc-i440fx-2.9'>hvm</type>
+    <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
+    <nvram>/var/lib/libvirt/qemu/nvram/testvm_VARS.fd</nvram>
     <boot dev='hd'/>
   </os>
   <features>
@@ -36,7 +35,11 @@
       <runtime state='on'/>
       <stimer state='on'/>
       <reset state='on'/>
+      <vendor_id state='on' value='whatever'/>
     </hyperv>
+    <kvm>
+      <hidden state='on'/>
+    </kvm>
     <vmport state='off'/>
   </features>
   <cpu mode='host-passthrough' check='none'>
@@ -60,7 +63,7 @@
   <devices>
     <emulator>${qemu}/bin/qemu-kvm</emulator>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='raw' cache='default' io='threads' iothread='1'/>
+      <driver name='qemu' type='raw' cache='default' />
       <source file='/var/lib/libvirt/images/win10.img'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
