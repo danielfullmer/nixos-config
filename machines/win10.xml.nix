@@ -5,15 +5,15 @@
   <uuid>2ca9b556-8a2a-48bb-ad29-890bca792cbb</uuid>
   <memory unit='KiB'>12582912</memory>
   <currentMemory unit='KiB'>12582912</currentMemory>
-  <vcpu placement='static'>3</vcpu>
+  <vcpu placement='static'>6</vcpu>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
-    <vcpupin vcpu='1' cpuset='2'/>
-    <vcpupin vcpu='2' cpuset='3'/>
-    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
-    <emulatorpin cpuset='0'/>
+    <vcpupin vcpu='1' cpuset='5'/>
+    <vcpupin vcpu='2' cpuset='2'/>
+    <vcpupin vcpu='3' cpuset='6'/>
+    <vcpupin vcpu='4' cpuset='3'/>
+    <vcpupin vcpu='5' cpuset='7'/>
+    <emulatorpin cpuset='0,4'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
@@ -43,7 +43,7 @@
     <vmport state='off'/>
   </features>
   <cpu mode='host-passthrough' check='none'>
-    <topology sockets='1' cores='3' threads='1'/>
+    <topology sockets='1' cores='3' threads='2'/>
     <cache mode='passthrough'/>
     <feature policy='require' name='invtsc'/>
   </cpu>
@@ -118,6 +118,7 @@
         <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
       </source>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
+      <rom file='${./1080ti-evga-sc2-hybrid-gaming.rom}'/>
     </hostdev>
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
