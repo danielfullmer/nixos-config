@@ -3,8 +3,8 @@
 <domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>2ca9b556-8a2a-48bb-ad29-890bca792cbb</uuid>
-  <memory unit='KiB'>12582912</memory>
-  <currentMemory unit='KiB'>12582912</currentMemory>
+  <memory unit='KiB'>10240000</memory>
+  <currentMemory unit='KiB'>10240000</currentMemory>
   <vcpu placement='static'>6</vcpu>
   <cputune>
     <vcpupin vcpu='0' cpuset='1'/>
