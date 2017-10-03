@@ -24,11 +24,11 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_12; # Need >= 4.10 for keyboard support
+    kernelPackages = pkgs.linuxPackages_4_13; # Need >= 4.10 for keyboard support
 
     kernelPatches = [
       { name = "IPTS";
-        patch = ../pkgs/surface-pro-firmware/ipts-4.12.10.patch;
+        patch = ../pkgs/surface-pro-firmware/ipts-4.13.patch;
         extraConfig = "INTEL_IPTS m";
       }
       { name = "mwifiex-fix";
