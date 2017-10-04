@@ -139,4 +139,6 @@
   nixpkgs.config.mpv.vaapiSupport = true;
 
   environment.systemPackages = with pkgs; [ xorg.xbacklight ];
+
+  system.autoUpgrade.enable = true;
 }

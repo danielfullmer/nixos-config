@@ -31,8 +31,4 @@
         eval sh ${shellThemeScript}
       '';
   };
-
-  # Use the channel set with nix-channel. Should automatically get the latest
-  # tested nixpkgs and nixos-configuration from hydra
-  system.autoUpgrade.enable = true;
 }

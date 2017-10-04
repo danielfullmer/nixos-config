@@ -162,4 +162,6 @@
   };
 
   environment.systemPackages = with pkgs; [ bcachefs-tools ];
+
+  system.autoUpgrade.enable = true;
 }

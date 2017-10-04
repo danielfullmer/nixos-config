@@ -54,4 +54,6 @@
         ExecStart = "${pkgs.bash}/bin/bash -i /etc/nixos-in-place/setup-network";
       };
     };
+
+  system.autoUpgrade.enable = true;
 }

@@ -8,7 +8,7 @@
   euler =
     { config, pkgs, ... }:
     { imports = [ machines/euler.nix ]; };
-  gauss =
+  spaceheater =
     { config, pkgs, ... }:
-    { imports = [ machines/gauss.nix ]; };
+    { imports = [ machines/spaceheater.nix ]; };
 }

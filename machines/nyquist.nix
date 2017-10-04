@@ -4,6 +4,7 @@
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
+    ../profiles/extended.nix
     ../profiles/yubikey.nix
     ../profiles/desktop/default.nix
     ../profiles/academic.nix
@@ -61,4 +62,6 @@
   services.plex.enable = true;
 
   #environment.systemPackages = with pkgs; [ dactyl-keyboard ];
+
+  system.autoUpgrade.enable = true;
 }
