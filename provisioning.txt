@@ -17,7 +17,7 @@ $ ln -s ../nixos-config/pkgs/config.nix
 $ keybase login
 
 # Checkout password-store (requires keybase)
-$ git clone /keybase/private/danielfullmer/secrets/password-store .password-store
+$ git clone keybase://private/danielfullmer/password-store .password-store
 
 # Regenerate key-stubs
 $ gpg --card-status
