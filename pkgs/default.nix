@@ -21,8 +21,6 @@ rec {
 
   gmailieer = pkgs.callPackage ./gmailieer {};
 
-  kbfs = pkgs.kbfs.overrideAttrs (attrs: { subPackages = attrs.subPackages ++ [ "kbfsgit/git-remote-keybase" ]; } );
-
   neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
 
   surface-pro-firmware = pkgs.callPackage ./surface-pro-firmware {};
