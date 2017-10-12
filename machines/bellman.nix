@@ -20,7 +20,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableAllFirmware = true;  # For any other wifi firmware
@@ -34,21 +33,14 @@
     '';
   } ];
 
-  # NOTE: Using bcache + LVM
-  # bcache on: ata-ST2000DM006-2DM164_W4Z4BH2E-part2 and ata-WDC_WD5000AAKS-22TMA0_WD-WCAPW3279067
-  # bcache ssd is: ata-OCZ-AGILITY4_OCZ-CS8UXT0MD692SSR2
-  # LVM on top of each of those, combined into a single volume group
-  # Try to move windows off of faster 500gb SSD, and then switch bcache and swap to that one.
-
   boot.initrd = {
+    kernelModules = [ "bcache" ];
     availableKernelModules = [
       "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
 
       # LUKS stuff, not sure how much is needed
       "aes_x86_64" "aesni_intel" "af_alg" "algif_skcipher" "cbc" "cryptd" "crypto_simd"
       "dm_crypt" "ecb" "gf128mul" "glue_helper" "xts"
-
-      "bcachefs"
     ];
 
     # To avoid slow boot times, luksAddKey was done with --iter-time 100
@@ -60,19 +52,20 @@
         preLVM = true; # Ensure the vault device is mounted first
       }
       { name = "hd1";
-        device = "/dev/disk/by-uuid/c2691d0f-071e-46ab-897c-555f9164322d";
+        #device = "/dev/bcache/by-uuid/5d409b86-feb4-4df5-a16d-d42376aeb5f0";
+        device = "/dev/disk/by-uuid/63e731c3-a339-4df3-b9d3-acbb818e7533";
         keyFile = "/dev/mapper/luks-key";
         keyFileSize = 4096;
         preLVM = false;
       }
       { name = "hd2";
-        device = "/dev/disk/by-uuid/d9222f0e-4180-4896-83e7-347110fda931";
+        device = "/dev/disk/by-uuid/b93b6108-7fc6-47dc-8279-96476bfba9d4";
         keyFile = "/dev/mapper/luks-key";
         keyFileSize = 4096;
         preLVM = false;
       }
-      { name = "ssd";
-        device = "/dev/disk/by-uuid/bfe14fae-1e45-4022-8ee2-8ed1d5b200c3";
+      { name = "hd3";
+        device = "/dev/disk/by-uuid/19aae242-c0ca-4486-bce8-080befd075cd";
         keyFile = "/dev/mapper/luks-key";
         keyFileSize = 4096;
         preLVM = false;
@@ -86,10 +79,9 @@
 
   fileSystems = {
     "/" = {
-      # Extra / at the beginning of this device is a hack to ensure stage-1
-      # recognizes this as a "pseudodevice" and doesn't wait around for it to appear
-      device = "//dev/mapper/ssd:/dev/mapper/hd1:/dev/mapper/hd2";
-      fsType = "bcachefs";
+      device = "/dev/mapper/hd1";
+      fsType = "btrfs";
+      options = [ "device=/dev/mapper/hd2" "device=/dev/mapper/hd3" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
@@ -113,7 +105,8 @@
     Option "DRI3" "1"
   '';
 
-  services.xserver.videoDrivers = [ "nvidia" "intel" ];
+  #services.xserver.videoDrivers = [ "intel" "nvidia" ];
+  services.xserver.videoDrivers = [ "intel" ];
 
   services.redshift.enable = true;
 
@@ -160,8 +153,6 @@
       OnCalendar = "*:0/3"; # Every 3 minutes
     };
   };
-
-  environment.systemPackages = with pkgs; [ bcachefs-tools ];
 
   system.autoUpgrade.enable = true;
 }

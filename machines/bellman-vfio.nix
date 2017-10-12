@@ -19,7 +19,7 @@
 # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
 
 let
-  kbd_path = "/dev/input/by-id/usb-04d9_a097-event-kbd";
+  kbd_path = "/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd";
   mouse_path = "/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse";
 in
 {
