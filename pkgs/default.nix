@@ -51,4 +51,19 @@ rec {
   vkcube = pkgs.callPackage ./vkcube {};
 
   xcompose = pkgs.callPackage ./xcompose {};
+
+  #### Environments ####
+
+  pythonEnv = (pkgs.python3.buildEnv.override {
+    extraLibs = with pkgs.python3Packages; [
+      jupyter
+      bpython
+      numpy
+      sympy
+      matplotlib
+      seaborn
+      pandas
+    ];
+    ignoreCollisions = true;
+  });
 }

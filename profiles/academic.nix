@@ -10,18 +10,5 @@
     proselint
 
     mendeley
-
-    (python3.buildEnv.override {
-      extraLibs = with python3Packages; [
-        jupyter
-        bpython
-        numpy
-        sympy
-        matplotlib
-        seaborn
-        pandas
-      ];
-      ignoreCollisions = true;
-    })
   ]);
 }
