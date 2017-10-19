@@ -61,6 +61,8 @@ with lib;
     ]);
   };
 
+  services.compton.enable = true;
+
   services.redshift = {
     # Enable this in the individual machines
     latitude = "41";
