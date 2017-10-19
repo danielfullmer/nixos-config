@@ -33,6 +33,12 @@
     '';
   } ];
 
+  # Current partition status:
+  # All drives backed by bcache
+  # All drives have a main LUKS partition
+  # BTRFS directly on top of on two of those drives
+  # LVM on the other, with windows disk on top
+
   boot.initrd = {
     kernelModules = [ "bcache" ];
     availableKernelModules = [
@@ -52,7 +58,6 @@
         preLVM = true; # Ensure the vault device is mounted first
       }
       { name = "hd1";
-        #device = "/dev/bcache/by-uuid/5d409b86-feb4-4df5-a16d-d42376aeb5f0";
         device = "/dev/disk/by-uuid/63e731c3-a339-4df3-b9d3-acbb818e7533";
         keyFile = "/dev/mapper/luks-key";
         keyFileSize = 4096;
@@ -79,9 +84,9 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/hd1";
+      device = "/dev/mapper/hd2";
       fsType = "btrfs";
-      options = [ "device=/dev/mapper/hd2" "device=/dev/mapper/hd3" ];
+      options = [ "device=/dev/mapper/hd3" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
