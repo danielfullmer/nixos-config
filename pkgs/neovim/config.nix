@@ -74,7 +74,7 @@ in
       #Plug 'lukaszb/vim-web-indent'
       #" }}}
       #" LaTeX {{{
-      vimtex
+      #vimtex # TODO: Too slow
       #" }}}
       #" Pandoc {{{
       vim-pandoc
