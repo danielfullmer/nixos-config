@@ -26,8 +26,9 @@ in
       # Plug 'merlinrebrovic/focus.vim'
       # }}}
       # Text/File Navigation {{{
-      unite
       easymotion
+      fzf-vim
+      fzfWrapper
       # }}}
       # Code Completion/Navigation {{{
       neocomplete
@@ -158,19 +159,37 @@ else
   " copy to attached terminal using the yank(1) script:
   " https://github.com/sunaku/home/blob/master/bin/yank
   noremap <silent> <Leader>y y:call system('yank', @0)<Return>
-endif
+    endif
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
-nnoremap <space>/ :Unite grep:.<CR>
-let g:unite_source_history_yank_enable = 1
-nnoremap <space>y :Unite history/yank<CR>
-nnoremap <space>b :Unite -quick-match buffer<CR>
-nnoremap <space>s :Unite neosnippet<CR>
+" FZF stuff
+nnoremap <C-p> :Files<CR>
+nnoremap <space>b :Buffers<CR>
+nnoremap <space>t :Tags<CR>
 
-" Using ag as recursive command.
-let g:unite_source_rec_async_command =
-\ '${pkgs.ag}/bin/ag --follow --nocolor --nogroup -g ""'
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 
 let g:EasyMotion_leader_key = "<space>"
 nmap s <Plug>(easymotion-s)

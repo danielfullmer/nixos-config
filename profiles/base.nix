@@ -122,6 +122,7 @@ in
 
     tmux
     silver-searcher
+    fzf
     git
     neovim
   ]);
