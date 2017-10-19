@@ -60,6 +60,7 @@
 
   services.bitlbee.enable = true;
   services.plex.enable = true;
+  networking.firewall.allowedTCPPorts = [ 32400 ];
 
   #environment.systemPackages = with pkgs; [ dactyl-keyboard ];
 
