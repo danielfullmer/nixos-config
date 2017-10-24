@@ -21,5 +21,7 @@
   environment.systemPackages = with pkgs; [
     gparted
     bcachefs-tools
+    parted
+    ntfs3g
   ];
 }
