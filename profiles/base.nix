@@ -129,6 +129,7 @@ in
 
   environment.variables = {
     EDITOR = "vim";
+    FZF_TMUX = "1"; # For fzf zsh scripts
   };
 
   programs.zsh = {
@@ -140,7 +141,10 @@ in
     };
     enableAutosuggestions = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
-    interactiveShellInit = import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
+    interactiveShellInit = ''
+      source ${pkgs.fzf}/share/fzf/completion.zsh # Activated with **<TAB>
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh # CTRL-R and CTRL-T
+    '' + import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
   };
 
   programs.command-not-found.enable = true;
