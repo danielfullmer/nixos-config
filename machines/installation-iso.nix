@@ -2,6 +2,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
+    <nixpkgs/nixos/modules/profiles/base.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-base.nix>
     ../profiles/base.nix
     ../profiles/yubikey.nix
