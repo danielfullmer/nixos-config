@@ -94,7 +94,7 @@ packloadall
 set nocompatible
 set backspace=indent,eol,start
 set encoding=utf8
-let mapleader=","
+let mapleader=" "
 set timeoutlen=500
 set wildmenu
 set lazyredraw
@@ -191,7 +191,7 @@ endfunction
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 
-let g:EasyMotion_leader_key = "<space>"
+let g:EasyMotion_leader_key = "<Leader><Leader>"
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
