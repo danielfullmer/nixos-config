@@ -103,7 +103,7 @@ set incsearch
 
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
-set dictionary=/usr/share/dict/words
+set dictionary=${pkgs.miscfiles}/share/web2
 set nobackup
 set noswapfile
 
@@ -173,13 +173,10 @@ xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
 " Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
+inoremap <expr> <c-x><c-k> fzf#complete('cat ${pkgs.miscfiles}/share/web2')
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 function! s:fzf_statusline()
   " Override statusline as you like
