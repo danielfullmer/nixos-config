@@ -14,7 +14,7 @@ in
 
       # UI {{{
       Colour-Sampler-Pack
-      # vim-indent-guides
+      vim-indent-guides
       airline
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
@@ -30,11 +30,11 @@ in
       fzf-vim
       fzfWrapper
       # }}}
-      # Code Completion/Navigation {{{
-      neocomplete
-      # TODO: Consider deocomplete
+      # Code Completion / Navigation {{{
+      # neocomplete / deocomplete
+      nvim-completion-manager # Get more language-specific completion plugins
       neosnippet
-      #Plug 'Shougo/neosnippet-snippets'
+      neosnippet-snippets
       The_NERD_tree
       # }}}
       # Editing {{{
@@ -56,15 +56,15 @@ in
       polyglot # Language pack
       #" }}}
       #" Python {{{
+      # XXX: nvim-completion-manager needs pythonPackages.jedi in nix-shell
       #Plug 'klen/python-mode'
       #Plug 'alfredodeza/pytest.vim'
       ipython
       #Plug 'julienr/vimux-pyutils'
-      #Plug 'davidhalter/jedi-vim'
-      # TODO: Consider deoplete-jedi
       #" }}}
       #" Haskell {{{
       #Plug 'lukerandall/haskellmode-vim'
+      neco-ghc
       #" }}}
       #" Go {{{
       #Plug 'jnwhiteh/vim-golang'
@@ -74,7 +74,7 @@ in
       #Plug 'lukaszb/vim-web-indent'
       #" }}}
       #" LaTeX {{{
-      #vimtex # TODO: Too slow
+      vimtex # TODO: Too slow
       #" }}}
       #" Pandoc {{{
       vim-pandoc
@@ -82,6 +82,7 @@ in
       #" }}}
       #" Misc {{{
       #Plug 'benmills/vimux'
+      neco-vim
       tmux-navigator
       gundo
       #" }}}
@@ -195,14 +196,32 @@ let g:EasyMotion_leader_key = "<Leader><Leader>"
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
-let g:neocomplete#enable_at_startup = 1
+"" nvim-completion-manager
+
+" don't give |ins-completion-menu| messages.  For example,
+" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
+
+" When the <Enter> key is pressed while the popup menu is visible, it only hides
+" the menu. Use this mapping to hide the menu and also start a new line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Here is an example for expanding snippet in the popup menu with <Enter> key.
+" Suppose you use the <C-U> key for expanding snippet.
+imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand_or_nl)" : "\<CR>")
+imap <expr> <Plug>(expand_or_nl) (cm#completed_is_snippet() ? "\<C-U>":"\<CR>")
+
+" neosnippet
 let g:neosnippet#enable_preview = 1
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: "\<TAB>"
+let g:neosnippet#enable_completed_snippet=1
+imap <c-j>     <Plug>(neosnippet_expand_or_jump)
+vmap <c-j>     <Plug>(neosnippet_expand_or_jump)
+inoremap <silent> <c-u> <c-r>=cm#sources#neosnippet#trigger_or_popup("\<Plug>(neosnippet_expand_or_jump)")<cr>
+vmap <c-u>     <Plug>(neosnippet_expand_target)
 
 map <leader>n <Esc>:NERDTreeToggle<CR>
 
@@ -239,6 +258,20 @@ map <leader>g <Esc>:GundoToggle<CR>
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 let g:vimtex_fold_enabled = 1
+
+" vimtex + nvim-completion-manager integration
+augroup my_cm_setup
+  autocmd!
+  autocmd User CmSetup call cm#register_source({
+        \ 'name' : 'vimtex',
+        \ 'priority': 8,
+        \ 'scoping': 1,
+        \ 'scopes': ['tex'],
+        \ 'abbreviation': 'tex',
+        \ 'cm_refresh_patterns': g:vimtex#re#ncm,
+        \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
+        \ })
+augroup END
 
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
