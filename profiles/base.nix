@@ -132,6 +132,14 @@ in
     FZF_TMUX = "1"; # For fzf zsh scripts
   };
 
+  programs.bash = {
+    enableCompletion = true;
+    interactiveShellInit = ''
+      source ${pkgs.fzf}/share/fzf/completion.bash # Activated with **<TAB>
+      source ${pkgs.fzf}/share/fzf/key-bindings.bash # CTRL-R and CTRL-T
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
