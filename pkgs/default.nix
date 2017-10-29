@@ -1,39 +1,43 @@
-{ pkgs ? import <nixpkgs> {},
-  theme ? import ../modules/theme/defaultTheme.nix }:
-
-
-rec {
+self: super: with super; {
 ### Example to patch a derivation
 #  zerotierone = pkgs.zerotierone.overrideAttrs (attrs: {
 #    patches = [
-#      (pkgs.fetchurl {
+#      (fetchurl {
 #        url = "https://github.com/zerotier/ZeroTierOne/commit/039790cf267cb67a5130fb82caf97998d8b0959e.patch";
 #        sha256 = "1n93gvi3d3jsb84k496rhs61ycq5wih1yn47wiz2jwfd83bryarj";
 #      })
 #    ];
 #  });
 
-  dactyl-keyboard = pkgs.callPackage ./dactyl-keyboard {};
+  # Local stuff
+  theme = import ../modules/theme/defaultTheme.nix;
 
-  duplicity = pkgs.duplicity.override { inherit (pkgs) gnupg; };
+  # Packages
 
-  #emacs = pkgs.callPackage ./emacs {};
+  dactyl-keyboard = callPackage ./dactyl-keyboard {};
 
-  gmailieer = pkgs.callPackage ./gmailieer {};
+  duplicity = duplicity.override { inherit (self) gnupg; };
 
-  neovim = pkgs.neovim.override { vimAlias = true; configure = (import ./neovim/config.nix { inherit pkgs theme; }); };
+  #emacs = callPackage ./emacs {};
 
-  surface-pro-firmware = pkgs.callPackage ./surface-pro-firmware {};
+  gmailieer = callPackage ./gmailieer {};
 
-  st = (pkgs.st.override {
-    conf = (import st/config.h.nix { inherit theme; });
+  neovim = neovim.override {
+    vimAlias = true;
+    configure = import ./neovim/config.nix { pkgs=self; theme=self.theme; };
+  };
+
+  surface-pro-firmware = callPackage ./surface-pro-firmware {};
+
+  st = (st.override {
+    conf = (callPackage st/config.h.nix {});
   });
 
-  termite = (pkgs.termite.override {
-    configFile = pkgs.writeText "termite-config" (import termite/config.nix { inherit pkgs theme; });
+  termite = (termite.override {
+    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=self.theme; });
   });
 
-  my_qemu = pkgs.qemu_kvm.overrideAttrs (attrs: {
+  my_qemu = qemu_kvm.overrideAttrs (attrs: {
     patches = [
    #   (fetchurl {
    #     name = "qemu-vcpu-affinity";
@@ -48,14 +52,14 @@ rec {
     ] ++ attrs.patches;
   });
 
-  vkcube = pkgs.callPackage ./vkcube {};
+  vkcube = callPackage ./vkcube {};
 
-  xcompose = pkgs.callPackage ./xcompose {};
+  xcompose = callPackage ./xcompose {};
 
   #### Environments ####
 
-  pythonEnv = (pkgs.python3.buildEnv.override {
-    extraLibs = with pkgs.python3Packages; [
+  pythonEnv = (python3.buildEnv.override {
+    extraLibs = with self.python3Packages; [
       jupyter
       bpython
       numpy

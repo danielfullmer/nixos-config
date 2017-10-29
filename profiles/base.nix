@@ -106,7 +106,10 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.config = import ../pkgs/config.nix { pkgs=pkgs; theme=config.theme; };
+  nixpkgs.config = import ../pkgs/config.nix;
+  nixpkgs.overlays = (import ../pkgs/overlays.nix) ++ [
+    (self: super: {theme=config.theme;})
+  ];
 
   environment.systemPackages = (with pkgs; [
     binutils
