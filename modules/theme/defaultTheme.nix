@@ -11,7 +11,7 @@ rec {
   titleFontSize = 14; # Example value. See theme.nix
 
   # GTK
-  gtkTheme = "Adapta-Eta";
+  gtkTheme = "Adapta";
   gtkIconTheme = "Adwaita";
 }
 

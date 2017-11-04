@@ -58,6 +58,7 @@ with lib;
       roboto
       roboto-mono
       roboto-slab
+      noto-fonts
     ]);
   };
 

@@ -14,6 +14,15 @@ self: super: with super; {
 
   # Packages
 
+  adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
+    configureFlags = attrs.configureFlags ++ (with self.theme.colors; [
+      "--with-selection_color=#${base0C}"
+      "--with-accent_color=#${base0D}"
+      "--with-suggestion_color=#${base0D}"
+      "--with-destruction_color=#${base08}"
+    ]);
+  });
+
   dactyl-keyboard = callPackage ./dactyl-keyboard {};
 
   duplicity = duplicity.override { inherit (self) gnupg; };
