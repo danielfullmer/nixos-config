@@ -37,6 +37,7 @@ rec {
   }).overrideAttrs (attrs: {
     # Hack until releaseTools.channel may be unified with nixos/lib/make-channel.nix someday
     patchPhase = attrs.patchPhase + ''
+      echo -n pre${toString nixpkgs.revCount}.${nixpkgs.shortRev} > .version-suffix
       echo -n ${nixpkgs.rev or nixpkgs.shortRev} > .git-revision
     '';
   });
