@@ -141,23 +141,21 @@
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 
-  systemd.services.gmailieer = {
-    serviceConfig = {
-      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
-      Type = "oneshot";
-      User = "danielrf";
-      Group = "danielrf";
-      WorkingDirectory = "/home/danielrf/mail";
-    };
-  };
-
-  systemd.timers.gmailieer = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      Unit = "gmailieer.service";
-      OnCalendar = "*:0/3"; # Every 3 minutes
-    };
-  };
+  #  systemd.user.services.gmailieer = {
+  #    serviceConfig = {
+  #      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
+  #      Type = "oneshot";
+  #      #WorkingDirectory = "/home/danielrf/mail";
+  #    };
+  #  };
+  #
+  #  systemd.user.timers.gmailieer = {
+  #    wantedBy = [ "timers.target" ];
+  #    timerConfig = {
+  #      Unit = "gmailieer.service";
+  #      OnCalendar = "*:0/3"; # Every 3 minutes
+  #    };
+  #  };
 
   system.autoUpgrade.enable = true;
 }

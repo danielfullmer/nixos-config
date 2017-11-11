@@ -29,8 +29,6 @@ self: super: with super; {
 
   #emacs = callPackage ./emacs {};
 
-  gmailieer = callPackage ./gmailieer {};
-
   neovim = neovim.override {
     vimAlias = true;
     configure = import ./neovim/config.nix { pkgs=self; theme=self.theme; };
