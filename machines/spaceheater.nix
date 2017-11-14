@@ -17,7 +17,7 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 
-  hardware.enableAllFirmware = true; # For additional wifi firmware
+  hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/be4c48ed-6457-496a-8fdc-fcc5c2aeabc0";

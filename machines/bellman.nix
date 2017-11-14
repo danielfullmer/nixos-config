@@ -22,7 +22,7 @@
 
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
-  hardware.enableAllFirmware = true;  # For any other wifi firmware
+  hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
   boot.kernelPatches = [ {
     name = "enable-latencytop";

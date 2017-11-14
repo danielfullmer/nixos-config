@@ -48,10 +48,7 @@
     blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
   };
 
-  hardware = {
-    enableAllFirmware = true;
-    firmware = [ pkgs.surface-pro-firmware ];
-  };
+  hardware.firmware = [ pkgs.firmwareLinuxNonfree pkgs.surface-pro-firmware ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/euler";
