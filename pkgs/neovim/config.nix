@@ -15,6 +15,7 @@ in
       # UI {{{
       Colour-Sampler-Pack
       vim-indent-guides
+      vim-highlightedyank
       airline
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
@@ -100,6 +101,7 @@ set timeoutlen=500
 set wildmenu
 set lazyredraw
 set incsearch
+set inccommand=nosplit
 
 set tags+=~/.vim/systags
 set grepprg=grep\ -nH\ $*
