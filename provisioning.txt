@@ -34,3 +34,7 @@ $ gmi sync # Get everything
 
 # Join zerotier
 $ sudo zerotier-cli join ${zerotier.network}
+
+# Create hydra user
+$ sudo -s
+$ hydra-create-user ...

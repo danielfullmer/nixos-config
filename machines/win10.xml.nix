@@ -62,9 +62,9 @@
   </pm>
   <devices>
     <emulator>${qemu}/bin/qemu-kvm</emulator>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='/dev/mapper/vg0-win10'/>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='default'/>
+      <source file='/var/lib/libvirt/images/win10.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </disk>

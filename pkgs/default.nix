@@ -23,6 +23,36 @@ self: super: with super; {
     ]);
   });
 
+  bcachefs-tools = bcachefs-tools.overrideAttrs (attrs: {
+    src = fetchgit {
+      url = "https://evilpiepirate.org/git/bcachefs-tools.git";
+      rev = "bf8c59996b3fb2a940827d12438a9e18eca6db4c";
+      sha256 = "0n1jlkfksl83igx90fmafdjpfdjv6hyyz3mcm2fv9mknd4qiz27d";
+    };
+
+    # Makefile uses "git ls-files". This fixes that
+    preBuild = ''
+      makeFlagsArray=(SRCS="$(find -iname '*.c')")
+    '';
+  });
+
+  linux_testing_bcachefs = callPackage <nixpkgs/pkgs/os-specific/linux/kernel/linux-testing-bcachefs.nix> {
+    argsOverride.src = fetchgit {
+      url = "https://evilpiepirate.org/git/bcachefs.git";
+      rev = "e82e65627960a46945b78a5e5e946b23b8f08972";
+      sha256 = "131nmrl5iqhh00mnnja4ixk1fb8bhx1zv9pa9w2gj71a47pr311v";
+    };
+
+    kernelPatches = with pkgs.kernelPatches;
+      [ bridge_stp_helper
+        p9_fixes
+        # See pkgs/os-specific/linux/kernel/cpu-cgroup-v2-patches/README.md
+        # when adding a new linux version
+        cpu-cgroup-v2."4.11"
+        modinst_arg_list_too_long
+      ];
+  };
+
   dactyl-keyboard = callPackage ./dactyl-keyboard {};
 
   duplicity = duplicity.override { inherit (self) gnupg; };

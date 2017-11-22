@@ -20,6 +20,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
@@ -34,59 +35,19 @@
   } ];
 
   # Current partition status:
-  # All drives backed by bcache
-  # All drives have a main LUKS partition
-  # BTRFS directly on top of on two of those drives
-  # LVM on the other, with windows disk on top
+  # One bcachefs spanning 1x 500GB SSD and 2x 2Tb HDDs
 
   boot.initrd = {
-    kernelModules = [ "bcache" ];
     availableKernelModules = [
       "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-
-      # LUKS stuff, not sure how much is needed
-      "aes_x86_64" "aesni_intel" "af_alg" "algif_skcipher" "cbc" "cryptd" "crypto_simd"
-      "dm_crypt" "ecb" "gf128mul" "glue_helper" "xts"
+      "bcachefs"
     ];
-
-    # To avoid slow boot times, luksAddKey was done with --iter-time 100
-    # luks-key is in first slot in remaining devices for speed as well
-    luks.devices = [
-      # See: https://github.com/NixOS/nixpkgs/issues/24386
-      { name = "luks-key"; # No encrypted filesystem, just an encrypted 4096-bit key
-        device = "/dev/disk/by-uuid/0727144d-70bf-4f4b-bff1-b5601ef833cc";
-        preLVM = true; # Ensure the vault device is mounted first
-      }
-      { name = "hd1";
-        device = "/dev/disk/by-uuid/63e731c3-a339-4df3-b9d3-acbb818e7533";
-        keyFile = "/dev/mapper/luks-key";
-        keyFileSize = 4096;
-        preLVM = false;
-      }
-      { name = "hd2";
-        device = "/dev/disk/by-uuid/b93b6108-7fc6-47dc-8279-96476bfba9d4";
-        keyFile = "/dev/mapper/luks-key";
-        keyFileSize = 4096;
-        preLVM = false;
-      }
-      { name = "hd3";
-        device = "/dev/disk/by-uuid/19aae242-c0ca-4486-bce8-080befd075cd";
-        keyFile = "/dev/mapper/luks-key";
-        keyFileSize = 4096;
-        preLVM = false;
-      }
-    ];
-
-    postDeviceCommands = lib.mkAfter ''
-      cryptsetup luksClose /dev/mapper/luks-key
-    '';
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/hd2";
-      fsType = "btrfs";
-      options = [ "device=/dev/mapper/hd3" ];
+      device = "//dev/disk/by-partuuid/aff42536-c064-4c6a-a3af-a3bda7421dc5:/dev/disk/by-partuuid/54891227-4e2b-4391-91ae-19fe078f1915:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052";
+      fsType = "bcachefs";
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
@@ -156,6 +117,8 @@
   #      OnCalendar = "*:0/3"; # Every 3 minutes
   #    };
   #  };
+
+  environment.systemPackages = with pkgs; [ bcachefs-tools ];
 
   system.autoUpgrade.enable = true;
 }
