@@ -62,7 +62,8 @@ with lib;
     ]);
   };
 
-  services.compton.enable = true;
+  # Disabled to hopefully reduce latency, and since tiling window managers don't use many compositing features anyway.
+  #services.compton.enable = true;
 
   services.redshift = {
     # Enable this in the individual machines
@@ -85,7 +86,6 @@ with lib;
   security.rtkit.enable = true;
 
   environment.systemPackages = (with pkgs; [
-    compton
     xclip
 
     dmenu
