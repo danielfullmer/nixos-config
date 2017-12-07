@@ -9,9 +9,10 @@ $ sudo mkdir /root/.gnupg
 
 nmtui # connect to wireless interface
 
-$ mkdir -p ~/.nixpkgs
-$ cd ~/.nixpkgs
-$ ln -s ../nixos-config/pkgs/config.nix
+$ mkdir -p ~/.config/nixpkgs
+$ cd ~/.config/nixpkgs
+$ ln -s ../../nixos-config/pkgs/config.nix
+$ ln -s ../../nixos-config/pkgs/overlays.nix
 
 # Sign into keybase
 $ keybase login
