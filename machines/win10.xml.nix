@@ -14,6 +14,12 @@
     <vcpupin vcpu='4' cpuset='3'/>
     <vcpupin vcpu='5' cpuset='7'/>
     <emulatorpin cpuset='0,4'/>
+    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='3' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='4' scheduler='fifo' priority='1'/>
+    <vcpusched vcpus='5' scheduler='fifo' priority='1'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
