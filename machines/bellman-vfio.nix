@@ -18,6 +18,13 @@
 #
 # Press both ctrl keys simultaneously to switch keyboard/mouse between host and guest
 
+# Ensure MSI interrupts
+# Check device manager "View -> Resources by type", "Interrupt Request (IRQ)". (PCI) 0x00.... (positive integer) devices are in line interrupt, not MSI mode.
+# nvidia drivers default to off!
+# Use this to enable: https://github.com/CHEF-KOCH/MSI-utility
+# https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts.378044/
+# http://vfio.blogspot.com/2014/09/vfio-interrupts-and-how-to-coax-windows.html
+
 let
   kbd_path = "/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd";
   mouse_path = "/dev/input/by-id/usb-Logitech_G500_6416B88EB90018-event-mouse";
