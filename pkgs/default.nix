@@ -10,12 +10,13 @@ self: super: with super; {
 #  });
 
   # Local stuff
-  theme = import ../modules/theme/defaultTheme.nix;
+  # "theme" by itself conflicts with some stuff in nixpkgs
+  localtheme = import ../modules/theme/defaultTheme.nix;
 
   # Packages
 
   adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
-    configureFlags = attrs.configureFlags ++ (with self.theme.colors; [
+    configureFlags = attrs.configureFlags ++ (with self.localtheme.colors; [
       "--with-selection_color=#${base0C}"
       "--with-accent_color=#${base0D}"
       "--with-suggestion_color=#${base0D}"
@@ -61,17 +62,19 @@ self: super: with super; {
 
   neovim = neovim.override {
     vimAlias = true;
-    configure = import ./neovim/config.nix { pkgs=self; theme=self.theme; };
+    configure = import ./neovim/config.nix { pkgs=self; theme=self.localtheme; };
   };
+
+  #papis = callPackage ./papis {};
 
   surface-pro-firmware = callPackage ./surface-pro-firmware {};
 
   st = (st.override {
-    conf = (callPackage st/config.h.nix {});
+    conf = (callPackage st/config.h.nix { theme=self.localtheme; });
   });
 
   termite = (termite.override {
-    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=self.theme; });
+    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=self.localtheme; });
   });
 
   my_qemu = qemu_kvm.overrideAttrs (attrs: {
