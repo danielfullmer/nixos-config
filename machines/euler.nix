@@ -15,6 +15,13 @@
 
   system.stateVersion = "17.03";
 
+  # Known issues:
+  #  - eCryptfs: use after free in ecryptfs_release_messaging()
+  #  - ALSA: usb-audio: Fix potential out-of-bound access at parsing SU
+  nixpkgs.config.permittedInsecurePackages = [
+    "linux-4.13.16"
+  ];
+
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
   # https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
   # More recent: https://github.com/jakeday/linux-surface
