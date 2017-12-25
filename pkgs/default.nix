@@ -35,6 +35,8 @@ self: super: with super; {
     preBuild = ''
       makeFlagsArray=(SRCS="$(find -iname '*.c')")
     '';
+
+    patches = [ ./bcachefs/bcachefs-tools.patch ];
   });
 
   linux_testing_bcachefs = callPackage <nixpkgs/pkgs/os-specific/linux/kernel/linux-testing-bcachefs.nix> {
@@ -51,6 +53,7 @@ self: super: with super; {
         # when adding a new linux version
         cpu-cgroup-v2."4.11"
         modinst_arg_list_too_long
+        { name = "bcachefs-fix"; patch = ./bcachefs/bcachefs.patch; }
       ];
   };
 
