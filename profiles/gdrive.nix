@@ -20,7 +20,7 @@ in
         options = [ "_netdev" ];
         noCheck = true;
     };
-  }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
+  }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" "gdrive2-media" ]);
 
   environment.systemPackages = with pkgs; [ rclone ];
 }
