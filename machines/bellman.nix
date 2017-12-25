@@ -25,15 +25,6 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
-  boot.kernelPatches = [ {
-    name = "enable-latencytop";
-    patch = "";
-    extraConfig = ''
-      SCHEDSTATS y
-      LATENCYTOP y
-    '';
-  } ];
-
   # Current partition status:
   # One bcachefs spanning 1x 500GB SSD and 2x 2Tb HDDs
 
