@@ -48,11 +48,13 @@
       Group = "danielrf";
     };
     script = ''
-      ${lib.getBin pkgs.gnupg}/bin/gpg --import ${./secret-subkey-stubs.asc}
+      ${lib.getBin pkgs.gnupg}/bin/gpg --import ${./yubikey.asc} ${./offlinekey.asc}
       ${lib.getBin pkgs.gnupg}/bin/gpg --import-ownertrust << EOF
       FA0ED54AE0DBF4CDC4B4FEADD1481BC2EF6B0CB0:6:
+      7242A6FEF237A429E981576F6EDF0AEEA2D9FA5D:6:
       EOF
     '';
+    # TODO: Maybe create a udev rule to run "gpg --card-status" when yubikey plugged in first time
   };
 
   services.keybase.enable = true;
