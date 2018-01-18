@@ -62,8 +62,7 @@
     Option "DRI3" "1"
   '';
 
-  #services.xserver.videoDrivers = [ "intel" "nvidia" ];
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   services.redshift.enable = true;
 
