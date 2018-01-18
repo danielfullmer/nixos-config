@@ -192,7 +192,6 @@ in
       ln -fs ${../dotfiles}/.local/bin/yank .local/bin/yank
       ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
       ln -fs ${../dotfiles}/.taskrc
-      ln -fns /run/current-system/sw/share/terminfo .terminfo  # TODO: See issue #19785
       touch .zshrc
       chown danielrf:danielrf .zshrc
     '';
