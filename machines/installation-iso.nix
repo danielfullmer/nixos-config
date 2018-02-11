@@ -9,9 +9,11 @@
     ../profiles/desktop
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableRedistributableFirmware = true;
+
+  boot.supportedFilesystems = [ "bcachefs" ];
+  boot.initrd.supportedFilesystems = [ "bcachefs" ];
 
   security.sudo.enable = lib.mkForce true;
   security.sudo.wheelNeedsPassword = false;

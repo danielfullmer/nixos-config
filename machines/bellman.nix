@@ -20,7 +20,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
@@ -28,12 +27,13 @@
   # Current partition status:
   # One bcachefs spanning 1x 500GB SSD and 2x 2Tb HDDs
 
-  boot.initrd = {
-    availableKernelModules = [
-      "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-      "bcachefs"
-    ];
-  };
+  boot.initrd.availableKernelModules = [
+    "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
+    "bcachefs"
+  ];
+
+  boot.supportedFilesystems = [ "bcachefs" ];
+  boot.initrd.supportedFilesystems = [ "bcachefs" ];
 
   fileSystems = {
     "/" = {
