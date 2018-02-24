@@ -1,22 +1,40 @@
-{ stdenv, fetchFromGitHub, avrgcclibc }:
+{ stdenv, fetchFromGitHub, avrgcc, avrbinutils, avrlibc }:
+let
+  avr_incflags = [
+    "-isystem ${avrlibc}/avr/include"
+    "-B${avrlibc}/avr/lib/avr5"
+    "-L${avrlibc}/avr/lib/avr5"
+    "-B${avrlibc}/avr/lib/avr35"
+    "-L${avrlibc}/avr/lib/avr35"
+    "-B${avrlibc}/avr/lib/avr51"
+    "-L${avrlibc}/avr/lib/avr51"
+  ];
+in
 stdenv.mkDerivation {
-  name = "tmk-keyboard-firmware";
+  name = "dactyl-firmware";
 
   src = fetchFromGitHub {
-    owner = "danielfullmer";
-    repo = "tmk_keyboard";
-    rev = "99e34040bf4862380a54f49650da489aac6b1c3e";
-    sha256 = "0j3k6nq2kbpb4fwlv1agxzp0y8qki5sg9yl6jf108x1a3a7bhnz8";
+    owner = "qmk";
+    repo = "qmk_firmware";
+    rev = "3b801880a084377fc4680fe3fb44e1ef4df0608e";
+    sha256 = "1ypmlh32fyzszsj4kh3bpk5abwha1w44kra2ja16sj2dr9plchkw";
   };
 
-  buildInputs = [ avrgcclibc ];
+  buildInputs = [ avrgcc avrbinutils avrlibc ];
+
+  prePatch = ''
+    mkdir -p keyboards/dactyl
+    cp -r ${./.}/* keyboards/dactyl
+  '';
 
   buildPhase = ''
-    cd keyboard/dactyl
-    make -f Makefile.pjrc daniel
+    make dactyl:default
   '';
 
   installPhase = ''
-    cp dactyl_pjrc.hex $out
+    cp .build/dactyl_default.hex $out
   '';
+
+  CFLAGS = avr_incflags;
+  ASFLAGS = avr_incflags;
 }

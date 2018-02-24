@@ -3,7 +3,7 @@ let
   firmware = callPackage ./firmware.nix {};
   # Currently running on a Teensy 2.0, ATMEGA32U4
   dactyl-flash = writeScript "dactyl-flash" ''
-    #! ${stdenv.shell}
+    #!/bin/sh
     ${teensy-loader-cli}/bin/teensy-loader-cli --mcu=atmega32u4 ${firmware} $*
   '';
 in runCommand "dactyl-keyboard" {} ''
