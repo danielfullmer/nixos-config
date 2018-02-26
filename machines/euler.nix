@@ -68,7 +68,7 @@ in
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" "hid-multitouch" ];
     extraModulePackages = [ config.boot.kernelPackages.rtl8812au ]; # Just in case we need a USB wifi device
-    blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
+    #blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
   };
 
   hardware.firmware = [ pkgs.firmwareLinuxNonfree i915-firmware ipts-firmware mwifiex-firmware ];
