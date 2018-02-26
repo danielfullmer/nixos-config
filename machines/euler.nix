@@ -1,5 +1,41 @@
 { config, lib, pkgs, ... }:
 
+let
+  linux-surface = pkgs.fetchFromGitHub {
+    owner = "jakeday";
+    repo = "linux-surface";
+    rev = "4.15.6-1";
+    sha256 = "1ck672an2wf1kpbjbyfcbjrw032x3wjxm8hxsya7n3fzk686l1lp";
+  };
+
+  buildFirmware = (name: subdir: src: pkgs.stdenv.mkDerivation {
+    name = "${name}-firmware";
+    src = src;
+    installPhase = ''
+      mkdir -p $out/lib/firmware/${subdir}
+      cp -r * $out/lib/firmware/${subdir}
+    '';
+  });
+
+  i915-firmware = buildFirmware "i915" "i915" (pkgs.fetchzip {
+    url = "file://${linux-surface}/firmware/i915_firmware_skl.zip"; # HACK
+    sha256 = "0n04km2pjzjyk16cwgwdqq1bb3i230m895pvsw4bfl99arcmlv02";
+    stripRoot = false;
+  });
+
+  ipts-firmware = buildFirmware "ipts" "intel/ipts" (pkgs.fetchzip {
+    url = "file://${linux-surface}/firmware/ipts_firmware_v78.zip"; # HACK
+    sha256 = "1nlav1i7rzxbiam5grxsacwvlsggaic5chgxrx73mp90b4xr54fi";
+    stripRoot = false;
+  });
+
+  mwifiex-firmware = buildFirmware "mwifiex" "mrvl" (pkgs.fetchFromGitHub {
+    owner = "jakeday";
+    repo = "mwifiex-firmware";
+    rev = "5446916b53de395245d89400dea566055ec4502c";
+    sha256 = "1hr6skpaiqlfvbdis8g687mh0jcpqxwcr5a3djllxgcgq7rrw9i1";
+  } + /mrvl);
+in
 {
   imports = [
     ../profiles/base.nix
@@ -15,13 +51,6 @@
 
   system.stateVersion = "17.03";
 
-  # Known issues:
-  #  - eCryptfs: use after free in ecryptfs_release_messaging()
-  #  - ALSA: usb-audio: Fix potential out-of-bound access at parsing SU
-  nixpkgs.config.permittedInsecurePackages = [
-    "linux-4.13.16"
-  ];
-
   # See https://github.com/jimdigriz/debian-mssp4 for details on surface pro 4
   # https://gitlab.com/jimdigriz/linux.git (mssp4 branch)
   # More recent: https://github.com/jakeday/linux-surface
@@ -31,31 +60,18 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_13; # Need >= 4.10 for keyboard support
-
-    kernelPatches = [
-      { name = "IPTS";
-        patch = ../pkgs/surface-pro-firmware/ipts-4.13.patch;
-        extraConfig = "INTEL_IPTS m";
-      }
-      { name = "mwifiex-fix";
-        patch = ../pkgs/surface-pro-firmware/mwifiex-fix.patch;
-        extraConfig = "CFG80211_DEFAULT_PS n";
-      }
-    ];
+    kernelPackages = pkgs.linuxPackages_4_15;
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches-4.15/${name}.patch";})
+      [ "ipts" "cameras" "keyboards_and_covers" "sdcard_reader" "surfacedock" "wifi" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" "hid-multitouch" ];
-    kernelParams = [
-      #"resume=/dev/mapper/lvm--quatermain-swap"
-      "noresume"
-    ];
     extraModulePackages = [ config.boot.kernelPackages.rtl8812au ]; # Just in case we need a USB wifi device
     blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
   };
 
-  hardware.firmware = [ pkgs.firmwareLinuxNonfree pkgs.surface-pro-firmware ];
+  hardware.firmware = [ pkgs.firmwareLinuxNonfree i915-firmware ipts-firmware mwifiex-firmware ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/euler";
@@ -85,8 +101,8 @@
   powerManagement.cpuFreqGovernor = "powersave";
   services.acpid.enable = true;
   services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-    HandleLidSwitch=suspend
+    HandlePowerKey=hibernate
+    HandleLidSwitch=hibernate
   '';
   environment.etc."systemd/sleep.conf".text = ''
     [Sleep]
