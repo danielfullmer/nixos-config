@@ -140,7 +140,6 @@ in
 
   theme.fontSize = 8;
 
-  fonts.fontconfig.dpi = 267;
   environment.variables = {
     GDK_SCALE = "2"; # Scale UI elements
     GDK_DPI_SCALE = "0.5"; # Reverse scale the fonts
