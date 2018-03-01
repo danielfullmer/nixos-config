@@ -24,7 +24,7 @@ self: super: with super; {
     ]);
   });
 
-  dactyl-keyboard = callPackage ./dactyl-keyboard {};
+  keyboard-firmware = callPackage ./keyboard-firmware {};
 
   duplicity = duplicity.override { inherit (self) gnupg; };
 

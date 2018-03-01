@@ -61,7 +61,6 @@ BACKLIGHT_ENABLE = no  # Enable keyboard backlight functionality (+1150)
 MIDI_ENABLE = no 		# MIDI controls
 AUDIO_ENABLE = no
 UNICODE_ENABLE = no 		# Unicode
-UNICODEMAP_ENABLE = yes
 BLUETOOTH_ENABLE = no # Enable Bluetooth with the Adafruit EZ-Key HID
 
 # Optimize size but this may cause error "relocation truncated to fit"

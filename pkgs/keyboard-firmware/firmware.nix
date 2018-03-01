@@ -23,16 +23,22 @@ stdenv.mkDerivation {
   buildInputs = [ avrgcc avrbinutils avrlibc ];
 
   prePatch = ''
-    mkdir -p keyboards/dactyl
-    cp -r ${./.}/* keyboards/dactyl
+    mkdir -p keyboards/dactyl/keymaps/daniel
+    cp -r ${./dactyl}/* keyboards/dactyl
+    cp -r ${./keymaps/daniel}/* keyboards/dactyl/keymaps/daniel
+    mkdir -p keyboards/ergodox_ez/keymaps/daniel
+    cp -r ${./keymaps/daniel}/* keyboards/ergodox_ez/keymaps/daniel
   '';
 
   buildPhase = ''
-    make dactyl:default
+    make dactyl:daniel
+    make ergodox_ez:daniel
   '';
 
   installPhase = ''
-    cp .build/dactyl_default.hex $out
+    mkdir -p $out
+    cp .build/dactyl_daniel.hex $out/
+    cp .build/ergodox_ez_daniel.hex $out/
   '';
 
   CFLAGS = avr_incflags;
