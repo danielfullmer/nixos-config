@@ -20,7 +20,7 @@
 
 #define MATRIX_COL_PINS { B0, B1, B2, B3, B7, D0, D1,     F0, F1, F4, F5, F6, F7, B6 }
 #define MATRIX_ROW_PINS { B5, B4, D7, D6, D4 }
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL2ROW
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE    5
