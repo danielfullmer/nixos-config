@@ -39,6 +39,7 @@ with lib;
           (${pkgs.pasystray}/bin/pasystray) &
           (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
           (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
+          (${pkgs.ibus}/bin/ibus-daemon -d) &
           #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
           ${config.services.xserver.desktopManager.extraSessionCommands}
@@ -46,6 +47,8 @@ with lib;
       } ];
     };
   };
+
+  i18n.inputMethod.enabled = "ibus";
 
   fonts = {
     fonts = (with pkgs; [
@@ -151,8 +154,6 @@ with lib;
 
   environment.variables = {
     BROWSER = "chromium";
-    GTK_IM_MODULE = "xim"; # For compose key
-    QT_IM_MODULE = "xim";
   };
 
   # HW accelerated video playback
