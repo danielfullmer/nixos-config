@@ -116,7 +116,7 @@
   #    };
   #  };
 
-  environment.systemPackages = with pkgs; [ bcachefs-tools ];
+  environment.systemPackages = with pkgs; [ bcachefs-tools keyboard-firmware ];
 
   system.autoUpgrade.enable = true;
 }
