@@ -37,8 +37,6 @@ self: super: with super; {
 
   #papis = callPackage ./papis {};
 
-  surface-pro-firmware = callPackage ./surface-pro-firmware {};
-
   st = (st.override {
     conf = (callPackage st/config.h.nix { theme=self.localtheme; });
   });
