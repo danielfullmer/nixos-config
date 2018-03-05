@@ -90,14 +90,6 @@
     buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
-
-    # HACK: Until it builds properly and hydra-queue-evaluator doesn't spin. See #35125
-    package = (import (pkgs.fetchFromGitHub {
-      owner = "NixOS";
-      repo = "nixpkgs";
-      rev = "3e96cee147d1ab9ee790f5b47871472a48e71a8d";
-      sha256 = "14j46l2cfp4ckvny459fq7ndnkj2rl0w6vv27kzz9k3rfqr05jhr";
-    }) {}).hydra;
   };
 
   #  systemd.user.services.gmailieer = {
