@@ -92,6 +92,14 @@
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 
+  services.tor = {
+    enable = true;
+    hiddenServices."bellman".map = [
+      { port = 22; } # SSH
+      { port = 8123; } # Home-assistant
+    ];
+  };
+
   #  systemd.user.services.gmailieer = {
   #    serviceConfig = {
   #      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
