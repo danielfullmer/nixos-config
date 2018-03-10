@@ -6,7 +6,8 @@
   services.xserver.modules = [ pkgs.xlibs.xf86inputjoystick ];
 
   environment.systemPackages = (with pkgs; [
-    steam
+    # Extra deps are for steamvr support
+    (steam.override { extraPkgs = p: with p; [ usbutils lsb-release procps dbus_daemon ]; })
   ]);
 
   services.udev.packages = [

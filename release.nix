@@ -12,7 +12,6 @@ in
 rec {
   bellman = (import nixos { configuration = ./machines/bellman.nix; }).system;
   bellman-vfio = (import nixos { configuration = ./machines/bellman-vfio.nix; }).system;
-  #bellman-steamvr = (import nixos { configuration = ./machines/bellman-steamvr.nix; }).system;
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
   #banach = (import nixos { configuration = ./machines/banach.nix; }).system;
