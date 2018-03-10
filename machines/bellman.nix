@@ -80,6 +80,26 @@
     sha256 = "0fyw8ax2ci8fsj1zjxlb0pkm1knrx1qmq63mxzwp708qra9x4pq6";
   });
 
+  services.xserver.desktopManager.extraSessionCommands =
+    let synergyConfigFile = pkgs.writeText "synergy.conf" ''
+      section: screens
+          bellman:
+          devnull-PC:
+          euler-win:
+      end
+      section: aliases
+      end
+      section: links
+      bellman:
+          right = devnull-PC
+          down = euler-win
+      devnull-PC:
+          left = bellman
+      euler-win:
+          up = bellman
+      end
+    '';
+    in "(${pkgs.synergy}/bin/synergys -c ${synergyConfigFile} -a 30.0.0.222:24800) &";
 
   services.hydra = {
     enable = true;
