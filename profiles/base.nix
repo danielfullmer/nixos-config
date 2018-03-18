@@ -4,8 +4,7 @@ let
 in
 {
   imports = [
-    ../modules/theme
-    ../modules/desktop.nix
+    ../modules
   ];
 
   services.openssh.enable = true;
