@@ -112,6 +112,8 @@
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 
+  services.home-assistant.enable = true;
+
   services.tor = {
     enable = true;
     hiddenServices."bellman".map = [
