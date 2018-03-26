@@ -126,6 +126,7 @@ in
     silver-searcher
     fzf
     git
+    gitAndTools.hub
     neovim
   ]);
 
@@ -174,6 +175,7 @@ in
     vi = "vim";
     nfo="iconv -f IBM775";
     t = "task";
+    git = "hub";
   };
 
   # This is a hack
