@@ -252,6 +252,9 @@ let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 let g:vimtex_fold_enabled = 1
 
+" Polyglot bring in latex-box which conflicts with vimtex
+let g:polyglot_disabled = ['latex']
+
 " vimtex + nvim-completion-manager integration
 augroup my_cm_setup
   autocmd!
