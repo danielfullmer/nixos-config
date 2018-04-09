@@ -55,6 +55,27 @@ in
     StreamLocalBindUnlink yes
   '';
 
+  # Use DNS-over-TLS
+  # TODO: Figure out google's DNS
+  services.kresd = {
+    enable = true;
+    extraConfig = ''
+      policy.add(policy.all(policy.TLS_FORWARD({
+        { '1.1.1.1', hostname = 'cloudflare-dns.com', ca_file = '/etc/ssl/certs/ca-bundle.crt' },
+      })))
+      policy.add(policy.all(policy.TLS_FORWARD({
+        { '2606:4700:4700::1111', hostname = 'cloudflare-dns.com', ca_file = '/etc/ssl/certs/ca-bundle.crt' },
+      })))
+      policy.add(policy.all(policy.TLS_FORWARD({
+        { '9.9.9.9', hostname = 'dns.quad9.net', ca_file = '/etc/ssl/certs/ca-bundle.crt' },
+      })))
+      policy.add(policy.all(policy.TLS_FORWARD({
+        { '2620:fe::fe', hostname = 'dns.quad9.net', ca_file = '/etc/ssl/certs/ca-bundle.crt' },
+      })))
+    '';
+  };
+  networking.nameservers = [ "127.0.0.1" "::1" ];
+
   nix = {
     nixPath = [ # From nixos/modules/services/misc/nix-daemon.nix
       "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos" # Removed trailing /nixpkgs, which was just a symlink to .
