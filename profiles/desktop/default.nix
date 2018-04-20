@@ -93,7 +93,7 @@ with lib;
     xclip
 
     dmenu
-    rofi
+    (rofi.override { theme=null; }) # config.theme conflicts with this and I can't be bothered to figure out why
     stalonetray
     dunst
 
