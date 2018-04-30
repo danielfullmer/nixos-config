@@ -60,8 +60,6 @@ self: super: with super; {
     ] ++ attrs.patches;
   });
 
-  vkcube = callPackage ./vkcube {};
-
   xcompose = callPackage ./xcompose {};
 
   #### Environments ####
