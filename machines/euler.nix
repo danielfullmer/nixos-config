@@ -4,30 +4,24 @@ let
   linux-surface = pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "linux-surface";
-    rev = "4.15.7-2";
-    sha256 = "1fbvdjc7vj3i3gzh4j7slb84n718201ljhhbj2khb0nl1vd33qp9";
+    rev = "4.16.5-1";
+    sha256 = "15cq98rfyqd4k4b6rnm7vasrcswp5ka3qryvwnf6pkhh22bhg09i";
   };
 
   buildFirmware = (name: subdir: src: pkgs.stdenv.mkDerivation {
     name = "${name}-firmware";
     src = src;
+    nativeBuildInputs = [ pkgs.unzip ];
+    sourceRoot = ".";
     installPhase = ''
       mkdir -p $out/lib/firmware/${subdir}
       cp -r * $out/lib/firmware/${subdir}
     '';
   });
 
-  i915-firmware = buildFirmware "i915" "i915" (pkgs.fetchzip {
-    url = "file://${linux-surface}/firmware/i915_firmware_skl.zip"; # HACK
-    sha256 = "0n04km2pjzjyk16cwgwdqq1bb3i230m895pvsw4bfl99arcmlv02";
-    stripRoot = false;
-  });
+  i915-firmware = buildFirmware "i915" "i915" "${linux-surface}/firmware/i915_firmware_skl.zip";
 
-  ipts-firmware = buildFirmware "ipts" "intel/ipts" (pkgs.fetchzip {
-    url = "file://${linux-surface}/firmware/ipts_firmware_v78.zip"; # HACK
-    sha256 = "1nlav1i7rzxbiam5grxsacwvlsggaic5chgxrx73mp90b4xr54fi";
-    stripRoot = false;
-  });
+  ipts-firmware = buildFirmware "ipts" "intel/ipts" "${linux-surface}/firmware/ipts_firmware_v78.zip";
 
   mwifiex-firmware = buildFirmware "mwifiex" "mrvl" (pkgs.fetchFromGitHub {
     owner = "jakeday";
@@ -60,9 +54,9 @@ in
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-    kernelPackages = pkgs.linuxPackages_4_15;
-    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches-4.15/${name}.patch";})
-      [ "ipts" "cameras" "keyboards_and_covers" "sdcard_reader" "surfacedock" "wifi" ]);
+    kernelPackages = pkgs.linuxPackages_4_16;
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.16/${name}.patch";})
+      [ "acpica" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfaceacpi" "surfacedock" "wifi" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
