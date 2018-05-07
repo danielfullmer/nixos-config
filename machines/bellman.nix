@@ -67,13 +67,22 @@
   services.redshift.enable = true;
 
   # For Seiki 4K monitor
-  # TODO: Add modeline for 1080p at 120Hz
   fonts.fontconfig.dpi = 115;
   fonts.fontconfig.subpixel.rgba = "bgr";
-  services.xserver.monitorSection = ''
-    DisplaySize 698 393
-  '';
   theme.fontSize = 12;
+#  services.xserver.monitorSection = ''
+#    DisplaySize 698 393
+#  '';
+
+  services.xserver.xrandrHeads = [
+    { output = "DP-2"; primary = true; }
+    { output = "DP-4"; }
+    { output = "DVI-D-0";
+      monitorConfig = ''
+        Option "Rotate" "Left"
+      '';
+    }
+  ];
 
   theme.background = toString (pkgs.fetchurl {
     url = "https://4.bp.blogspot.com/-ttahA5YH_0M/WDcmRM-DoKI/AAAAAAACGlE/jBcAJ45T-twF5qoFR3TNQNyHTVGyGdCUACPcB/s0/Trip_in_Bled_Slovenia_4k.jpg";
