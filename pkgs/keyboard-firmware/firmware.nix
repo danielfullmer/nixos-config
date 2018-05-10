@@ -10,14 +10,15 @@ let
     "-L${avrlibc}/avr/lib/avr51"
   ];
 in
-stdenv.mkDerivation {
-  name = "dactyl-firmware";
+stdenv.mkDerivation rec {
+  name = "dactyl-firmware-${version}";
+  version = "0.6.31";
 
   src = fetchFromGitHub {
     owner = "qmk";
     repo = "qmk_firmware";
-    rev = "3b801880a084377fc4680fe3fb44e1ef4df0608e";
-    sha256 = "1ypmlh32fyzszsj4kh3bpk5abwha1w44kra2ja16sj2dr9plchkw";
+    rev = version;
+    sha256 = "1y5ljlf9snb2cbbgl24ngq7anfqfnp454n3ng39cvh6pdl0j5z93";
   };
 
   buildInputs = [ avrgcc avrbinutils avrlibc ];
