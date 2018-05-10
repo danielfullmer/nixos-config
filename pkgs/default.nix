@@ -35,8 +35,6 @@ self: super: with super; {
     configure = import ./neovim/config.nix { pkgs=self; theme=self.localtheme; };
   };
 
-  #papis = callPackage ./papis {};
-
   st = (st.override {
     conf = (callPackage st/config.h.nix { theme=self.localtheme; });
   });
