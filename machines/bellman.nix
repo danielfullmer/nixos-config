@@ -147,7 +147,16 @@
   #    };
   #  };
 
-  environment.systemPackages = with pkgs; [ bcachefs-tools keyboard-firmware ];
+  environment.systemPackages = with pkgs; [
+    bcachefs-tools keyboard-firmware
+    signal-desktop
+  ];
+
+  services.xserver.desktopManager.extraSessionCommands = ''
+    (yubioath-gui -t) &
+    #(keybase-gui) &
+    (signal-desktop --start-in-tray) &
+  '';
 
   system.autoUpgrade.enable = true;
 }

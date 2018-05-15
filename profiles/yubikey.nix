@@ -40,11 +40,6 @@ in
     keybase-gui
   ]);
 
-  #  services.xserver.desktopManager.extraSessionCommands = ''
-  #    (yubioath-gui -t) &
-  #    (keybase-gui) &
-  #  '';
-
   systemd.services.gpg-key-import = {
     description = "Import gpg keys";
     wantedBy = [ "multi-user.target" ];
