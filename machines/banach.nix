@@ -6,10 +6,13 @@
     ../profiles/gdrive.nix
   ];
 
-  theme.base16Color = "isotope";
+  theme.base16Name = "isotope";
 
   system.nixos.stateVersion = "17.09";
-  nixpkgs.system = "aarch64-linux";
+
+  #nixpkgs.localSystem = (import <nixpkgs/lib>).systems.examples.aarch64-multiplatform;
+  nixpkgs.localSystem = { system = "aarch64-linux"; config = "aarch64-unknown-linux-gnu"; }; # The above one should work but doesn't
+  #nixpkgs.crossSystem = (import /home/danielrf/nixpkgs/lib).systems.examples.aarch64-multiplatform;
 
   # Parts of this taken from nixos/modules/installer/cd-dvd/sd-image-aarch64.nix.
   # Bootloader was initially created from that SD image
