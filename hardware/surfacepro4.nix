@@ -9,8 +9,8 @@ let
   linux-surface = pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "linux-surface";
-    rev = "4.16.5-1";
-    sha256 = "15cq98rfyqd4k4b6rnm7vasrcswp5ka3qryvwnf6pkhh22bhg09i";
+    rev = "4.16.7-1";
+    sha256 = "04f91i6msb71yc2l7grjdf85a0dpk6nhrs740j3yi6p44zqnzswf";
   };
 
   buildFirmware = (name: subdir: src: pkgs.stdenv.mkDerivation {
