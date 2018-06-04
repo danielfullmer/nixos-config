@@ -45,6 +45,6 @@
 
   # Disable docs
   services.nixosManual.enable = false;
-  programs.man.enable = false;
-  programs.info.enable = false;
+  documentation.man.enable = false;
+  documentation.info.enable = false;
 }
