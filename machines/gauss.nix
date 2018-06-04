@@ -8,7 +8,7 @@
 
   theme.base16Name = "ocean";
 
-  system.stateVersion = "17.03";
+  system.nixos.stateVersion = "17.03";
 
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
   boot.kernelModules = [ "kvm-intel" ];

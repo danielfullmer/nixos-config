@@ -15,7 +15,7 @@
 
   theme.base16Name = "3024";
 
-  system.stateVersion = "17.03";
+  system.nixos.stateVersion = "17.03";
 
   boot = {
     # Use the gummiboot efi boot loader.

@@ -8,7 +8,7 @@
 
   theme.base16Color = "isotope";
 
-  system.stateVersion = "17.09";
+  system.nixos.stateVersion = "17.09";
   nixpkgs.system = "aarch64-linux";
 
   # Parts of this taken from nixos/modules/installer/cd-dvd/sd-image-aarch64.nix.
