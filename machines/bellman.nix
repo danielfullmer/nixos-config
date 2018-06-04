@@ -108,7 +108,12 @@
           up = bellman
       end
     '';
-    in "(${pkgs.synergy}/bin/synergys -c ${synergyConfigFile} -a 30.0.0.222:24800) &";
+    in ''
+      (${pkgs.synergy}/bin/synergys -c ${synergyConfigFile} -a 30.0.0.222:24800) &";
+      (yubioath-gui -t) &
+      #(keybase-gui) &
+      (signal-desktop --start-in-tray) &
+    '';
 
   services.hydra = {
     enable = true;
@@ -151,12 +156,6 @@
     bcachefs-tools keyboard-firmware
     signal-desktop
   ];
-
-  services.xserver.desktopManager.extraSessionCommands = ''
-    (yubioath-gui -t) &
-    #(keybase-gui) &
-    (signal-desktop --start-in-tray) &
-  '';
 
   system.autoUpgrade.enable = true;
 }
