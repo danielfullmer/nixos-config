@@ -37,7 +37,23 @@ let
 in
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_4_16;
+    kernelPackages = pkgs.linuxPackages_4_16.extend (self: super: {
+      kernel = super.kernel.override { argsOverride = with lib; rec {
+        version = "4.16.7";
+
+        # modDirVersion needs to be x.y.z, will automatically add .0 if needed
+        modDirVersion = concatStrings (intersperse "." (take 3 (splitString "." "${version}.0")));
+
+        # branchVersion needs to be x.y
+        extraMeta.branch = concatStrings (intersperse "." (take 2 (splitString "." version)));
+
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
+          sha256 = "0f81mxc5b3zf5m29bwc3afv07k60661zl18098cjjqv6qpvbwynq";
+        };
+      };};
+    });
+
     kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.16/${name}.patch";})
       [ "acpica" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfaceacpi" "surfacedock" "wifi" ]);
 
