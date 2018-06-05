@@ -1,10 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let cleverca22 = builtins.fetchTarball {
-  url = https://github.com/cleverca22/nixos-configs/archive/043cec7eedb0c97d068513b33e6e425f7ba45aa4.tar.gz;
-  sha256 = "0cl7i29mn1b7bb5g4swy13yknl72dnflagbnbibadklfqxqkllxk";
-};
-in
 {
   imports = [
     ../profiles/base.nix
@@ -16,7 +11,7 @@ in
     ../profiles/academic.nix
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
-    "${cleverca22}/qemu.nix"
+    ../profiles/qemu-binfmt.nix
   ];
 
   theme.base16Name = "chalk";
