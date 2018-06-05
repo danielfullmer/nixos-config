@@ -82,11 +82,7 @@ in
 
   # TODO: Remove this hack when keybase becomes multi-user
   system.activationScripts.keybase = lib.stringAfter [ "users" "groups" ] ''
-    # XXX: Can't just do [[ ! -d /keybase ]] since root can't even stat() this dir if mounted
-    if ls -f / | grep -q keybase; then false;
-    else
-      mkdir /keybase
-      chown danielrf:danielrf /keybase
-    fi
+    mkdir -p /keybase 2>/dev/null
+    chown -f danielrf:danielrf /keybase
   '';
 }
