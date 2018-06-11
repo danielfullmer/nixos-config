@@ -78,6 +78,7 @@
   services.xserver.xrandrHeads = [
     { output = "DP-2"; primary = true; }
     { output = "DP-4"; }
+    { output = "DP-5"; }
     { output = "DVI-D-0";
       monitorConfig = ''
         Option "Rotate" "Left"
