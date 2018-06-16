@@ -130,15 +130,15 @@
   qemu-user.aarch64 = true;
   nix.supportedPlatforms = [ "aarch64-linux" ];
 
-  services.home-assistant.enable = true;
-
-  services.tor = {
-    enable = true;
-    hiddenServices."bellman".map = [
-      { port = 22; } # SSH
-      { port = 8123; } # Home-assistant
-    ];
-  };
+#  services.home-assistant.enable = true;
+#
+#  services.tor = {
+#    enable = true;
+#    hiddenServices."bellman".map = [
+#      { port = 22; } # SSH
+#      { port = 8123; } # Home-assistant
+#    ];
+#  };
 
   #  systemd.user.services.gmailieer = {
   #    serviceConfig = {
