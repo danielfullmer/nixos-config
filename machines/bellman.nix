@@ -38,7 +38,7 @@
 
   fileSystems = {
     "/" = {
-      device = "//dev/disk/by-partuuid/aff42536-c064-4c6a-a3af-a3bda7421dc5:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052";
+      device = "//dev/disk/by-partuuid/31c55194-7364-9748-a547-eef9442d2f51:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052";
       fsType = "bcachefs";
     };
     "/boot" = {
