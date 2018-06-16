@@ -21,7 +21,9 @@ in
   #boot.tmpOnTmpfs = true; # XXX: Too much memory usage
 
   services.zerotierone.enable = true;
-  networking.firewall.trustedInterfaces = [ "zt0" ];
+  services.zerotierone.joinNetworks = [ "8056c2e21c36f91e" ];
+  networking.dhcpcd.denyInterfaces = [ "ztmjfpigyc" ]; # Network name generated from network ID in zerotier osdep/LinuxEthernetTap.cpp
+  networking.firewall.trustedInterfaces = [ "ztmjfpigyc" ];
   networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
   networking.hosts = {
     "30.0.0.48" = [ "devnull" ];
