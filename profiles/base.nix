@@ -173,7 +173,7 @@ in
       enable = true;
       highlighters = [ "main" "brackets" ];
     };
-    enableAutosuggestions = true;
+    autosuggestions.enable = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
     interactiveShellInit = ''
       source ${pkgs.fzf}/share/fzf/completion.zsh # Activated with **<TAB>
