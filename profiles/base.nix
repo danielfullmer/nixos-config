@@ -25,7 +25,7 @@ in
   networking.dhcpcd.denyInterfaces = [ "ztmjfpigyc" ]; # Network name generated from network ID in zerotier osdep/LinuxEthernetTap.cpp
   networking.firewall.trustedInterfaces = [ "ztmjfpigyc" ];
   networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
-  networking.hosts = {
+  networking.hosts = { # TODO: Parameterize
     "30.0.0.48" = [ "devnull" ];
     "30.0.0.154" = [ "sysc-2" ];
     "30.0.0.127" = [ "nyquist" ];
@@ -41,11 +41,13 @@ in
     bellman.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUIB2rle04uPIk5TFnGeomYPqfRCbRfjOQw11gsJOye";
     nyquist.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBEOwL+5XKdvVBNGIT4pUfzNtMyvuvERwWAcE9q8HFVj";
     wrench.publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM6M2q7YcOoHWQRpok1euwQ8FChG34GxxlijFtLHL6uO2myUpstpfvaF4K0Rm5rkiaXGmFZAjgj132JO98JbL1k=";
+    banach.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGfJCTIzSct/m/Zm/yUb224JhKmr35ISH2CEcxSbkCc";
   };
 
   # X11 and GPG forwarding for SSH
   # See https://wiki.gnupg.org/AgentForwarding
   # TODO: /run/user/ path is not correct if UID is different across hosts
+  # TODO: Parameterize the list of machines
   programs.ssh.extraConfig = ''
     Host bellman nyquist euler banach spaceheater
     ForwardAgent yes
