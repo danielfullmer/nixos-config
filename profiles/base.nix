@@ -22,6 +22,7 @@ in
 
   services.zerotierone.enable = true;
   services.zerotierone.joinNetworks = [ "8056c2e21c36f91e" ];
+  systemd.services.zerotierone.wants = [ "network-online.target" ]; # Workaround for https://github.com/zerotier/ZeroTierOne/issues/738
   networking.dhcpcd.denyInterfaces = [ "ztmjfpigyc" ]; # Network name generated from network ID in zerotier osdep/LinuxEthernetTap.cpp
   networking.firewall.trustedInterfaces = [ "ztmjfpigyc" ];
   networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
