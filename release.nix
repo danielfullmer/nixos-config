@@ -14,7 +14,7 @@ rec {
   bellman-vfio = (import nixos { configuration = ./machines/bellman-vfio.nix; }).system;
   nyquist = (import nixos { configuration = ./machines/nyquist.nix; }).system;
   euler = (import nixos { configuration = ./machines/euler.nix; }).system;
-  #banach = (import nixos { configuration = ./machines/banach.nix; }).system;
+  banach = (import nixos { configuration = ./machines/banach.nix; }).system;
   spaceheater = (import nixos { configuration = ./machines/spaceheater.nix; }).system;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
