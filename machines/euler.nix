@@ -76,7 +76,7 @@
     DisplaySize 260 173
   '';
 
-  theme.fontSize = 8;
+  theme.fontSize = 7;
 
   environment.variables = {
     GDK_SCALE = "2"; # Scale UI elements
