@@ -9,11 +9,11 @@ let
   linux-surface = pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "linux-surface";
-    rev = "4.16.7-1";
-    sha256 = "04f91i6msb71yc2l7grjdf85a0dpk6nhrs740j3yi6p44zqnzswf";
+    rev = "4.17.3-3";
+    sha256 = "0bwygqbiy7pz7pvzd87ra3gkwdimbqsgm7816xrqvw69pyiackx5";
   };
 
-  buildFirmware = (name: subdir: src: pkgs.stdenv.mkDerivation {
+  buildFirmware = (name: subdir: src: pkgs.stdenvNoCC.mkDerivation {
     name = "${name}-firmware";
     src = src;
     nativeBuildInputs = [ pkgs.unzip ];
@@ -37,9 +37,9 @@ let
 in
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_4_16.extend (self: super: {
+    kernelPackages = pkgs.linuxPackages_4_17.extend (self: super: {
       kernel = super.kernel.override { argsOverride = with lib; rec {
-        version = "4.16.7";
+        version = "4.17.3";
 
         # modDirVersion needs to be x.y.z, will automatically add .0 if needed
         modDirVersion = concatStrings (intersperse "." (take 3 (splitString "." "${version}.0")));
@@ -49,13 +49,13 @@ in
 
         src = pkgs.fetchurl {
           url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
-          sha256 = "0f81mxc5b3zf5m29bwc3afv07k60661zl18098cjjqv6qpvbwynq";
+          sha256 = "1z8zja786x5dxwm69zgfkwsvfwjfznwbclf76301c2fd4wjancmg";
         };
       };};
     });
 
-    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.16/${name}.patch";})
-      [ "acpica" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfaceacpi" "surfacedock" "wifi" ]);
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.17/${name}.patch";})
+      [ "acpi" "buttons" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfacedock" "wifi" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
