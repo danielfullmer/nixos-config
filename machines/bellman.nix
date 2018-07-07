@@ -123,12 +123,23 @@
     notificationSender = "cgibreak@gmail.com";
     smtpHost = "${config.networking.hostName}";
     useSubstitutes = true;
-    buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
+    #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
   qemu-user.aarch64 = true;
-  nix.supportedPlatforms = [ "aarch64-linux" ];
+
+    # TOOD: Parameterize
+    # Used by hydra even if nix.distributedBuilds is false
+  nix.buildMachines = [
+    { hostName = "localhost";
+      #sshUser = "nix";
+      #sshKey = "/none";
+      system = "x86_64-linux,i686-linux,aarch64-linux";
+      maxJobs = 4;
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+    }
+  ];
 
 #  services.home-assistant.enable = true;
 #

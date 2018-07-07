@@ -1,1 +1,0 @@
-localhost i686-linux,x86_64-linux /var/lib/hydra/queue-runner/.ssh/id_rsa 2 5 kvm,nixos-test,big-parallel
