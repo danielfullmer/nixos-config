@@ -150,6 +150,7 @@ in
 
     tmux
     silver-searcher
+    ripgrep
     fzf
     git
     gitAndTools.hub
