@@ -35,9 +35,6 @@ self: super: with super; {
     configure = import ./neovim/config.nix { pkgs=self; theme=self.localtheme; };
   };
 
-  # Nixpkgs PR #41327
-  raspberrypi-wireless = callPackage ./raspberrypi-wireless {};
-
   st = (st.override {
     conf = (callPackage st/config.h.nix { theme=self.localtheme; });
   });
