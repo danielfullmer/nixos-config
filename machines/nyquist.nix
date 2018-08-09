@@ -13,7 +13,7 @@
 
   theme.base16Name = "eighties";
 
-  system.nixos.stateVersion = "17.03";
+  system.stateVersion = "17.03";
 
   boot.initrd.availableKernelModules = [ "ata_piix" ];
   boot.kernelModules = [ ];

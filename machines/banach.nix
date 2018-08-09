@@ -18,7 +18,7 @@ in
 
   theme.base16Name = "isotope";
 
-  system.nixos.stateVersion = "18.03";
+  system.stateVersion = "18.03";
 
   #nixpkgs.localSystem = { system = "aarch64-linux"; } // (import <nixpkgs/lib>).systems.examples.aarch64-multiplatform;
   nixpkgs.localSystem = { system = "aarch64-linux"; config = "aarch64-unknown-linux-gnu"; }; # The above one should work but doesn't

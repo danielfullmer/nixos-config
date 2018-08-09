@@ -7,7 +7,7 @@
 
   theme.base16Name = "irblack";
 
-  system.nixos.stateVersion = "17.03";
+  system.stateVersion = "17.03";
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;

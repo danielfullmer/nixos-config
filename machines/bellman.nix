@@ -16,7 +16,7 @@
 
   theme.base16Name = "chalk";
 
-  system.nixos.stateVersion = "18.03";
+  system.stateVersion = "18.03";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
