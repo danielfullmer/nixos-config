@@ -39,3 +39,14 @@ $ sudo zerotier-cli join ${zerotier.network}
 # Create hydra user
 $ sudo -s
 $ hydra-create-user ...
+
+# (Optional) Copy secrets:
+/home/danielrf/.syncthing
+/home/danielrf/.config/cachix
+/home/danielrf/.config/rclone
+/home/danielrf/.config/keybase
+/home/danielrf/.config/Signal
+/home/danielrf/.config/chromium
+/var/lib/zerotier-one
+/etc/wpa_supplicant.conf
+/etc/rclone.conf
