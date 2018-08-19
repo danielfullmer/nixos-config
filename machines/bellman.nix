@@ -30,7 +30,6 @@
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-    "bcachefs"
   ];
 
   boot.supportedFilesystems = [ "bcachefs" ];
@@ -38,7 +37,7 @@
 
   fileSystems = {
     "/" = {
-      device = "//dev/disk/by-partuuid/31c55194-7364-9748-a547-eef9442d2f51:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052";
+      device = "//dev/disk/by-partuuid/c3dfea2f-1a6c-4ed0-be71-7c867cd08cc2:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052:/dev/disk/by-partuuid/31c55194-7364-9748-a547-eef9442d2f51";
       fsType = "bcachefs";
     };
     "/boot" = {
