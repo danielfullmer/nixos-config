@@ -9,7 +9,7 @@ with lib;
 
     displayManager.lightdm = {
       enable = true;
-      background = config.theme.background;
+      background = toString config.theme.background;
     };
 
     windowManager = {
