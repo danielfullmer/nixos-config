@@ -92,13 +92,14 @@ in
     useSandbox = true;
     trustedUsers = [ "root" "danielrf" "nixBuild" ];
 
-    binaryCaches = [ "https://cache.nixos.org/" ];
+    binaryCaches = [ "https://cache.nixos.org/" "https://daniel.cachix.org/" ];
 
     trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "http://bellman:5000";
 
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "bellman-1:zgaxZSNzvCMGY5sjjgsxEC2uKn3OTW9LWEN0uhjJoO4="
+      "daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
     ];
 
     daemonNiceLevel = 10; # Range: 0-19
@@ -145,6 +146,7 @@ in
     ncdu
     bmon
     wget
+    cachix
 
     zerotierone
 
