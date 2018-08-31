@@ -58,10 +58,6 @@
 
   services.acpid.enable = true;
 
-  services.xserver.deviceSection = ''
-    Option "DRI3" "1"
-  '';
-
   services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   services.redshift.enable = true;
