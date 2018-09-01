@@ -162,14 +162,19 @@ in
 
   environment.variables = {
     EDITOR = "vim";
-    FZF_TMUX = "1"; # For fzf zsh scripts
+
+    # See also: https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
+    FZF_TMUX = "1";
+    FZF_CTRL_T_OPTS="--preview '(${pkgs.highlight}/bin/highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'";
+    FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'";
+    FZF_ALT_C_OPTS="--preview '${pkgs.tree}/bin/tree -C {} | head -200'";
   };
 
   programs.bash = {
     enableCompletion = true;
     interactiveShellInit = ''
       source ${pkgs.fzf}/share/fzf/completion.bash # Activated with **<TAB>
-      source ${pkgs.fzf}/share/fzf/key-bindings.bash # CTRL-R and CTRL-T
+      source ${pkgs.fzf}/share/fzf/key-bindings.bash # CTRL-R, CTRL-T, and ALT-C
     '';
   };
 
@@ -184,7 +189,7 @@ in
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
     interactiveShellInit = ''
       source ${pkgs.fzf}/share/fzf/completion.zsh # Activated with **<TAB>
-      source ${pkgs.fzf}/share/fzf/key-bindings.zsh # CTRL-R and CTRL-T
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh # CTRL-R, CTRL-T, and ALT-C
     '' + import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
   };
 
