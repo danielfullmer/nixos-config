@@ -6,9 +6,17 @@
   services.xserver.modules = [ pkgs.xlibs.xf86inputjoystick ];
 
   environment.systemPackages = (with pkgs; [
-    # Extra deps are for steamvr support
-    (steam.override { extraPkgs = p: with p; [ usbutils lsb-release procps dbus_daemon ]; })
+    steam
+    steam-run
   ]);
+
+  nixpkgs.overlays = [ (self: super: {
+    steam = super.steam.override (
+      { nativeOnly = true;
+        # Extra deps are for steamvr support
+        extraPkgs = p: with p; [ usbutils lsb-release procps dbus_daemon ];
+      });
+  }) ];
 
   # Support for Steam play (Proton/wine)'s esync feature:
   # See https://github.com/zfigura/wine/blob/esync/README.esync<Paste>
