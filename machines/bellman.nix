@@ -81,11 +81,6 @@
     }
   ];
 
-  theme.background = pkgs.fetchurl {
-    url = "https://4.bp.blogspot.com/-ttahA5YH_0M/WDcmRM-DoKI/AAAAAAACGlE/jBcAJ45T-twF5qoFR3TNQNyHTVGyGdCUACPcB/s0/Trip_in_Bled_Slovenia_4k.jpg";
-    sha256 = "0fyw8ax2ci8fsj1zjxlb0pkm1knrx1qmq63mxzwp708qra9x4pq6";
-  };
-
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
       section: screens
