@@ -22,6 +22,13 @@
   # See https://github.com/zfigura/wine/blob/esync/README.esync<Paste>
   # https://github.com/ValveSoftware/Proton/blob/proton_3.7/PREREQS.md
   systemd.extraConfig = "DefaultLimitNOFILE=1048576";
+  security.pam.loginLimits = [{
+    domain = "*";
+    type = "hard";
+    item = "nofile";
+    value = "1048576";
+  }];
+
 
   services.udev.packages = [
     (pkgs.writeTextFile {
