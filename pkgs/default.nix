@@ -63,12 +63,6 @@ self: super: with super; {
   fuse = super.fuse.overrideAttrs (attrs: {
     patches = attrs.patches ++ [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
   });
-  fuse2 = super.fuse2.overrideAttrs (attrs: {
-    patches = attrs.patches ++ [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
-  });
-  fuse3 = super.fuse3.overrideAttrs (attrs: {
-    patches = attrs.patches ++ [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
-  });
 
   #### Environments ####
 
