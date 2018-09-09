@@ -12,7 +12,7 @@
 
   nixpkgs.overlays = [ (self: super: {
     steam = super.steam.override (
-      { nativeOnly = true;
+      { #nativeOnly = true;
         # Extra deps are for steamvr support
         extraPkgs = p: with p; [ usbutils lsb-release procps dbus_daemon ];
       });
