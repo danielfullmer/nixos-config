@@ -9,8 +9,8 @@ let
   linux-surface = pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "linux-surface";
-    rev = "4.17.3-3";
-    sha256 = "0bwygqbiy7pz7pvzd87ra3gkwdimbqsgm7816xrqvw69pyiackx5";
+    rev = "4.18.7-2";
+    sha256 = "0f7q7a8xnlfqc7l5hz4lxxz901kv7xfv0ildf6lwp3g0cqzccqmc";
   };
 
   buildFirmware = (name: subdir: src: pkgs.stdenvNoCC.mkDerivation {
@@ -37,9 +37,9 @@ let
 in
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_4_17.extend (self: super: {
+    kernelPackages = pkgs.linuxPackages_4_18.extend (self: super: {
       kernel = super.kernel.override { argsOverride = with lib; rec {
-        version = "4.17.3";
+        version = "4.18.7";
 
         # modDirVersion needs to be x.y.z, will automatically add .0 if needed
         modDirVersion = concatStrings (intersperse "." (take 3 (splitString "." "${version}.0")));
@@ -49,12 +49,12 @@ in
 
         src = pkgs.fetchurl {
           url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
-          sha256 = "1z8zja786x5dxwm69zgfkwsvfwjfznwbclf76301c2fd4wjancmg";
+          sha256 = "0cgpb8zx7ckd9lmmaas6r1vszbz9lhrn4w1njw3yaw9a4rg44fzh";
         };
       };};
     });
 
-    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.17/${name}.patch";})
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.18/${name}.patch";})
       [ "acpi" "buttons" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfacedock" "wifi" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
