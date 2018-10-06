@@ -20,6 +20,9 @@
     pythonPackages.glances
     nethogs
     iotop
+
+    qutebrowser
+    youtube-dl
   ]);
 
   programs.fish = {
