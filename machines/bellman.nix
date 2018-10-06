@@ -141,21 +141,21 @@
 #    ];
 #  };
 
-  #  systemd.user.services.gmailieer = {
-  #    serviceConfig = {
-  #      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
-  #      Type = "oneshot";
-  #      #WorkingDirectory = "/home/danielrf/mail";
-  #    };
-  #  };
-  #
-  #  systemd.user.timers.gmailieer = {
-  #    wantedBy = [ "timers.target" ];
-  #    timerConfig = {
-  #      Unit = "gmailieer.service";
-  #      OnCalendar = "*:0/3"; # Every 3 minutes
-  #    };
-  #  };
+  systemd.user.services.gmailieer = {
+    serviceConfig = {
+      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
+      Type = "oneshot";
+      WorkingDirectory = "/home/danielrf/mail/cgibreak.gmail";
+    };
+  };
+
+  systemd.user.timers.gmailieer = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      Unit = "gmailieer.service";
+      OnCalendar = "*:0/3"; # Every 3 minutes
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     bcachefs-tools keyboard-firmware

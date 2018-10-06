@@ -14,6 +14,7 @@
     gmailieer
     alot
     notmuch
+    notmuch-bower
     w3m
 
     pythonPackages.glances

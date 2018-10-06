@@ -29,7 +29,8 @@ $ notmuch # Do setup procedure, use /home/danielrf/mail as directory
 # set gpg_path properly in ~/.notmuch-config
 
 $ notmuch new # generate mail/.notmuch database
-$ cd mail
+$ mkdir mail/<username>.gmail # must be in a subdir of the notmuch mail/ dir
+$ cd mail/<username>.gmail
 $ gmi init ....@gmail.com
 $ gmi sync # Get everything
 
