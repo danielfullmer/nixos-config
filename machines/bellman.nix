@@ -150,6 +150,7 @@
   };
 
   systemd.user.timers.gmailieer = {
+    requires = [ "network-online.target" ];
     wantedBy = [ "timers.target" ];
     timerConfig = {
       Unit = "gmailieer.service";
