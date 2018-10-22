@@ -37,7 +37,8 @@
 #define XXXXXXX KC_NO
 
 enum layers {
-  _ASET,
+  _NORM,
+  _QWERTY,
   _BLUE,
 
   _GREEKL,
@@ -46,9 +47,9 @@ enum layers {
   _EMPTY
 };
 
-enum planck_keycodes {
+enum custom_keycodes {
   // layouts
-  ASET = SAFE_RANGE,
+  NORM = SAFE_RANGE,
   GREEK
 };
 
@@ -272,15 +273,15 @@ const uint32_t PROGMEM unicode_map[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* 0: Norman layout - Minimize use of center columns.
  * Swap p and j. Better for ortholinear */
-[_ASET] = KEYMAP(
+[_NORM] = KEYMAP(
  KC_EQL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,          \
  KC_GRV,    KC_Q,    KC_W,    KC_D,    KC_F,    KC_K, XXXXXXX,          \
  KC_TAB,    KC_A,    KC_S,    KC_E,    KC_T,    KC_G,                   \
 KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, XXXXXXX,          \
-KC_LGUI,   GREEK, XXXXXXX, KC_LEFT, KC_RGHT,                            \
+KC_LGUI,   GREEK,DF(_QWERTY), KC_LEFT, KC_RGHT,                         \
                                               KC_DEL, KC_HOME,          \
                                                        KC_END,          \
-                 LT(1,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          \
+                 LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          \
                                                                         \
          XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS, \
          XXXXXXX,    KC_P,    KC_U,    KC_R,    KC_L, KC_SCLN, KC_BSLS, \
@@ -289,10 +290,31 @@ KC_LGUI,   GREEK, XXXXXXX, KC_LEFT, KC_RGHT,                            \
                            KC_DOWN,   KC_UP, XXXXXXX, KC_RALT, KC_RCTL, \
 KC_PGUP, KC_RCTL,                                                       \
 KC_PGDN,                                                                \
-KC_RGUI, KC_ENT, LT(1,KC_SPC)                                           \
+KC_RGUI, KC_ENT, LT(2,KC_SPC)                                           \
 ),
 
-/* 1: Blueshift */
+/* 1: Qwerty layout - For compatibilty */
+[_QWERTY] = KEYMAP(
+_______, _______, _______, _______, _______, _______, _______,          \
+_______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, _______,          \
+_______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                   \
+_______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,          \
+_______, _______,DF(_NORM), _______, _______,                           \
+                                             _______, _______,          \
+                                                      _______,          \
+                                    _______, _______, _______,          \
+                                                                        \
+         _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______, \
+         _______,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______, \
+                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______, \
+         _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______, \
+                           _______, _______, _______, _______, _______, \
+_______, _______,                                                       \
+_______,                                                                \
+_______, _______, _______                                               \
+),
+
+/* 2: Blueshift */
 [_BLUE] = KEYMAP(
    F(0),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,          \
 _______, XXXXXXX, XXXXXXX, KC_CIRC, KC_PLUS, XXXXXXX, _______,          \
@@ -375,6 +397,11 @@ _______, _______, _______                                               \
 
 };
 
+void matrix_init_user() {
+    set_unicode_input_mode(UC_LNX); // Ctrl-Shift-u support
+    //set_unicode_input_mode(UC_WINC); // WinCompose support
+}
+
 /* id for user defined functions */
 enum function_id {
     TEENSY_KEY,
@@ -387,8 +414,7 @@ const uint16_t PROGMEM fn_actions[] = {
     ACTION_FUNCTION(TEENSY_KEY),                    // FN0
 };
 
-void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
-{
+void action_function(keyrecord_t *event, uint8_t id, uint8_t opt) {
     print("action_function called\n");
     print("id  = "); phex(id); print("\n");
     print("opt = "); phex(opt); print("\n");
