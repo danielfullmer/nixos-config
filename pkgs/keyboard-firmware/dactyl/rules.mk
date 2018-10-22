@@ -44,8 +44,9 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   Atmel DFU loader 4096
 #   LUFA bootloader  4096
 #   USBaspLoader     2048
-OPT_DEFS += -DBOOTLOADER_SIZE=4096
-
+BOOTLOADER = halfkay
+# TODO: with atmel-dfu, teensy-loader-cli fails with "HEX parse error" on ihex file generated for dactyl
+# See https://github.com/qmk/qmk_firmware/issues/3653
 
 # Build Options
 #   comment out to disable the options.
