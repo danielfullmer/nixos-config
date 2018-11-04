@@ -11,7 +11,8 @@
     ../profiles/academic.nix
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
-    ../profiles/qemu-binfmt.nix
+    #../profiles/backup.nix
+    #../profiles/qemu-binfmt.nix
   ];
 
   theme.base16Name = "chalk";
@@ -117,7 +118,8 @@
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
-  qemu-user.aarch64 = true;
+
+  #qemu-user.aarch64 = true;
 
     # TOOD: Parameterize
     # Used by hydra even if nix.distributedBuilds is false
