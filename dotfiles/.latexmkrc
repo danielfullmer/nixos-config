@@ -1,5 +1,4 @@
 $print_type     = 'pdf';
-$pdflatex       = 'xelatex --shell-escape';
 $pdf_previewer  = 'start zathura %O %S';
 $pdf_mode       = 1;
 
