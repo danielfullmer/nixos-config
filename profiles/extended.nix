@@ -15,6 +15,7 @@
     alot
     notmuch
     notmuch-bower
+    astroid
     w3m
 
     pythonPackages.glances
