@@ -31,6 +31,7 @@
 #endif
 #ifdef KEYBOARD_ergodox_ez
 #include "ergodox_ez.h"
+#define KEYMAP LAYOUT_ergodox
 #endif
 
 #define _______ KC_TRNS
