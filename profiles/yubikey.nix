@@ -24,6 +24,7 @@ in
   # For single-user: append the output of pamu2fcfg to ~/.config/Yubico/u2f_keys
   security.pam.enableU2F = true;
   security.pam.u2fModuleArgs = "origin=pam://${config.networking.domain} cue authfile=${u2f_file}";
+  security.pam.services."sshd".u2fAuth = false;
 
   environment.systemPackages = (with pkgs; [
     yubico-piv-tool
