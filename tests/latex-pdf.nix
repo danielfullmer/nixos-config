@@ -26,6 +26,5 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
       $machine->waitForWindow(qr/zathura/);
       $machine->sleep(5);
       $machine->screenshot("zathura");
-      $machine->waitForText("Title");
     '';
 })
