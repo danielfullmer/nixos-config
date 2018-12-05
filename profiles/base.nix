@@ -35,6 +35,7 @@ in
     "30.0.0.84" = [ "gauss" ];
     "30.0.0.156" = [ "banach" ];
     "30.0.0.40" = [ "spaceheater" ];
+    "30.0.0.248" = [ "pixel" ];
   };
 
   programs.ssh.knownHosts = {
