@@ -55,7 +55,7 @@ in
     ForwardX11 yes
     RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
   '';
-  services.openssh.forwardX11 = true;
+  services.openssh.forwardX11 = !config.environment.noXlibs;
   services.openssh.extraConfig = ''
     StreamLocalBindUnlink yes
   '';
