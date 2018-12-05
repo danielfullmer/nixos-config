@@ -37,7 +37,7 @@ let
 in
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_4_18.extend (self: super: {
+    kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
       kernel = super.kernel.override { argsOverride = with lib; rec {
         version = "4.18.7";
 
