@@ -6,17 +6,18 @@ let
   shellThemeScript = pkgs.writeScript "shellTheme" (import (../../modules/theme/templates + "/shell.${theme.brightness}.nix") { colors=theme.colors; });
 in
 {
-  packages.myVimPackage = with pkgs.vimPlugins; with myVimPlugins; {
-    start = [
-      vim2nix
-      vim-nix
-      vimproc
+  vam.knownPlugins = pkgs.vimPlugins // myVimPlugins;
+  vam.pluginDictionaries = [
+    { names = [
+      "vim2nix"
+      "vim-nix"
+      "vimproc"
 
       # UI {{{
-      Colour-Sampler-Pack
-      vim-indent-guides
-      vim-highlightedyank
-      airline
+      "Colour-Sampler-Pack"
+      "vim-indent-guides"
+      "vim-highlightedyank"
+      "airline"
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
@@ -27,72 +28,80 @@ in
       # Plug 'merlinrebrovic/focus.vim'
       # }}}
       # Text/File Navigation {{{
-      easymotion
-      fzf-vim
-      fzfWrapper
+      "easymotion"
+      "fzf-vim"
+      "fzfWrapper"
       # }}}
       # Code Completion / Navigation {{{
       # neocomplete / deocomplete
-      nvim-completion-manager # Get more language-specific completion plugins
-      neosnippet
-      neosnippet-snippets
-      The_NERD_tree
+      "LanguageClient-neovim"
+      "ncm2" # TODO: Figure out language server support
+      "nvim-yarp" # ncm2 needs this
+      "ncm2-bufword"
+      "ncm2-path"
+      "ncm2-tmux"
+      "neosnippet" # Replace with something ncm-compatible?
+      "neosnippet-snippets"
+      "The_NERD_tree"
       # }}}
       # Editing {{{
-      align
+      "align"
       # Plug 'tpope/vim-abolish'
-      surround
-      editorconfig-vim
+      "surround"
+      "editorconfig-vim"
       # }}}
       # GIT {{{
-      fugitive
-      gitgutter
-      webapi-vim
-      gist-vim
+      "fugitive"
+      "gitgutter"
+      "webapi-vim"
+      "gist-vim"
       #" }}}
       #" General Coding {{{
-      ale
-      commentary
-      FastFold
-      polyglot # Language pack
-      #" }}}
-      #" Python {{{
-      # XXX: nvim-completion-manager needs pythonPackages.jedi in nix-shell
-      #Plug 'klen/python-mode'
-      #Plug 'alfredodeza/pytest.vim'
-      ipython
-      #Plug 'julienr/vimux-pyutils'
-      #" }}}
-      #" Haskell {{{
-      #Plug 'lukerandall/haskellmode-vim'
-      neco-ghc
-      #" }}}
-      #" Go {{{
-      #Plug 'jnwhiteh/vim-golang'
-      #" }}}
-      #" HTML {{{
-      #Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-      #Plug 'lukaszb/vim-web-indent'
-      #" }}}
-      #" LaTeX {{{
-      vimtex # TODO: Too slow
-      #" }}}
-      #" Pandoc {{{
-      vim-pandoc
-      vim-pandoc-syntax
+      "ale" # TODO: See about language server support
+      "commentary"
+      "FastFold"
+      "polyglot" # Language pack
       #" }}}
       #" Misc {{{
       #Plug 'benmills/vimux'
-      neco-vim
-      tmux-navigator
-      gundo
+      "neco-vim"
+      "tmux-navigator"
+      "gundo"
       #" }}}
-    ];
-  };
+    ]; }
+    { ft_regex = "^tex\$";
+      names = [
+      "vimtex" # TODO: Too slow
+    ]; }
+    { ft_regex = "^python\$";
+      names = [
+        "ipython"
+        #Plug 'klen/python-mode'
+        #Plug 'alfredodeza/pytest.vim'
+        #Plug 'julienr/vimux-pyutils'
+    ]; }
+    { ft_regex = "^haskell\$";
+      names = [
+        "neco-ghc"
+        #"haskell-vim"
+        #Plug 'lukerandall/haskellmode-vim'
+    ]; }
+    { ft_regex = "^go\$";
+      names = [
+        #Plug 'jnwhiteh/vim-golang'
+    ]; }
+    { ft_regex = "^html\$";
+      names = [
+        #Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+        #Plug 'lukaszb/vim-web-indent'
+    ]; }
+    { ft_regex = "^markdown\$";
+      names = [
+#      vim-pandoc
+#      vim-pandoc-syntax
+    ]; }
+  ];
   customRC = ''
-" Load packages early
-packloadall
-
 set nocompatible
 set backspace=indent,eol,start
 set encoding=utf8
@@ -174,7 +183,7 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
-" Insert mode completion
+" Insert mode completion. TODO: Remove this?
 inoremap <expr> <c-x><c-k> fzf#complete('cat ${pkgs.miscfiles}/share/web2')
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
@@ -190,16 +199,75 @@ endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-
 let g:EasyMotion_leader_key = "<Leader><Leader>"
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
-"" nvim-completion-manager
+"" ncm2 (neovim-completion-manager-2)
+au InsertEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
 
-" don't give |ins-completion-menu| messages.  For example,
-" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+autocmd Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-cmds',
+        \ 'priority': 8, 
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'prefix', 'key': 'word'},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+autocmd Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-labels',
+        \ 'priority': 8, 
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'substr', 'key': 'word'},
+        \               {'name': 'substr', 'key': 'menu'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#labels,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+autocmd Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-files',
+        \ 'priority': 8, 
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'abbrfuzzy', 'key': 'word'},
+        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#files,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+autocmd Filetype tex call ncm2#register_source({
+        \ 'name' : 'bibtex',
+        \ 'priority': 8, 
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'prefix', 'key': 'word'},
+        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+        \               {'name': 'abbrfuzzy', 'key': 'menu'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+
+" supress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
 set shortmess+=c
+
+" enable auto complete for `<backspace>`, `<c-w>` keys.
+" known issue https://github.com/ncm2/ncm2/issues/7
+au TextChangedI * call ncm2#auto_trigger()
 
 " When the <Enter> key is pressed while the popup menu is visible, it only hides
 " the menu. Use this mapping to hide the menu and also start a new line.
@@ -208,11 +276,6 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Here is an example for expanding snippet in the popup menu with <Enter> key.
-" Suppose you use the <C-U> key for expanding snippet.
-imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand_or_nl)" : "\<CR>")
-imap <expr> <Plug>(expand_or_nl) (cm#completed_is_snippet() ? "\<C-U>":"\<CR>")
 
 " neosnippet
 let g:neosnippet#enable_preview = 1
@@ -231,7 +294,6 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-set completeopt="menu"
 let g:pymode_doc = 0
 let g:pymode_run = 0
 let g:pymode_lint = 0
@@ -254,20 +316,6 @@ let g:vimtex_fold_enabled = 1
 
 " Polyglot bring in latex-box which conflicts with vimtex
 let g:polyglot_disabled = ['latex']
-
-" vimtex + nvim-completion-manager integration
-augroup my_cm_setup
-  autocmd!
-  autocmd User CmSetup call cm#register_source({
-        \ 'name' : 'vimtex',
-        \ 'priority': 8,
-        \ 'scoping': 1,
-        \ 'scopes': ['tex'],
-        \ 'abbreviation': 'tex',
-        \ 'cm_refresh_patterns': g:vimtex#re#ncm,
-        \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
-        \ })
-augroup END
 
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
