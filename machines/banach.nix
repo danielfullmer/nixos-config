@@ -13,7 +13,8 @@ in
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/sd-image.nix>
     ../profiles/base.nix
-    ../profiles/gdrive.nix
+    # Non interactive host
+    #../profiles/gdrive.nix
   ];
 
   theme.base16Name = "isotope";

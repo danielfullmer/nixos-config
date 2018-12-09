@@ -4,6 +4,7 @@
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ../profiles/base.nix
+    ../profiles/interactive.nix
     ../profiles/extended.nix
     ../profiles/yubikey.nix
     ../profiles/desktop/default.nix

@@ -1,3 +1,5 @@
+# yubikey.nix: Inteded for hosts I could potentially insert the yubikey into.
+
 { config, pkgs, lib, ... }:
 let
   u2f_key = "danielrf:-lTPHVrWKR1eizhqEq4U5cVF2ozG4o9T6jT1dFvmR1ERuz-lVc6UkOZc1mztVIfZxVuLlDDE2VOb4KJg2wihgg,04b2601eac5bdb1dea7882c10393e0e79c814c4bda2a2b5cb63395173f8c91af0c86e32a39d13c07fa61013985c0b4c81cec08bf72f2e9d456708a08fd4efec141";

@@ -3,6 +3,7 @@
 {
   imports = [
     ../profiles/base.nix
+    ../profiles/interactive.nix
     ../profiles/extended.nix
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
