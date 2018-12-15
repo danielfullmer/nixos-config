@@ -4,9 +4,16 @@
 let
   myVimPlugins = pkgs.callPackage ./plugins.nix {};
   shellThemeScript = pkgs.writeScript "shellTheme" (import (../../modules/theme/templates + "/shell.${theme.brightness}.nix") { colors=theme.colors; });
+
+  # Airline theme can't be directly sourced anymore. Needs to be in under <rtp>/autoload/airline/themes/
+  airlineThemeBase16 = pkgs.vimUtils.buildVimPlugin {
+    name = "airlineThemeBase16";
+    # TODO: Should be able to use writeTextDir, but that's broken too: https://github.com/NixOS/nixpkgs/issues/50347
+    src = pkgs.writeTextFile {name="airlineTheme"; destination="/autoload/airline/themes/base16_nixos_configured.vim"; text=(import (../../modules/theme/templates + "/airline.${theme.brightness}.nix") { colors=theme.colors; });};
+  };
 in
 {
-  vam.knownPlugins = pkgs.vimPlugins // myVimPlugins;
+  vam.knownPlugins = pkgs.vimPlugins // myVimPlugins // { inherit airlineThemeBase16; };
   vam.pluginDictionaries = [
     { names = [
       "vim2nix"
@@ -18,6 +25,7 @@ in
       "vim-indent-guides"
       "vim-highlightedyank"
       "airline"
+      "airlineThemeBase16" # Custom base16 colors
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
@@ -133,9 +141,9 @@ if !has('gui_running')
 endif
 source ${pkgs.writeText "vimTheme" (import (../../modules/theme/templates + "/neovim.${theme.brightness}.nix") { colors=theme.colors; })}
 
+" Use the theme from airlineThemeBase16
 let g:airline_theme="base16_nixos_configured"
 let g:airline_powerline_fonts=1
-source ${pkgs.writeText "airlineTheme" (import (../../modules/theme/templates + "/airline.${theme.brightness}.nix") { colors=theme.colors; })}
 
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1
