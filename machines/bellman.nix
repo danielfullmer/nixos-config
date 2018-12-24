@@ -13,7 +13,7 @@
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     #../profiles/backup.nix
-    #../profiles/qemu-binfmt.nix
+    ../profiles/qemu-binfmt.nix
   ];
 
   theme.base16Name = "chalk";
@@ -120,7 +120,7 @@
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
   };
 
-  #qemu-user.aarch64 = true;
+  qemu-user.aarch64 = true;
 
     # TOOD: Parameterize
     # Used by hydra even if nix.distributedBuilds is false
