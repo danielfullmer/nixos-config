@@ -36,4 +36,8 @@
         eval sh ${shellThemeScript}
       '';
   };
+
+  # If the host is big enough to use all those packages, it can probably handle zrap swap and tmpfs
+  zramSwap.enable = true;
+  boot.tmpOnTmpfs = true;
 }

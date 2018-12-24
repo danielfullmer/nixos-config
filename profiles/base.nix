@@ -18,7 +18,6 @@ in
   };
 
   boot.cleanTmpDir = true;
-  #boot.tmpOnTmpfs = true; # XXX: Too much memory usage
 
   services.zerotierone.enable = true;
   services.zerotierone.joinNetworks = [ "8056c2e21c36f91e" ];
