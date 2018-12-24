@@ -4,6 +4,7 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
   machine = { config, pkgs, ... }: {
     imports = [
       ../profiles/base.nix
+      ../profiles/interactive.nix
       ../profiles/desktop/default.nix
       ../profiles/academic.nix
       ../profiles/autologin.nix
