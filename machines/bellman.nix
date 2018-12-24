@@ -118,6 +118,9 @@
     #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
+
+    # Patch to allow builtins.fetchTarball
+    package = pkgs.hydra.overrideAttrs (attrs: { patches = attrs.patches ++ [ ../pkgs/hydra/no-restrict-eval.patch ]; });
   };
 
   qemu-user.aarch64 = true;
