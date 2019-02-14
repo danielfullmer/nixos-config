@@ -2,7 +2,6 @@
 {
   imports = [
     ./desktop.nix
-    ./pam-u2f.nix
     ./theme
   ];
 }
