@@ -21,6 +21,7 @@ rec {
   tests.gpg-agent = pkgs.lib.hydraJob (import ./tests/gpg-agent.nix {});
   tests.gpg-agent-x11 = pkgs.lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
   tests.latex-pdf = pkgs.lib.hydraJob (import ./tests/latex-pdf.nix {});
+  tests.vim = pkgs.lib.hydraJob (import ./tests/vim.nix {});
   tests.zerotier = pkgs.lib.hydraJob (import ./tests/zerotier.nix {});
 
   tested = pkgs.releaseTools.aggregate {
@@ -41,6 +42,7 @@ rec {
         tests.gpg-agent
         tests.gpg-agent-x11
         tests.latex-pdf
+        tests.vim
         tests.zerotier
 
         # Some nixos tests that are not in release-combined.nix
