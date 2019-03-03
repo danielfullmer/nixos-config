@@ -24,6 +24,8 @@
 
     qutebrowser
     youtube-dl
+
+    jq
   ]);
 
   programs.fish = {
