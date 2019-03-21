@@ -48,8 +48,10 @@ in
       "ncm2-bufword"
       "ncm2-path"
       "ncm2-tmux"
-      "neosnippet" # Replace with something ncm-compatible?
-      "neosnippet-snippets"
+      "ncm2-jedi"
+      "ncm2-ultisnips"
+      "ultisnips"
+      "vim-snippets"
       "The_NERD_tree"
       # }}}
       # Editing {{{
@@ -179,7 +181,7 @@ else
   " copy to attached terminal using the yank(1) script:
   " https://github.com/sunaku/home/blob/master/bin/yank
   noremap <silent> <Leader>y y:call system('yank', @0)<Return>
-    endif
+endif
 
 " FZF stuff
 nnoremap <C-p> :Files<CR>
@@ -281,17 +283,17 @@ au TextChangedI * call ncm2#auto_trigger()
 " the menu. Use this mapping to hide the menu and also start a new line.
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" neosnippet
-let g:neosnippet#enable_preview = 1
-let g:neosnippet#enable_completed_snippet=1
-imap <c-j>     <Plug>(neosnippet_expand_or_jump)
-vmap <c-j>     <Plug>(neosnippet_expand_or_jump)
-inoremap <silent> <c-u> <c-r>=cm#sources#neosnippet#trigger_or_popup("\<Plug>(neosnippet_expand_or_jump)")<cr>
-vmap <c-u>     <Plug>(neosnippet_expand_target)
+"" Snippets
+let g:UltiSnipsSnippetDirectories = [ "${./UltiSnips}" ]
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 map <leader>n <Esc>:NERDTreeToggle<CR>
 
