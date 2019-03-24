@@ -28,6 +28,15 @@ self: super: with super; {
 
   duplicity = duplicity.override { inherit (self) gnupg; };
 
+  # Dmenu 4.9 segfaults on entering text. Pick up a slightly later version with this fixed.
+  dmenu = dmenu.overrideAttrs (attrs: {
+    src = fetchgit {
+      url = https://git.suckless.org/dmenu;
+      rev = "db6093f6ec1bb884f7540f2512935b5254750b30";
+      sha256 = "9eb21eb1cb7f488876d34648e1ab22598d70729496f837c60595e066fa0d19bf";
+    };
+  });
+
   #emacs = callPackage ./emacs {};
 
   neovim = neovim.override {
