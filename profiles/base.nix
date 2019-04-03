@@ -5,6 +5,7 @@ in
 {
   imports = [
     ../modules
+    ./zerotier.nix
   ];
 
   services.openssh.enable = true;
@@ -19,11 +20,6 @@ in
 
   boot.cleanTmpDir = true;
 
-  services.zerotierone.enable = true;
-  services.zerotierone.joinNetworks = [ "8056c2e21c36f91e" ];
-  networking.dhcpcd.denyInterfaces = [ "ztmjfpigyc" ]; # Network name generated from network ID in zerotier osdep/LinuxEthernetTap.cpp
-  networking.firewall.trustedInterfaces = [ "ztmjfpigyc" ];
-  networking.firewall.allowedUDPPorts = [ 9993 ]; # Inbound UDP 9993 for zerotierone
   networking.hosts = { # TODO: Parameterize
     "30.0.0.48" = [ "devnull" ];
     "30.0.0.154" = [ "sysc-2" ];
