@@ -1,13 +1,13 @@
 { stdenv, fetchFromGitHub }:
 stdenv.mkDerivation rec {
   name = "dactyl-firmware-${version}";
-  version = "0.6.183";
+  version = "0.6.328";
 
   src = fetchFromGitHub {
     owner = "qmk";
     repo = "qmk_firmware";
     rev = version;
-    sha256 = "0mff52kf9zgx2q79zcbp28im5znhymkrkl2f59i2i79cmpl6jjdg";
+    sha256 = "080hhjxxbxdf3wa9xkhsgwjsljaix1lg5rqrmxkpyvrvc6dl82mx";
   };
 
   prePatch = ''

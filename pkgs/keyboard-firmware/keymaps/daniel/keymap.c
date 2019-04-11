@@ -279,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  KC_GRV,    KC_Q,    KC_W,    KC_D,    KC_F,    KC_K, XXXXXXX,          \
  KC_TAB,    KC_A,    KC_S,    KC_E,    KC_T,    KC_G,                   \
 KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, XXXXXXX,          \
-KC_LGUI,   GREEK,DF(_QWERTY), KC_LEFT, KC_RGHT,                         \
+KC_LGUI,   GREEK,DF(_QWERTY), XXXXXXX, XXXXXXX,                         \
                                               KC_DEL, KC_HOME,          \
                                                        KC_END,          \
                  LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          \
@@ -288,7 +288,7 @@ KC_LGUI,   GREEK,DF(_QWERTY), KC_LEFT, KC_RGHT,                         \
          XXXXXXX,    KC_P,    KC_U,    KC_R,    KC_L, KC_SCLN, KC_BSLS, \
                      KC_Y,    KC_N,    KC_I,    KC_O,    KC_H, KC_QUOT, \
          XXXXXXX,    KC_J,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, \
-                           KC_DOWN,   KC_UP, XXXXXXX, KC_RALT, KC_RCTL, \
+                            KC_SPC, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, \
 KC_PGUP, KC_RCTL,                                                       \
 KC_PGDN,                                                                \
 KC_RGUI, KC_ENT, LT(2,KC_SPC)                                           \
