@@ -1,37 +1,28 @@
 #include "quantum.h"
 
 #ifdef KEYBOARD_dactyl
-/* KX1-6 are not present on dactyl */
+/* KX1-6 are not present on dactyl, but are on ergodox */
+/*  ---------- LEFT HAND -----------   ---------- RIGHT HAND ---------- */
 #define KEYMAP( \
-    /* left hand */                         \
-    K00, K01, K02, K03, K04, K05, KX1,      \
-    K10, K11, K12, K13, K14, K15, KX2,      \
-    K20, K21, K22, K23, K24, K25,           \
-    K30, K31, K32, K33, K34, K35, KX3,      \
-    K40, K41, K42, K43, K44,                \
-                                  K06, K16, \
-                                       K26, \
-                             K45, K46, K36, \
-    /* right hand */                        \
-         KX4, K08, K09, K0A, K0B, K0C, K0D, \
-         KX5, K18, K19, K1A, K1B, K1C, K1D, \
-              K28, K29, K2A, K2B, K2C, K2D, \
-         KX6, K38, K39, K3A, K3B, K3C, K3D, \
-                   K49, K4A, K4B, K4C, K4D, \
-    K17, K07,                               \
-    K27,                                    \
-    K37, K47, K48                           \
+    L00,L01,L02,L03,L04,L05,LX1,             RX4,R08,R09,R0A,R0B,R0C,R0D, \
+    L10,L11,L12,L13,L14,L15,LX2,             RX5,R18,R19,R1A,R1B,R1C,R1D, \
+    L20,L21,L22,L23,L24,L25,                     R28,R29,R2A,R2B,R2C,R2D, \
+    L30,L31,L32,L33,L34,L35,LX3,             RX6,R38,R39,R3A,R3B,R3C,R3D, \
+    L40,L41,L42,L43,L44,                             R49,R4A,R4B,R4C,R4D, \
+                            L06,L16,   R17,R07,                           \
+                                L26,   R27,                               \
+                        L45,L46,L36,   R37,R47,R48                        \
 ) { \
-    { K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K0A, K0B, K0C, K0D }, \
-    { K10, K11, K12, K13, K14, K15, K16, K17, K18, K19, K1A, K1B, K1C, K1D }, \
-    { K20, K21, K22, K23, K24, K25, K26, K27, K28, K29, K2A, K2B, K2C, K2D }, \
-    { K30, K31, K32, K33, K34, K35, K36, K37, K38, K39, K3A, K3B, K3C, K3D }, \
-    { K40, K41, K42, K43, K44, K45, K46, K47, K48, K49, K4A, K4B, K4C, K4D }  \
+    { L00, L01, L02, L03, L04, L05, L06, R07, R08, R09, R0A, R0B, R0C, R0D }, \
+    { L10, L11, L12, L13, L14, L15, L16, R17, R18, R19, R1A, R1B, R1C, R1D }, \
+    { L20, L21, L22, L23, L24, L25, L26, R27, R28, R29, R2A, R2B, R2C, R2D }, \
+    { L30, L31, L32, L33, L34, L35, L36, R37, R38, R39, R3A, R3B, R3C, R3D }, \
+    { L40, L41, L42, L43, L44, L45, L46, R47, R48, R49, R4A, R4B, R4C, R4D }  \
 }
 #endif
 #ifdef KEYBOARD_ergodox_ez
 #include "ergodox_ez.h"
-#define KEYMAP LAYOUT_ergodox
+#define KEYMAP LAYOUT_ergodox_pretty
 #endif
 
 #define _______ KC_TRNS
@@ -270,130 +261,76 @@ const uint32_t PROGMEM unicode_map[] = {
   [PLMIN] = 0xB1, // plus minus
 };
 
-
+// See quantum/quantum_keycodes.h in qmk_firmware source
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* 0: Norman layout - Minimize use of center columns.
  * Swap p and j. Better for ortholinear */
 [_NORM] = KEYMAP(
- KC_EQL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,          \
- KC_GRV,    KC_Q,    KC_W,    KC_D,    KC_F,    KC_K, XXXXXXX,          \
- KC_TAB,    KC_A,    KC_S,    KC_E,    KC_T,    KC_G,                   \
-KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, XXXXXXX,          \
-KC_LGUI,   GREEK,DF(_QWERTY), XXXXXXX, XXXXXXX,                         \
-                                              KC_DEL, KC_HOME,          \
-                                                       KC_END,          \
-                 LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          \
-                                                                        \
-         XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS, \
-         XXXXXXX,    KC_P,    KC_U,    KC_R,    KC_L, KC_SCLN, KC_BSLS, \
-                     KC_Y,    KC_N,    KC_I,    KC_O,    KC_H, KC_QUOT, \
-         XXXXXXX,    KC_J,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, \
-                            KC_SPC, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, \
-KC_PGUP, KC_RCTL,                                                       \
-KC_PGDN,                                                                \
-KC_RGUI, KC_ENT, LT(2,KC_SPC)                                           \
+ KC_EQL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,                   XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS, \
+ KC_GRV,    KC_Q,    KC_W,    KC_D,    KC_F,    KC_K, XXXXXXX,                   XXXXXXX,    KC_P,    KC_U,    KC_R,    KC_L, KC_SCLN, KC_BSLS, \
+ KC_TAB,    KC_A,    KC_S,    KC_E,    KC_T,    KC_G,                                        KC_Y,    KC_N,    KC_I,    KC_O,    KC_H, KC_QUOT, \
+KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, XXXXXXX,                   XXXXXXX,    KC_J,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, \
+KC_LGUI,   GREEK,C_S_T(E), XXXXXXX, DF(_QWERTY),                                                    KC_SPC, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, \
+                                              KC_DEL, KC_HOME,          KC_PGUP, KC_RCTL,                                                       \
+                                                       KC_END,          KC_PGDN,                                                                \
+                 LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          KC_RGUI, KC_ENT, LT(_BLUE,KC_SPC)                                       \
 ),
 
 /* 1: Qwerty layout - For compatibilty */
 [_QWERTY] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,          \
-_______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, _______,          \
-_______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                   \
-_______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,          \
-_______, _______,DF(_NORM), _______, _______,                           \
-                                             _______, _______,          \
-                                                      _______,          \
-                                    _______, _______, _______,          \
-                                                                        \
-         _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______, \
-         _______,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______, \
-                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______, \
-         _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______, \
-                           _______, _______, _______, _______, _______, \
-_______, _______,                                                       \
-_______,                                                                \
-_______, _______, _______                                               \
+_______, _______, _______, _______, _______, _______, _______,                   _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______, \
+_______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, _______,                   _______,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______, \
+_______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______, \
+_______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,                   _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______, \
+_______, _______,DF(_NORM), _______, _______,                                                      _______, _______, _______, _______, _______, \
+                                             _______, _______,          _______, _______,                                                       \
+                                                      _______,          _______,                                                                \
+                                    _______, _______, _______,          _______, _______, _______                                               \
 ),
 
 /* 2: Blueshift */
 [_BLUE] = KEYMAP(
-   F(0),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,          \
-_______, XXXXXXX, XXXXXXX, KC_CIRC, KC_PLUS, XXXXXXX, _______,          \
-_______, KC_TILD, XXXXXXX, KC_UNDS, KC_MINS, XXXXXXX,                   \
-_______, XXXXXXX, KC_LPRN, KC_LBRC, KC_LCBR, XXXXXXX, _______,          \
-_______, _______, _______, _______, _______,                            \
-                                             _______, _______,          \
-                                                      _______,          \
-                                    _______, _______, _______,          \
-                                                                        \
-         _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______, \
-         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-                  KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______, \
-         _______, XXXXXXX, KC_RCBR, KC_RBRC, KC_RPRN, XXXXXXX, _______, \
-                           _______, _______, _______, _______, _______, \
-_______, _______,                                                       \
-_______,                                                                \
-_______, _______, _______                                               \
+   F(0),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,                   _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______, \
+_______, XXXXXXX, XXXXXXX, KC_CIRC, KC_PLUS, XXXXXXX, _______,                   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
+_______, KC_TILD, XXXXXXX, KC_UNDS, KC_MINS, XXXXXXX,                                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______, \
+_______, XXXXXXX, KC_LPRN, KC_LBRC, KC_LCBR, XXXXXXX, _______,                   _______, XXXXXXX, KC_RCBR, KC_RBRC, KC_RPRN, XXXXXXX, _______, \
+_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
+                                             _______, _______,          _______, _______,                                                       \
+                                                      _______,          _______,                                                                \
+                                    _______, _______, _______,          _______, _______, _______                                               \
 ),
 
 [_GREEKL] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,          \
-_______, XXXXXXX,X(FSIGM),X(LDELT), X(LPHI),X(LKAPP), _______,          \
-_______,X(LALPH),X(LSIGM),X(LEPSI), X(LTAU),X(LGAMM),                   \
-_______,X(LZETA), X(LCHI), X(LPSI),X(LOMEG),X(LBETA), _______,          \
-_______, _______, _______, _______, _______,                            \
-                                                      _______, _______, \
-                                                               _______, \
-                                             _______, _______, _______, \
-                                                                        \
-         _______, _______, _______, _______, _______, _______, _______, \
-         _______,  X(LPI),X(LTHET), X(LRHO),X(LLAMB), _______, _______, \
-                 X(LUPSI),  X(LNU),X(LIOTA),X(LOMIC), X(LETA), _______, \
-         _______,  X(LXI),  X(LMU), _______, _______, _______, _______, \
-                           _______, _______, _______, _______, _______, \
-_______, _______,                                                       \
-_______,                                                                \
-_______, _______, _______                                               \
+_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
+_______, XXXXXXX,X(FSIGM),X(LDELT), X(LPHI),X(LKAPP), _______,                   _______,  X(LPI),X(LTHET), X(LRHO),X(LLAMB), _______, _______, \
+_______,X(LALPH),X(LSIGM),X(LEPSI), X(LTAU),X(LGAMM),                                    X(LUPSI),  X(LNU),X(LIOTA),X(LOMIC), X(LETA), _______, \
+_______,X(LZETA), X(LCHI), X(LPSI),X(LOMEG),X(LBETA), _______,                   _______,  X(LXI),  X(LMU), _______, _______, _______, _______, \
+_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
+                                             _______, _______,          _______, _______,                                                       \
+                                                      _______,          _______,                                                                \
+                                    _______, _______, _______,          _______, _______, _______                                               \
 ),
 
 [_GREEKU] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,          \
-_______, XXXXXXX, XXXXXXX,X(UDELT), X(UPHI),X(UKAPP), _______,          \
-_______,X(UALPH),X(USIGM),X(UEPSI), X(UTAU),X(UGAMM),                   \
-_______,X(UZETA), X(UCHI), X(UPSI),X(UOMEG),X(UBETA), _______,          \
-_______, _______, _______, _______, _______,                            \
-                                                      _______, _______, \
-                                                               _______, \
-                                             _______, _______, _______, \
-                                                                        \
-         _______, _______, _______, _______, _______, _______, _______, \
-         _______,  X(UPI),X(UTHET), X(URHO),X(ULAMB), _______, _______, \
-                 X(UUPSI),  X(UNU),X(UIOTA),X(UOMIC), X(UETA), _______, \
-         _______,  X(UXI),  X(UMU), _______, _______, _______, _______, \
-                           _______, _______, _______, _______, _______, \
-_______, _______,                                                       \
-_______,                                                                \
-_______, _______, _______                                               \
+_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
+_______, XXXXXXX, XXXXXXX,X(UDELT), X(UPHI),X(UKAPP), _______,                   _______,  X(UPI),X(UTHET), X(URHO),X(ULAMB), _______, _______, \
+_______,X(UALPH),X(USIGM),X(UEPSI), X(UTAU),X(UGAMM),                                    X(UUPSI),  X(UNU),X(UIOTA),X(UOMIC), X(UETA), _______, \
+_______,X(UZETA), X(UCHI), X(UPSI),X(UOMEG),X(UBETA), _______,                   _______,  X(UXI),  X(UMU), _______, _______, _______, _______, \
+_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
+                                             _______, _______,          _______, _______,                                                       \
+                                                      _______,          _______,                                                                \
+                                    _______, _______, _______,          _______, _______, _______                                               \
 ),
 
 [_EMPTY] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,          \
-_______, _______, _______, _______, _______, _______, _______,          \
-_______, _______, _______, _______, _______, _______,                   \
-_______, _______, _______, _______, _______, _______, _______,          \
-_______, _______, _______, _______, _______,                            \
-                                                      _______, _______, \
-                                                               _______, \
-                                             _______, _______, _______, \
-                                                                        \
-         _______, _______, _______, _______, _______, _______, _______, \
-         _______, _______, _______, _______, _______, _______, _______, \
-                  _______, _______, _______, _______, _______, _______, \
-         _______, _______, _______, _______, _______, _______, _______, \
-                           _______, _______, _______, _______, _______, \
-_______, _______,                                                       \
-_______,                                                                \
-_______, _______, _______                                               \
+_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
+_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
+_______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______, \
+_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
+_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
+                                             _______, _______,          _______, _______,                                                       \
+                                                      _______,          _______,                                                                \
+                                    _______, _______, _______,          _______, _______, _______                                               \
 ),
 
 };
