@@ -1,1 +1,1 @@
-[ (import ./default.nix) ]
+[ (import ./default.nix {}) ]

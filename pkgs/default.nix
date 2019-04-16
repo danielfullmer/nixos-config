@@ -1,3 +1,8 @@
+{ config ? {
+    # Provide some default options to use below in case we aren't getting the config from the nixos config
+    theme = import ../modules/theme/defaultTheme.nix;
+  }
+}:
 self: super: with super; {
 ### Example to patch a derivation
 #  zerotierone = pkgs.zerotierone.overrideAttrs (attrs: {
@@ -9,14 +14,10 @@ self: super: with super; {
 #    ];
 #  });
 
-  # Local stuff
-  # "theme" by itself conflicts with some stuff in nixpkgs
-  localtheme = import ../modules/theme/defaultTheme.nix;
-
   # Packages
 
   adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
-    configureFlags = attrs.configureFlags ++ (with self.localtheme.colors; [
+    configureFlags = attrs.configureFlags ++ (with config.theme.colors; [
       "--with-selection_color=#${base0C}"
       "--with-accent_color=#${base0D}"
       "--with-suggestion_color=#${base0D}"
@@ -41,15 +42,15 @@ self: super: with super; {
 
   neovim = neovim.override {
     vimAlias = true;
-    configure = import ./neovim/config.nix { pkgs=self; theme=self.localtheme; };
+    configure = import ./neovim/config.nix { pkgs=self; theme=config.theme; };
   };
 
   st = (st.override {
-    conf = (callPackage st/config.h.nix { theme=self.localtheme; });
+    conf = (callPackage st/config.h.nix { theme=config.theme; });
   });
 
   termite = (termite.override {
-    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=self.localtheme; });
+    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=config.theme; });
   });
 
   my_qemu = qemu_kvm.overrideAttrs (attrs: {
