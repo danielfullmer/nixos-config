@@ -1,9 +1,16 @@
-{ config ? {
-    # Provide some default options to use below in case we aren't getting the config from the nixos config
-    theme = import ../modules/theme/defaultTheme.nix;
-  }
-}:
-self: super: with super; {
+{ _config ? {} }: self: super:
+let
+  # Profide a default config if we dont' get it
+  # This is probably too slow for comfort.
+  config = if _config != {} then _config else (import (super.path + "/nixos/lib/eval-config.nix") {
+    modules = [
+      ../modules/theme
+      ../modules/programs.nix
+      ../profiles/keyboard.nix
+      ./custom-config.nix
+    ];
+  }).config;
+in with super; {
 ### Example to patch a derivation
 #  zerotierone = pkgs.zerotierone.overrideAttrs (attrs: {
 #    patches = [
@@ -15,7 +22,6 @@ self: super: with super; {
 #  });
 
   # Packages
-
   adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
     configureFlags = attrs.configureFlags ++ (with config.theme.colors; [
       "--with-selection_color=#${base0C}"
@@ -25,7 +31,7 @@ self: super: with super; {
     ]);
   });
 
-  keyboard-firmware = callPackage ./keyboard-firmware {};
+  keyboard-firmware = callPackage ./keyboard-firmware { keymap=config.hardware.dactyl.keymap; };
 
   duplicity = duplicity.override { inherit (self) gnupg; };
 
@@ -42,7 +48,11 @@ self: super: with super; {
 
   neovim = neovim.override {
     vimAlias = true;
-    configure = import ./neovim/config.nix { pkgs=self; theme=config.theme; };
+    configure = {
+      vam.knownPlugins = config.programs.vim.knownPlugins;
+      vam.pluginDictionaries = config.programs.vim.pluginDictionaries;
+      customRC = config.programs.vim.config;
+    };
   };
 
   st = (st.override {
@@ -50,7 +60,7 @@ self: super: with super; {
   });
 
   termite = (termite.override {
-    configFile = writeText "termite-config" (import termite/config.nix { pkgs=self; theme=config.theme; });
+    configFile = writeText "termite-config" config.programs.termite.config;
   });
 
   my_qemu = qemu_kvm.overrideAttrs (attrs: {

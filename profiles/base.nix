@@ -5,6 +5,7 @@ in
 {
   imports = [
     ../modules
+    ../pkgs/custom-config.nix
     ./zerotier.nix
   ];
 
@@ -107,5 +108,5 @@ in
   security.sudo.wheelNeedsPassword = false;
 
   nixpkgs.config = import ../pkgs/config.nix;
-  nixpkgs.overlays =  [ (import ../pkgs/default.nix { inherit config; }) ];
+  nixpkgs.overlays =  [ (import ../pkgs/default.nix { _config=config; }) ];
 }

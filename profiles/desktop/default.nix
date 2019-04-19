@@ -14,9 +14,19 @@ with lib;
 
     windowManager = {
       default = "i3";
-
       i3.enable = true;
-      i3.config = import ./i3config.nix { pkgs=pkgs; theme=config.theme; };
+      i3.config = ''
+        # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+        # 1 pixel window borders
+        new_window pixel 1
+
+        # If only one window visible, hide borders
+        hide_edge_borders smart
+      '';
+      i3.bars = [
+        "status_command ${pkgs.i3status}/bin/i3status --config ${./i3status.config}"
+      ];
     };
 
     desktopManager = {
@@ -26,10 +36,8 @@ with lib;
         name = "desktop";
         start =
           let
-            xresourcesFile = pkgs.writeText "xresources"
-              (import (../../modules/theme/templates + "/xresources.${config.theme.brightness}.nix") { colors=config.theme.colors; });
-            dunstFile = pkgs.writeText "dunstFile"
-              (import ./dunstrc.nix { pkgs=pkgs; theme=config.theme; });
+            xresourcesFile = pkgs.writeText "xresources" config.services.xserver.xresources;
+            dunstFile = pkgs.writeText "dunstFile" (generators.toINI {} config.programs.dunst.config);
           in
           ''
           (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
@@ -63,6 +71,7 @@ with lib;
       roboto-mono
       roboto-slab
       noto-fonts
+      noto-fonts-emoji
     ]);
   };
 
@@ -114,7 +123,7 @@ with lib;
     chromium
   ]);
 
-  environment.etc."zathurarc".text = import (../../modules/theme/templates + "/zathura.${config.theme.brightness}.nix") { colors=config.theme.colors; };
+  environment.etc."zathurarc".text = config.programs.zathura.config;
 
   ### THEMES ###
   # Note: Use package "awf" to test gtk themes

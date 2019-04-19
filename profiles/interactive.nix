@@ -2,6 +2,10 @@
 
 { config, pkgs, lib, ... }:
 {
+  imports =  [
+    ./keyboard.nix
+  ];
+
   users.users.danielrf.shell = "/run/current-system/sw/bin/zsh";
 
   environment.systemPackages = (with pkgs; [
@@ -38,10 +42,6 @@
 
   programs.bash = {
     enableCompletion = true;
-    interactiveShellInit = ''
-      source ${pkgs.fzf}/share/fzf/completion.bash # Activated with **<TAB>
-      source ${pkgs.fzf}/share/fzf/key-bindings.bash # CTRL-R, CTRL-T, and ALT-C
-    '';
   };
 
   programs.zsh = {
@@ -53,15 +53,11 @@
     };
     autosuggestions.enable = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
-    interactiveShellInit = ''
-      source ${pkgs.fzf}/share/fzf/completion.zsh # Activated with **<TAB>
-      source ${pkgs.fzf}/share/fzf/key-bindings.zsh # CTRL-R, CTRL-T, and ALT-C
-    '' + import (../modules/theme/templates + "/shell.${config.theme.brightness}.nix") { colors=config.theme.colors; };
   };
 
   programs.command-not-found.enable = true;
 
-  environment.etc."tmux.conf".text = import ../pkgs/tmux/tmux.conf.nix { inherit pkgs; };
+  environment.etc."tmux.conf".text = config.programs.tmux.config;
 
   environment.interactiveShellInit = ''
     eval $(${pkgs.coreutils}/bin/dircolors "${./dircolors}")

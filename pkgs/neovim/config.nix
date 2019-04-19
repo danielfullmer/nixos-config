@@ -1,20 +1,8 @@
 # vim: foldmethod=marker
-{ pkgs, theme }:
-
-let
-  myVimPlugins = pkgs.callPackage ./plugins.nix {};
-  shellThemeScript = pkgs.writeScript "shellTheme" (import (../../modules/theme/templates + "/shell.${theme.brightness}.nix") { colors=theme.colors; });
-
-  # Airline theme can't be directly sourced anymore. Needs to be in under <rtp>/autoload/airline/themes/
-  airlineThemeBase16 = pkgs.vimUtils.buildVimPlugin {
-    name = "airlineThemeBase16";
-    # TODO: Should be able to use writeTextDir, but that's broken too: https://github.com/NixOS/nixpkgs/issues/50347
-    src = pkgs.writeTextFile {name="airlineTheme"; destination="/autoload/airline/themes/base16_nixos_configured.vim"; text=(import (../../modules/theme/templates + "/airline.${theme.brightness}.nix") { colors=theme.colors; });};
-  };
-in
+{ config, pkgs, ... }:
 {
-  vam.knownPlugins = pkgs.vimPlugins // myVimPlugins // { inherit airlineThemeBase16; };
-  vam.pluginDictionaries = [
+  programs.vim.knownPlugins = pkgs.vimPlugins // pkgs.callPackage ./plugins.nix {};
+  programs.vim.pluginDictionaries = [
     { names = [
       "vim2nix"
       "vim-nix"
@@ -24,8 +12,6 @@ in
       "Colour-Sampler-Pack"
       "vim-indent-guides"
       "vim-highlightedyank"
-      "airline"
-      "airlineThemeBase16" # Custom base16 colors
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
@@ -111,11 +97,10 @@ in
 #      vim-pandoc-syntax
     ]; }
   ];
-  customRC = ''
+  programs.vim.config = ''
 set nocompatible
 set backspace=indent,eol,start
 set encoding=utf8
-let mapleader=" "
 set timeoutlen=500
 set wildmenu
 set lazyredraw
@@ -135,17 +120,6 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set shiftround
-
-set background=${theme.brightness}
-let base16colorspace=256
-if !has('gui_running')
-  execute "silent !/bin/sh ${shellThemeScript}"
-endif
-source ${pkgs.writeText "vimTheme" (import (../../modules/theme/templates + "/neovim.${theme.brightness}.nix") { colors=theme.colors; })}
-
-" Use the theme from airlineThemeBase16
-let g:airline_theme="base16_nixos_configured"
-let g:airline_powerline_fonts=1
 
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1
@@ -173,32 +147,6 @@ if !has('nvim')
   set ttymouse=xterm2
 endif
 
-" See http://sunaku.github.io/tmux-yank-osc52.html
-" copy the current text selection to the system clipboard
-if has('gui_running')
-  noremap <Leader>y "+y
-else
-  " copy to attached terminal using the yank(1) script:
-  " https://github.com/sunaku/home/blob/master/bin/yank
-  noremap <silent> <Leader>y y:call system('yank', @0)<Return>
-endif
-
-" FZF stuff
-nnoremap <C-p> :Files<CR>
-nnoremap <space>b :Buffers<CR>
-nnoremap <space>t :Tags<CR>
-
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion. TODO: Remove this?
-inoremap <expr> <c-x><c-k> fzf#complete('cat ${pkgs.miscfiles}/share/web2')
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
 function! s:fzf_statusline()
   " Override statusline as you like
   highlight fzf1 ctermfg=161 ctermbg=251
@@ -208,14 +156,6 @@ function! s:fzf_statusline()
 endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-let g:EasyMotion_leader_key = "<Leader><Leader>"
-nmap s <Plug>(easymotion-s)
-nmap S <Plug>(easymotion-s2)
-
-"" ncm2 (neovim-completion-manager-2)
-au InsertEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
 
 autocmd Filetype tex call ncm2#register_source({
         \ 'name' : 'vimtex-cmds',
@@ -285,24 +225,12 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 
 "" Snippets
-let g:UltiSnipsSnippetDirectories = [ "${./UltiSnips}" ]
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories = [ "${./UltiSnips}", "UltiSnips" ]
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
 map <leader>n <Esc>:NERDTreeToggle<CR>
-
-"Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<CR>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
 
 let g:pymode_doc = 0
 let g:pymode_run = 0
@@ -311,30 +239,11 @@ let g:pymode_rope = 0
 
 let g:haddock_browser = "xdg-open"
 let g:pandoc_syntax_dont_use_conceal_for_rules = ['atx', 'titleblock']
-map <leader>vp <Esc>:VimuxPromptCommand<CR>
-map <leader>vl <Esc>:VimuxRunLastCommand<CR>
-map <leader>vi <Esc>:VimuxInspectRunner<CR>
-map <leader>vx <Esc>:VimuxCloseRunner<CR>
-vmap <leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
-nmap <leader>vs vip<leader>vs<CR>
-
-map <leader>g <Esc>:GundoToggle<CR>
-
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 let g:vimtex_fold_enabled = 1
 
 " Polyglot bring in latex-box which conflicts with vimtex
 let g:polyglot_disabled = ['latex']
-
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <Esc>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <Esc>j :TmuxNavigateDown<cr>
-nnoremap <silent> <Esc>k :TmuxNavigateUp<cr>
-nnoremap <silent> <Esc>l :TmuxNavigateRight<cr>
   '';
 }

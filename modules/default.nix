@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... } :
 {
   imports = [
-    ./desktop.nix
+    ./programs.nix
     ./theme
   ];
 }

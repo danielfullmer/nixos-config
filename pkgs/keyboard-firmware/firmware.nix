@@ -1,4 +1,7 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv, writeText, fetchFromGitHub, keymap }:
+let
+  keymap-config = writeText "keymap_config.h" keymap;
+in
 stdenv.mkDerivation rec {
   name = "dactyl-firmware-${version}";
   version = "0.6.328";
@@ -14,8 +17,10 @@ stdenv.mkDerivation rec {
     mkdir -p keyboards/dactyl/keymaps/daniel
     cp -r ${./dactyl}/* keyboards/dactyl
     cp -r ${./keymaps/daniel}/* keyboards/dactyl/keymaps/daniel
+    cp ${keymap-config} keyboards/dactyl/keymaps/daniel/keymap_config.h
     mkdir -p keyboards/ergodox_ez/keymaps/daniel
     cp -r ${./keymaps/daniel}/* keyboards/ergodox_ez/keymaps/daniel
+    cp ${keymap-config} keyboards/ergodox_ez/keymaps/daniel/keymap_config.h
   '';
 
   buildPhase = ''

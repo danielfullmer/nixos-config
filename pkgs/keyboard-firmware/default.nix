@@ -1,7 +1,7 @@
-{ pkgsCross, runCommand, writeScript, teensy-loader-cli, hid-listen }:
+{ pkgsCross, runCommand, writeScript, teensy-loader-cli, hid-listen, keymap }:
 let 
   # Currently running on a Teensy 2.0, ATMEGA32U4
-  firmware = pkgsCross.avr.callPackage ./firmware.nix {};
+  firmware = pkgsCross.avr.callPackage ./firmware.nix { inherit keymap; };
 
   keyboard-flash = name: writeScript "${name}-flash" ''
     #!/bin/sh

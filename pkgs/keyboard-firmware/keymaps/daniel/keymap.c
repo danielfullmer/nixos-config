@@ -28,17 +28,6 @@
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
 
-enum layers {
-  _NORM,
-  _QWERTY,
-  _BLUE,
-
-  _GREEKL,
-  _GREEKU,
-
-  _EMPTY
-};
-
 enum custom_keycodes {
   // layouts
   NORM = SAFE_RANGE,
@@ -261,79 +250,7 @@ const uint32_t PROGMEM unicode_map[] = {
   [PLMIN] = 0xB1, // plus minus
 };
 
-// See quantum/quantum_keycodes.h in qmk_firmware source
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* 0: Norman layout - Minimize use of center columns.
- * Swap p and j. Better for ortholinear */
-[_NORM] = KEYMAP(
- KC_EQL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,                   XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS, \
- KC_GRV,    KC_Q,    KC_W,    KC_D,    KC_F,    KC_K, XXXXXXX,                   XXXXXXX,    KC_P,    KC_U,    KC_R,    KC_L, KC_SCLN, KC_BSLS, \
- KC_TAB,    KC_A,    KC_S,    KC_E,    KC_T,    KC_G,                                        KC_Y,    KC_N,    KC_I,    KC_O,    KC_H, KC_QUOT, \
-KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, XXXXXXX,                   XXXXXXX,    KC_J,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, \
-KC_LGUI,   GREEK,C_S_T(E), XXXXXXX, DF(_QWERTY),                                                    KC_SPC, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, \
-                                              KC_DEL, KC_HOME,          KC_PGUP, KC_RCTL,                                                       \
-                                                       KC_END,          KC_PGDN,                                                                \
-                 LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          KC_RGUI, KC_ENT, LT(_BLUE,KC_SPC)                                       \
-),
-
-/* 1: Qwerty layout - For compatibilty */
-[_QWERTY] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,                   _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______, \
-_______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, _______,                   _______,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______, \
-_______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______, \
-_______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,                   _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______, \
-_______, _______,DF(_NORM), _______, _______,                                                      _______, _______, _______, _______, _______, \
-                                             _______, _______,          _______, _______,                                                       \
-                                                      _______,          _______,                                                                \
-                                    _______, _______, _______,          _______, _______, _______                                               \
-),
-
-/* 2: Blueshift */
-[_BLUE] = KEYMAP(
-   F(0),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, _______,                   _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______, \
-_______, XXXXXXX, XXXXXXX, KC_CIRC, KC_PLUS, XXXXXXX, _______,                   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-_______, KC_TILD, XXXXXXX, KC_UNDS, KC_MINS, XXXXXXX,                                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______, \
-_______, XXXXXXX, KC_LPRN, KC_LBRC, KC_LCBR, XXXXXXX, _______,                   _______, XXXXXXX, KC_RCBR, KC_RBRC, KC_RPRN, XXXXXXX, _______, \
-_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
-                                             _______, _______,          _______, _______,                                                       \
-                                                      _______,          _______,                                                                \
-                                    _______, _______, _______,          _______, _______, _______                                               \
-),
-
-[_GREEKL] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
-_______, XXXXXXX,X(FSIGM),X(LDELT), X(LPHI),X(LKAPP), _______,                   _______,  X(LPI),X(LTHET), X(LRHO),X(LLAMB), _______, _______, \
-_______,X(LALPH),X(LSIGM),X(LEPSI), X(LTAU),X(LGAMM),                                    X(LUPSI),  X(LNU),X(LIOTA),X(LOMIC), X(LETA), _______, \
-_______,X(LZETA), X(LCHI), X(LPSI),X(LOMEG),X(LBETA), _______,                   _______,  X(LXI),  X(LMU), _______, _______, _______, _______, \
-_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
-                                             _______, _______,          _______, _______,                                                       \
-                                                      _______,          _______,                                                                \
-                                    _______, _______, _______,          _______, _______, _______                                               \
-),
-
-[_GREEKU] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
-_______, XXXXXXX, XXXXXXX,X(UDELT), X(UPHI),X(UKAPP), _______,                   _______,  X(UPI),X(UTHET), X(URHO),X(ULAMB), _______, _______, \
-_______,X(UALPH),X(USIGM),X(UEPSI), X(UTAU),X(UGAMM),                                    X(UUPSI),  X(UNU),X(UIOTA),X(UOMIC), X(UETA), _______, \
-_______,X(UZETA), X(UCHI), X(UPSI),X(UOMEG),X(UBETA), _______,                   _______,  X(UXI),  X(UMU), _______, _______, _______, _______, \
-_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
-                                             _______, _______,          _______, _______,                                                       \
-                                                      _______,          _______,                                                                \
-                                    _______, _______, _______,          _______, _______, _______                                               \
-),
-
-[_EMPTY] = KEYMAP(
-_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
-_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
-_______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______, \
-_______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______, \
-_______, _______, _______, _______, _______,                                                       _______, _______, _______, _______, _______, \
-                                             _______, _______,          _______, _______,                                                       \
-                                                      _______,          _______,                                                                \
-                                    _______, _______, _______,          _______, _______, _______                                               \
-),
-
-};
+#include "keymap_config.h"
 
 void matrix_init_user() {
     set_unicode_input_mode(UC_LNX); // Ctrl-Shift-u support
