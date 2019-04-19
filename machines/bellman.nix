@@ -8,6 +8,7 @@
     ../profiles/yubikey.nix
     ../profiles/syncthing.nix
     ../profiles/desktop/default.nix
+    ../profiles/monitors-calibrate.nix
     ../profiles/gaming.nix
     ../profiles/academic.nix
     ../profiles/postfix.nix
@@ -73,7 +74,7 @@
 #  '';
 
   services.xserver.xrandrHeads = [
-    { output = "DP-2"; primary = true; }
+    { output = "DP-0"; primary = true; }
     { output = "DP-4"; }
     { output = "DP-5"; }
     { output = "DVI-D-0";
