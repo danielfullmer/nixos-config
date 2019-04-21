@@ -84,6 +84,15 @@
     }
   ];
 
+  # For serial interface to reflash x39 monitor firmware
+  services.udev.packages = lib.singleton (pkgs.writeTextFile {
+    name = "uart-udev-rules";
+    destination = "/etc/udev/rules.d/51-uart-custom.rules";
+    text = ''
+      SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{product}=="FT232R USB UART", TAG+="uaccess", SYMLINK+="arduino"
+    '';
+  });
+
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
       section: screens
