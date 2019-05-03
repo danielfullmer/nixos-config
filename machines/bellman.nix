@@ -93,6 +93,10 @@
     '';
   });
 
+  # For flashing android stuff
+  programs.adb.enable = true;
+  users.users.danielrf.extraGroups = [ "adbusers" ];
+
   services.xserver.desktopManager.extraSessionCommands =
     let synergyConfigFile = pkgs.writeText "synergy.conf" ''
       section: screens
