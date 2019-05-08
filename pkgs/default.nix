@@ -98,4 +98,12 @@ in with super; {
     ];
     ignoreCollisions = true;
   });
+
+  # This is for zws-specific stuff.
+  # There is probably a more elegant way to do this.
+  zis-arduino = arduino.overrideAttrs (attrs: {
+    installPhase = attrs.installPhase + ''
+      cp -r ${/home/danielrf/Sync/dev-box/monitors/zisworks/Arduino_ZWS}/avr/* $out/share/arduino/hardware/arduino/avr
+    '';
+  });
 }
