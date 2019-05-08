@@ -42,6 +42,7 @@
     "/" = {
       device = "//dev/disk/by-partuuid/c3dfea2f-1a6c-4ed0-be71-7c867cd08cc2:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052:/dev/disk/by-partuuid/31c55194-7364-9748-a547-eef9442d2f51";
       fsType = "bcachefs";
+      options = [ "discard" "noatime" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
