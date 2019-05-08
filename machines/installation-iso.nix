@@ -27,5 +27,7 @@
     bcachefs-tools
     parted
     ntfs3g
-  ];
+  ] ++ lib.optional (!(config.system.build ? vm)) (import <nixpkgs/nixos> {}).vm;
+  # Make a VM of ourself, in case we'd like to spin a VM with -snapshot to not modify the disk
+  # Only make one if we are not already a VM ourself (to avoid infinite loops)
 }
