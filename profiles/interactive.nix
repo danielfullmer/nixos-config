@@ -1,6 +1,9 @@
 # interactive.nix: Intended for hosts that I would at least SSH into.
 
 { config, pkgs, lib, ... }:
+let
+  userBin = pkgs.runCommand "user-bin" {} "mkdir -p $out/bin; cp ${./bin}/* $out/bin/";
+in
 {
   imports =  [
     ./keyboard.nix
@@ -28,6 +31,8 @@
     git
     gitAndTools.hub
     neovim
+
+    userBin
   ]);
 
   environment.variables = {
@@ -35,9 +40,9 @@
 
     # See also: https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
     FZF_TMUX = "1";
-    #FZF_CTRL_T_OPTS="--preview '(${pkgs.highlight}/bin/highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'";
-    #FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'";
-    #FZF_ALT_C_OPTS="--preview '${pkgs.tree}/bin/tree -C {} | head -200'";
+    FZF_CTRL_T_OPTS="--preview '(${pkgs.highlight}/bin/highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'";
+    FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'";
+    FZF_ALT_C_OPTS="--preview '${pkgs.tree}/bin/tree -C {} | head -200'";
   };
 
   programs.bash = {
@@ -86,9 +91,6 @@
       chmod 700 .gnupg
       ln -fs ${../dotfiles}/.latexmkrc
       mkdir -p .local/bin
-      chown danielrf:danielrf .local .local/bin
-      ln -fs ${../dotfiles}/.local/bin/yank .local/bin/yank
-      ln -fs ${../dotfiles}/.local/bin/rofi-pdf .local/bin/rofi-pdf
       ln -fs ${../dotfiles}/.taskrc
       touch .zshrc
       chown danielrf:danielrf .zshrc

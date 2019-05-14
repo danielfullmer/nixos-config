@@ -1,0 +1,3 @@
+#!/bin/sh
+cd "$1"
+find -iname "*.pdf" | fzf --print0 | xargs -0 zathura

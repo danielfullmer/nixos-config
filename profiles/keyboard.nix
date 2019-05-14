@@ -188,8 +188,10 @@
     # kill focused window
     bindsym $mod+Shift+q kill
 
-    bindsym $mod+d exec ${pkgs.dmenu}/bin/dmenu_run -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
     bindsym $mod+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
+
+    bindsym $mod+d exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
+    for_window [title="fzf-menu"] floating enable
 
     bindsym XF86AudioRaiseVolume exec amixer sset Master 1000+ unmute
     bindsym XF86AudioLowerVolume exec amixer sset Master 1000- unmute
