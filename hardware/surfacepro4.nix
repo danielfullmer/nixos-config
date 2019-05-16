@@ -6,11 +6,19 @@
 { config, lib, pkgs, ... }:
 
 let
+  version = "5.0.10";
+  patchlevel = "1";
+
+  # modDirVersion needs to be x.y.z, will automatically add .0 if needed
+  modDirVersion = lib.concatStrings (lib.intersperse "." (lib.take 3 (lib.splitString "." "${version}.0")));
+  # branchVersion needs to be x.y
+  branchVersion = lib.concatStrings (lib.intersperse "." (lib.take 2 (lib.splitString "." version)));
+
   linux-surface = pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "linux-surface";
-    rev = "4.18.7-2";
-    sha256 = "0f7q7a8xnlfqc7l5hz4lxxz901kv7xfv0ildf6lwp3g0cqzccqmc";
+    rev = "${version}-${patchlevel}";
+    sha256 = "1q8dv7j6gwgszqavb35aswwfn7c7mwkc2xqd2v8gvxnjk7sp4747";
   };
 
   buildFirmware = (name: subdir: src: pkgs.stdenvNoCC.mkDerivation {
@@ -24,6 +32,7 @@ let
     '';
   });
 
+  # TODO: Parameterize for all the surface pro revisions.
   i915-firmware = buildFirmware "i915" "i915" "${linux-surface}/firmware/i915_firmware_skl.zip";
 
   ipts-firmware = buildFirmware "ipts" "intel/ipts" "${linux-surface}/firmware/ipts_firmware_v78.zip";
@@ -31,31 +40,26 @@ let
   mwifiex-firmware = buildFirmware "mwifiex" "mrvl" (pkgs.fetchFromGitHub {
     owner = "jakeday";
     repo = "mwifiex-firmware";
-    rev = "5446916b53de395245d89400dea566055ec4502c";
-    sha256 = "1hr6skpaiqlfvbdis8g687mh0jcpqxwcr5a3djllxgcgq7rrw9i1";
+    rev = "63ca64a73c05fa5bcceb687422cbc28185bb6355";
+    sha256 = "11yia5pglmkahkjbihsq1s4pq6caw6l11ni8s48i94yz272nfinq";
   } + /mrvl);
 in
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
-      kernel = super.kernel.override { argsOverride = with lib; rec {
-        version = "4.18.7";
-
-        # modDirVersion needs to be x.y.z, will automatically add .0 if needed
-        modDirVersion = concatStrings (intersperse "." (take 3 (splitString "." "${version}.0")));
-
-        # branchVersion needs to be x.y
-        extraMeta.branch = concatStrings (intersperse "." (take 2 (splitString "." version)));
+      kernel = super.kernel.override { argsOverride = rec {
+        inherit version modDirVersion;
+        extraMeta.branch = branchVersion;
 
         src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
-          sha256 = "0cgpb8zx7ckd9lmmaas6r1vszbz9lhrn4w1njw3yaw9a4rg44fzh";
+          url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
+          sha256 = "0xjycbjlzpgskqnwcjml60vkbg7r8fsijdj6ypmhpry7q8ii677a";
         };
       };};
     });
 
-    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/4.18/${name}.patch";})
-      [ "acpi" "buttons" "cameras" "ipts" "keyboards_and_covers" "sdcard_reader" "surfacedock" "wifi" ]);
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/${branchVersion}/${name}.patch";})
+      [ "0001-surface-acpi" "0002-suspend" "0003-buttons" "0004-cameras" "0005-ipts" "0006-hid" "0007-sdcard-reader" "0008-wifi" "0009-surface-power" "0010-surface-dock" "0011-mwlwifi" "0012-surface-lte" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
