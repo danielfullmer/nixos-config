@@ -14,7 +14,6 @@
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     #../profiles/backup.nix
-    ../profiles/qemu-binfmt.nix
   ];
 
   theme.base16Name = "chalk";
@@ -138,7 +137,7 @@
     package = pkgs.hydra.overrideAttrs (attrs: { patches = attrs.patches ++ [ ../pkgs/hydra/no-restrict-eval.patch ]; });
   };
 
-  qemu-user.aarch64 = true;
+  boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
     # TOOD: Parameterize
     # Used by hydra even if nix.distributedBuilds is false
