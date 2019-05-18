@@ -14,6 +14,7 @@
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     #../profiles/backup.nix
+    ../profiles/android.nix
   ];
 
   theme.base16Name = "chalk";
