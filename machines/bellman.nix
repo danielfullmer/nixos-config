@@ -150,7 +150,28 @@
       maxJobs = 4;
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     }
+#    { hostName = "nyquist";
+#      #sshUser = "nix";
+#      #sshKey = "/none";
+#      system = "x86_64-linux,i686-linux";
+#      maxJobs = 4;
+#      supportedFeatures = [ ];
+#    }
+#    { hostName = "banach";
+#      #sshUser = "nix";
+#      #sshKey = "/none";
+#      system = "aarch64-linux";
+#      maxJobs = 2;
+#      supportedFeatures = [ ];
+#    }
   ];
+  #nix.distributedBuilds = true;
+
+  # Remote hosts often have better connection to cache than direct to this host
+  nix.extraOptions = ''
+    builders-use-substitutes = true
+    secret-key-files = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec
+  '';
 
 #  services.home-assistant.enable = true;
 #
