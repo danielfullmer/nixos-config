@@ -59,7 +59,7 @@ in
 
   nix = {
     nixPath = [
-      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos" # Removed trailing /nixpkgs, which was just a symlink to .
+      "nixpkgs=${pkgs.path}" # Removed trailing /nixpkgs, which was just a symlink to .
       "nixos-config=/nix/var/nix/profiles/per-user/root/channels/config-tested/machines/${config.networking.hostName}.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
@@ -81,6 +81,8 @@ in
     daemonNiceLevel = 10; # Range: 0-19
     daemonIONiceLevel = 5; # Range: 0-7
   };
+
+  system.autoUpgrade.flags = [ "-I" "nixpkgs=https://bellman:3000/channel/custom/nixos-config/machines/nixpkgs-tested/nixexprs.tar.xz" ];
 
   users = {
     groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
