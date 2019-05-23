@@ -2,7 +2,7 @@
 , stableBranch ? false
 , supportedSystems ? [ "x86_64-linux" ]
 }:
-with import nixpkgs {};
+with import nixpkgs {config=import ./pkgs/config.nix;};
 
 # See also: https://github.com/openlab-aux/vuizvui
 let

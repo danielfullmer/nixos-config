@@ -1,8 +1,8 @@
 { _config ? {} }: self: super:
 let
-  # Profide a default config if we dont' get it
+  # Provide a default config if we dont' get it
   # This is probably too slow for comfort.
-  config = if _config != {} then _config else (import (super.path + "/nixos/lib/eval-config.nix") {
+  config = if _config != {} then _config else (import (super.path + /nixos/lib/eval-config.nix) {
     modules = [
       ../modules/theme
       ../modules/programs.nix
