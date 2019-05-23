@@ -46,7 +46,7 @@ with lib;
           (${pkgs.networkmanagerapplet}/bin/nm-applet) &
           (${pkgs.pasystray}/bin/pasystray) &
           (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
-          (${pkgs.feh}/bin/feh --bg-scale ${config.theme.background}) &
+          (${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}) &
           (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
           (${pkgs.ibus}/bin/ibus-daemon -d) &
           #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
