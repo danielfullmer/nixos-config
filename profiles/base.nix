@@ -66,7 +66,7 @@ in
 
     autoOptimiseStore = true;
     useSandbox = true;
-    trustedUsers = [ "root" "danielrf" "nixBuild" ];
+    trustedUsers = [ "root" "danielrf" ];
 
     binaryCaches = [ "https://cache.nixos.org/" "https://daniel.cachix.org/" ];
 
