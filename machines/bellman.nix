@@ -120,7 +120,7 @@
     in ''
       (${pkgs.synergy}/bin/synergys -c ${synergyConfigFile} -a 30.0.0.222:24800) &
       (yubioath-gui -t) &
-      #(keybase-gui) &
+      (keybase-gui) &
       (signal-desktop --start-in-tray) &
     '';
 
