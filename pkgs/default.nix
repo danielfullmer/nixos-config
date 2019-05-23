@@ -82,8 +82,9 @@ in with super; {
 
   xcompose = callPackage ./xcompose {};
 
-  fuse = super.fuse.overrideAttrs (attrs: {
-    patches = attrs.patches ++ [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
+  fuse = fuse.overrideAttrs (attrs: {
+    # TODO: should be "attrs ++" or something like that but seems to get applied multiple times.
+    patches = [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
   });
 
   #### Environments ####
