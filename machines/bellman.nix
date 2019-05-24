@@ -28,22 +28,25 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
-  # Current partition status:
-  # One bcachefs spanning 1x 500GB SSD and 2x 2Tb HDDs
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
   ];
 
-  boot.supportedFilesystems = [ "bcachefs" ];
-  boot.initrd.supportedFilesystems = [ "bcachefs" ];
+  # Current partition status:
+  # One zfs with mirrored 2x 2Tb HDDs, backed with 1x 500GB SSD
+  # Seagate 2TB ST2000DM006 has 4096 size blocks: ashift=12
+  # Samsung SSD 850/860 EVO 500G have 8192 size blocks: ashift=13
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.supportedFilesystems = [ "zfs" ];
+  boot.zfs.enableUnstable = true;
+  services.zfs.autoScrub.enable = true;
 
   fileSystems = {
-    "/" = {
-      device = "//dev/disk/by-partuuid/c3dfea2f-1a6c-4ed0-be71-7c867cd08cc2:/dev/disk/by-partuuid/2f5ccc7a-506e-4f51-973e-4058132e9052:/dev/disk/by-partuuid/31c55194-7364-9748-a547-eef9442d2f51";
-      fsType = "bcachefs";
-      options = [ "discard" "noatime" ];
-    };
+    "/" = { device = "pool/root"; fsType = "zfs"; };
+    "/home" = { device = "pool/home"; fsType = "zfs"; };
+    "/nix" = { device = "pool/nix"; fsType = "zfs"; };
+
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
       fsType = "vfat";

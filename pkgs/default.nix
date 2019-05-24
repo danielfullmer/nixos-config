@@ -87,24 +87,6 @@ in with super; {
     patches = [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
   });
 
-  # https://github.com/NixOS/nixpkgs/pull/61605
-  linuxPackages.rtl8812au = linuxPackages.rtl8812au.overrideAttrs (attrs: {
-    src = fetchFromGitHub {
-      owner = "zebulon2";
-      repo = "rtl8812au-driver-5.2.20";
-      rev = "ac063a4b1a87855e10f6cd1f358aaccbeee9b9c1";
-      sha256 = "1cmsv22q4k6p2wzm73k60kxbjhcgx4hqr0x3djvqrlv4rzz75l92";
-    };
-  });
-  linuxPackages_latest.rtl8812au = linuxPackages_latest.rtl8812au.overrideAttrs (attrs: {
-    src = fetchFromGitHub {
-      owner = "zebulon2";
-      repo = "rtl8812au-driver-5.2.20";
-      rev = "ac063a4b1a87855e10f6cd1f358aaccbeee9b9c1";
-      sha256 = "1cmsv22q4k6p2wzm73k60kxbjhcgx4hqr0x3djvqrlv4rzz75l92";
-    };
-  });
-
   #### Environments ####
 
   pythonEnv = (python3.buildEnv.override {
