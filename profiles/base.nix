@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
 let
+  machines = import ../machines;
   ssh-yubikey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey";
 in
 {
@@ -21,24 +23,10 @@ in
 
   boot.cleanTmpDir = true;
 
-  networking.hosts = { # TODO: Parameterize
-    "30.0.0.48" = [ "devnull" ];
-    "30.0.0.154" = [ "sysc-2" ];
-    "30.0.0.127" = [ "nyquist" ];
-    "30.0.0.222" = [ "bellman" ];
-    "30.0.0.34" = [ "wrench" ];
-    "30.0.0.86" = [ "euler" ];
-    "30.0.0.84" = [ "gauss" ];
-    "30.0.0.156" = [ "banach" ];
-    "30.0.0.40" = [ "spaceheater" ];
-    "30.0.0.248" = [ "pixel" ];
-  };
+  networking.hosts = mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;
 
-  programs.ssh.knownHosts = {
-    bellman.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3vpFuoazTclho9ew0EFP+QhanahZtASGBCUk5oxBGW";
-    nyquist.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBEOwL+5XKdvVBNGIT4pUfzNtMyvuvERwWAcE9q8HFVj";
-    wrench.publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM6M2q7YcOoHWQRpok1euwQ8FChG34GxxlijFtLHL6uO2myUpstpfvaF4K0Rm5rkiaXGmFZAjgj132JO98JbL1k=";
-    banach.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGfJCTIzSct/m/Zm/yUb224JhKmr35ISH2CEcxSbkCc";
+  programs.ssh.knownHosts = mapAttrs (machine: publicKey: { publicKey = publicKey; }) machines.sshPublicKey
+    // {
     "github.com".publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==";
   };
 
@@ -47,7 +35,7 @@ in
   # TODO: /run/user/ path is not correct if UID is different across hosts
   # TODO: Parameterize the list of machines
   programs.ssh.extraConfig = ''
-    Host bellman nyquist euler banach spaceheater
+    Host ${concatStringsSep " " (attrNames machines.sshPublicKey)}
     ForwardAgent yes
     ForwardX11 yes
     RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
