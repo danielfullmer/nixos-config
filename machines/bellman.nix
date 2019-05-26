@@ -46,6 +46,7 @@
     "/" = { device = "pool/root"; fsType = "zfs"; };
     "/home" = { device = "pool/home"; fsType = "zfs"; };
     "/nix" = { device = "pool/nix"; fsType = "zfs"; };
+    "/tmp" = { device = "pool/tmp"; fsType = "zfs"; };
 
     "/boot" = {
       device = "/dev/disk/by-uuid/3AF1-2802";
