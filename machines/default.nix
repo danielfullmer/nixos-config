@@ -5,6 +5,7 @@
     bellman = "30.0.0.222";
     nyquist = "30.0.0.127";
     euler = "30.0.0.86";
+    euler-win = "30.0.0.205";
     banach = "30.0.0.156";
     gauss = "30.0.0.84";
     spaceheater = "30.0.0.40";
@@ -26,6 +27,7 @@
   syncthingID = {
     bellman = "BVJ7MGT-A4S3AST-MOI4ROZ-KVNQM5J-34N5IJQ-JIEUFJR-KFEA7HF-RIDQOQJ";
     euler = "V6FOL26-QXGNP4E-25OQLVP-BW7TNIL-Q6KWDHC-56UGUZ7-7PY3DWA-KPN2QQ4";
+    euler-win = "7OQKY2N-BQ4XUVH-DMTLW72-K7U7RR6-GLNWHSF-PTKJRJ7-MIUU2P6-G3TZBQY";
     sysc-2 = "SVORZYT-B75D76Z-JTLBU64-CAV3QR2-IMLOCLG-CPJPNO7-UELWC5U-SAI5CQV";
   };
 }
