@@ -13,8 +13,8 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.enableRedistributableFirmware = true;
 
-  boot.supportedFilesystems = [ "bcachefs" ];
-  boot.initrd.supportedFilesystems = [ "bcachefs" ];
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.supportedFilesystems = [ "zfs" ];
 
   security.sudo.enable = lib.mkForce true;
   security.sudo.wheelNeedsPassword = false;
