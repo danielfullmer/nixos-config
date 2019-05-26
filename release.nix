@@ -27,7 +27,7 @@ rec {
     name = "tested";
     constituents = [
         bellman
-        bellman-vfio
+        #bellman-vfio
         nyquist
         euler
         spaceheater
