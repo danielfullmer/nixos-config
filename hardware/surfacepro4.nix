@@ -6,7 +6,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  version = "5.0.10";
+  version = "4.19.37";
   patchlevel = "1";
 
   # modDirVersion needs to be x.y.z, will automatically add .0 if needed
@@ -52,8 +52,8 @@ in
         extraMeta.branch = branchVersion;
 
         src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
-          sha256 = "0xjycbjlzpgskqnwcjml60vkbg7r8fsijdj6ypmhpry7q8ii677a";
+          url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
+          sha256 = "0xjycbjlzpgskqnwcjml60vkbg7x8fsijdj6ypmhpry7q8ii677a";
         };
       };};
     });
