@@ -46,20 +46,21 @@ let
 in
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
-      kernel = super.kernel.override { argsOverride = rec {
-        inherit version modDirVersion;
-        extraMeta.branch = branchVersion;
-
-        src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
-          sha256 = "0xjycbjlzpgskqnwcjml60vkbg7x8fsijdj6ypmhpry7q8ii677a";
-        };
-      };};
-    });
+    kernelPackages = pkgs.linuxPackages_4_19;
+#    kernelPackages = pkgs.linuxPackages_4_19.extend (self: super: {
+#      kernel = super.kernel.override { argsOverride = rec {
+#        inherit version modDirVersion;
+#        extraMeta.branch = branchVersion;
+#
+#        src = pkgs.fetchurl {
+#          url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
+#          sha256 = "0rcwzzbm4853rhsj5mkya0asi6bhsg3mhh9r9ihps31cqc7b7c7c";
+#        };
+#      };};
+#    });
 
     kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/${branchVersion}/${name}.patch";})
-      [ "0001-surface-acpi" "0002-suspend" "0003-buttons" "0004-cameras" "0005-ipts" "0006-hid" "0007-sdcard-reader" "0008-wifi" "0009-surface-power" "0010-surface-dock" "0011-mwlwifi" "0012-surface-lte" ]);
+      [ "0001-surface-acpi" "0002-suspend" "0003-buttons" "0004-cameras" "0005-ipts" "0006-hid" "0007-sdcard-reader" "0008-wifi" "0009-surface3-power" "0010-surface-dock" "0011-mwlwifi" "0012-surface-lte" ]);
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
