@@ -48,4 +48,6 @@ in
 
   networking.dhcpcd.denyInterfaces = map (s: ifrname s) config.services.zerotierone.joinNetworks;
   networking.firewall.trustedInterfaces = map (s: ifrname s) config.services.zerotierone.joinNetworks;
+
+  systemd.services.zerotierone.serviceConfig.TimeoutSec = 10; # Zerotier sometimes decides not to shutdown quickly
 }
