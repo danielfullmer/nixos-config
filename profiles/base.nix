@@ -47,7 +47,7 @@ in
 
   nix = {
     nixPath = [
-      "nixpkgs=${pkgs.path}" # Removed trailing /nixpkgs, which was just a symlink to .
+      "nixpkgs=/nix/var/nix/profiles/per-user-root/channels/nixos" # Removed trailing /nixpkgs, which was just a symlink to .
       "nixos-config=/nix/var/nix/profiles/per-user/root/channels/config-tested/machines/${config.networking.hostName}.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
