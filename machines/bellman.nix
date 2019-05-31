@@ -219,4 +219,14 @@
   ];
 
   system.autoUpgrade.enable = true;
+
+  # Router ipv6 isn't working. Lets tunnel through tunnelbroker.net. Notably helps zerotier connections as well
+  # TODO: Nixify this. Add a periodic client IP udpate
+  networking.localCommands = ''
+    ip tunnel add he-ipv6 mode sit remote 209.51.161.14 ttl 255
+    ip link set he-ipv6 up
+    ip addr add 2001:470:1f06:bae::2/64 dev he-ipv6
+    ip route add ::/0 dev he-ipv6 pref high
+  '';
+
 }
