@@ -128,9 +128,17 @@
       (signal-desktop --start-in-tray) &
     '';
 
+  services.nginx.enable = true;
+  services.nginx.virtualHosts.localhost.default = true;
+  services.nginx.virtualHosts.localhost.listen = [ { addr = "0.0.0.0"; port = 80; } ];
+  services.nginx.recommendedProxySettings = true;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
   services.hydra = {
     enable = true;
-    hydraURL = "http://${config.networking.hostName}:3000/";
+    listenHost = "localhost";
+    port = 5001;
+    hydraURL = "http://${config.networking.hostName}/hydra/";
     notificationSender = "cgibreak@gmail.com";
     smtpHost = "${config.networking.hostName}";
     useSubstitutes = true;
@@ -141,6 +149,7 @@
     # Patch to allow builtins.fetchTarball
     package = pkgs.hydra.overrideAttrs (attrs: { patches = attrs.patches ++ [ ../pkgs/hydra/no-restrict-eval.patch ]; });
   };
+  services.nginx.virtualHosts.localhost.locations."/hydra/".proxyPass = "http://127.0.0.1:5001/";
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
