@@ -17,7 +17,7 @@ in
   services.openssh.enable = true;
   #services.fail2ban.enable = true; # Currently causes problems restarting, See fail2ban PR 1618. nixpkgs out of date
 
-  networking.domain = "controlnet";
+  networking.domain = "daniel.fullmer.me";
   networking.defaultMailServer = {
     directDelivery = true;
     hostName = "bellman";
