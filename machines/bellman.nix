@@ -130,7 +130,10 @@
 
   services.nginx.enable = true;
   services.nginx.virtualHosts.localhost.default = true;
-  services.nginx.virtualHosts.localhost.listen = [ { addr = "0.0.0.0"; port = 80; } ];
+  services.nginx.virtualHosts.localhost.forceSSL = true;
+  services.nginx.virtualHosts.localhost.sslCertificate = ../certs/daniel.fullmer.me.crt;
+  services.nginx.virtualHosts.localhost.sslCertificateKey = "/home/danielrf/nixos-config/secrets/bellman/daniel.fullmer.me.key";
+  services.nginx.virtualHosts.localhost.root = "/data/webroot";
   services.nginx.recommendedProxySettings = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 

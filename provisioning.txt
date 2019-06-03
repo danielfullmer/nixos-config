@@ -23,7 +23,8 @@ $ git clone keybase://private/danielfullmer/password-store .password-store
 # Regenerate key-stubs
 $ gpg --card-status
 
-# Sign into chromium
+# Sign into chromium / firefox
+# Add ca.crt as a trusted CA
 
 $ notmuch # Do setup procedure, use /home/danielrf/mail as directory
 # set gpg_path properly in ~/.notmuch-config

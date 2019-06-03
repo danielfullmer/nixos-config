@@ -11,6 +11,9 @@ in
     ./zerotier.nix
   ];
 
+  # Self-signed Certificate Authority I use to sign other certs
+  security.pki.certificateFiles = [ ../certs/ca.crt ];
+
   services.openssh.enable = true;
   #services.fail2ban.enable = true; # Currently causes problems restarting, See fail2ban PR 1618. nixpkgs out of date
 
