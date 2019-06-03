@@ -1,0 +1,75 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 5 (0x5)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Daniel Fullmer CA
+        Validity
+            Not Before: Jun  3 17:03:02 2019 GMT
+            Not After : May 31 17:03:02 2029 GMT
+        Subject: CN=playmaker.daniel.fullmer.me
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:dd:5b:5b:18:63:90:5a:db:09:4a:5d:e0:3d:01:
+                    55:49:87:7b:1c:13:e0:89:56:1c:30:3a:81:7b:13:
+                    38:b8:38:1d:c3:54:10:00:5e:ec:5a:2d:44:d9:a3:
+                    b2:bf:61:93:bb:3e:08:15:d1:d3:ce:d9:9f:0f:c3:
+                    dc:47:06:44:12:1d:ca:21:c5:91:1a:c4:02:dc:7c:
+                    66:68:e5:97:fe:7e:55:cd:13:5a:7e:13:e5:89:80:
+                    6b:c1:a9:2c:97:1b:ba:b2:08:15:1a:00:f6:f2:07:
+                    b8:5c:dd:47:29:e2:8e:3d:90:fe:78:3e:aa:c7:a8:
+                    f2:aa:07:73:e5:35:a2:af:fb:b9:9e:5e:45:82:3c:
+                    d0:ec:62:49:05:3a:0f:73:25:5d:5f:d3:e1:74:77:
+                    e3:bc:2b:2a:91:2d:fe:76:ec:21:30:1f:b4:5f:13:
+                    61:81:5e:a1:9f:3f:02:b3:8c:18:a3:1c:6c:6d:8b:
+                    ef:8e:f2:a0:19:f5:d7:c2:78:e4:15:69:83:ba:a1:
+                    41:65:92:df:a6:f7:89:fa:31:19:0d:7a:fc:3b:df:
+                    aa:15:f1:6a:2c:be:00:9b:64:aa:02:fc:1f:a6:77:
+                    d9:5d:70:fb:84:32:4e:77:b2:f1:7e:75:37:aa:a0:
+                    15:74:7d:85:1b:53:eb:40:9c:bb:a4:ce:88:d7:7a:
+                    ad:77
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Alternative Name: 
+                DNS:playmaker.daniel.fullmer.me
+            X509v3 Subject Key Identifier: 
+                3E:95:6C:1D:35:4A:39:AF:76:FE:B1:F2:BD:98:D1:21:14:A7:D9:9A
+    Signature Algorithm: sha256WithRSAEncryption
+         89:e8:39:e8:fe:51:f5:0b:cc:db:c0:4e:8d:d3:6c:c7:d0:72:
+         a4:96:3f:d1:e3:2b:42:66:c3:b1:d6:6e:69:0a:08:10:21:e0:
+         45:ce:b8:be:d7:30:0d:93:12:a1:5e:8c:40:c7:fa:8b:fb:0e:
+         44:1d:63:38:40:5f:cd:f8:54:97:d1:0f:d8:ee:80:0d:7e:8f:
+         ce:98:a4:60:ed:b7:b9:09:54:af:6d:d3:a5:01:13:1c:03:55:
+         c9:8a:14:6e:70:18:b9:aa:51:f8:35:25:29:01:d8:46:e8:92:
+         87:65:01:b1:87:17:24:c0:6f:bc:b5:19:15:8d:f3:48:58:88:
+         e8:ca:5e:47:95:a1:40:c3:7b:c9:0d:e7:71:bd:bb:94:34:19:
+         6b:be:84:57:62:d3:98:5a:4c:5c:94:e5:48:63:86:01:f1:6d:
+         9c:52:53:d3:11:09:f2:30:d3:ba:58:07:8e:01:ec:12:46:59:
+         84:d9:21:5e:2d:55:6b:ff:71:99:24:67:d1:92:c0:62:cd:09:
+         0d:bd:7a:09:b4:d0:be:a9:bc:90:35:b9:b7:33:9e:76:31:6b:
+         11:97:53:17:6c:43:ff:d3:60:da:22:a5:0a:84:c8:ec:54:b0:
+         69:00:54:98:ab:f9:22:74:cf:4d:57:77:b1:65:34:f3:ae:33:
+         54:33:5f:a5
+-----BEGIN CERTIFICATE-----
+MIIDETCCAfmgAwIBAgIBBTANBgkqhkiG9w0BAQsFADAcMRowGAYDVQQDDBFEYW5p
+ZWwgRnVsbG1lciBDQTAeFw0xOTA2MDMxNzAzMDJaFw0yOTA1MzExNzAzMDJaMCYx
+JDAiBgNVBAMMG3BsYXltYWtlci5kYW5pZWwuZnVsbG1lci5tZTCCASIwDQYJKoZI
+hvcNAQEBBQADggEPADCCAQoCggEBAN1bWxhjkFrbCUpd4D0BVUmHexwT4IlWHDA6
+gXsTOLg4HcNUEABe7FotRNmjsr9hk7s+CBXR087Znw/D3EcGRBIdyiHFkRrEAtx8
+Zmjll/5+Vc0TWn4T5YmAa8GpLJcburIIFRoA9vIHuFzdRynijj2Q/ng+qseo8qoH
+c+U1oq/7uZ5eRYI80OxiSQU6D3MlXV/T4XR347wrKpEt/nbsITAftF8TYYFeoZ8/
+ArOMGKMcbG2L747yoBn118J45BVpg7qhQWWS36b3ifoxGQ16/DvfqhXxaiy+AJtk
+qgL8H6Z32V1w+4QyTney8X51N6qgFXR9hRtT60Ccu6TOiNd6rXcCAwEAAaNUMFIw
+CQYDVR0TBAIwADAmBgNVHREEHzAdghtwbGF5bWFrZXIuZGFuaWVsLmZ1bGxtZXIu
+bWUwHQYDVR0OBBYEFD6VbB01Sjmvdv6x8r2Y0SEUp9maMA0GCSqGSIb3DQEBCwUA
+A4IBAQCJ6Dno/lH1C8zbwE6N02zH0HKklj/R4ytCZsOx1m5pCggQIeBFzri+1zAN
+kxKhXoxAx/qL+w5EHWM4QF/N+FSX0Q/Y7oANfo/OmKRg7be5CVSvbdOlARMcA1XJ
+ihRucBi5qlH4NSUpAdhG6JKHZQGxhxckwG+8tRkVjfNIWIjoyl5HlaFAw3vJDedx
+vbuUNBlrvoRXYtOYWkxclOVIY4YB8W2cUlPTEQnyMNO6WAeOAewSRlmE2SFeLVVr
+/3GZJGfRksBizQkNvXoJtNC+qbyQNbm3M552MWsRl1MXbEP/02DaIqUKhMjsVLBp
+AFSYq/kidM9NV3exZTTzrjNUM1+l
+-----END CERTIFICATE-----

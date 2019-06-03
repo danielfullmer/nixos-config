@@ -14,7 +14,6 @@
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     #../profiles/backup.nix
-    ../profiles/android.nix
   ];
 
   theme.base16Name = "chalk";
@@ -129,30 +128,37 @@
     '';
 
   services.nginx.enable = true;
-  services.nginx.virtualHosts.localhost.default = true;
-  services.nginx.virtualHosts.localhost.forceSSL = true;
-  services.nginx.virtualHosts.localhost.sslCertificate = ../certs/daniel.fullmer.me.crt;
-  services.nginx.virtualHosts.localhost.sslCertificateKey = "/home/danielrf/nixos-config/secrets/bellman/daniel.fullmer.me.key";
-  services.nginx.virtualHosts.localhost.root = "/data/webroot";
   services.nginx.recommendedProxySettings = true;
+  services.nginx.virtualHosts.localhost = {
+    default = true;
+    forceSSL = true;
+    sslCertificate = ../certs/daniel.fullmer.me.crt;
+    sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/daniel.fullmer.me.key";
+    root = "/data/webroot";
+  };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.hydra = {
     enable = true;
     listenHost = "localhost";
     port = 5001;
-    hydraURL = "http://${config.networking.hostName}/hydra/";
+    hydraURL = "https://hydra.daniel.fullmer.me/";
     notificationSender = "cgibreak@gmail.com";
     smtpHost = "${config.networking.hostName}";
     useSubstitutes = true;
     #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
-    extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec";
+    extraConfig = "binary_cache_secret_key_file = /home/danielrf/nixos-config/secrets/bellman/nix/bellman-nix-serve.sec";
 
     # Patch to allow builtins.fetchTarball
     package = pkgs.hydra.overrideAttrs (attrs: { patches = attrs.patches ++ [ ../pkgs/hydra/no-restrict-eval.patch ]; });
   };
-  services.nginx.virtualHosts.localhost.locations."/hydra/".proxyPass = "http://127.0.0.1:5001/";
+  services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
+    locations."/".proxyPass = "http://127.0.0.1:5001/";
+    forceSSL = true;
+    sslCertificate = ../certs/hydra.daniel.fullmer.me.crt;
+    sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/hydra.daniel.fullmer.me.key";
+  };
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
@@ -186,7 +192,7 @@
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''
     builders-use-substitutes = true
-    secret-key-files = /home/danielrf/nixos-config/secrets/bellman-nix-serve.sec
+    secret-key-files = /home/danielrf/nixos-config/secrets/bellman/nix/bellman-nix-serve.sec
   '';
 
 #  services.home-assistant.enable = true;
@@ -233,13 +239,16 @@
   '';
 
   networking.hosts = {
-    "127.0.0.1" = [ "nextcloud.fullmer.me" "hydra.fullmer.me" ];
+    "127.0.0.1" = [ "nextcloud.fullmer.me" "hydra.daniel.fullmer.me" "playmaker.daniel.fullmer.me" ];
   };
 
-  services.nginx.virtualHosts."nextcloud.fullmer.me".locations."/".proxyPass = "http://10.100.0.2/";
-  services.nginx.virtualHosts."nextcloud.fullmer.me".forceSSL = true;
-  services.nginx.virtualHosts."nextcloud.fullmer.me".sslCertificate = ../certs/nextcloud.fullmer.me.crt;
-  services.nginx.virtualHosts."nextcloud.fullmer.me".sslCertificateKey = "/home/danielrf/nixos-config/secrets/bellman/nextcloud.fullmer.me.key";
+  services.nginx.virtualHosts."nextcloud.fullmer.me" = {
+    locations."/".proxyPass = "http://10.100.0.2/";
+    forceSSL = true;
+    sslCertificate = ../certs/nextcloud.fullmer.me.crt;
+    sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/nextcloud.fullmer.me.key";
+  };
+
   networking.nat.enable = true;
   networking.nat.internalIPs = [ "10.100.0.2" ];
   containers.nextcloud = {
@@ -286,5 +295,17 @@
 
       environment.systemPackages = with pkgs; [ ffmpeg imagemagick ghostscript ];
     };
+  };
+
+  services.playmaker.enable = true; # Port 5000 (customize in future)
+  # Port 5000 has no access control--anyone who can connect can add/remove packages.
+  # We'll rely on firewall to ensure only zerotier network can access port 5000,
+  # and additionally pass through the fdroid repo it generates via nginx.
+  services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
+    locations."/".proxyPass = "http://127.0.0.1:5000/";
+    locations."/fdroid/".proxyPass = "http://127.0.0.1:5000/fdroid/";
+    forceSSL = true;
+    sslCertificate = ../certs/playmaker.daniel.fullmer.me.crt;
+    sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/playmaker.daniel.fullmer.me.key";
   };
 }

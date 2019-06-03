@@ -1,19 +1,75 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4 (0x4)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Daniel Fullmer CA
+        Validity
+            Not Before: Jun  3 17:00:20 2019 GMT
+            Not After : May 31 17:00:20 2029 GMT
+        Subject: CN=nextcloud.fullmer.me
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:cd:71:2a:7a:da:5c:0e:66:5b:20:b6:24:91:c8:
+                    c1:cb:96:59:2b:3a:30:b2:ff:1e:0f:3f:5c:6c:b9:
+                    d8:4a:26:26:e0:26:1a:84:20:cf:f1:b9:55:b9:cb:
+                    c4:4c:70:91:42:9f:05:03:a7:8c:fe:4d:4c:82:a1:
+                    d5:16:c8:96:15:1b:35:14:71:74:4b:6d:cc:8f:d8:
+                    17:cb:8f:97:c3:e9:a4:99:95:14:ef:e8:ca:c5:a1:
+                    3c:1c:ad:da:7f:f3:06:75:64:c0:39:02:fb:08:27:
+                    ac:b9:89:f5:0c:32:a0:bc:77:8a:ec:26:11:6f:e1:
+                    75:c4:be:e2:f0:ee:23:71:48:2e:61:22:9c:6e:98:
+                    35:ac:7f:f4:64:41:60:ae:51:2f:61:0e:dc:c6:d2:
+                    1e:7b:a1:ca:5d:dc:31:da:07:d2:8e:a5:9e:e9:24:
+                    4e:84:69:86:fa:54:3f:1e:70:0b:55:d4:78:93:0e:
+                    64:89:6a:88:c7:77:62:75:46:b5:61:e9:b6:c1:7e:
+                    58:a5:d7:19:1e:ee:03:e0:4f:3f:93:b2:c2:50:03:
+                    af:5a:67:0a:e6:8a:62:59:6f:58:68:7f:46:9a:06:
+                    e9:e2:dd:b8:ea:86:c9:a3:bc:c1:21:7b:a5:35:54:
+                    b6:e8:92:62:38:05:45:8f:2f:5a:19:54:64:0d:e0:
+                    09:c3
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Alternative Name: 
+                DNS:nextcloud.fullmer.me
+            X509v3 Subject Key Identifier: 
+                A6:42:67:5D:13:08:A0:38:78:5D:C2:1B:B6:80:B0:8F:5B:F8:6B:3B
+    Signature Algorithm: sha256WithRSAEncryption
+         d3:8a:5f:ce:19:c9:40:ce:1d:81:cc:fb:43:fd:c9:74:87:95:
+         ea:c4:b4:27:ad:25:50:e1:ac:03:d2:cf:85:88:12:f3:45:bd:
+         a9:a0:71:5c:ba:9f:28:d8:43:99:14:d3:cd:25:f4:68:3f:8c:
+         71:6f:47:08:44:9c:81:37:f4:33:bf:e2:36:87:ef:d7:28:52:
+         7a:bc:5f:ab:fd:76:f1:c9:b7:ad:7f:35:13:0c:45:f4:03:20:
+         57:08:1c:a7:6c:61:5f:06:76:25:ae:b3:8a:b3:32:8f:4d:6e:
+         36:16:a0:9e:00:eb:09:39:20:23:d2:80:f7:d5:20:38:17:02:
+         53:f1:2e:55:07:dd:8b:85:87:f6:c3:5e:af:74:98:6a:d5:c8:
+         fa:7f:d8:0e:98:ac:d7:23:60:fd:06:c6:be:08:e8:6a:44:bb:
+         c7:b8:06:ff:67:e7:cb:f3:f9:3e:b0:28:bb:1b:70:db:27:ae:
+         12:c2:2d:b5:4a:e8:a8:5b:f6:f9:e1:c4:33:80:41:c6:2b:00:
+         c3:f3:a8:b3:08:d6:84:5c:cf:4d:1f:18:99:0b:bd:ab:bb:ba:
+         60:17:ca:ff:a7:45:43:e4:64:99:e5:35:06:ab:5e:8f:65:47:
+         93:f5:2f:4e:37:02:b6:e8:c9:f5:bb:33:5f:f5:50:ca:30:b2:
+         b3:0c:fd:69
 -----BEGIN CERTIFICATE-----
-MIIDCzCCAfOgAwIBAgIJAO3/wcIY8+NMMA0GCSqGSIb3DQEBCwUAMBwxGjAYBgNV
-BAMMEURhbmllbCBGdWxsbWVyIENBMB4XDTE5MDYwMzAxMjcyNVoXDTE5MDcwMzAx
-MjcyNVowHzEdMBsGA1UEAwwUbmV4dGNsb3VkLmZ1bGxtZXIubWUwggEiMA0GCSqG
-SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNcSp62lwOZlsgtiSRyMHLllkrOjCy/x4P
-P1xsudhKJibgJhqEIM/xuVW5y8RMcJFCnwUDp4z+TUyCodUWyJYVGzUUcXRLbcyP
-2BfLj5fD6aSZlRTv6MrFoTwcrdp/8wZ1ZMA5AvsIJ6y5ifUMMqC8d4rsJhFv4XXE
-vuLw7iNxSC5hIpxumDWsf/RkQWCuUS9hDtzG0h57ocpd3DHaB9KOpZ7pJE6EaYb6
-VD8ecAtV1HiTDmSJaojHd2J1RrVh6bbBflil1xke7gPgTz+TssJQA69aZwrmimJZ
-b1hof0aaBuni3bjqhsmjvMEhe6U1VLbokmI4BUWPL1oZVGQN4AnDAgMBAAGjTTBL
-MAkGA1UdEwQCMAAwHwYDVR0RBBgwFoIUbmV4dGNsb3VkLmZ1bGxtZXIubWUwHQYD
-VR0OBBYEFKZCZ10TCKA4eF3CG7aAsI9b+Gs7MA0GCSqGSIb3DQEBCwUAA4IBAQCf
-vI7SqxvLK2EZmSvXX+0CseHslTkwiyqnKHMedR9+CVYaQKLD83kcs/xAf5yfT5QS
-5wWmAnlNOMIXTm0+yOEqhRAf6aFi93ItdokbT9HSsWcvvEkT4tWxJem8a9imHmxi
-lFa94M0rOdf37hhzq4j4wR0FPXVMH5+eJjAsNA3aHrlCww4FXFpJdmyaU1JbSTu5
-6tv+wUs8Vr9cCr6BaJEopjUBrFd11Z8oBoaiIPQRlfTPNyHHlGEwbTEfTjCo4ta9
-28bc47MtRA2QgwMt4CY8h210VXXz38aE6e/H45m6o+jL+mlqxR/JSS/zS0gtP/O1
-JLO4qnewvI3Py5vM4EYI
+MIIDAzCCAeugAwIBAgIBBDANBgkqhkiG9w0BAQsFADAcMRowGAYDVQQDDBFEYW5p
+ZWwgRnVsbG1lciBDQTAeFw0xOTA2MDMxNzAwMjBaFw0yOTA1MzExNzAwMjBaMB8x
+HTAbBgNVBAMMFG5leHRjbG91ZC5mdWxsbWVyLm1lMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAzXEqetpcDmZbILYkkcjBy5ZZKzowsv8eDz9cbLnYSiYm
+4CYahCDP8blVucvETHCRQp8FA6eM/k1MgqHVFsiWFRs1FHF0S23Mj9gXy4+Xw+mk
+mZUU7+jKxaE8HK3af/MGdWTAOQL7CCesuYn1DDKgvHeK7CYRb+F1xL7i8O4jcUgu
+YSKcbpg1rH/0ZEFgrlEvYQ7cxtIee6HKXdwx2gfSjqWe6SROhGmG+lQ/HnALVdR4
+kw5kiWqIx3didUa1Yem2wX5YpdcZHu4D4E8/k7LCUAOvWmcK5opiWW9YaH9Gmgbp
+4t246obJo7zBIXulNVS26JJiOAVFjy9aGVRkDeAJwwIDAQABo00wSzAJBgNVHRME
+AjAAMB8GA1UdEQQYMBaCFG5leHRjbG91ZC5mdWxsbWVyLm1lMB0GA1UdDgQWBBSm
+QmddEwigOHhdwhu2gLCPW/hrOzANBgkqhkiG9w0BAQsFAAOCAQEA04pfzhnJQM4d
+gcz7Q/3JdIeV6sS0J60lUOGsA9LPhYgS80W9qaBxXLqfKNhDmRTTzSX0aD+McW9H
+CEScgTf0M7/iNofv1yhSerxfq/128cm3rX81EwxF9AMgVwgcp2xhXwZ2Ja6zirMy
+j01uNhagngDrCTkgI9KA99UgOBcCU/EuVQfdi4WH9sNer3SYatXI+n/YDpis1yNg
+/QbGvgjoakS7x7gG/2fny/P5PrAouxtw2yeuEsIttUroqFv2+eHEM4BBxisAw/Oo
+swjWhFzPTR8YmQu9q7u6YBfK/6dFQ+RkmeU1Bqtej2VHk/UvTjcCtujJ9bszX/VQ
+yjCyswz9aQ==
 -----END CERTIFICATE-----
