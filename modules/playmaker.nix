@@ -10,6 +10,16 @@ in
 {
   options.services.playmaker = {
     enable = mkEnableOption "Fdroid repository manager fetching apps from Play Store";
+
+    device = mkOption {
+      type = types.str;
+      default = "bacon";
+      description = ''
+        Specify a device to be used by playmaker.
+
+        For a list of supported devices see <link xlink:href="https://raw.githubusercontent.com/NoMore201/googleplay-api/master/gpapi/device.properties">this file</link>.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -19,7 +29,11 @@ in
       after = [ "network.target" ];
 
       path = with pkgs; [ fdroidserver jdk androidsdk_9_0 ];
-      environment.HOME = "%S/playmaker";
+      environment = {
+        HOME = "%S/playmaker";
+        LANG_TIMEZONE = config.time.timeZone;
+        DEVICE_CODE = cfg.device;
+      };
 
       serviceConfig = {
         ExecStart = "${pkgs.playmaker}/bin/pm-server -f -d";
