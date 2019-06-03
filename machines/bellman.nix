@@ -232,4 +232,59 @@
     ip route add ::/0 dev he-ipv6 pref high
   '';
 
+  networking.hosts = {
+    "127.0.0.1" = [ "nextcloud.fullmer.me" "hydra.fullmer.me" ];
+  };
+
+  services.nginx.virtualHosts."nextcloud.fullmer.me".locations."/".proxyPass = "http://10.100.0.2/";
+  services.nginx.virtualHosts."nextcloud.fullmer.me".forceSSL = true;
+  services.nginx.virtualHosts."nextcloud.fullmer.me".sslCertificate = ../certs/nextcloud.fullmer.me.crt;
+  services.nginx.virtualHosts."nextcloud.fullmer.me".sslCertificateKey = "/home/danielrf/nixos-config/secrets/bellman/nextcloud.fullmer.me.key";
+  networking.nat.enable = true;
+  networking.nat.internalIPs = [ "10.100.0.2" ];
+  containers.nextcloud = {
+    autoStart = true;
+    privateNetwork = true;
+    hostAddress = "10.100.0.1";
+    localAddress = "10.100.0.2";
+    config = { config, pkgs, ... }:
+    {
+      networking.useHostResolvConf = true;
+
+      services.nextcloud = {
+        enable = true;
+        hostName = "nextcloud.fullmer.me";
+        nginx.enable = true;
+        config = {
+          dbtype = "pgsql";
+          dbuser = "nextcloud";
+          dbhost = "/tmp"; # nextcloud will add /.s.PGSQL.5432 by itself
+          dbname = "nextcloud";
+          adminpass = "insecure"; # TODO: Fix this
+          #adminpassFile = "/path/to/admin-pass-file";
+          adminuser = "root";
+          extraTrustedDomains = [ "10.100.0.2" ]; # Ensure the "proxyPass" location is a valid domain
+          overwriteProtocol = "https"; # Since we're behind nginx reverse proxy, we need to know that we should always use https
+        };
+      };
+
+      services.postgresql = {
+        enable = true;
+        initialScript = pkgs.writeText "psql-init" ''
+          CREATE ROLE nextcloud WITH LOGIN;
+          CREATE DATABASE nextcloud WITH OWNER nextcloud;
+        '';
+      };
+
+      # ensure that postgres is running *before* running the setup
+      systemd.services."nextcloud-setup" = {
+        requires = ["postgresql.service"];
+        after = ["postgresql.service"];
+      };
+
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+      environment.systemPackages = with pkgs; [ ffmpeg imagemagick ghostscript ];
+    };
+  };
 }
