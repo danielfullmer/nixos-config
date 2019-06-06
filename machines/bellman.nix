@@ -304,6 +304,7 @@
   # and additionally pass through the fdroid repo it generates via nginx.
   services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/";
+    basicAuthFile = "/home/danilerf/nixos-config/secrets/bellman/htpasswd";
     forceSSL = true;
     sslCertificate = ../certs/playmaker.daniel.fullmer.me.crt;
     sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/playmaker.daniel.fullmer.me.key";
