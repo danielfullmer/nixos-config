@@ -23,4 +23,7 @@ in
   }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
 
   environment.systemPackages = with pkgs; [ rclone ];
+
+  environment.etc."rclone.conf".source = "/var/secrets/rclone.conf";
+  secrets."rclone.conf" = {};
 }

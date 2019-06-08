@@ -24,6 +24,9 @@ in
     root = "cgibreak@gmail.com";
   };
 
+  environment.etc."wpa_supplicant.conf".source = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) "/var/secrets/wpa_supplicant.conf";
+  secrets."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {};
+
   boot.cleanTmpDir = true;
 
   networking.hosts = mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;

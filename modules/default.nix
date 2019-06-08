@@ -3,6 +3,7 @@
   imports = [
     ./programs.nix
     ./theme
+    ./secrets.nix
 
     ./playmaker.nix
   ];
