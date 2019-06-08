@@ -39,12 +39,11 @@ in
   # X11 and GPG forwarding for SSH
   # See https://wiki.gnupg.org/AgentForwarding
   # TODO: /run/user/ path is not correct if UID is different across hosts
-  # TODO: Parameterize the list of machines
   programs.ssh.extraConfig = ''
     Host ${concatStringsSep " " (attrNames machines.sshPublicKey)}
-    ForwardAgent yes
+    #ForwardAgent yes
     ForwardX11 yes
-    RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
+    #RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
   '';
   services.openssh.forwardX11 = !config.environment.noXlibs;
   services.openssh.extraConfig = ''
