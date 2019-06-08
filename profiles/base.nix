@@ -63,7 +63,7 @@ in
 
     binaryCaches = [ "https://cache.nixos.org/" "https://daniel.cachix.org/" ];
 
-    trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "http://bellman:5000";
+    trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "https://hydra.daniel.fullmer.me";
 
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -74,8 +74,6 @@ in
     daemonNiceLevel = 10; # Range: 0-19
     daemonIONiceLevel = 5; # Range: 0-7
   };
-
-  system.autoUpgrade.flags = [ "-I" "nixpkgs=https://bellman:3000/channel/custom/nixos-config/machines/nixpkgs-tested/nixexprs.tar.xz" ];
 
   users = {
     groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
