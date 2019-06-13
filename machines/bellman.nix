@@ -129,14 +129,12 @@
 
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
-  services.nginx.virtualHosts.localhost = {
+  services.nginx.virtualHosts."daniel.fullmer.me" = {
     default = true;
     forceSSL = true;
-    sslCertificate = ../certs/daniel.fullmer.me.crt;
-    sslCertificateKey = "/var/secrets/daniel.fullmer.me.key";
+    enableACME = true;
     root = "/data/webroot";
   };
-  secrets."daniel.fullmer.me.key" = { user = "nginx"; group = "nginx"; };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.hydra = {
@@ -158,10 +156,8 @@
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
     forceSSL = true;
-    sslCertificate = ../certs/hydra.daniel.fullmer.me.crt;
-    sslCertificateKey = "/var/secrets/hydra.daniel.fullmer.me.key";
+    enableACME = true;
   };
-  secrets."hydra.daniel.fullmer.me.key" = { user = "nginx"; group = "nginx"; };
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
@@ -249,10 +245,8 @@
   services.nginx.virtualHosts."nextcloud.fullmer.me" = {
     locations."/".proxyPass = "http://10.100.0.2/";
     forceSSL = true;
-    sslCertificate = ../certs/nextcloud.fullmer.me.crt;
-    sslCertificateKey = "/home/danielrf/nixos-config/secrets/ca/nextcloud.fullmer.me.key";
+    enableACME = true;
   };
-  secrets."nextcloud.fullmer.me.key" = { user = "nginx"; group = "nginx"; };
 
   networking.nat.enable = true;
   networking.nat.internalIPs = [ "10.100.0.2" ];
@@ -311,10 +305,8 @@
     locations."/".proxyPass = "http://127.0.0.1:5000/";
     basicAuthFile = "/var/secrets/htpasswd";
     forceSSL = true;
-    sslCertificate = ../certs/playmaker.daniel.fullmer.me.crt;
-    sslCertificateKey = "/var/secrets/playmaker.daniel.fullmer.me.key";
+    enableACME = true;
   };
   secrets."htpasswd" = { user = "nginx"; group = "nginx"; };
-  secrets."playmaker.daniel.fullmer.me.key" = { user = "nginx"; group = "nginx"; };
   services.nginx.virtualHosts."fdroid.daniel.fullmer.me".locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
 }

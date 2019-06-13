@@ -23,5 +23,5 @@ in
     };
   };
   # networking.firewall.allowedTCPPorts = [ 22000 ]; # Don't open port. Just work over zerotier
-  services.nginx.virtualHosts.localhost.locations."/syncthing/".proxyPass = "http://127.0.0.1:8384/";
+  #services.nginx.virtualHosts.localhost.locations."/syncthing/".proxyPass = "http://127.0.0.1:8384/";
 }
