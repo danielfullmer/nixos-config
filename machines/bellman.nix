@@ -308,5 +308,9 @@
     enableACME = true;
   };
   secrets."htpasswd" = { user = "nginx"; group = "nginx"; };
-  services.nginx.virtualHosts."fdroid.daniel.fullmer.me".locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
+  services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
+    locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
+    forceSSL = true;
+    enableACME = true;
+  };
 }
