@@ -26,7 +26,7 @@ in
     systemd.services.playmaker = {
       description = "Fdroid repository manager fetching apps from Play Store";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wants = [ "network-online.target" ];
 
       path = with pkgs; [ fdroidserver jdk androidsdk_9_0 ];
       environment = {
