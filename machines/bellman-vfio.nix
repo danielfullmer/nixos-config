@@ -54,8 +54,8 @@ in
     patch = "";
     extraConfig = ''
       NO_HZ_FULL y
-      PREEMPT y
     '';
+      #PREEMPT y
   } ];
 
   virtualisation.libvirtd.enable = true;
