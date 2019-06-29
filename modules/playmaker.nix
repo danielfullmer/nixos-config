@@ -26,13 +26,14 @@ in
     systemd.services.playmaker = {
       description = "Fdroid repository manager fetching apps from Play Store";
       wantedBy = [ "multi-user.target" ];
-      wants = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
 
-      path = with pkgs; [ fdroidserver jdk androidsdk_9_0 ];
+      path = with pkgs; [ fdroidserver jdk ];
       environment = {
         HOME = "%S/playmaker";
         LANG_TIMEZONE = config.time.timeZone;
         DEVICE_CODE = cfg.device;
+        ANDROID_HOME = "${pkgs.androidsdk_9_0}/libexec/android-sdk";
       };
 
       serviceConfig = {

@@ -297,7 +297,7 @@
   };
 
   services.playmaker.enable = true; # Port 5000 (customize in future)
-  services.playmaker.device = "sailfish";
+  services.playmaker.device = "walleye"; # This is currently the only device in playmaker/googleplay-api device.properties file that is actually android 9 / API 28
   # Port 5000 has no access control--anyone who can connect can add/remove packages.
   # We'll rely on firewall to ensure only zerotier network can access port 5000,
   # and additionally pass through the fdroid repo it generates via nginx.
