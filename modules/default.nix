@@ -5,6 +5,7 @@
     ./theme
     ./secrets.nix
 
+    ./attestation-server.nix
     ./playmaker.nix
   ];
 }

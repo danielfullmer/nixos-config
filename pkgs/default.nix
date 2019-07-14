@@ -22,6 +22,8 @@ in with super; {
 #  });
 
   # Packages
+  attestation-server = callPackage ./attestation-server {};
+
   adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
     configureFlags = attrs.configureFlags ++ (with config.theme.colors; [
       "--with-selection_color=#${base0C}"

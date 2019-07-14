@@ -313,4 +313,23 @@
     forceSSL = true;
     enableACME = true;
   };
+
+  services.attestation-server = {
+    enable = true;
+    domain = "attestation.daniel.fullmer.me";
+    listenHost = "127.0.0.1";
+    port = 8085;
+    # TODO: Extract from NixDroid configuration
+    deviceFamily = "crosshatch";
+    platformFingerprint = "FAAE6B5D98FC8FB1589F9D9767904109EE360980907DF5BB33CB6D42A5AC7111";
+    avbFingerprint = "DB6EF54AC9112478038F0DC3E8D919817984B486433ADFA665356089074ACAE4";
+  };
+  services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
+    locations."/".root = config.services.attestation-server.package.static;
+    locations."/api/".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/api/";
+    locations."/challenge".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/challenge";
+    locations."/verify".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/verify";
+    forceSSL = true;
+    enableACME = true;
+  };
 }

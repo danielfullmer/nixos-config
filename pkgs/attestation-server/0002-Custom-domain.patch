@@ -1,0 +1,191 @@
+From e8ebdba04de3a0e90af7a93f5599f69cdeee4e22 Mon Sep 17 00:00:00 2001
+From: Daniel Fullmer <danielrf12@gmail.com>
+Date: Sun, 14 Jul 2019 17:01:09 -0400
+Subject: [PATCH 2/3] Custom domain
+
+---
+ .../attestation/server/AttestationServer.java  |  2 +-
+ static/about.html                              | 10 +++++-----
+ static/contact.html                            | 18 +++++++++---------
+ static/index.html                              |  8 ++++----
+ static/robots.txt                              |  2 +-
+ static/tutorial.html                           | 14 +++++++-------
+ 6 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/src/main/java/app/attestation/server/AttestationServer.java b/src/main/java/app/attestation/server/AttestationServer.java
+index 8ed9cd4..04c2cff 100644
+--- a/src/main/java/app/attestation/server/AttestationServer.java
++++ b/src/main/java/app/attestation/server/AttestationServer.java
+@@ -749,7 +749,7 @@ public class AttestationServer {
+             }
+             exchange.sendResponseHeaders(200, 0);
+             try (final OutputStream output = exchange.getResponseBody()) {
+-                final String contents = "attestation.app " +
++                final String contents = "@domain@ " +
+                     account.userId + " " +
+                     BaseEncoding.base64().encode(account.subscribeKey) + " " +
+                     account.verifyInterval;
+diff --git a/static/about.html b/static/about.html
+index b24f1b9..2a064d1 100644
+--- a/static/about.html
++++ b/static/about.html
+@@ -12,17 +12,17 @@
+         <meta property="og:title" content="Auditor overview"/>
+         <meta property="og:description" content="Overview of the Auditor Android app and associated service."/>
+         <meta property="og:type" content="website"/>
+-        <meta property="og:image" content="https://attestation.app/ic_launcher-web.png"/>
++        <meta property="og:image" content="https://@domain@/ic_launcher-web.png"/>
+         <meta property="og:image:width" content="512"/>
+         <meta property="og:image:height" content="512"/>
+         <meta property="og:image:alt" content="Auditor logo"/>
+-        <meta property="og:url" content="https://attestation.app/about"/>
+-        <meta property="og:site_name" content="attestation.app"/>
++        <meta property="og:url" content="https://@domain@/about"/>
++        <meta property="og:site_name" content="@domain@/>
+         <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+         <link rel="mask-icon" href="/safari_pinned_tab_icon.svg" color="#000000"/>
+         <link rel="stylesheet" href="/attestation.css?5"/>
+         <link rel="manifest" href="/manifest.webmanifest"/>
+-        <link rel="canonical" href="https://attestation.app/about"/>
++        <link rel="canonical" href="https://@domain@/about"/>
+     </head>
+     <body>
+         <nav>
+@@ -56,7 +56,7 @@
+             pairing process between the device performing verification (Auditor) and the device
+             being verified (Auditee) to implement a Trust On First Use (TOFU) model. The device
+             performing verification can either be another Android device running the app in the
+-            Auditor mode or the <a href="https://attestation.app/">https://attestation.app/</a>
++            Auditor mode or the <a href="https://@domain@/">https://@domain@/</a>
+             service for automated verification on a regular schedule with support for email
+             alerts. See <a href="/tutorial">the tutorial</a> for usage instructions. The protocol
+             used for both local and remote attestation is
+diff --git a/static/contact.html b/static/contact.html
+index 8e503ba..a9d86ed 100644
+--- a/static/contact.html
++++ b/static/contact.html
+@@ -12,17 +12,17 @@
+         <meta property="og:title" content="Auditor contact information"/>
+         <meta property="og:description" content="Contact information for the Auditor Android app and associated service."/>
+         <meta property="og:type" content="website"/>
+-        <meta property="og:image" content="https://attestation.app/ic_launcher-web.png"/>
++        <meta property="og:image" content="https://@domain@/ic_launcher-web.png"/>
+         <meta property="og:image:width" content="512"/>
+         <meta property="og:image:height" content="512"/>
+         <meta property="og:image:alt" content="Auditor logo"/>
+-        <meta property="og:url" content="https://attestation.app/contact"/>
+-        <meta property="og:site_name" content="attestation.app"/>
++        <meta property="og:url" content="https://@domain@/contact"/>
++        <meta property="og:site_name" content="@domain@"/>
+         <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+         <link rel="mask-icon" href="/safari_pinned_tab_icon.svg" color="#000000"/>
+         <link rel="stylesheet" href="/attestation.css?5"/>
+         <link rel="manifest" href="/manifest.webmanifest"/>
+-        <link rel="canonical" href="https://attestation.app/contact"/>
++        <link rel="canonical" href="https://@domain@/contact"/>
+     </head>
+     <body>
+         <nav>
+@@ -40,8 +40,8 @@
+             <h1 id="contact">
+                 <a href="#contact">Contact</a>
+             </h1>
+-            <p>You can contact <a href="mailto:contact@attestation.app">contact@attestation.app</a> for topics
+-            related to the Auditor app and attestation service. The <a href="mailto:security@attestation.app">security@attestation.app</a>
++            <p>You can contact <a href="mailto:contact@@domain@">contact@@domain@</a> for topics
++            related to the Auditor app and attestation service. The <a href="mailto:security@@domain@">security@@domain@</a>
+             address can be used for high priority security issues. My personal email address <a href="mailto:danielmicay@gmail.com">danielmicay@gmail.com</a>
+             can be used for anything else.</p>
+         </div>
+@@ -49,9 +49,9 @@
+             {
+                 "@context": "https://schema.org",
+                 "@type": "Organization",
+-                "url": "https://attestation.app/",
+-                "logo": "https://attestation.app/ic_launcher-web.png",
+-                "email": "contact@attestation.app"
++                "url": "https://@domain@/",
++                "logo": "https://@domain@/ic_launcher-web.png",
++                "email": "contact@@domain@"
+             }
+         </script>
+     </body>
+diff --git a/static/index.html b/static/index.html
+index 427b063..d900e37 100644
+--- a/static/index.html
++++ b/static/index.html
+@@ -12,17 +12,17 @@
+         <meta property="og:title" content="Device integrity monitoring"/>
+         <meta property="og:description" content="Hardware-based remote attestation service for monitoring the security of Android devices using the Auditor app."/>
+         <meta property="og:type" content="website"/>
+-        <meta property="og:image" content="https://attestation.app/ic_launcher-web.png"/>
++        <meta property="og:image" content="https://@domain@/ic_launcher-web.png"/>
+         <meta property="og:image:width" content="512"/>
+         <meta property="og:image:height" content="512"/>
+         <meta property="og:image:alt" content="Auditor logo"/>
+-        <meta property="og:url" content="https://attestation.app/"/>
+-        <meta property="og:site_name" content="attestation.app"/>
++        <meta property="og:url" content="https://@domain@/"/>
++        <meta property="og:site_name" content="@domain@"/>
+         <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+         <link rel="mask-icon" href="/safari_pinned_tab_icon.svg" color="#000000"/>
+         <link rel="stylesheet" href="/attestation.css?5"/>
+         <link rel="manifest" href="/manifest.webmanifest"/>
+-        <link rel="canonical" href="https://attestation.app/"/>
++        <link rel="canonical" href="https://@domain@/"/>
+     </head>
+     <body>
+         <nav>
+diff --git a/static/robots.txt b/static/robots.txt
+index 2747cbe..acceea4 100644
+--- a/static/robots.txt
++++ b/static/robots.txt
+@@ -1,2 +1,2 @@
+ User-agent: *
+-Sitemap: https://attestation.app/sitemap.xml
++Sitemap: https://@domain@/sitemap.xml
+diff --git a/static/tutorial.html b/static/tutorial.html
+index 2b38de7..bd77c7b 100644
+--- a/static/tutorial.html
++++ b/static/tutorial.html
+@@ -12,17 +12,17 @@
+         <meta property="og:title" content="Auditor tutorial"/>
+         <meta property="og:description" content="Tutorial on using the Auditor Android app and associated service."/>
+         <meta property="og:type" content="website"/>
+-        <meta property="og:image" content="https://attestation.app/ic_launcher-web.png"/>
++        <meta property="og:image" content="https://@domain@/ic_launcher-web.png"/>
+         <meta property="og:image:width" content="512"/>
+         <meta property="og:image:height" content="512"/>
+         <meta property="og:image:alt" content="Auditor logo"/>
+-        <meta property="og:url" content="https://attestation.app/tutorial"/>
+-        <meta property="og:site_name" content="attestation.app"/>
++        <meta property="og:url" content="https://@domain@/tutorial"/>
++        <meta property="og:site_name" content="@domain@"/>
+         <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+         <link rel="mask-icon" href="/safari_pinned_tab_icon.svg" color="#000000"/>
+         <link rel="stylesheet" href="/attestation.css?5"/>
+         <link rel="manifest" href="/manifest.webmanifest"/>
+-        <link rel="canonical" href="https://attestation.app/tutorial"/>
++        <link rel="canonical" href="https://@domain@/tutorial"/>
+     </head>
+     <body>
+         <nav>
+@@ -74,12 +74,12 @@
+             on each Auditor for the same Auditee.</p>
+             <p>To set up regularly scheduled remote verification via the remote attestation service:</p>
+             <ol>
+-                <li>create an account on https://attestation.app/ from a separate device</li>
++                <li>create an account on https://@domain@/ from a separate device</li>
+                 <li>press the menu button in the app</li>
+                 <li>press the 'Enable remote verification' action in the menu</li>
+-                <li>scan the account QR code displayed on https://attestation.app/</li>
++                <li>scan the account QR code displayed on https://@domain@/</li>
+                 <li>configure an alert email address to receive alerts if the device fails to provide valid attestations in time</li>
+-                <li>refresh https://attestation.app/ to view the initial attestation result</li>
++                <li>refresh https://@domain@/ to view the initial attestation result</li>
+             </ol>
+             <h2 id="expanding-device-support">
+                 <a href="#expanding-device-support">Expanding device support</a>
+-- 
+2.22.0
+
