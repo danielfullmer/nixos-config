@@ -1,1 +1,3 @@
-[ (import ./default.nix {}) ]
+[ (import ./default.nix {})
+  (import ../vr-overlay/default.nix)
+]
