@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitLab, cmake, extra-cmake-modules, xrdesktop, graphene, libinputsynth, qtbase }:
+{ stdenv, fetchFromGitLab, cmake, extra-cmake-modules, xrdesktop, graphene, libinputsynth, kwin, epoxy }:
 
 stdenv.mkDerivation rec {
   pname = "kwin-effect-xrdesktop";
@@ -13,5 +13,5 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake extra-cmake-modules ];
-  buildInputs = [ xrdesktop graphene libinputsynth qtbase ];
+  buildInputs = [ xrdesktop graphene libinputsynth kwin epoxy ];
 }
