@@ -297,6 +297,20 @@
     };
   };
 
+  docker-containers.onlyoffice = {
+    image = "onlyoffice/documentserver";
+    ports = [ "9980:80" ];
+  };
+  services.nginx.virtualHosts."office.daniel.fullmer.me" = {
+    locations."/" = {
+      proxyPass = "http://[::1]:9980/";
+      proxyWebsockets = true;
+    };
+    forceSSL = true;
+    enableACME = true;
+  };
+
+
   services.playmaker.enable = true; # Port 5000 (customize in future)
   services.playmaker.device = "walleye"; # This is currently the only device in playmaker/googleplay-api device.properties file that is actually android 9 / API 28
   # Port 5000 has no access control--anyone who can connect can add/remove packages.
