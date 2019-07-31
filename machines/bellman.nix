@@ -264,12 +264,12 @@
         hostName = "nextcloud.fullmer.me";
         nginx.enable = true;
         config = {
-          dbtype = "pgsql";
-          dbuser = "nextcloud";
-          dbhost = "/tmp"; # nextcloud will add /.s.PGSQL.5432 by itself
-          dbname = "nextcloud";
-          adminpass = "insecure"; # TODO: Fix this
-          #adminpassFile = "/path/to/admin-pass-file";
+          dbtype = "sqlite";
+          # dbtype = "pgsql"; # TODO: Convert to postgres?
+          #dbuser = "nextcloud";
+          #dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
+          #dbname = "nextcloud";
+          adminpassFile = "/var/secrets/nextcloud";
           adminuser = "root";
           extraTrustedDomains = [ "10.100.0.2" ]; # Ensure the "proxyPass" location is a valid domain
           overwriteProtocol = "https"; # Since we're behind nginx reverse proxy, we need to know that we should always use https
@@ -277,7 +277,7 @@
       };
 
       services.postgresql = {
-        enable = true;
+        #enable = true;
         initialScript = pkgs.writeText "psql-init" ''
           CREATE ROLE nextcloud WITH LOGIN;
           CREATE DATABASE nextcloud WITH OWNER nextcloud;
@@ -285,10 +285,10 @@
       };
 
       # ensure that postgres is running *before* running the setup
-      systemd.services."nextcloud-setup" = {
-        requires = ["postgresql.service"];
-        after = ["postgresql.service"];
-      };
+      #systemd.services."nextcloud-setup" = {
+      #  requires = ["postgresql.service"];
+      #  after = ["postgresql.service"];
+      #};
 
       networking.firewall.allowedTCPPorts = [ 80 443 ];
 
