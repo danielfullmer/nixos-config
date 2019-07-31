@@ -263,6 +263,7 @@
         enable = true;
         hostName = "nextcloud.fullmer.me";
         nginx.enable = true;
+        autoUpdateApps.enable = true;
         config = {
           dbtype = "sqlite";
           # dbtype = "pgsql"; # TODO: Convert to postgres?
