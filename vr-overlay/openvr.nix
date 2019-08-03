@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "openvr";
-  version = "1.5.17";
+  version = "1.6.10";
 
   src = fetchFromGitHub {
     owner = "ValveSoftware";
     repo = "openvr";
     rev = "v${version}";
-    sha256 = "11iqhx4vmdaq0kn8ylx5w1lgsyrznv5rp41p7200jsbjmvbcsqg3";
+    sha256 = "1pxjwpz8qcgdjqzd2ixmlngnsyw6cyjd6mqjjaw2jsxpkms1h1a4";
   };
- 
+
   nativeBuildInputs = [ cmake ];
 }
