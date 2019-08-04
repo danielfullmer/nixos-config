@@ -1,8 +1,10 @@
 self: super: {
+  openvr = super.callPackage ./openvr.nix {};
+  openvrSamples = super.callPackage ./openvr-samples.nix {};
+
   gulkan = super.callPackage ./gulkan.nix {};
   gxr = super.callPackage ./gxr.nix {};
   libinputsynth = super.callPackage ./libinputsynth.nix {};
-  openvr = super.callPackage ./openvr.nix {};
   xrdesktop = super.callPackage ./xrdesktop.nix {};
 
   plasma5 = super.plasma5.overrideScope' (plasma-self: plasma-super: rec {

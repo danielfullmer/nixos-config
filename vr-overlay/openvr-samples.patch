@@ -1,0 +1,52 @@
+diff -Naur samples/CMakeLists.txt samples-new/CMakeLists.txt
+--- samples/CMakeLists.txt	2019-08-03 18:24:11.750345164 -0400
++++ samples-new/CMakeLists.txt	2019-08-03 18:34:59.004126281 -0400
+@@ -50,12 +50,12 @@
+ 
+ # Check that the steamVR SDK is installed 
+ # (needed to prevent a segfault in OpenVR).
+-if(CMAKE_HOST_UNIX)
+-  find_file(OPENVRPATHS openvrpaths.vrpath PATHS $ENV{HOME}/.config/openvr "$ENV{HOME}/Library/Application Support/OpenVR/.openvr")
+-  if(${OPENVRPATHS} MATCHES OPENVRPATHS-NOTFOUND)
+-    message(FATAL_ERROR "${OPENVRPATHS} Please install SteamVR SDK to continue..")
+-  endif()
+-endif()
++#if(CMAKE_HOST_UNIX)
++#  find_file(OPENVRPATHS openvrpaths.vrpath PATHS $ENV{HOME}/.config/openvr "$ENV{HOME}/Library/Application Support/OpenVR/.openvr")
++#  if(${OPENVRPATHS} MATCHES OPENVRPATHS-NOTFOUND)
++#    message(FATAL_ERROR "${OPENVRPATHS} Please install SteamVR SDK to continue..")
++#  endif()
++#endif()
+ 
+ # Default output directory.
+ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/${ARCH_TARGET})
+@@ -211,10 +211,7 @@
+     osx32
+     linux64
+     ${WINDOWS_PATH_SUFFIXES}
+-  NO_DEFAULT_PATH
+-  NO_CMAKE_FIND_ROOT_PATH
+ )
+-set(OPENVR_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../headers)
+ 
+ 
+ # -----------------------------------------------------------------------------
+diff -Naur samples/driver_sample/driver_sample.cpp samples-new/driver_sample/driver_sample.cpp
+--- samples/driver_sample/driver_sample.cpp	2019-08-03 18:24:11.723344721 -0400
++++ samples-new/driver_sample/driver_sample.cpp	2019-08-03 19:20:23.059652412 -0400
+@@ -97,13 +97,13 @@
+ 		if ( (0x01 & GetAsyncKeyState( 'Y' )) != 0 )
+ 		{
+ 			// Y key was pressed. 
+-			vr::VRWatchdogHost()->WatchdogWakeUp();
++			vr::VRWatchdogHost()->WatchdogWakeUp(TrackedDeviceClass_HMD);
+ 		}
+ 		std::this_thread::sleep_for( std::chrono::microseconds( 500 ) );
+ #else
+ 		// for the other platforms, just send one every five seconds
+ 		std::this_thread::sleep_for( std::chrono::seconds( 5 ) );
+-		vr::VRWatchdogHost()->WatchdogWakeUp();
++		vr::VRWatchdogHost()->WatchdogWakeUp(TrackedDeviceClass_HMD);
+ #endif
+ 	}
+ }
