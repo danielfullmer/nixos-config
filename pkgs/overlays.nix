@@ -1,3 +1,3 @@
 [ (import ./default.nix {})
-  (import ../xrdesktop-overlay)
+  (import ../xrdesktop-overlay/overlay.nix)
 ]
