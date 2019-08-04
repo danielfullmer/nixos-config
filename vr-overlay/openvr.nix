@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake }:
+{ stdenv, fetchFromGitHub, cmake, SDL2, vulkan-loader }:
 
 stdenv.mkDerivation rec {
   pname = "openvr";
@@ -12,4 +12,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake ];
+
+  # Steam's provided vrclient.so uses these libs, so let's link them in now so it can properly dlopen() vrclient.so
+  NIX_LDFLAGS = "-L${SDL2}/lib -lSDL2 -L${vulkan-loader}/lib -lvulkan";
+
+  cmakeFlags = [ "-DBUILD_SHARED=1" ];
 }
