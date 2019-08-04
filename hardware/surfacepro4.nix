@@ -6,7 +6,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  version = "4.19.37";
+  version = "4.19.56";
   patchlevel = "1";
 
   # modDirVersion needs to be x.y.z, will automatically add .0 if needed
@@ -59,8 +59,7 @@ in
 #      };};
 #    });
 
-    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/${branchVersion}/${name}.patch";})
-      [ "0001-surface-acpi" "0002-suspend" "0003-buttons" "0004-cameras" "0005-ipts" "0006-hid" "0007-sdcard-reader" "0008-wifi" "0009-surface3-power" "0010-surface-dock" "0011-mwlwifi" "0012-surface-lte" ]);
+    kernelPatches = (map (name: { name=name; patch="${linux-surface}/patches/${branchVersion}/${name}"; }) (lib.attrNames (builtins.readDir "${linux-surface}/patches/${branchVersion}")));
 
     initrd.kernelModules = [ "hid-multitouch" ];
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
