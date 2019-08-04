@@ -14,6 +14,7 @@
     ../profiles/postfix.nix
     ../profiles/gdrive.nix
     #../profiles/backup.nix
+    ../xrdesktop-overlay
   ];
 
   theme.base16Name = "chalk";
@@ -347,4 +348,8 @@
     forceSSL = true;
     enableACME = true;
   };
+
+  # For testing xrdesktop
+  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 }

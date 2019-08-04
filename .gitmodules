@@ -1,0 +1,3 @@
+[submodule "xrdesktop-overlay"]
+	path = xrdesktop-overlay
+	url = https://github.com/danielfullmer/xrdesktop-overlay
