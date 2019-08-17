@@ -18,7 +18,7 @@ let
     owner = "jakeday";
     repo = "linux-surface";
     rev = "${version}-${patchlevel}";
-    sha256 = "1q8dv7j6gwgszqavb35aswwfn7c7mwkc2xqd2v8gvxnjk7sp4747";
+    sha256 = "1mflaxqwlbkqgx6j4d38nxc9jjf9715b61cn10gdw3j1i1jqbmml";
   };
 
   buildFirmware = (name: subdir: src: pkgs.stdenvNoCC.mkDerivation {
