@@ -78,16 +78,23 @@
 #    DisplaySize 698 393
 #  '';
 
-  services.xserver.xrandrHeads = [
-    { output = "DP-0"; primary = true; }
-    { output = "DP-4"; }
-    { output = "DP-5"; }
-    { output = "DVI-D-0";
-      monitorConfig = ''
-        Option "Rotate" "Left"
-      '';
-    }
-  ];
+#  services.xserver.xrandrHeads = [
+#    { output = "DP-0"; primary = true; }
+#    { output = "DP-4"; }
+#    { output = "DP-5"; }
+#    { output = "DVI-D-0";
+#      monitorConfig = ''
+#        Option "Rotate" "Left"
+#      '';
+#    }
+#  ];
+  services.xserver.screenSection = ''
+    Option         "Stereo" "0"
+    Option         "metamodes" "DVI-D-0: nvidia-auto-select +3840+0 {rotation=left}, DP-2: 3840x2160 +0+200, DP-4: NULL"
+    Option         "SLI" "Off"
+    Option         "MultiGPU" "Off"
+    Option         "BaseMosaic" "off"
+  '';
 
   # For serial interface to reflash x39 monitor firmware
   services.udev.packages = lib.singleton (pkgs.writeTextFile {
