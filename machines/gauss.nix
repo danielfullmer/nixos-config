@@ -1,59 +1,58 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+# gauss is an external machine on a public provider.
+# Minimize and private/secret information on this host.
+# Forward any sensitive service to another host over zerotier
+let
+  machines = import ./default.nix;
+  externalIP = "167.71.187.97";
+in
 {
   imports = [
-      <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-      ../profiles/base.nix
-    ];
-
-  theme.base16Name = "ocean";
-
-  system.stateVersion = "17.03";
-
-  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-  swapDevices = [ ];
-
-  nix.maxJobs = 1;
+    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    ../profiles/base.nix
+  ];
 
   networking.hostName = "gauss";
   networking.hostId = "394ac2e1";
-  networking.usePredictableInterfaceNames = false;
+  networking.nameservers = [ "8.8.8.8" ];
 
-  ## Everything below is generated from nixos-in-place; modify with caution!
-  boot.kernelParams = ["boot.shell_on_fail"];
+  #networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.nat = {
+    enable = true;
+    forwardPorts = [
+      { sourcePort = 80; destination = "${machines.zerotierIP.bellman}:80"; proto = "tcp"; }
+      { sourcePort = 443; destination = "${machines.zerotierIP.bellman}:443"; proto = "tcp"; }
+    ];
+    externalInterface = "ens3";
+    #externalIP = externalIP;
+  };
+
+  nix.gc = {
+    automatic = true;
+    options = "-d";
+  };
+
+  # Stuff from nixos-infect below:
   boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.storePath = "/nixos/nix/store";
-  boot.initrd.supportedFilesystems = [ "ext4" ];
-  boot.initrd.postDeviceCommands = ''
-    mkdir -p /mnt-root/old-root ;
-    mount -t ext4 /dev/vda1 /mnt-root/old-root ;
-  '';
-  fileSystems = {
-    "/" = {
-      device = "/old-root/nixos";
-      fsType = "none";
-      "options" = "bind";
-    };
-    "/old-root" = {
-      device = "/dev/vda1";
-      fsType = "ext4";
+  fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
+
+  networking.defaultGateway = "167.71.176.1";
+  networking.defaultGateway6 = "";
+  networking.dhcpcd.enable = false;
+  networking.usePredictableInterfaceNames = lib.mkForce true;
+  networking.interfaces = {
+    ens3 = {
+      ipv4.addresses = [
+        { address=externalIP; prefixLength=20; }
+        { address="10.17.0.5"; prefixLength=16; }
+      ];
+      ipv6.addresses = [
+        { address="fe80::bc4e:eeff:fe18:60e8"; prefixLength=64; }
+      ];
     };
   };
-  
-    ## Digital Ocean networking setup; manage interfaces manually
-    networking.interfaces.eth0.useDHCP = false;
-    networking.interfaces.eth1.useDHCP = false;
-
-    systemd.services.setup-network = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.bash}/bin/bash -i /etc/nixos-in-place/setup-network";
-      };
-    };
-
-  system.autoUpgrade.enable = true;
+  services.udev.extraRules = ''
+    ATTR{address}=="be:4e:ee:18:60:e8", NAME="ens3"
+  '';
 }

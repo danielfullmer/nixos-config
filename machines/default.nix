@@ -21,6 +21,7 @@
     bellman = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3vpFuoazTclho9ew0EFP+QhanahZtASGBCUk5oxBGW";
     nyquist = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBEOwL+5XKdvVBNGIT4pUfzNtMyvuvERwWAcE9q8HFVj";
     banach = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGfJCTIzSct/m/Zm/yUb224JhKmr35ISH2CEcxSbkCc";
+    gauss = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHsBoQtQeyvKK0IHewwwesgxiiiwxzx5bUqBNKGU3Xuu";
     wrench = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM6M2q7YcOoHWQRpok1euwQ8FChG34GxxlijFtLHL6uO2myUpstpfvaF4K0Rm5rkiaXGmFZAjgj132JO98JbL1k=";
   };
 
