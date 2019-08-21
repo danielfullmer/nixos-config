@@ -50,4 +50,8 @@ in
   networking.firewall.trustedInterfaces = map (s: ifrname s) config.services.zerotierone.joinNetworks;
 
   systemd.services.zerotierone.serviceConfig.TimeoutSec = 10; # Zerotier sometimes decides not to shutdown quickly
+
+  networking.hosts = let
+    machines = import ../machines;
+  in mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;
 }

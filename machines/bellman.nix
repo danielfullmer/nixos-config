@@ -246,10 +246,6 @@
     ip route add ::/0 dev he-ipv6 pref high
   '';
 
-  networking.hosts = {
-    "127.0.0.1" = [ "nextcloud.fullmer.me" "hydra.daniel.fullmer.me" "playmaker.daniel.fullmer.me" ];
-  };
-
   services.nginx.virtualHosts."nextcloud.fullmer.me" = {
     locations."/".proxyPass = "http://10.100.0.2/";
     forceSSL = true;

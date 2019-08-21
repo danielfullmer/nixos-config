@@ -29,7 +29,10 @@ in
 
   boot.cleanTmpDir = true;
 
-  networking.hosts = mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;
+  # TODO: Set to 127.0.0.1 if we are bellman?
+  networking.hosts."${machines.zerotierIP.bellman}" = (map (name: "${name}.${config.networking.domain}") [ 
+    "attestation" "hydra" "playmaker" "fdroid" "office"
+  ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
 
   programs.ssh.knownHosts = mapAttrs (machine: publicKey: { publicKey = publicKey; }) machines.sshPublicKey
     // {
