@@ -4,12 +4,13 @@
 { config, pkgs, ... }:
 
 {
-  # Configuration for keyboard firmware
+  # Keyboard firmware {{{
   hardware.dactyl.keymap = ''
     enum layers {
       _NORM,
       _QWERTY,
       _BLUE,
+      _ARWS,
 
       _GREEKL,
       _GREEKU,
@@ -29,7 +30,7 @@
     KC_LGUI,   GREEK, XXXXXXX, XXXXXXX, DF(_QWERTY),                                           KC_SPC, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, \
                                                   KC_DEL, KC_HOME,          KC_PGUP, KC_RCTL,                                              \
                                                            KC_END,          KC_PGDN,                                                       \
-                     LT(2,KC_BSPC), MT(MOD_LCTL, KC_ESC), KC_LALT,          KC_RGUI,  KC_ENT, LT(_BLUE,KC_SPC)                             \
+                      KC_BSPC, LCTL_T(KC_ESC), LM(_ARWS,MOD_LGUI),          LM(_ARWS,MOD_LALT), KC_ENT, LT(_BLUE,KC_SPC)                   \
     ),
 
     /* 1: Qwerty layout - For compatibilty */
@@ -38,7 +39,7 @@
     _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, _______,          _______,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______, \
     _______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______, \
     _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,          _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______, \
-    _______, _______,DF(_NORM), _______, _______,                                             _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______,DF(_NORM),                                             _______, _______, _______, _______, _______, \
                                                  _______, _______,          _______, _______,                                              \
                                                           _______,          _______,                                                       \
                                         _______, _______, _______,          _______, _______, _______                                      \
@@ -50,6 +51,18 @@
     _______, XXXXXXX, XXXXXXX, KC_CIRC, KC_PLUS, XXXXXXX, _______,          _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
     _______, KC_TILD, XXXXXXX, KC_UNDS, KC_MINS, XXXXXXX,                            KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______, \
     _______, XXXXXXX, KC_LPRN, KC_LBRC, KC_LCBR, XXXXXXX, _______,          _______, XXXXXXX, KC_RCBR, KC_RBRC, KC_RPRN, XXXXXXX, _______, \
+    _______, _______, _______, _______, _______,                                              _______, _______, _______, _______, _______, \
+                                                 _______, _______,          _______, _______,                                              \
+                                                          _______,          _______,                                                       \
+                                        _______, _______, _______,          _______, _______, _______                                      \
+    ),
+
+    /* 3: Arrows */
+    [_ARWS] = KEYMAP(
+    _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______,                            KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______,                                              _______, _______, _______, _______, _______, \
                                                  _______, _______,          _______, _______,                                              \
                                                           _______,          _______,                                                       \
@@ -91,6 +104,7 @@
 
     };
   '';
+  # }}}
 
   # fzf shell keybinds:
   # CTRL-R: search history
