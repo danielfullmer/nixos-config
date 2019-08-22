@@ -67,6 +67,6 @@ in
     { address = "0.0.0.0"; prefixLength = 0; via = "30.0.0.84"; options = { table = "zerotier"; }; }
   ];
   networking.localCommands = ''
-    ip rule add from ${machines.zerotierIP.${config.networking.hostName}} table zerotier
+    ip rule add from 30.0.0.0/24 table zerotier
   '';
 }
