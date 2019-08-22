@@ -1,5 +1,13 @@
 { config, lib, pkgs, ... }:
 
+let
+  denyInternet = ''
+    allow 127.0.0.1;
+    allow ::1;
+    allow 30.0.0.0/24;
+    deny all;
+  '';
+in
 {
   imports = [
     ../profiles/base.nix
@@ -165,6 +173,7 @@
     locations."/".proxyPass = "http://127.0.0.1:5001/";
     forceSSL = true;
     enableACME = true;
+    extraConfig = denyInternet;
   };
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
@@ -322,9 +331,9 @@
   # and additionally pass through the fdroid repo it generates via nginx.
   services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/";
-    basicAuthFile = "/var/secrets/htpasswd";
     forceSSL = true;
     enableACME = true;
+    extraConfig = denyInternet;
   };
   secrets."htpasswd" = { user = "nginx"; group = "nginx"; };
   services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
