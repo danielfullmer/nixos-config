@@ -78,14 +78,15 @@ with lib;
   # Disabled to hopefully reduce latency, and since tiling window managers don't use many compositing features anyway.
   #services.compton.enable = true;
 
+  location = {
+    latitude = 41.3;
+    longitude = -72.9;
+  };
   services.redshift = {
-    # Enable this in the individual machines
-    latitude = "41";
-    longitude = "-73";
-      temperature = {
-        day = 5500;
-        night = 3700;
-      };
+    temperature = {
+      day = 5500;
+      night = 3700;
+    };
   };
 
   hardware.pulseaudio = {
