@@ -13,6 +13,8 @@ in
     ../profiles/base.nix
   ];
 
+  system.stateVersion = "19.03";
+
   networking.hostName = "gauss";
   networking.hostId = "394ac2e1";
   networking.nameservers = [ "8.8.8.8" ];

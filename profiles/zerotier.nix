@@ -41,6 +41,8 @@ let
 
   # Convert a string like "8056c2e21c36f91e" to the zerotier network interface name like "ztmjfpigyc"
   ifrname = nwid: "zt" + (toBase32 (nwid40 (bytes nwid)));
+
+  machines = import ../machines;
 in
 {
   services.zerotierone.enable = true;
@@ -51,7 +53,20 @@ in
 
   systemd.services.zerotierone.serviceConfig.TimeoutSec = 10; # Zerotier sometimes decides not to shutdown quickly
 
-  networking.hosts = let
-    machines = import ../machines;
-  in mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;
+  networking.hosts = mapAttrs' (machine: ip: nameValuePair ip [ machine ]) machines.zerotierIP;
+
+  # If we have incoming traffic to our ZT address from an internet address--this traffic has been forwareded from our external machine.
+  # Ensure any traffic responding to this goes out on the right interface.
+  networking.iproute2 = {
+    enable = true;
+    rttablesExtraConfig = ''
+      1      zerotier
+    '';
+  };
+  networking.interfaces."ztmjfpigyc".ipv4.routes = [
+    { address = "0.0.0.0"; prefixLength = 0; via = "30.0.0.84"; options = { table = "zerotier"; }; }
+  ];
+  networking.localCommands = ''
+    ip rule add from ${machines.zerotierIP.${config.networking.hostName}} table zerotier
+  '';
 }
