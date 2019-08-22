@@ -20,7 +20,7 @@ in
     ncdu
     bmon
     wget
-    cachix
+    #cachix
 
     zerotierone
 
