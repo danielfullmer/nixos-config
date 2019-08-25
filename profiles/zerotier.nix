@@ -63,10 +63,19 @@ in
       1      zerotier
     '';
   };
+
   networking.interfaces."ztmjfpigyc".ipv4.routes = [
     { address = "0.0.0.0"; prefixLength = 0; via = "30.0.0.84"; options = { table = "zerotier"; }; }
   ];
   networking.localCommands = ''
     ip rule add from 30.0.0.0/24 table zerotier
   '';
+
+  # If using network-interfaces-scripts instead of networkd, need to set it up to depend on zerotier
+  systemd.services."network-addresses-ztmjfpigyc".bindsTo = [ "zerotierone.service" ];
+
+  # Override some defaults so the whole network-setup.service doesn't get held up by this interface
+  systemd.services."network-addresses-ztmjfpigyc".wantedBy = mkForce [ "network-link-ztmjfpigyc.service" ];
+  systemd.services."network-addresses-ztmjfpigyc".before = mkForce [ ];
+  systemd.services."network-link-ztmjfpigyc".wantedBy = mkForce [];
 }
