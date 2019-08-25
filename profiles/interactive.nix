@@ -90,7 +90,6 @@ in
       chown danielrf:danielrf .gnupg
       chmod 700 .gnupg
       ln -fs ${../dotfiles}/.latexmkrc
-      mkdir -p .local/bin
       ln -fs ${../dotfiles}/.taskrc
       touch .zshrc
       chown danielrf:danielrf .zshrc
