@@ -349,8 +349,8 @@ in
     port = 8085;
     # TODO: Extract from NixDroid configuration
     deviceFamily = "crosshatch";
-    platformFingerprint = "FAAE6B5D98FC8FB1589F9D9767904109EE360980907DF5BB33CB6D42A5AC7111";
-    avbFingerprint = "DB6EF54AC9112478038F0DC3E8D919817984B486433ADFA665356089074ACAE4";
+    signatureFingerprint = "30E3A2C19024A208DF0D4FE0633AE3663B22AD4868F446B1AC36D526CA8E95FA";
+    avbFingerprint = "F7B29168803BA73C31641D2770C2A84D4FF68C157F0B8BFE0BDC1958D4310491";
   };
   services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
     locations."/".root = config.services.attestation-server.package.static;

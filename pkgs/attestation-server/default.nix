@@ -1,8 +1,9 @@
 { callPackage, lib, substituteAll, makeWrapper, fetchFromGitHub, jre,
   listenHost ? "localhost",
   port ? 8080,
-  domain ? "",
-  platformFingerprint ? "",
+  applicationId ? "org.nixdroid.auditor",
+  domain ? "example.org",
+  signatureFingerprint ? "",
   deviceFamily ? "",
   avbFingerprint ? ""
 }:
@@ -11,27 +12,24 @@ let
 in
 buildGradle {
   pname = "AttestationServer";
-  version = "2019-07-14";
+  version = "2019-08-21";
 
   envSpec = ./gradle-env.json;
 
   src = fetchFromGitHub {
     owner = "grapheneos";
     repo = "AttestationServer";
-    rev = "cb580bb94346abfa117d8a2d98fc266f11628e06";
-    sha256 = "1gbgg320a8gk70rryp5s4g92j52f0h4ifs7b44p1aqgj4fnv50x8";
+    rev = "03a3c1d44dabbeab8457460ca5e469b9e6a08743";
+    sha256 = "0rya7qvibwxq9b586ljlnbhrgxvfvcbsgj5f2663sf5x9hdla2px";
   };
 
-  patches = [
-    (substituteAll { src = ./0001-Custom-listen-settings.patch; inherit listenHost port; })
-  ] ++ lib.optional (domain != "") (substituteAll { src = ./0002-Custom-domain.patch; inherit domain; })
-    ++ lib.optional (platformFingerprint != "") (substituteAll {
-      src = ./0003-Custom-fingerprints.patch;
-      inherit platformFingerprint;
-      # TODO: Allow passing in a bunch of fingerprints so multiple custom devices can cross validate each other
-      taimen_avbFingerprint = if (deviceFamily == "taimen") then avbFingerprint else "DISABLED_CUSTOM_TAIMEN";
-      crosshatch_avbFingerprint = if (deviceFamily == "crosshatch") then avbFingerprint else "DISABLED_CUSTOM_CROSSHATCH";
-    });
+  patches = [ (substituteAll {
+    src = ./customized-attestation-server.patch;
+    inherit listenHost port domain applicationId signatureFingerprint;
+
+    taimen_avbFingerprint = if (deviceFamily == "taimen") then avbFingerprint else "DISABLED_CUSTOM_TAIMEN";
+    crosshatch_avbFingerprint = if (deviceFamily == "crosshatch") then avbFingerprint else "DISABLED_CUSTOM_CROSSHATCH";
+  }) ];
 
   JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF8";
 

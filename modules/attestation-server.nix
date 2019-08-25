@@ -20,12 +20,10 @@ in
     };
 
     domain = mkOption {
-      default = "attestation.app";
       type = types.str;
     };
 
-    platformFingerprint = mkOption {
-      default = "";
+    signatureFingerprint = mkOption {
       type = types.str;
     };
 
@@ -41,7 +39,7 @@ in
 
     package = mkOption {
       default = pkgs.attestation-server.override {
-        inherit (cfg) listenHost port domain platformFingerprint deviceFamily avbFingerprint;
+        inherit (cfg) listenHost port domain signatureFingerprint deviceFamily avbFingerprint;
       };
       type = types.path;
     };
