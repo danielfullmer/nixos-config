@@ -27,7 +27,7 @@ in
       { sourcePort = 443; destination = "${machines.zerotierIP.bellman}:443"; proto = "tcp"; }
     ];
     externalInterface = "ens3";
-    #externalIP = externalIP;
+    internalInterfaces = [ "ztmjfpigyc" ];
   };
 
   nix.gc = {
