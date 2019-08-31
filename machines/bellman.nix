@@ -45,6 +45,7 @@ in
   # One zfs with mirrored 2x 2Tb HDDs, backed with 1x 500GB SSD
   # Seagate 2TB ST2000DM006 has 4096 size blocks: ashift=12
   # Samsung SSD 850/860 EVO 500G have 8192 size blocks: ashift=13
+  # However, vdevs can't be removed from a pool if they have different ashift values, so just use ashift=12 everywhere.
   boot.supportedFilesystems = [ "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
   boot.zfs.enableUnstable = true;

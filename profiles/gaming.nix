@@ -2,7 +2,7 @@
 {
   hardware.opengl.driSupport32Bit = true; # Needed for steam
   hardware.pulseaudio.support32Bit = true;
-  hardware.steam-hardware.enable = true; # Provides udev rules for controller and HTC vive
+  hardware.steam-hardware.enable = true; # Provides udev rules for controller, HTC vive, and Valve Index
 
   services.xserver.modules = [ pkgs.xlibs.xf86inputjoystick ];
 
