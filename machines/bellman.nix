@@ -254,6 +254,17 @@ in
     ip addr add 2001:470:1f06:bae::2/64 dev he-ipv6
     ip route add ::/0 dev he-ipv6 pref high
   '';
+#  networking.sits."he-ipv6" = {
+#    dev = "he-dummy"; # TODO: See below
+#    remote = "209.51.161.14";
+#    ttl = 255;
+#  };
+#  systemd.services."he-ipv6-netdev".bindsTo = lib.mkForce []; # Otherwise networking.sits.he-ipv6.dev must be set and it forces a hard dependency
+#  systemd.services."he-ipv6-netdev".after = lib.mkForce [ "network-pre.target" ];
+#  networking.interfaces."he-ipv6" = {
+#    ipv6.addresses = [ { address = "2001:470:1f06:bae::2"; prefixLength = 64; } ];
+#    ipv6.routes = [ { address = "::"; prefixLength = 0; } ];
+#  };
 
   services.nginx.virtualHosts."nextcloud.fullmer.me" = {
     locations."/".proxyPass = "http://10.100.0.2/";
