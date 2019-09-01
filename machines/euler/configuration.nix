@@ -12,8 +12,6 @@
     ../../profiles/gdrive.nix
   ];
 
-  theme.base16Name = "3024";
-
   networking.hostName = "euler";
   networking.hostId = "56c53b14";
 

@@ -11,8 +11,6 @@
     ../../profiles/gdrive.nix
   ];
 
-  theme.base16Name = "eighties";
-
   networking.hostName = "nyquist";
   networking.hostId = "d8ab690e";
 

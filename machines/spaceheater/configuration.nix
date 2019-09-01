@@ -2,10 +2,8 @@
 
 {
   imports = [
-    ../profiles/base.nix
+    ../../profiles/base.nix
   ];
-
-  theme.base16Name = "irblack";
 
   networking.hostName = "spaceheater";
   networking.wireless.enable = true;

@@ -25,8 +25,6 @@ in
     ../../xrdesktop-overlay
   ];
 
-  theme.base16Name = "chalk";
-
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
   #networking.wireless.enable = true;
