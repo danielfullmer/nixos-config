@@ -10,7 +10,7 @@ let
 in
 rec {
   bellman = nixos ./machines/bellman;
-  bellman-vfio = nixos ./machines/bellman-vfio;
+  #bellman-vfio = nixos ./machines/bellman-vfio;
   nyquist = nixos ./machines/nyquist;
   euler = nixos ./machines/euler;
   #banach = (./machines/banach.nix;).system;
