@@ -42,10 +42,6 @@
       '';
   };
 
-  # If the host is big enough to use all those packages, it can probably handle zrap swap and tmpfs
-  zramSwap.enable = true;
-  #boot.tmpOnTmpfs = true; # XXX: Building big programs doesn't work so hot with this.
-
   services.xserver.desktopManager.extraSessionCommands = ''
     ${pkgs.kdeconnect}/lib/libexec/kdeconnectd &
     ${pkgs.kdeconnect}/bin/kdeconnect-indicator &

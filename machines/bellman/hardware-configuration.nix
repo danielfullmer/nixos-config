@@ -41,4 +41,7 @@
 
   nix.maxJobs = 2;
   nix.buildCores = 4;
+
+  zramSwap.enable = true;
+  #boot.tmpOnTmpfs = true; # XXX: Building big programs doesn't work so hot with this.
 }
