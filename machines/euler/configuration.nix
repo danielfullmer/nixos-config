@@ -2,46 +2,17 @@
 
 {
   imports = [
-    ../hardware/surfacepro4.nix
-
-    ../profiles/base.nix
-    ../profiles/interactive.nix
-    ../profiles/extended.nix
-    ../profiles/yubikey.nix
-    ../profiles/syncthing.nix
-    ../profiles/desktop/default.nix
-    ../profiles/academic.nix
-    ../profiles/gdrive.nix
+    ../../profiles/base.nix
+    ../../profiles/interactive.nix
+    ../../profiles/extended.nix
+    ../../profiles/yubikey.nix
+    ../../profiles/syncthing.nix
+    ../../profiles/desktop/default.nix
+    ../../profiles/academic.nix
+    ../../profiles/gdrive.nix
   ];
 
   theme.base16Name = "3024";
-
-  system.stateVersion = "17.03";
-
-  boot = {
-    # Use the gummiboot efi boot loader.
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-
-    extraModulePackages = [ config.boot.kernelPackages.rtl8812au ]; # Just in case we need a USB wifi device
-    #blacklistedKernelModules = [ "intel_ipts" ]; # Unstable for me at the moment
-  };
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/euler";
-      fsType = "btrfs";
-      options = [ "ssd" "discard" "compress=lzo" "autodefrag" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/508F-B0FC";
-      fsType = "vfat";
-    };
-
-  swapDevices = [ ];
-
-  nix.maxJobs = 2;
-  nix.buildCores = 4;
 
   networking.hostName = "euler";
   networking.hostId = "56c53b14";

@@ -9,12 +9,13 @@ let
   nixos = confFile: (pkgs.nixos (import confFile)).toplevel;
 in
 rec {
-  bellman = nixos ./machines/bellman.nix;
-  bellman-vfio = nixos ./machines/bellman-vfio.nix;
-  nyquist = nixos ./machines/nyquist.nix;
-  euler = nixos ./machines/euler.nix;
+  bellman = nixos ./machines/bellman;
+  bellman-vfio = nixos ./machines/bellman-vfio;
+  nyquist = nixos ./machines/nyquist;
+  euler = nixos ./machines/euler;
   #banach = (./machines/banach.nix;).system;
-  spaceheater = nixos ./machines/spaceheater.nix;
+  spaceheater = nixos ./machines/spaceheater;
+  gauss = nixos ./machines/gauss;
 
   tests.desktop = lib.hydraJob (import ./tests/desktop.nix {});
   tests.gpg-agent = lib.hydraJob (import ./tests/gpg-agent.nix {});
@@ -30,7 +31,8 @@ rec {
         #bellman-vfio
         nyquist
         euler
-        spaceheater
+        #spaceheater
+        gauss
 
         tests.desktop
         tests.gpg-agent

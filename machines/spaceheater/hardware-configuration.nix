@@ -1,12 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ../profiles/base.nix
-  ];
-
-  theme.base16Name = "irblack";
-
   system.stateVersion = "17.03";
 
   boot.loader.grub.enable = true;
@@ -34,9 +28,4 @@
     ];
 
   nix.maxJobs = lib.mkDefault 2;
-
-  networking.hostName = "spaceheater";
-  networking.wireless.enable = true;
-
-  system.autoUpgrade.enable = true;
 }
