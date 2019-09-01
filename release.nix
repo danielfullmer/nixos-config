@@ -21,7 +21,7 @@ rec {
   tests.gpg-agent-x11 = lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
   tests.latex-pdf = lib.hydraJob (import ./tests/latex-pdf.nix {});
   tests.vim = lib.hydraJob (import ./tests/vim.nix {});
-  tests.zerotier = lib.hydraJob (import ./tests/zerotier.nix {});
+  tests.zerotier = lib.hydraJob (import ./tests/zerotier {});
 
   tested = releaseTools.aggregate {
     name = "tested";
