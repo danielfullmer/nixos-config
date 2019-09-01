@@ -82,4 +82,15 @@ in
   systemd.services."network-addresses-ztmjfpigyc".before = mkForce [ ];
   systemd.services."network-link-ztmjfpigyc".wantedBy = mkForce [ "multi-user.target" ];
   systemd.services."network-link-ztmjfpigyc".before = mkForce [];
+
+  # Kinda gross hack to make upnp work. Holds open an incoming firewall exception from ssdp udp source port (1900) for 3 seconds
+  # Couldn't figure out how to make SSDP connection tracking work.
+  networking.firewall.extraPackages = [ pkgs.ipset ];
+  networking.firewall.extraCommands = ''
+    ipset -exist create upnp hash:ip,port timeout 3
+    iptables -A OUTPUT -d 239.255.255.250/32 -p udp -m udp --dport 1900 -j SET --add-set upnp src,src --exist
+    iptables -A INPUT -p udp -m set --match-set upnp dst,dst -j ACCEPT
+  '';
+
+
 }
