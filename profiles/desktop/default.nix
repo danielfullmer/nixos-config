@@ -64,14 +64,12 @@ with lib;
       powerline-fonts
       font-awesome-ttf
       corefonts
-      dejavu_fonts
       lmodern
       #source-code-pro
       roboto
       roboto-mono
       roboto-slab
       noto-fonts
-      noto-fonts-emoji
     ]);
   };
 
