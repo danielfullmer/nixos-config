@@ -31,4 +31,24 @@ in
     automatic = true;
     options = "-d";
   };
+
+  # TODO: Forward to something that resolves over DNS over HTTPS for privacy
+  # This is intended just for wireguard clients
+  services.unbound = {
+    enable = true;
+    interfaces = [ "127.0.0.1" "::1" "10.200.0.1" ];
+    allowedAccess = [ "127.0.0.0/24" "10.200.0.0/24" ];
+    forwardAddresses = [ "8.8.8.8" "8.8.4.4" ];
+    extraConfig = ''
+      local-zone: "daniel.fullmer.me." static
+      local-data: "attestation.daniel.fullmer.me.  IN A 10.200.0.2"
+      local-data: "hydra.daniel.fullmer.me.        IN A 10.200.0.2"
+      local-data: "playmaker.daniel.fullmer.me.    IN A 10.200.0.2"
+      local-data: "fdroid.daniel.fullmer.me.       IN A 10.200.0.2"
+      local-data: "office.daniel.fullmer.me.       IN A 10.200.0.2"
+      local-data: "daniel.fullmer.me.              IN A 10.200.0.2"
+      local-data: "nextcloud.fullmer.me.           IN A 10.200.0.2"
+    '';
+  };
+  networking.networkmanager.dns = lib.mkForce "default";
 }
