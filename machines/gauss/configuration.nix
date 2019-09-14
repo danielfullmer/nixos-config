@@ -9,6 +9,7 @@ in
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/wireguard.nix
   ];
 
   networking.hostName = "gauss";
@@ -23,7 +24,7 @@ in
       { sourcePort = 443; destination = "${machines.zerotierIP.bellman}:443"; proto = "tcp"; }
     ];
     externalInterface = "ens3";
-    internalInterfaces = [ "ztmjfpigyc" ];
+    internalInterfaces = [ "ztmjfpigyc" "wg0" ];
   };
 
   nix.gc = {

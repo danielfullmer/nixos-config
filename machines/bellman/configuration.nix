@@ -1,10 +1,12 @@
 { config, lib, pkgs, ... }:
 
 let
+  # Allow localhost, zerotier, and wireguard hosts
   denyInternet = ''
     allow 127.0.0.1;
     allow ::1;
     allow 30.0.0.0/24;
+    allow 10.200.0.0/24;
     deny all;
   '';
 in
@@ -21,6 +23,7 @@ in
     ../../profiles/academic.nix
     ../../profiles/postfix.nix
     ../../profiles/gdrive.nix
+    ../../profiles/wireguard.nix
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
   ];
@@ -328,6 +331,7 @@ in
     locations."/verify".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/verify";
     forceSSL = true;
     enableACME = true;
+    extraConfig = denyInternet;
   };
 
   # For testing xrdesktop
