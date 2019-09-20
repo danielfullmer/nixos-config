@@ -64,11 +64,11 @@ in
     '';
   };
 
-  networking.interfaces."ztmjfpigyc".ipv4.routes = [
+  networking.interfaces."ztmjfpigyc".ipv4.routes = mkIf (config.networking.hostName != "gauss") [
     { address = "0.0.0.0"; prefixLength = 0; via = "30.0.0.84"; options = { table = "zerotier"; }; }
   ];
 
-  networking.localCommands = ''
+  networking.localCommands = mkIf (config.networking.hostName != "gauss") ''
     ip rule add from 30.0.0.0/24 table zerotier
   '';
 
