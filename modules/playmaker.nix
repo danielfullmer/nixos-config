@@ -27,6 +27,7 @@ in
       description = "Fdroid repository manager fetching apps from Play Store";
       wantedBy = [ "multi-user.target" ];
       requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
 
       path = with pkgs; [ fdroidserver jdk ];
       environment = {
@@ -38,6 +39,8 @@ in
 
       serviceConfig = {
         ExecStart = "${pkgs.playmaker}/bin/pm-server -f -d";
+        Restart = "on-failure";
+        RestartSec = "3";
 
         # TODO: optionally set HTTPS_CERTFILE / HTTPS_KEYFILE
         # Patch for port, listen address?
