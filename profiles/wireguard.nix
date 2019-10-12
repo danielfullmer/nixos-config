@@ -31,7 +31,7 @@ with lib;
       { # gauss
         publicKey = "EaKu1LrJO5PBwrXk5u34fwMa7uzx1J4UF9WTAZA3mWQ=";
         allowedIPs = [ "10.200.0.0/24" ];
-        endpoint = "gauss.daniel.fullmer.me:${toString config.networking.wireguard.interfaces.wg0.listenPort}";
+        endpoint = "167.71.187.97:${toString config.networking.wireguard.interfaces.wg0.listenPort}";
       }
     ];
     privateKeyFile = "/var/secrets/${config.networking.hostName}-wireguard.private";
