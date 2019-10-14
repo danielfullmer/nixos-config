@@ -1,4 +1,11 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
+import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, lib, ...} :
+
+# A few connectivity modes to test:
+# 1) Direct local network access
+# 2) uPNP mediated UDP tunneling
+# 3) Traffic passing through moon
+# 4) Double-nat stuff
+# 5) UDP hole punching
 
 let
   networkZTConfig = {
@@ -26,8 +33,7 @@ let
   # # Following instructions from: https://www.zerotier.com/manual.shtml#4_4
   # zerotier-idtool initmoon identity.public > moon.json
   #
-  # # Add moon IP address as stable endpoint. This IP address depends on the ordering of the nodes :(
-  # # TODO: Make robust to reordering
+  # # Add moon IP address as stable endpoint.
   # cat moon.json | jq '. + {roots: ([.roots[0] + {stableEndpoints: ["192.168.1.3/9993"]}])}' > moon-modified.json
   #
   # # Sign this moon definition
@@ -51,15 +57,31 @@ rec {
 
   nodes = {
     moon =
-      { pkgs, ...}: {
-        imports = [common];
+      { pkgs, ...}:
+      { imports = [ common ];
         systemd.services.zerotierone.preStart = ''
           mkdir -p /var/lib/zerotier-one
           cp ${moonFiles}/identity.{public,secret} /var/lib/zerotier-one/
         '';
+
+        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
+          { address = "192.168.1.3"; prefixLength = 24; }
+        ];
       };
-    controller = { pkgs, ...}: { imports = [common]; };
-    client = { pkgs, ...}: { imports = [common]; };
+    controller =
+      { pkgs, ...}:
+      { imports = [common];
+        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
+          { address = "192.168.1.1"; prefixLength = 24; }
+        ];
+      };
+    client =
+      { pkgs, ...}:
+      { imports = [common];
+        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
+          { address = "192.168.1.2"; prefixLength = 24; }
+        ];
+      };
   };
 
   testScript =
