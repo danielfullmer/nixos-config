@@ -45,6 +45,12 @@ let
       services.zerotierone.enable = true;
       nixpkgs.config.allowUnfree = true;
 
+      # nixpkgs commit fe3da83b7e26b6f7cdde7a457a794c215d16e969 with
+      # boot.enableContainers causes "tun" to load at boot.  For some reason
+      # this breaks the test.
+      # TODO: Fix
+      boot.enableContainers = false;
+
       # Ensure .moon file is available to all nodes
       systemd.services.zerotierone.preStart = ''
         mkdir -p /var/lib/zerotier-one/moons.d
