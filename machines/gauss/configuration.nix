@@ -16,6 +16,8 @@ in
   networking.hostId = "394ac2e1";
   networking.nameservers = [ "8.8.8.8" ];
 
+  documentation.enable = false;
+
   #networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.nat = {
     enable = true;
