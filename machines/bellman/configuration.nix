@@ -243,6 +243,9 @@ in
     config = { config, pkgs, ... }:
     {
       networking.useHostResolvConf = true;
+      networking.hosts = {
+        "10.100.0.1" = [ "office.daniel.fullmer.me" ];
+      };
 
       services.nextcloud = {
         enable = true;
@@ -285,6 +288,7 @@ in
   docker-containers.onlyoffice = {
     image = "onlyoffice/documentserver";
     ports = [ "9980:80" ];
+    extraDockerOptions = [ "--add-host=office.daniel.fullmer.me:30.0.0.222" ];
   };
   services.nginx.virtualHosts."office.daniel.fullmer.me" = {
     locations."/" = {
