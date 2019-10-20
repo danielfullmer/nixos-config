@@ -20,7 +20,7 @@ in
     where = "/mnt/${remote}";
     type = "fuse";
     options = "_netdev";
-    wantedBy = [ "remote-fs.target" ];
+    wantedBy = [ "default.target" ];
   }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
 
   environment.systemPackages = with pkgs; [ rclone ];
