@@ -69,24 +69,6 @@ in
   services.kbfs.enable = true;
   services.kbfs.mountPoint = "/keybase";
 
-  # TODO: See https://github.com/keybase/client/issues/3508
-  # systemd.user.sockets.keybase = {
-  #   description = "Keybase socket";
-  #   after = [ "network.target" ];
-  #   wantedBy = [ "sockets.target" ];
-  #   socketConfig.ListenStream = "%t/keybase/keybased.sock";
-  # };
-
-  systemd.user.services.keybase = {
-    after = [ "network.target" ];
-    wantedBy = [ "default.target" ]; # TODO: Remove this when socket-activation works
-  };
-
-  systemd.user.services.kbfs = {
-    after = [ "keybase.target" ];
-    wantedBy = [ "default.target" ];
-  };
-
   # TODO: Remove this hack when keybase becomes multi-user
   system.activationScripts.keybase = lib.stringAfter [ "users" "groups" ] ''
     mkdir -p /keybase 2>/dev/null
