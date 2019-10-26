@@ -14,6 +14,7 @@ in
 
   # Use gpg-agent instead of system-wide ssh-agent
   programs.ssh.startAgent = false;
+  programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
   programs.gnupg = {
     agent.enable = true;
     agent.enableSSHSupport = true;
