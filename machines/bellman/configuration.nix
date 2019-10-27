@@ -24,6 +24,7 @@ in
     ../../profiles/postfix.nix
     ../../profiles/gdrive.nix
     ../../profiles/wireguard.nix
+    ../../profiles/tor.nix
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
   ];
@@ -174,14 +175,6 @@ in
   secrets."bellman-nix-key.sec" = {};
 
 #  services.home-assistant.enable = true;
-#
-#  services.tor = {
-#    enable = true;
-#    hiddenServices."bellman".map = [
-#      { port = 22; } # SSH
-#      { port = 8123; } # Home-assistant
-#    ];
-#  };
 
   systemd.user.services.gmailieer = {
     serviceConfig = {

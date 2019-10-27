@@ -9,6 +9,7 @@
     ../../profiles/desktop/default.nix
     ../../profiles/academic.nix
     ../../profiles/gdrive.nix
+    ../../profiles/tor.nix
   ];
 
   networking.hostName = "nyquist";
