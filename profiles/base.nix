@@ -33,6 +33,7 @@ in
   networking.hosts."${machines.zerotierIP.bellman}" = (map (name: "${name}.${config.networking.domain}") [ 
     "attestation" "hydra" "playmaker" "fdroid" "office"
   ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
+  networking.hosts."${machines.zerotierIP.gauss}" = [ "searx.daniel.fullmer.me" ];
 
   programs.ssh.knownHosts = mapAttrs (machine: publicKey: { publicKey = publicKey; }) machines.sshPublicKey
     // {

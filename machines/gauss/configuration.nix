@@ -5,6 +5,15 @@
 # Forward any sensitive service to another host over zerotier
 let
   machines = import ../default.nix;
+
+  # Allow localhost, zerotier, and wireguard hosts
+  denyInternet = ''
+    allow 127.0.0.1;
+    allow ::1;
+    allow 30.0.0.0/24;
+    allow 10.200.0.0/24;
+    deny all;
+  '';
 in
 {
   imports = [
@@ -43,6 +52,7 @@ in
     forwardAddresses = [ "8.8.8.8" "8.8.4.4" ];
     extraConfig = ''
       local-zone: "daniel.fullmer.me." static
+      local-data: "searx.daniel.fullmer.me.               IN A 10.200.0.1"
       local-data: "attestation.daniel.fullmer.me.  IN A 10.200.0.2"
       local-data: "hydra.daniel.fullmer.me.        IN A 10.200.0.2"
       local-data: "playmaker.daniel.fullmer.me.    IN A 10.200.0.2"
@@ -53,4 +63,20 @@ in
     '';
   };
   networking.networkmanager.dns = lib.mkForce "default";
+
+  services.searx.enable = true; # Default port 8888. http://searx.daniel.fullmer.me
+  services.searx.configFile = "/var/lib/searx/settings.yml"; # TODO: Nixify
+
+  # Not opening firewall port for this anyway, so only accessible over zerotier or wireguard
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts = {
+      "searx.daniel.fullmer.me" = {
+        locations."/".proxyPass = "http://127.0.0.1:8888/";
+        listen = [ { addr = "0.0.0.0"; port = 81; } ];
+        extraConfig = denyInternet;
+      };
+    };
+  };
 }
