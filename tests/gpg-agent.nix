@@ -7,8 +7,11 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
     { config, pkgs, lib, ... }:
     {
       programs.ssh.startAgent = false;
-      programs.gnupg.agent.enable = true;
-      programs.gnupg.agent.enableSSHSupport = true;
+      programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+        pinentryFlavor = "curses";
+      };
 
       environment.systemPackages = [ pkgs.gnupg ];
 
