@@ -19,8 +19,7 @@ in
     what = "${rclonemount}#${remote}:";
     where = "/mnt/${remote}";
     type = "fuse";
-    options = "_netdev";
-    wantedBy = [ "default.target" ];
+    options = "_netdev,nofail"; # nofail makes it wanted, but not required, by remote-fs.target
   }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
 
   environment.systemPackages = with pkgs; [ rclone ];
