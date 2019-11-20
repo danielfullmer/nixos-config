@@ -159,6 +159,26 @@ with lib;
     export GDK_PIXBUF_MODULE_FILE=$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)
   '';
 
+  programs.chromium = {
+    enable = true;
+    extensions = [
+      "kcgpggonjhmeaejebeoeomdlohicfhce" # Cookie Remover
+      "ihlenndgcmojhcghmfjfneahoeklbjjh" # cVim
+      "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
+      "cimiefiiaegbelhefglklhhakcgmhkai" # Plasma integration
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+      "pgdnlhfefecpicbbihgmbmffkjpaplco" # uBlock Origin Extra
+      "ogfcmafjalglgifnmanfmnieipoejdcf" # uMatrix
+      "naepdomgkenhinolocfifgehidddafch" # Browserpass
+    ];
+    extraOpts = {
+      ExtensionInstallForcelist = [
+        # Bypass Paywalls: Fite me IRL Google.
+        "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml"
+      ];
+    };
+  };
+
   programs.browserpass.enable = true;
 
   environment.variables = {
