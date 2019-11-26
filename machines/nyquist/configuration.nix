@@ -22,4 +22,7 @@
   environment.systemPackages = with pkgs; [ keyboard-firmware ];
 
   system.autoUpgrade.enable = true;
+
+  programs.adb.enable = true;
+  users.users.danielrf.extraGroups = [ "adbusers" ];
 }
