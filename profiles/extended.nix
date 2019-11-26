@@ -6,7 +6,6 @@
 
     emacs
     pandoc
-    bitlbee
     weechat
     mutt
     taskwarrior

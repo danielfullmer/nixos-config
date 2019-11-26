@@ -15,7 +15,6 @@
   networking.hostName = "nyquist";
   networking.hostId = "d8ab690e";
 
-  services.bitlbee.enable = true;
   services.plex.enable = true;
   networking.firewall.allowedTCPPorts = [ 32400 ];
 
