@@ -7,13 +7,13 @@ with lib;
     enable = true;
     xkbOptions = "compose:ralt";
 
+    displayManager.defaultSession = "desktop+i3";
     displayManager.lightdm = {
       enable = true;
       background = toString config.theme.background;
     };
 
     windowManager = {
-      default = "i3";
       i3.enable = true;
       i3.config = ''
         # Please see http://i3wm.org/docs/userguide.html for a complete reference!
@@ -30,7 +30,6 @@ with lib;
     };
 
     desktopManager = {
-      default = "desktop";
       xterm.enable = false;
       session = [ {
         name = "desktop";

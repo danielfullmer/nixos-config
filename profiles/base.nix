@@ -18,8 +18,8 @@ in
   #services.fail2ban.enable = true; # Currently causes problems restarting, See fail2ban PR 1618. nixpkgs out of date
 
   networking.domain = "daniel.fullmer.me";
-  networking.defaultMailServer = {
-    directDelivery = true;
+  services.ssmtp = {
+    enable = true;
     hostName = "bellman";
     root = "cgibreak@gmail.com";
   };
