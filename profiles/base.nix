@@ -31,7 +31,7 @@ in
 
   # TODO: Set to 127.0.0.1 if we are bellman?
   networking.hosts."${machines.zerotierIP.bellman}" = (map (name: "${name}.${config.networking.domain}") [ 
-    "attestation" "hydra" "playmaker" "fdroid" "office"
+    "attestation" "hydra" "playmaker" "fdroid" "office" "zoneminder"
   ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
   networking.hosts."${machines.zerotierIP.gauss}" = [ "searx.daniel.fullmer.me" ];
 

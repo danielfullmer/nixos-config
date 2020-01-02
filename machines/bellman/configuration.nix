@@ -28,6 +28,7 @@ in
     ../../profiles/nextcloud.nix
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
+    ../../profiles/pxe.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
@@ -175,7 +176,6 @@ in
   '';
   secrets."bellman-nix-key.sec" = {};
 
-#  services.home-assistant.enable = true;
 
   systemd.user.services.gmailieer = {
     serviceConfig = {
@@ -260,9 +260,12 @@ in
     extraConfig = denyInternet;
   };
 
+
   # For testing xrdesktop
-  services.xserver.desktopManager.gnome3.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+   services.xserver.desktopManager.gnome3.enable = true;
+   services.xserver.desktopManager.plasma5.enable = true;
+
 
   programs.ccache.enable = true;
+
 }

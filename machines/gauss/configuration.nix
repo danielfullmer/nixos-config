@@ -58,6 +58,7 @@ in
       local-data: "playmaker.daniel.fullmer.me.    IN A 10.200.0.2"
       local-data: "fdroid.daniel.fullmer.me.       IN A 10.200.0.2"
       local-data: "office.daniel.fullmer.me.       IN A 10.200.0.2"
+      local-data: "zoneminder.daniel.fullmer.me.   IN A 10.200.0.2"
       local-data: "daniel.fullmer.me.              IN A 10.200.0.2"
       local-data: "nextcloud.fullmer.me.           IN A 10.200.0.2"
     '';
