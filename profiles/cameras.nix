@@ -1,5 +1,15 @@
-{ config, pkgs, libs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # Allow localhost, zerotier, and wireguard hosts
+  denyInternet = ''
+    allow 127.0.0.1;
+    allow ::1;
+    allow 30.0.0.0/24;
+    allow 10.200.0.0/24;
+    deny all;
+  '';
+in
 {
   # Stuff for streaming cameras?
   # Currently unencrypted. Maybe fix in the future?

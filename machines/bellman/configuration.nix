@@ -29,6 +29,7 @@ in
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
     ../../profiles/pxe.nix
+    ../../profiles/cameras.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
