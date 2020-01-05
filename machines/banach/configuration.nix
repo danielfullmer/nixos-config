@@ -54,11 +54,11 @@ in
     });
   }) ];
 
-  systemd.services."rpi-camera-rtmp" = {
+  systemd.services."camera-livingroom" = {
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
     script = ''
-      ${rpi_ffmpeg.bin}/bin/ffmpeg -nostats -f video4linux2 -input_format h264 -video_size 640x480 -framerate 30 -i /dev/video0 -vcodec copy -f flv "rtmp://10.0.0.1/live/camera"
+      ${rpi_ffmpeg.bin}/bin/ffmpeg -nostats -f video4linux2 -input_format h264 -video_size 640x480 -framerate 30 -i /dev/video0 -vcodec copy -f flv "rtmp://10.0.0.1/live/livingroom"
     '';
     serviceConfig = {
       DynamicUser = true;
