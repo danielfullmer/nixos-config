@@ -65,20 +65,22 @@ in
   };
 
   networking.interfaces."ztmjfpigyc".ipv4.routes = mkIf (config.networking.hostName != "gauss") [
+    { address = "30.0.0.0"; prefixLength = 24; options = { dev = "ztmjfpigyc"; table = "zerotier"; }; }
     { address = "0.0.0.0"; prefixLength = 0; via = "30.0.0.84"; options = { table = "zerotier"; }; }
   ];
 
+  # TODO: This could also be just from our address
   networking.localCommands = mkIf (config.networking.hostName != "gauss") ''
     ip rule add from 30.0.0.0/24 table zerotier
   '';
 
 
   # If using network-interfaces-scripts instead of networkd, need to set it up to depend on zerotier
-  systemd.services."network-addresses-ztmjfpigyc".requires = [ "zerotierone.service" ];
+  systemd.services."network-addresses-ztmjfpigyc".bindsTo = [ "zerotierone.service" ];
   systemd.services."network-addresses-ztmjfpigyc".after = [ "zerotierone.service" ];
 
   # Override some defaults so the whole network-setup.service doesn't get held up by this interface
-  systemd.services."network-addresses-ztmjfpigyc".wantedBy = mkForce [ "network-link-ztmjfpigyc.service" "multi-user.target" ];
+  systemd.services."network-addresses-ztmjfpigyc".wantedBy = mkForce [ "network-link-ztmjfpigyc.service" "zerotierone.service" "multi-user.target" ];
   systemd.services."network-addresses-ztmjfpigyc".before = mkForce [ ];
   systemd.services."network-link-ztmjfpigyc".wantedBy = mkForce [ "multi-user.target" ];
   systemd.services."network-link-ztmjfpigyc".before = mkForce [];
