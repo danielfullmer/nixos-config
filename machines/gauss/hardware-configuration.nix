@@ -15,7 +15,7 @@ in
   fileSystems."/" = { device = "/dev/vda1"; fsType = "ext4"; };
 
   networking.defaultGateway = "167.71.176.1";
-  networking.defaultGateway6 = "";
+  networking.defaultGateway6 = "2604:a880:800:c1::1";
   networking.dhcpcd.enable = false;
   networking.usePredictableInterfaceNames = lib.mkForce true;
   networking.interfaces = {
@@ -25,7 +25,7 @@ in
         { address="10.17.0.5"; prefixLength=16; }
       ];
       ipv6.addresses = [
-        { address="fe80::bc4e:eeff:fe18:60e8"; prefixLength=64; }
+        { address="2604:a880:800:c1::3b8:4001"; prefixLength=64; }
       ];
     };
   };
