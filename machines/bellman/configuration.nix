@@ -28,7 +28,6 @@ in
     ../../profiles/nextcloud.nix
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
-    ../../profiles/pxe.nix
     ../../profiles/cameras.nix
   ];
 
@@ -36,6 +35,27 @@ in
   networking.hostId = "f6bb12be";
   #networking.wireless.enable = true;
   networking.networkmanager.enable = true;
+
+  # Router ipv6 isn't working. Lets tunnel through tunnelbroker.net. Notably helps zerotier connections as well
+  # TODO: Add a periodic client IP udpate
+  networking.localCommands = ''
+    ip tunnel add he-ipv6 mode sit remote 209.51.161.14 ttl 255
+
+    ip link set he-ipv6 up
+    ip addr add 2001:470:1f06:bae::2/64 dev he-ipv6
+    ip route add ::/0 dev he-ipv6 pref high
+  '';
+#  networking.sits."he-ipv6" = {
+#    dev = "he-dummy"; # TODO: See below
+#    remote = "209.51.161.14";
+#    ttl = 255;
+#  };
+#  systemd.services."he-ipv6-netdev".bindsTo = lib.mkForce []; # Otherwise networking.sits.he-ipv6.dev must be set and it forces a hard dependency
+#  systemd.services."he-ipv6-netdev".after = lib.mkForce [ "network-pre.target" ];
+#  networking.interfaces."he-ipv6" = {
+#    ipv6.addresses = [ { address = "2001:470:1f06:bae::2"; prefixLength = 64; } ];
+#    ipv6.routes = [ { address = "::"; prefixLength = 0; } ];
+#  };
 
   services.acpid.enable = true;
 
@@ -202,25 +222,7 @@ in
 
   system.autoUpgrade.enable = true;
 
-  # Router ipv6 isn't working. Lets tunnel through tunnelbroker.net. Notably helps zerotier connections as well
-  # TODO: Nixify this. Add a periodic client IP udpate
-  networking.localCommands = ''
-    ip tunnel add he-ipv6 mode sit remote 209.51.161.14 ttl 255
-    ip link set he-ipv6 up
-    ip addr add 2001:470:1f06:bae::2/64 dev he-ipv6
-    ip route add ::/0 dev he-ipv6 pref high
-  '';
-#  networking.sits."he-ipv6" = {
-#    dev = "he-dummy"; # TODO: See below
-#    remote = "209.51.161.14";
-#    ttl = 255;
-#  };
-#  systemd.services."he-ipv6-netdev".bindsTo = lib.mkForce []; # Otherwise networking.sits.he-ipv6.dev must be set and it forces a hard dependency
-#  systemd.services."he-ipv6-netdev".after = lib.mkForce [ "network-pre.target" ];
-#  networking.interfaces."he-ipv6" = {
-#    ipv6.addresses = [ { address = "2001:470:1f06:bae::2"; prefixLength = 64; } ];
-#    ipv6.routes = [ { address = "::"; prefixLength = 0; } ];
-#  };
+  #nix.package = import /home/danielrf/NixDroid/misc/nix.nix { inherit pkgs; };
 
 
   services.playmaker.enable = true; # Port 5000 (customize in future)
