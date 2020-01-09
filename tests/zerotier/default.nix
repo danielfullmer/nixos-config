@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, lib, ...} :
+import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, lib, ...} :
 
 # A few connectivity modes to test:
 # 1) Direct local network access
@@ -61,6 +61,8 @@ in
 rec {
   name = "zerotier";
 
+  skipLint = true;
+
   nodes = {
     moon =
       { pkgs, ...}:
@@ -93,68 +95,67 @@ rec {
   testScript =
     { nodes, ... }:
     ''
-      my $curl = "curl -sSf --header \"X-ZT1-Auth: \$(cat /var/lib/zerotier-one/authtoken.secret)\"";
+      curl = 'curl -sSf --header "X-ZT1-Auth: $(cat /var/lib/zerotier-one/authtoken.secret)"';
 
-      startAll;
+      start_all()
 
-      $moon->waitForUnit("zerotierone.service");
+      moon.wait_for_unit("zerotierone.service")
 
       ####
 
-      $controller->waitForUnit("zerotierone.service");
-      $controller->waitForFile("/var/lib/zerotier-one/authtoken.secret");
-      $controller->waitForOpenPort(9993);
+      controller.wait_for_unit("zerotierone.service")
+      controller.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
+      controller.wait_for_open_port(9993)
 
-      my $controllerZTAddress = $controller->succeed("$curl http://localhost:9993/status | jq -j -e .address");
-      my $networkID = $controllerZTAddress . "000001";
+      controllerZTAddress = controller.succeed(curl + " http://localhost:9993/status | jq -j -e .address")
+      networkID = controllerZTAddress + "000001"
 
       # Create the network on this controller
-      $controller->succeed("$curl -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/$networkID");
+      controller.succeed(curl + " -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/" + networkID)
 
       # Join the network using the command line
-      $controller->succeed("zerotier-cli join $networkID");
+      controller.succeed("zerotier-cli join " + networkID)
 
       # Wait for network to be OK
-      $controller->waitUntilSucceeds("$curl http://localhost:9993/network/$networkID | jq -j -e .status | grep -q OK");
+      controller.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
 
       # Get assigned IP address
-      my $assignedAddress = $controller->succeed("$curl http://localhost:9993/network/$networkID | jq -j -e .assignedAddresses[0]");
-      (my $controllerZTIPAddress) = ($assignedAddress =~ /(30.0.0.\d+)\/24/);
+      assignedAddress = controller.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]")
+      controllerZTIPAddress = assignedAddress.split('/')[0]
 
       # Ensure we can ping ourself on this zerotier network
-      $controller->waitUntilSucceeds("ping -c 1 $controllerZTIPAddress");
+      controller.wait_until_succeeds("ping -c 1 " + controllerZTIPAddress)
 
       ####
 
-      $client->waitForFile("/var/lib/zerotier-one/authtoken.secret");
-      $client->waitForOpenPort(9993);
+      client.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
+      client.wait_for_open_port(9993)
 
       # Join the network set up by controller
-      $client->succeed("zerotier-cli join $networkID");
+      client.succeed("zerotier-cli join " + networkID)
 
       # Wait for network to be OK
-      $client->waitUntilSucceeds("$curl http://localhost:9993/network/$networkID | jq -j -e .status | grep -q OK");
+      client.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
 
       # Get assigned IP address
-      my $assignedAddress = $client->succeed("$curl http://localhost:9993/network/$networkID | jq -j -e .assignedAddresses[0]");
-      (my $clientZTIPAddress) = ($assignedAddress =~ /(30.0.0.\d+)\/24/);
+      assignedAddress = client.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]")
+      clientZTIPAddress = assignedAddress.split('/')[0]
 
       # Ping the controller from the client and vice versa
-      $controller->waitUntilSucceeds("ping -c 1 $clientZTIPAddress");
-      $client->waitUntilSucceeds("ping -c 1 $controllerZTIPAddress");
+      controller.wait_until_succeeds("ping -c 1 " + clientZTIPAddress)
+      client.wait_until_succeeds("ping -c 1 " + controllerZTIPAddress)
 
+    '';
+})
 #      ### This works, but there is a painfully long delay before it starts working
 #
 #      # If we lose direct connectivity, zerotier should still be able to forward traffic through the moon
 #
 #      # Set up null routes
-#      $controller->succeed("route add -host 192.168.1.1 reject");
-#      $controller->succeed("route add -host 192.168.1.2 reject");
-#      $client->succeed("route add -host 192.168.1.1 reject");
-#      $client->succeed("route add -host 192.168.1.2 reject");
+#      controller.succeed("route add -host 192.168.1.1 reject")
+#      controller.succeed("route add -host 192.168.1.2 reject")
+#      client.succeed("route add -host 192.168.1.1 reject")
+#      client.succeed("route add -host 192.168.1.2 reject")
 #
-#      $controller->waitUntilSucceeds("ping -c 1 $clientZTIPAddress");
-#      $client->waitUntilSucceeds("ping -c 1 $controllerZTIPAddress");
-    '';
-
-})
+#      controller.wait_until_succeeds("ping -c 1 $clientZTIPAddress")
+#      client.wait_until_succeeds("ping -c 1 $controllerZTIPAddress")
