@@ -94,5 +94,13 @@ in
     iptables -A INPUT -p udp -m set --match-set upnp dst,dst -j ACCEPT
   '';
 
+  # Otherwise systemd sometimes changes the MAC address! TODO: Remove when in nixpkgs
+  environment.etc."systemd/network/50-zerotier.link".text = ''
+    [Match]
+    OriginalName=zt*
 
+    [Link]
+    AutoNegotiation=false
+    MACAddressPolicy=none
+  '';
 }

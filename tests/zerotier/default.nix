@@ -51,11 +51,15 @@ let
       services.zerotierone.enable = true;
       nixpkgs.config.allowUnfree = true;
 
-      # nixpkgs commit fe3da83b7e26b6f7cdde7a457a794c215d16e969 with
-      # boot.enableContainers causes "tun" to load at boot.  For some reason
-      # this breaks the test.
-      # TODO: Fix
-      boot.enableContainers = false;
+      # TODO: Remove when fixed in nixpkgs
+      environment.etc."systemd/network/50-zerotier.link".text = ''
+        [Match]
+        OriginalName=zt*
+
+        [Link]
+        AutoNegotiation=false
+        MACAddressPolicy=none
+      '';
 
       # Ensure .moon file is available to all nodes
       systemd.services.zerotierone.preStart = ''
@@ -74,7 +78,7 @@ let
 
   testCases = {
     simple = {
-      name = "simple";
+      name = "zerotier-simple";
       nodes = {
         moon = {
           imports = [ moon ];
@@ -92,7 +96,7 @@ let
     };
 
     doubleNat = {
-      name = "doubleNat";
+      name = "zerotier-doubleNat";
       nodes = {
         moon = {
           imports = [ moon ];
