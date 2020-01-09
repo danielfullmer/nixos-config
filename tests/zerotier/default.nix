@@ -1,11 +1,17 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, lib, ...} :
+{ system ? builtins.currentSystem
+, config ? { allowUnfree = true; }
+, pkgs ? import <nixpkgs> { inherit system config; }
+}:
+
+with import <nixpkgs/nixos/lib/testing-python.nix> { inherit system pkgs; };
+with pkgs.lib;
 
 # A few connectivity modes to test:
 # 1) Direct local network access
-# 2) uPNP mediated UDP tunneling
-# 3) Traffic passing through moon
-# 4) Double-nat stuff
-# 5) UDP hole punching
+# 2) Double-NAT
+# TODO:
+# 3) No direct connection, all traffic relayed through moon
+# 4) Multipath
 
 let
   networkZTConfig = {
@@ -34,7 +40,7 @@ let
   # zerotier-idtool initmoon identity.public > moon.json
   #
   # # Add moon IP address as stable endpoint.
-  # cat moon.json | jq '. + {roots: ([.roots[0] + {stableEndpoints: ["192.168.1.3/9993"]}])}' > moon-modified.json
+  # cat moon.json | jq '. + {roots: ([.roots[0] + {stableEndpoints: ["10.0.0.1/9993"]}])}' > moon-modified.json
   #
   # # Sign this moon definition
   # zerotier-idtool genmoon moon-modified.json
@@ -57,105 +63,121 @@ let
         cp ${moonFiles}/*.moon /var/lib/zerotier-one/moons.d/
       '';
     };
-in
-rec {
-  name = "zerotier";
 
-  skipLint = true;
+  moon =
+    { imports = [ common ];
+      systemd.services.zerotierone.preStart = ''
+        mkdir -p /var/lib/zerotier-one
+        cp ${moonFiles}/identity.{public,secret} /var/lib/zerotier-one/
+      '';
+    };
 
-  nodes = {
-    moon =
-      { pkgs, ...}:
-      { imports = [ common ];
-        systemd.services.zerotierone.preStart = ''
-          mkdir -p /var/lib/zerotier-one
-          cp ${moonFiles}/identity.{public,secret} /var/lib/zerotier-one/
-        '';
+  testCases = {
+    simple = {
+      name = "simple";
+      nodes = {
+        moon = {
+          imports = [ moon ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.1"; prefixLength = 8; } ];
+        };
+        client1 = {
+          imports = [common];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.2"; prefixLength = 8; } ];
+        };
+        client2 = {
+          imports = [common];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.3"; prefixLength = 8; } ];
+        };
+      };
+    };
 
-        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
-          { address = "192.168.1.3"; prefixLength = 24; }
-        ];
+    doubleNat = {
+      name = "doubleNat";
+      nodes = {
+        moon = {
+          imports = [ moon ];
+          virtualisation.vlans = [ 1 ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.1"; prefixLength = 8; } ];
+        };
+        router1 = {
+          virtualisation.vlans = [ 1 2 ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.2"; prefixLength = 8; } ];
+          networking.interfaces.eth2.ipv4.addresses = mkForce [ { address = "192.168.0.1"; prefixLength = 24; } ];
+          networking.nat.enable = true;
+          networking.nat.externalInterface = "eth1";
+          networking.nat.internalInterfaces = [ "eth2" ];
+        };
+        router2 = {
+          virtualisation.vlans = [ 1 3 ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "10.0.0.3"; prefixLength = 8; } ];
+          networking.interfaces.eth2.ipv4.addresses = mkForce [ { address = "192.168.1.1"; prefixLength = 24; } ];
+          networking.nat.enable = true;
+          networking.nat.externalInterface = "eth1";
+          networking.nat.internalInterfaces = [ "eth2" ];
+        };
+        client1 = {
+          imports = [common];
+          virtualisation.vlans = [ 2 ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "192.168.0.2"; prefixLength = 24; } ];
+          networking.interfaces.eth1.ipv4.routes = mkForce [ { address = "0.0.0.0"; prefixLength = 0; via = "192.168.0.1"; } ];
+        };
+        client2 = {
+          imports = [common];
+          virtualisation.vlans = [ 3 ];
+          networking.interfaces.eth1.ipv4.addresses = mkForce [ { address = "192.168.1.2"; prefixLength = 24; } ];
+          networking.interfaces.eth1.ipv4.routes = mkForce [ { address = "0.0.0.0"; prefixLength = 0; via = "192.168.1.1"; } ];
+        };
       };
-    controller =
-      { pkgs, ...}:
-      { imports = [common];
-        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
-          { address = "192.168.1.1"; prefixLength = 24; }
-        ];
-      };
-    client =
-      { pkgs, ...}:
-      { imports = [common];
-        networking.interfaces.eth1.ipv4.addresses = lib.mkForce [
-          { address = "192.168.1.2"; prefixLength = 24; }
-        ];
-      };
+    };
   };
+
+in mapAttrs (const: (attrs: makeTest (attrs // {
+  skipLint = true;
 
   testScript =
     { nodes, ... }:
     ''
+      MACHINES = [ moon, client1, client2 ]
+
+      def wait_for_zerotier(machine):
+          machine.wait_for_unit("zerotierone.service")
+          machine.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
+          machine.wait_for_open_port(9993)
+
       curl = 'curl -sSf --header "X-ZT1-Auth: $(cat /var/lib/zerotier-one/authtoken.secret)"';
 
       start_all()
 
-      moon.wait_for_unit("zerotierone.service")
+      for m in MACHINES:
+          wait_for_zerotier(m)
 
-      ####
-
-      controller.wait_for_unit("zerotierone.service")
-      controller.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
-      controller.wait_for_open_port(9993)
-
-      controllerZTAddress = controller.succeed(curl + " http://localhost:9993/status | jq -j -e .address")
+      controllerZTAddress = moon.succeed(curl + " http://localhost:9993/status | jq -j -e .address")
       networkID = controllerZTAddress + "000001"
 
-      # Create the network on this controller
-      controller.succeed(curl + " -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/" + networkID)
+      # Create the network on this host
+      moon.succeed(curl + " -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/" + networkID)
 
-      # Join the network using the command line
-      controller.succeed("zerotier-cli join " + networkID)
+      for m in MACHINES:
+          # Join the network using the command line
+          m.succeed("zerotier-cli join " + networkID)
 
-      # Wait for network to be OK
-      controller.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
+      for m in MACHINES:
+          # Wait for network to be OK
+          m.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
 
-      # Get assigned IP address
-      assignedAddress = controller.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]")
-      controllerZTIPAddress = assignedAddress.split('/')[0]
+      for m in MACHINES:
+          # Get assigned IP address
+          m.ZTIPAddress = m.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]").split('/')[0]
 
-      # Ensure we can ping ourself on this zerotier network
-      controller.wait_until_succeeds("ping -c 1 " + controllerZTIPAddress)
+      for m in MACHINES:
+          # Ensure we can ping ourself on this zerotier network
+          m.wait_until_succeeds("ping -c 1 " + m.ZTIPAddress)
 
-      ####
-
-      client.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
-      client.wait_for_open_port(9993)
-
-      # Join the network set up by controller
-      client.succeed("zerotier-cli join " + networkID)
-
-      # Wait for network to be OK
-      client.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
-
-      # Get assigned IP address
-      assignedAddress = client.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]")
-      clientZTIPAddress = assignedAddress.split('/')[0]
-
-      # Ping the controller from the client and vice versa
-      controller.wait_until_succeeds("ping -c 1 " + clientZTIPAddress)
-      client.wait_until_succeeds("ping -c 1 " + controllerZTIPAddress)
+      for client in MACHINES:
+          for host in MACHINES:
+              if client != host:
+                  # Ping the controller from the client and vice versa
+                  client.wait_until_succeeds("ping -c 1 " + host.ZTIPAddress)
 
     '';
-})
-#      ### This works, but there is a painfully long delay before it starts working
-#
-#      # If we lose direct connectivity, zerotier should still be able to forward traffic through the moon
-#
-#      # Set up null routes
-#      controller.succeed("route add -host 192.168.1.1 reject")
-#      controller.succeed("route add -host 192.168.1.2 reject")
-#      client.succeed("route add -host 192.168.1.1 reject")
-#      client.succeed("route add -host 192.168.1.2 reject")
-#
-#      controller.wait_until_succeeds("ping -c 1 $clientZTIPAddress")
-#      client.wait_until_succeeds("ping -c 1 $controllerZTIPAddress")
+}))) testCases
