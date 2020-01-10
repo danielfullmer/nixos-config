@@ -13,7 +13,7 @@
     gmailieer
     alot
     notmuch
-    notmuch-bower
+    #notmuch-bower
     astroid
     w3m
 
