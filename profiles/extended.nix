@@ -18,7 +18,7 @@
     w3m
 
     pythonPackages.glances
-    nethogs
+    bandwhich
     iotop
 
     qutebrowser
