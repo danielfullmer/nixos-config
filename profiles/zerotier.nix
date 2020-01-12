@@ -87,12 +87,13 @@ in
 
   # Kinda gross hack to make upnp work. Holds open an incoming firewall exception from ssdp udp source port (1900) for 3 seconds
   # Couldn't figure out how to make SSDP connection tracking work.
-  networking.firewall.extraPackages = [ pkgs.ipset ];
-  networking.firewall.extraCommands = ''
-    ipset -exist create upnp hash:ip,port timeout 3
-    iptables -A OUTPUT -d 239.255.255.250/32 -p udp -m udp --dport 1900 -j SET --add-set upnp src,src --exist
-    iptables -A INPUT -p udp -m set --match-set upnp dst,dst -j ACCEPT
-  '';
+  # As of 2020-01-11. upnp seems to make things worse
+#  networking.firewall.extraPackages = [ pkgs.ipset ];
+#  networking.firewall.extraCommands = ''
+#    ipset -exist create upnp hash:ip,port timeout 3
+#    iptables -A OUTPUT -d 239.255.255.250/32 -p udp -m udp --dport 1900 -j SET --add-set upnp src,src --exist
+#    iptables -A INPUT -p udp -m set --match-set upnp dst,dst -j ACCEPT
+#  '';
 
   # Otherwise systemd sometimes changes the MAC address! TODO: Remove when in nixpkgs
   environment.etc."systemd/network/50-zerotier.link".text = ''
@@ -103,4 +104,11 @@ in
     AutoNegotiation=false
     MACAddressPolicy=none
   '';
+
+  # If debugging is needed, uncomment below:
+#  nixpkgs.overlays = [ (self: super: {
+#    zerotierone = super.zerotierone.overrideAttrs (attrs: {
+#      ZT_DEBUG = true;
+#    });
+#  }) ];
 }
