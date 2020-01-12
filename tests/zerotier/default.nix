@@ -12,6 +12,8 @@ with pkgs.lib;
 # TODO:
 # 3) No direct connection, all traffic relayed through moon
 # 4) Multipath
+# 5) Bridging
+# 6) UPNP
 
 let
   networkZTConfig = {
@@ -76,9 +78,52 @@ let
       '';
     };
 
+  testScript =
+    ''
+      MACHINES = [ moon, client1, client2 ]
+
+      def wait_for_zerotier(machine):
+          machine.wait_for_unit("zerotierone.service")
+          machine.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
+          machine.wait_for_open_port(9993)
+
+      curl = 'curl -sSf --header "X-ZT1-Auth: $(cat /var/lib/zerotier-one/authtoken.secret)"';
+
+      start_all()
+
+      for m in MACHINES:
+          wait_for_zerotier(m)
+
+      controllerZTAddress = moon.succeed(curl + " http://localhost:9993/status | jq -j -e .address")
+      networkID = controllerZTAddress + "000001"
+
+      # Create the network on this host
+      moon.succeed(curl + " -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/" + networkID)
+
+      for m in MACHINES:
+          # Join the network using the command line
+          m.succeed("zerotier-cli join " + networkID)
+
+          # Wait for network to be OK
+          m.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
+
+          # Get assigned IP address
+          m.ZTIPAddress = m.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]").split('/')[0]
+          # Ensure we can ping ourself on this zerotier network
+          m.wait_until_succeeds("ping -c 1 " + m.ZTIPAddress)
+
+      # Ensure all machines can ping each other
+      for client in MACHINES:
+          for host in MACHINES:
+              if client != host:
+                  client.wait_until_succeeds("ping -c 1 " + host.ZTIPAddress)
+
+    '';
+
   testCases = {
     simple = {
       name = "zerotier-simple";
+      inherit testScript;
       nodes = {
         moon = {
           imports = [ moon ];
@@ -97,6 +142,13 @@ let
 
     doubleNat = {
       name = "zerotier-doubleNat";
+
+      testScript = testScript + ''
+        # Additionally ensure client 1 and 2 can't ping each other normally
+        client1.fail("ping -c 1 192.168.1.2")
+        client2.fail("ping -c 1 192.168.0.2")
+      '';
+
       nodes = {
         moon = {
           imports = [ moon ];
@@ -138,50 +190,4 @@ let
 in mapAttrs (const: (attrs: makeTest (attrs // {
   skipLint = true;
 
-  testScript =
-    { nodes, ... }:
-    ''
-      MACHINES = [ moon, client1, client2 ]
-
-      def wait_for_zerotier(machine):
-          machine.wait_for_unit("zerotierone.service")
-          machine.wait_for_file("/var/lib/zerotier-one/authtoken.secret")
-          machine.wait_for_open_port(9993)
-
-      curl = 'curl -sSf --header "X-ZT1-Auth: $(cat /var/lib/zerotier-one/authtoken.secret)"';
-
-      start_all()
-
-      for m in MACHINES:
-          wait_for_zerotier(m)
-
-      controllerZTAddress = moon.succeed(curl + " http://localhost:9993/status | jq -j -e .address")
-      networkID = controllerZTAddress + "000001"
-
-      # Create the network on this host
-      moon.succeed(curl + " -X POST -d @${pkgs.writeText "controller.json" (builtins.toJSON networkZTConfig)} http://localhost:9993/controller/network/" + networkID)
-
-      for m in MACHINES:
-          # Join the network using the command line
-          m.succeed("zerotier-cli join " + networkID)
-
-      for m in MACHINES:
-          # Wait for network to be OK
-          m.wait_until_succeeds(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .status | grep -q OK")
-
-      for m in MACHINES:
-          # Get assigned IP address
-          m.ZTIPAddress = m.succeed(curl + " http://localhost:9993/network/" + networkID + " | jq -j -e .assignedAddresses[0]").split('/')[0]
-
-      for m in MACHINES:
-          # Ensure we can ping ourself on this zerotier network
-          m.wait_until_succeeds("ping -c 1 " + m.ZTIPAddress)
-
-      for client in MACHINES:
-          for host in MACHINES:
-              if client != host:
-                  # Ping the controller from the client and vice versa
-                  client.wait_until_succeeds("ping -c 1 " + host.ZTIPAddress)
-
-    '';
 }))) testCases
