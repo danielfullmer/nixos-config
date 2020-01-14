@@ -6,13 +6,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
+    "nvme" "nvme_core"
   ];
 
   # Current partition status:
@@ -39,8 +40,8 @@
 
   swapDevices = [ ];
 
-  nix.maxJobs = 2;
-  nix.buildCores = 4;
+  nix.maxJobs = 4;
+  nix.buildCores = 64;
 
   zramSwap.enable = true;
   #boot.tmpOnTmpfs = true; # XXX: Building big programs doesn't work so hot with this.
