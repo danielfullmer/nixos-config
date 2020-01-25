@@ -44,7 +44,7 @@ with lib;
           (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
           (${pkgs.networkmanagerapplet}/bin/nm-applet) &
           (${pkgs.pasystray}/bin/pasystray) &
-          (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-fancy}/bin/i3lock-fancy) &
+          (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled) &
           (${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}) &
           (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
           (${pkgs.ibus}/bin/ibus-daemon -d) &
