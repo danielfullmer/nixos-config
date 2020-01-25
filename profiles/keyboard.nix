@@ -210,8 +210,8 @@
     bindsym XF86AudioRaiseVolume exec amixer sset Master 1000+ unmute
     bindsym XF86AudioLowerVolume exec amixer sset Master 1000- unmute
 
-    bindsym shift+XF86AudioRaiseVolume exec xbacklight -inc 5
-    bindsym shift+XF86AudioLowerVolume exec xbacklight -dec 5
+    bindsym XF86MonBrightnessUp   exec light -A 10
+    bindsym XF86MonBrightnessDown exec light -U 10
 
     # change focus
     bindsym $mod+h focus left
