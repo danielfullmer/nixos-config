@@ -6,6 +6,7 @@ with lib;
   services.xserver = {
     enable = true;
     xkbOptions = "compose:ralt";
+    libinput.naturalScrolling = true;
 
     displayManager.defaultSession = "desktop+i3";
     displayManager.lightdm = {
