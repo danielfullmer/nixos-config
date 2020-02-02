@@ -1,12 +1,25 @@
 { config, pkgs, lib, ... }:
 
+# AMD Ryzen Threadripper 3970X
+# 4x16GB G.Skill Trident Z Neo Series PC4-28800 DDR4 3600MHz CL16-19-19-39 1.35V F4-3600C16D-32GTZNC
+# GIGABYTE TRX40 AORUS Master
+# NZXT Kraken X62 280mm - RL-KRX62-02 (2x140mm AIO cooler)
+# EVGA GeForce 1080 Ti SC2 Hybrid 11G (120mm AIO cooler)
+# 3x1Tb Sabrent Rocket NVMe 4.0 Gen4 PCIe M.2 (SB-ROCKET-NVMe4-1TB)
+# EVGA 750 GQ 210-GQ-0750-V1 80+ GOLD 750W PSU
+# LIAN LI PC-O11 Dynamic Black Case
 {
   system.stateVersion = "18.03";
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelModules = [
+    "kvm-amd"
+    "it87" # For sensors on gigabyte motherboard
+  ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
 
@@ -45,4 +58,11 @@
 
   zramSwap.enable = true;
   #boot.tmpOnTmpfs = true; # XXX: Building big programs doesn't work so hot with this.
+
+  environment.systemPackages = with pkgs; [
+    lm_sensors
+    krakenx # For NZXT X62 AIO cooler
+  ];
+
+  powerManagement.cpuFreqGovernor = "ondemand"; # Let's save some temperature and electricity
 }
