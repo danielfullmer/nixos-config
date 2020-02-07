@@ -56,11 +56,6 @@
   services.xserver.libinput.enable = true;
   services.redshift.enable = true;
 
-  services.synergy.client = {
-    enable = true;
-    screenName = "euler";
-    serverAddress = "sysc-2";
-  };
   # Intel VAAPI support for hardware accelerated video playback
   hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
   nixpkgs.config.mpv.vaapiSupport = true;
