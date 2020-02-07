@@ -85,7 +85,7 @@ in
 #  ];
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
-    Option         "metamodes" "DVI-D-0: nvidia-auto-select +3840+0 {rotation=left}, DP-2: 3840x2160 +0+200, DP-4: NULL"
+    Option         "metamodes" "DVI-D-0: nvidia-auto-select +3840+0 {rotation=left}, DP-2: NULL, DP-4: 3840x2160 +0+200"
     Option         "SLI" "Off"
     Option         "MultiGPU" "Off"
     Option         "BaseMosaic" "off"
