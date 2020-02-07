@@ -178,7 +178,7 @@ global = {
     dmenu = "${pkgs.dmenu}/bin/dmenu -fn \"${config.theme.fontName}-${toString config.theme.titleFontSize}\" -p dunst:";
 
     # Browser for opening urls in context menu.
-    browser = "${pkgs.chromium}/bin/chromium";
+    browser = "$BROWSER";
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = "true";
