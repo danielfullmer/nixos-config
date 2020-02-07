@@ -59,7 +59,9 @@ in
 
   services.acpid.enable = true;
 
-  services.xserver.videoDrivers = [ "nvidia" "intel" ];
+  # Nvidia 1080ti
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
 
   services.redshift.enable = true;
 
