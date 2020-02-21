@@ -85,7 +85,10 @@ in
   };
 
   users = {
-    groups = [ { name = "danielrf"; } { name = "vboxsf"; } ];
+    groups = {
+      danielrf = {};
+      vboxsf = {};
+    };
     users = {
       danielrf = {
         description     = "Daniel Fullmer";
