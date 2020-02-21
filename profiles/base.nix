@@ -24,6 +24,11 @@ in
     root = "cgibreak@gmail.com";
   };
 
+  security.acme = {
+    acceptTerms = true;
+    email = "danielrf12@gmail.com";
+  };
+
   environment.etc."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) { source = "/var/secrets/wpa_supplicant.conf"; };
   secrets."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {};
 
