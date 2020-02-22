@@ -8,7 +8,5 @@
 
     git-latexdiff
     proselint
-
-    mendeley
   ]);
 }

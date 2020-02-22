@@ -3,6 +3,8 @@
   environment.systemPackages = (with pkgs; [
     nox
     nix-index
+    vulnix
+    morph
 
     emacs
     pandoc
