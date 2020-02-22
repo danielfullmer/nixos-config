@@ -59,16 +59,6 @@ in with lib;
       default = config.theme.fontSize + 4; # This allows changing only fontSize if desired.
     };
 
-    gtkTheme = mkOption {
-      type = types.str;
-      default = "Adapta";
-    };
-
-    gtkIconTheme = mkOption {
-      type = types.str;
-      default = "Adwaita";
-    };
-
     background = mkOption {
       type = types.path;
       default = pkgs.fetchurl {
@@ -79,6 +69,8 @@ in with lib;
   };
 
   config = with config.theme; {
+    gtk.font.name = "${config.theme.fontName} ${toString config.theme.fontSize}";
+
     programs.bash.interactiveShellInit = template "shell";
     programs.zsh.interactiveShellInit = template "shell";
     programs.fish.interactiveShellInit = template "shell";
@@ -86,7 +78,7 @@ in with lib;
     programs.dunst.config = {
         global = {
           font = "${fontName} ${toString (fontSize+2)}";
-          icon_path = "/run/current-system/sw/share/icons/${config.theme.gtkIconTheme}/32x32/status/:/run/current-system/sw/share/icons/${config.theme.gtkIconTheme}/share/icons/gnome/32x32/devices/";
+          icon_path = "/run/current-system/sw/share/icons/${config.gtk.iconTheme}/32x32/status/:/run/current-system/sw/share/icons/${config.gtk.iconTheme}/share/icons/gnome/32x32/devices/";
         };
       } // template "dunst";
 
