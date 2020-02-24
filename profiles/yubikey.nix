@@ -68,11 +68,5 @@ in
 
   services.keybase.enable = true;
   services.kbfs.enable = true;
-  services.kbfs.mountPoint = "/keybase";
-
-  # TODO: Remove this hack when keybase becomes multi-user
-  system.activationScripts.keybase = lib.stringAfter [ "users" "groups" ] ''
-    mkdir -p /keybase 2>/dev/null
-    chown -f danielrf:danielrf /keybase
-  '';
+  services.kbfs.enableRedirector = true;
 }
