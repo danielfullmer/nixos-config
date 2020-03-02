@@ -19,7 +19,7 @@
     astroid
     w3m
 
-    pythonPackages.glances
+    glances
     bandwhich
     iotop
 
