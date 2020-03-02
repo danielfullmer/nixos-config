@@ -26,19 +26,6 @@
 
     #kernelPackages = pkgs.linuxPackages_rpi3;
 
-    # For some reason, this is not enabled by default for aarch64: https://github.com/NixOS/nixpkgs/issues/61602
-    kernelPatches = [
-      { name = "ip_multi";
-        patch = "";
-        extraConfig = ''
-          IP_ADVANCED_ROUTER y
-          IP_MULTIPLE_TABLES y
-          IP_ROUTE_MULTIPATH y
-          IP_ROUTE_VERBOSE y
-        '';
-      }
-    ];
-
     initrd.availableKernelModules = [
       # Allows early (earlier) modesetting for the Raspberry Pi
       "vc4" "bcm2835_dma" "i2c_bcm2835"

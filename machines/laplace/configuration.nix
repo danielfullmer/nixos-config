@@ -43,18 +43,5 @@ in
 
   services.redshift.enable = true;
 
-  # For some reason, this is not enabled by default for aarch64: https://github.com/NixOS/nixpkgs/issues/61602
-#  boot.kernelPatches = [
-#    { name = "ip_multi";
-#      patch = "";
-#      extraConfig = ''
-#        IP_ADVANCED_ROUTER y
-#        IP_MULTIPLE_TABLES y
-#        IP_ROUTE_MULTIPATH y
-#        IP_ROUTE_VERBOSE y
-#      '';
-#    }
-#  ];
-
   programs.chromium.extensions = [ "aleakchihdccplidncghkekgioiakgal" ]; # h264ify
 }
