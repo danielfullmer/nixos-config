@@ -22,7 +22,7 @@
   ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.firmware = [ pkgs.firmwareLinuxNonfree ];  # For any other wifi firmware
-
+  hardware.cpu.amd.updateMicrocode = true;
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
