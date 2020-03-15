@@ -16,7 +16,8 @@
   networking.hostId = "d8ab690e";
 
   services.plex.enable = true;
-  networking.firewall.allowedTCPPorts = [ 32400 ];
+  systemd.services.plex.requires = [ "gdrive2-enc.service" ];
+  #networking.firewall.allowedTCPPorts = [ 32400 ];
 
   environment.systemPackages = with pkgs; [ keyboard-firmware ];
 
