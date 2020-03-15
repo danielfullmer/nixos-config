@@ -149,12 +149,12 @@
     bind-key -n M-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
     bind-key -n M-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
     bind-key -n M-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
-    bind-key -n M-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+    #bind-key -n M-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
     bind-key -T copy-mode-vi M-h select-pane -L
     bind-key -T copy-mode-vi M-j select-pane -D
     bind-key -T copy-mode-vi M-k select-pane -U
     bind-key -T copy-mode-vi M-l select-pane -R
-    bind-key -T copy-mode-vi M-\ select-pane -l
+    #bind-key -T copy-mode-vi M-\ select-pane -l
 
     # M-(Up,Down,Left,Right)
     bind-key M-Left if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
