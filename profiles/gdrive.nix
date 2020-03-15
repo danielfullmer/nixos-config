@@ -1,26 +1,17 @@
 { config, pkgs, lib, ... }:
 
 # https://github.com/rclone/rclone/wiki/rclone-fstab-mount-helper-script
-let rclonemount = pkgs.writeScript "rclonemount" ''
-  # Need this path to run "fusermount"
-  export PATH=${pkgs.fuse}/bin:$PATH
-
-  # TODO: Remove & when rclone implements a background option (See issue #723)
-  ${lib.getBin pkgs.rclone}/bin/rclone mount "$1" "$2" --allow-other --config /etc/rclone.conf &
-  sleep 1 # Should be enough time for the mount to complete before returning
-'';
-in
 {
-  environment.etc."fuse.conf".text = ''
-    user_allow_other
-  '';
+  programs.fuse.userAllowOther = true;
 
-  systemd.mounts = (map (remote: {
-    what = "${rclonemount}#${remote}:";
-    where = "/mnt/${remote}";
-    type = "fuse";
-    options = "_netdev,nofail"; # nofail makes it wanted, but not required, by remote-fs.target
-  }) [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ]);
+  systemd.services = lib.genAttrs [ "gdrive" "gdrive-enc" "gdrive2" "gdrive2-enc" ] (remote: {
+    requires = [ "network-online.target"] ;
+    after = [ "network-online.target" ];
+    script = "${lib.getBin pkgs.rclone}/bin/rclone mount ${remote}: /mnt/${remote} --allow-other --config /etc/rclone.conf";
+    postStop = "${pkgs.fuse}/bin/fusermount -z /mnt/${remote}";
+    path = [ pkgs.fuse ];
+    serviceConfig.Type = "notify";
+  });
 
   environment.systemPackages = with pkgs; [ rclone ];
 
