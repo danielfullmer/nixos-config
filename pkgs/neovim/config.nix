@@ -225,7 +225,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 
 "" Snippets
-let g:UltiSnipsSnippetDirectories = [ "${./UltiSnips}", "UltiSnips" ]
+"let g:UltiSnipsSnippetDirectories = [ "${./UltiSnips}", "UltiSnips" ]
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
