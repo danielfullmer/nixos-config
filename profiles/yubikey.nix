@@ -38,7 +38,7 @@ in
     yubikey-personalization
 
     gnupg
-    pass
+    (pass.withExtensions (p: with p; [ pass-audit]))
 
     keybase
     kbfs
