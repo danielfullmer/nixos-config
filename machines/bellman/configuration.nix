@@ -228,23 +228,15 @@ in
   services.attestation-server = {
     enable = true;
     domain = "attestation.daniel.fullmer.me";
-    listenHost = "127.0.0.1";
-    port = 8085;
     # TODO: Extract from NixDroid configuration
     deviceFamily = "crosshatch";
     signatureFingerprint = "30E3A2C19024A208DF0D4FE0633AE3663B22AD4868F446B1AC36D526CA8E95FA";
     avbFingerprint = "F7B29168803BA73C31641D2770C2A84D4FF68C157F0B8BFE0BDC1958D4310491";
   };
   services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
-    locations."/".root = config.services.attestation-server.package.static;
-    locations."/api/".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/api/";
-    locations."/challenge".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/challenge";
-    locations."/verify".proxyPass = "http://${config.services.attestation-server.listenHost}:${toString config.services.attestation-server.port}/verify";
-    forceSSL = true;
     enableACME = true;
     extraConfig = denyInternet;
   };
-
 
   # For testing xrdesktop
    services.xserver.desktopManager.gnome3.enable = true;
