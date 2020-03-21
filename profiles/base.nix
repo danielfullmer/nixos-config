@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  machines = import ../machines;
   ssh-yubikey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey";
 in
 {
   imports = [
+    ../machines
     ../modules
     ../pkgs/custom-config.nix
     ./zerotier.nix
@@ -34,22 +34,12 @@ in
 
   boot.cleanTmpDir = true;
 
-  # TODO: Set to 127.0.0.1 if we are bellman?
-  networking.hosts."${machines.zerotierIP.bellman}" = (map (name: "${name}.${config.networking.domain}") [ 
-    "attestation" "hydra" "playmaker" "fdroid" "office" "zoneminder"
-  ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
-  networking.hosts."${machines.zerotierIP.gauss}" = [ "searx.daniel.fullmer.me" ];
-
-  programs.ssh.knownHosts = mapAttrs (machine: publicKey: { publicKey = publicKey; }) machines.sshPublicKey
-    // {
-    "github.com".publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==";
-  };
-
+  programs.ssh.knownHosts."github.com".publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==";
   # X11 and GPG forwarding for SSH
   # See https://wiki.gnupg.org/AgentForwarding
   # TODO: /run/user/ path is not correct if UID is different across hosts
   programs.ssh.extraConfig = ''
-    Host ${concatStringsSep " " (attrNames machines.sshPublicKey)}
+    Host ${concatStringsSep " " (attrNames config.machines.sshPublicKey)}
     #ForwardAgent yes
     ForwardX11 yes
     #RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra

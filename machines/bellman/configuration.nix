@@ -1,15 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  # Allow localhost, zerotier, and wireguard hosts
-  denyInternet = ''
-    allow 127.0.0.1;
-    allow ::1;
-    allow 30.0.0.0/24;
-    allow 10.200.0.0/24;
-    deny all;
-  '';
-in
+with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
@@ -114,10 +105,8 @@ in
   services.nginx.recommendedProxySettings = true;
   services.nginx.virtualHosts."daniel.fullmer.me" = {
     default = true;
-    forceSSL = true;
-    enableACME = true;
     root = "/data/webroot";
-  };
+  } // vhostPublic;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.hydra = {
@@ -138,10 +127,7 @@ in
   secrets."hydra-nix-key.sec" = { user = "hydra"; group = "hydra"; };
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
-    forceSSL = true;
-    enableACME = true;
-    extraConfig = denyInternet;
-  };
+  } // vhostPrivate;
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
@@ -202,28 +188,24 @@ in
     signal-desktop
   ];
 
-  system.autoUpgrade.enable = true;
+  #system.autoUpgrade.enable = true;
 
   #nix.package = import /home/danielrf/NixDroid/misc/nix.nix { inherit pkgs; };
 
+  #virtualisation.anbox.enable = true;
 
-  services.playmaker.enable = true; # Port 5000 (customize in future)
+  #services.playmaker.enable = true; # Port 5000 (customize in future)
   services.playmaker.device = "walleye"; # This is currently the only device in playmaker/googleplay-api device.properties file that is actually android 9 / API 28
   # Port 5000 has no access control--anyone who can connect can add/remove packages.
   # We'll rely on firewall to ensure only zerotier network can access port 5000,
   # and additionally pass through the fdroid repo it generates via nginx.
   services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/";
-    forceSSL = true;
-    enableACME = true;
-    extraConfig = denyInternet;
-  };
+  } // vhostPrivate;
   secrets."htpasswd" = { user = "nginx"; group = "nginx"; };
   services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
-    forceSSL = true;
-    enableACME = true;
-  };
+  } // vhostPrivate;
 
   services.attestation-server = {
     enable = true;
@@ -236,7 +218,7 @@ in
   services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
     enableACME = true;
     extraConfig = denyInternet;
-  };
+  } // vhostPrivate;
 
   # For testing xrdesktop
    services.xserver.desktopManager.gnome3.enable = true;

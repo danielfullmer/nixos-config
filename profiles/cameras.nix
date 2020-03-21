@@ -1,15 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  # Allow localhost, zerotier, and wireguard hosts
-  denyInternet = ''
-    allow 127.0.0.1;
-    allow ::1;
-    allow 30.0.0.0/24;
-    allow 10.200.0.0/24;
-    deny all;
-  '';
-in
+with (import ./nginxCommon.nix);
 {
   # Stuff for streaming cameras?
   # Currently unencrypted. Maybe fix in the future?
@@ -56,12 +47,5 @@ in
   };
   services.nginx.virtualHosts."${config.services.zoneminder.hostname}" = {
     default = lib.mkForce false; # Override some defaults set in nixos module
-    listen = [
-      { addr = "0.0.0.0"; port = 80; ssl = false; }
-      { addr = "0.0.0.0"; port = 443; ssl = true; }
-    ];
-    forceSSL = true;
-    enableACME = true;
-    extraConfig = denyInternet;
-  };
+  } // vhostPrivate;
 }

@@ -1,8 +1,5 @@
 { config, pkgs, lib, ... }:
 with lib;
-let
-  machines = import ../machines;
-in
 {
   services.syncthing = {
     enable = true;
@@ -13,8 +10,8 @@ in
       # TODO: Track certs and private keys in secrets?
       devices = mapAttrs (machine: id: {
         inherit id;
-        addresses = [ "tcp://${machines.zerotierIP.${machine}}:22000" ];
-      }) (filterAttrs (machine: id: machine != config.networking.hostName) machines.syncthingID); # Filter ourself out
+        addresses = [ "tcp://${config.machines.zerotierIP.${machine}}:22000" ];
+      }) (filterAttrs (machine: id: machine != config.networking.hostName) config.machines.syncthingID); # Filter ourself out
 
       folders.Sync = {
         path = "/home/danielrf/Sync";
