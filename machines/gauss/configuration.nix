@@ -15,6 +15,8 @@ with (import ../../profiles/nginxCommon.nix);
   networking.hostId = "394ac2e1";
   networking.nameservers = [ "8.8.8.8" ];
 
+  services.openssh.passwordAuthentication = false;
+
   documentation.enable = false;
 
   networking.nat = {
@@ -26,6 +28,7 @@ with (import ../../profiles/nginxCommon.nix);
     externalInterface = "ens3";
     internalInterfaces = [ "ztmjfpigyc" "wg0" ];
   };
+  services.openssh.openFirewall = false;
 
   nix.gc = {
     automatic = true;
