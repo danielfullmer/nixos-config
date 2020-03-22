@@ -10,7 +10,7 @@
 # TODO: Set IPs in a single location
 with lib;
 {
-  networking.firewall.allowedUDPPorts = [ 51820 ];
+  networking.firewall.allowedUDPPorts = [ config.networking.wireguard.interfaces.wg0.listenPort ];
   networking.firewall.trustedInterfaces = [ "wg0" ];
   networking.wireguard.interfaces.wg0 = {
     listenPort = 51820;
