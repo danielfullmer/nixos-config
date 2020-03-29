@@ -50,7 +50,7 @@
       "fugitive"
       "gitgutter"
       "webapi-vim"
-      "gist-vim"
+      "vim-gist"
       #" }}}
       #" General Coding {{{
       "ale" # TODO: See about language server support
