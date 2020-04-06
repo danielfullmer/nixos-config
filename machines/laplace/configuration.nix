@@ -4,7 +4,7 @@ with lib;
 let
   pinebook_pro = import ((builtins.fetchGit {
       url = "https://github.com/samueldr/wip-pinebook-pro.git";
-      rev = "59568ca1d40777b957e2106c266c9f248b671f9d";
+      rev = "8c8105d093860754d2c1ed276451dd8b4031ef05";
     }) + "/pinebook_pro.nix");
 in
 {
