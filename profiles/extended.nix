@@ -30,6 +30,8 @@
     tig
 
     kdeconnect
+  ] ++ lib.optionals stdenv.isx86_64 [
+    zoom-us
   ]);
 
   programs.fish = {
