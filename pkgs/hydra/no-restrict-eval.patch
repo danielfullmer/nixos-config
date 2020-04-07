@@ -1,11 +1,13 @@
-diff -Naur source.old/src/hydra-eval-jobs/hydra-eval-jobs.cc source.new/src/hydra-eval-jobs/hydra-eval-jobs.cc
---- source.old/src/hydra-eval-jobs/hydra-eval-jobs.cc	1970-01-01 00:00:01.000000000 +0000
-+++ source.new/src/hydra-eval-jobs/hydra-eval-jobs.cc	2018-12-09 19:12:29.170888722 +0000
-@@ -275,7 +275,7 @@
+diff --git a/src/hydra-eval-jobs/hydra-eval-jobs.cc b/src/hydra-eval-jobs/hydra-eval-jobs.cc
+index 4cbe5a1c..7ba0438f 100644
+--- a/src/hydra-eval-jobs/hydra-eval-jobs.cc
++++ b/src/hydra-eval-jobs/hydra-eval-jobs.cc
+@@ -238,7 +238,7 @@ int main(int argc, char * * argv)
  
-                 /* Prevent access to paths outside of the Nix search path and
-                    to the environment. */
--                evalSettings.restrictEval = true;
-+                evalSettings.restrictEval = false;
+         /* Prevent access to paths outside of the Nix search path and
+            to the environment. */
+-        evalSettings.restrictEval = true;
++        evalSettings.restrictEval = false;
  
-                 if (releaseExpr == "") throw UsageError("no expression specified");
+         if (myArgs.dryRun) settings.readOnlyMode = true;
+ 
