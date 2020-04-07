@@ -4,6 +4,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.localSystem = { system = "aarch64-linux"; config = "aarch64-unknown-linux-gnu"; };
+
   boot.initrd.availableKernelModules = [ "usbhid" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
