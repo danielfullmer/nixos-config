@@ -17,42 +17,46 @@ in
 
   system.stateVersion = "19.03";
 
-  #networking.wireless.enable = true;
-
   documentation.enable = false;
 
-#  services.hostapd = {
-#    enable = true;
-#    #interface = "wlan0";
-#    ssid = "controlnet";
-#    hwMode = "a"; # Just means 5ghz
-#    # https://wiki.gentoo.org/wiki/Hostapd
-#    extraConfig = ''
-#      ieee80211n=1
-#      ieee80211ac=1
-#      wmm_enable=1
-#    '';
-#    wpaPassphrase = "verysecure";
-#  };
+  # This is just on an RPI 3b (no 5ghz and AC)
+  services.hostapd = {
+    enable = true;
+    interface = "wlan0";
+    ssid = "controlnet_nomap";
+    hwMode = "g";
+    # https://wiki.gentoo.org/wiki/Hostapd
+    extraConfig = ''
+      ieee80211n=1
+      require_ht=1
+      ht_capab=[MAX-AMSDU-3839][HT40][SHORT-GI-20][DSSS_CCK-40]
+      rsn_pairwise=CCMP
+    '';
+    wpaPassphrase = "verysecure";
+  };
+
+  services.dnsmasq = {
+    enable = true;
+    resolveLocalQueries = false;
+    servers = [ "8.8.8.8" "8.8.4.4" ];
+    extraConfig = ''
+      interface=wlan0
+
+      dhcp-range=192.168.3.2,192.168.3.254
+    '';
+  };
+
+  networking.interfaces.wlan0.ipv4.addresses = [ { address = "192.168.3.1"; prefixLength = 24; }];
+  networking.firewall.trustedInterfaces = [ "wlan0" ];
+  networking.nat.enable = true;
+  networking.nat.internalInterfaces = [ "wlan0" ];
 
   environment.systemPackages = with pkgs; [
+    wirelesstools iw
     raspberrypi-tools
     (v4l_utils.override { withGUI = false; })
     rpi_ffmpeg
   ];
-
-  nixpkgs.overlays = [ (self: super: {
-    linux_rpi3 = super.linux_rpi3.overrideAttrs (attrs: {
-      version = "4.19.89";
-      modDirVersion = "4.19.89";
-      src = pkgs.fetchFromGitHub { # Slightly newer version. TODO Remove when in nixpkgs
-        owner = "raspberrypi";
-        repo = "linux";
-        rev = "b85f76a63d5f1b13220c61244469d55487db84f1";
-        sha256 = "04pm4s2qa2pvlhf6vdb32vw4985cf76c26rqa8s9g1nbklgn5p99";
-      };
-    });
-  }) ];
 
   systemd.services."camera-livingroom" = {
     wantedBy = [ "multi-user.target" ];
