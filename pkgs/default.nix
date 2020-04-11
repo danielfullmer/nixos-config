@@ -28,7 +28,9 @@ in with super; {
       "--with-accent_color=#${base0D}"
       "--with-suggestion_color=#${base0D}"
       "--with-destruction_color=#${base08}"
+      "--enable-parallel"
     ]);
+    nativeBuildInputs = attrs.nativeBuildInputs ++ [ super.parallel ];
   });
 
   duplicity = duplicity.override { inherit (self) gnupg; };
