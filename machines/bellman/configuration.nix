@@ -125,7 +125,6 @@ with (import ../../profiles/nginxCommon.nix);
     # Patch to allow builtins.fetchTarball
     package = pkgs.hydra-unstable.overrideAttrs (attrs: { patches = (if attrs ? patches then attrs.patches else []) ++ [ ../../pkgs/hydra/no-restrict-eval.patch ]; });
   };
-  secrets."hydra-nix-key.sec" = { user = "hydra"; group = "hydra"; };
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
   } // vhostPrivate;
