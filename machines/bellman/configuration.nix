@@ -19,7 +19,7 @@ with (import ../../profiles/nginxCommon.nix);
     ../../profiles/nextcloud.nix
     #../../profiles/backup.nix
     ../../xrdesktop-overlay
-    ../../profiles/cameras.nix
+    #../../profiles/cameras.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
