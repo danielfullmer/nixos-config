@@ -100,8 +100,6 @@ in
   time.timeZone = "America/New_York";
   time.hardwareClockInLocalTime = true;
 
-  security.sudo.wheelNeedsPassword = false;
-
   nixpkgs.config = import ../pkgs/config.nix;
   nixpkgs.overlays =  [ (import ../pkgs/default.nix { _config=config; }) ];
 }
