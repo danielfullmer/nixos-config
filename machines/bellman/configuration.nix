@@ -18,7 +18,7 @@ with (import ../../profiles/nginxCommon.nix);
     ../../profiles/tor.nix
     ../../profiles/nextcloud.nix
     #../../profiles/backup.nix
-    ../../xrdesktop-overlay
+    #../../xrdesktop-overlay
     #../../profiles/cameras.nix
   ];
 
