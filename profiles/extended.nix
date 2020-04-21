@@ -7,10 +7,8 @@
     morph
 
     emacs
-    pandoc
     weechat
     mutt
-    taskwarrior
 
     gmailieer
     alot
