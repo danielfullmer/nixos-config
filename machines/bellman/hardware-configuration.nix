@@ -62,7 +62,41 @@
   environment.systemPackages = with pkgs; [
     lm_sensors
     krakenx # For NZXT X62 AIO cooler
+    openrgb # For RGB lights
   ];
 
   powerManagement.cpuFreqGovernor = "ondemand"; # Let's save some temperature and electricity
+
+  # For Seiki 4K monitor
+  fonts.fontconfig.dpi = 115;
+  fonts.fontconfig.subpixel.rgba = "bgr";
+  theme.fontSize = 12;
+#  services.xserver.monitorSection = ''
+#    DisplaySize 698 393
+#  '';
+
+#  services.xserver.xrandrHeads = [
+#    { output = "DP-0"; primary = true; }
+#    { output = "DP-4"; }
+#    { output = "DP-5"; }
+#    { output = "DVI-D-0";
+#      monitorConfig = ''
+#        Option "Rotate" "Left"
+#      '';
+#    }
+#  ];
+  services.xserver.screenSection = ''
+    Option         "Stereo" "0"
+    Option         "nvidiaXineramaInfoOrder" "DFP-4"
+    Option         "metamodes" "DVI-D-0: nvidia-auto-select +5760+0 {rotation=left}, HDMI-0: nvidia-auto-select +0+1480, DP-2: 1920x2160 +1920+132, DP-4: 1920x2160 +3840+132"
+    Option         "SLI" "Off"
+    Option         "MultiGPU" "Off"
+    Option         "BaseMosaic" "off"
+    Option         "AllowIndirectGLXProtocol" "off"
+    Option         "TripleBuffer" "on"
+  '';
+
+  # Nvidia 1080ti
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
 }
