@@ -63,7 +63,7 @@
   environment.systemPackages = with pkgs; [
     lm_sensors
     krakenx # For NZXT X62 AIO cooler
-    openrgb # For RGB lights
+    #openrgb # For RGB lights
   ];
 
   powerManagement.cpuFreqGovernor = "ondemand"; # Let's save some temperature and electricity
