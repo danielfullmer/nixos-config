@@ -44,7 +44,7 @@ rec {
         tests.zerotier.doubleNat
 
         # Some nixos tests that are not in release-combined.nix
-        nixosTests.bcachefs
+        #nixosTests.bcachefs
         nixosTests.pam-u2f
         nixosTests.xss-lock
 
