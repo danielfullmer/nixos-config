@@ -21,7 +21,6 @@
     bandwhich
     iotop
 
-    qutebrowser
     youtube-dl
 
     jq
