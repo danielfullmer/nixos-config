@@ -13,12 +13,16 @@ in
   # immediately after the iw scan was insufficient, as it would go back to
   # "country 00". One ugly workaround was to run networkmanager simultaneously
   # with hostapd, but networkmanager would clobber other settings I wanted to
-  # set for the interface. The workaround I settled on was to just have hostapd
-  # ignore it's own channel checks and try to bring up the AP anyway. This
-  # seems to work, and it switches to "country US" when doing so.
+  # set for the interface, as well as periodically killing the AP. The
+  # workaround I settled on was to just have hostapd ignore its own channel
+  # checks and try to bring up the AP anyway. This seems to work, and it
+  # switches to "country US" when doing so.
   nixpkgs.overlays = [ (self: super: {
-    hostapd = super.hostapd.overrideAttrs ({ patches ? [], ... }: {
+    hostapd = super.hostapd.overrideAttrs ({ patches ? [], extraConfig ? "", ... }: {
       patches = patches ++ [ ./hostapd-doitanyway.patch ];
+      #extraConfig = extraConfig + ''
+      #  CONFIG_IEEE80211AX=y
+      #'';
     });
   }) ];
   services.hostapd = {
@@ -26,11 +30,12 @@ in
     inherit interface;
     ssid = "controlnet2_nomap";
     hwMode = "a"; # Just means 5ghz
-    #channel = 0; # ACS. Seems to be needed for the card to set the right regulatory location
+    #channel = 0; # ACS. Doesn't work for me.
     channel = 36;
     # https://wiki.gentoo.org/wiki/Hostapd
     # https://medium.com/@renaudcerrato/how-to-build-your-own-wireless-router-from-scratch-part-3-d54eecce157f
     # https://blog.fraggod.net/2017/04/27/wifi-hostapd-configuration-for-80211ac-networks.html
+    # https://en.wikipedia.org/wiki/List_of_WLAN_channels#5_GHz_or_5.8_GHz_(802.11a/h/j/n/ac/ax)
     # Set up for 80MHz. Pixel 3 claims to get 780MBps on this
     extraConfig = ''
       wmm_enabled=1
@@ -48,18 +53,24 @@ in
 
       ieee80211ac=1
       #require_vht=1
-      vht_capab=[RXLDPC][SHORT-GI-80][SHORT-GI-160][TX-STBC-2BY1][SU-BEAMFORMEE][MU-BEAMFORMEE]
+      vht_capab=[MAX-MDPU-11454][VHT160][RXLDPC][SHORT-GI-80][SHORT-GI-160][TX-STBC-2BY1][SU-BEAMFORMEE][MU-BEAMFORMEE]
 
-      #ieee80211ax=1
-      #he_su_beamformer=1
-      #he_mu_beamformer=1
+      #ieee80211ax=1 #Enabling this strangely slows down my phone to 192Mbps instead of >650-780MBps
+      #he_su_beamformee=1
+      #he_mu_beamformee=1
 
-      vht_oper_chwidth=1
-      #vht_oper_chwidth=2
+      vht_oper_chwidth=1 # 80MHz channel
       vht_oper_centr_freq_seg0_idx=42
-      #vht_oper_centr_freq_seg1_idx=159
 
-      acs_num_scans=1
+      # DFS doesn't seem to work
+      #vht_oper_chwidth=2 # 160MHz
+      #vht_oper_centr_freq_seg0_idx=50
+      # Also try 100 / 114. Would be entirely in empty DFS region.
+
+      # Not supported by this card
+      #vht_oper_chwidth=3 # 80+80MHz channel
+      #vht_oper_centr_freq_seg0_idx=42
+      #vht_oper_centr_freq_seg1_idx=155
     '';
     # (v)ht_capab from comparing output of "iw list" with example hostapd.conf
     # For 8812au
