@@ -1,0 +1,24 @@
+diff -Naur hostapd-2.9-orig/src/ap/hw_features.c hostapd-2.9/src/ap/hw_features.c
+--- hostapd-2.9-orig/src/ap/hw_features.c	2020-04-27 23:45:11.493850841 -0400
++++ hostapd-2.9/src/ap/hw_features.c	2020-04-28 00:13:24.202317261 -0400
+@@ -726,7 +726,7 @@
+ 		   chan->flag,
+ 		   chan->flag & HOSTAPD_CHAN_NO_IR ? " NO-IR" : "",
+ 		   chan->flag & HOSTAPD_CHAN_RADAR ? " RADAR" : "");
+-	return 0;
++	return 1; // Try anyway
+ }
+ 
+ 
+diff -Naur hostapd-2.9-orig/src/common/hw_features_common.c hostapd-2.9/src/common/hw_features_common.c
+--- hostapd-2.9-orig/src/common/hw_features_common.c	2020-04-27 23:45:11.496850985 -0400
++++ hostapd-2.9/src/common/hw_features_common.c	2020-04-28 00:14:46.017059562 -0400
+@@ -122,7 +122,7 @@
+ 	    (!ht40_plus && !(p_chan->allowed_bw & HOSTAPD_CHAN_WIDTH_40M))) {
+ 		wpa_printf(MSG_ERROR, "HT40 secondary channel %d not allowed",
+ 			   sec_chan);
+-		return 0;
++		//return 0;
+ 	}
+ 
+ 	/*
