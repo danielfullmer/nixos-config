@@ -43,7 +43,6 @@ with lib;
           (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
           (${pkgs.xorg.xmodmap}/bin/xmodmap "${./Xmodmap}") &
           (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
-          (${pkgs.networkmanagerapplet}/bin/nm-applet) &
           (${pkgs.pasystray}/bin/pasystray) &
           (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled) &
           (${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}) &
@@ -54,6 +53,9 @@ with lib;
           ${config.services.xserver.desktopManager.extraSessionCommands}
         '';
       } ];
+      extraSessionCommands = mkIf config.networking.networkmanager.enable ''
+        (${pkgs.networkmanagerapplet}/bin/nm-applet) &
+      '';
     };
   };
 
