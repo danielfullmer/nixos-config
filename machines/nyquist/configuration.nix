@@ -5,6 +5,7 @@
     ../../profiles/base.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix
+    ../../profiles/kdeconnect.nix
     ../../profiles/yubikey.nix
     ../../profiles/desktop/default.nix
     ../../profiles/academic.nix

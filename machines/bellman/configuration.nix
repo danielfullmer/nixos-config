@@ -6,6 +6,7 @@ with (import ../../profiles/nginxCommon.nix);
     ../../profiles/base.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix
+    ../../profiles/kdeconnect.nix
     ../../profiles/yubikey.nix
     ../../profiles/syncthing.nix
     ../../profiles/desktop/default.nix
