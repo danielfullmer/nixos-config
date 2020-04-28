@@ -20,12 +20,16 @@ with (import ../../profiles/nginxCommon.nix);
     #../../profiles/backup.nix
     #../../xrdesktop-overlay
     #../../profiles/cameras.nix
+
+    ./ap.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
+
   #networking.wireless.enable = true;
-  networking.networkmanager.enable = true;
+  #networking.networkmanager.enable = true;
+  networking.interfaces.enp68s0.useDHCP = true;
 
   # Router ipv6 isn't working. Lets tunnel through tunnelbroker.net. Notably helps zerotier connections as well
   # TODO: Add a periodic client IP udpate

@@ -99,4 +99,10 @@
 #      '';
 #    }
 #  ];
+
+  hardware.firmware = [ pkgs.wireless-regdb ];
+  hardware.enableRedistributableFirmware = true;
+  boot.extraModprobeConfig = ''
+    options cfg80211 ieee80211_regdom="US"
+  '';
 }
