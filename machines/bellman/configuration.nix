@@ -195,9 +195,8 @@ with (import ../../profiles/nginxCommon.nix);
   } // vhostPrivate;
 
   # For testing xrdesktop
-   services.xserver.desktopManager.gnome3.enable = true;
-   services.xserver.desktopManager.plasma5.enable = true;
-
+#  services.xserver.desktopManager.gnome3.enable = true;
+#  services.xserver.desktopManager.plasma5.enable = true;
 
   programs.ccache.enable = true;
 
