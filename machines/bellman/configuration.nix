@@ -157,7 +157,8 @@ with (import ../../profiles/nginxCommon.nix);
   };
 
   environment.systemPackages = with pkgs; [
-    bcachefs-tools keyboard-firmware
+    #bcachefs-tools
+    keyboard-firmware
     signal-desktop
   ];
 
