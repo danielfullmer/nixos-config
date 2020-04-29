@@ -20,39 +20,20 @@ in
   documentation.enable = false;
 
   # This is just on an RPI 3b (no 5ghz and AC)
-  services.hostapd = {
+  controlnet.ap = {
     enable = true;
     interface = "wlan0";
-    ssid = "controlnet_nomap";
+    subnetNumber = 4;
+  };
+  services.hostapd = {
     hwMode = "g";
-    # https://wiki.gentoo.org/wiki/Hostapd
     extraConfig = ''
       ieee80211n=1
-      require_ht=1
-      ht_capab=[MAX-AMSDU-3839][HT40][SHORT-GI-20][DSSS_CCK-40]
-      rsn_pairwise=CCMP
-    '';
-    wpaPassphrase = "verysecure";
-  };
-
-  services.dnsmasq = {
-    enable = true;
-    resolveLocalQueries = false;
-    servers = [ "8.8.8.8" "8.8.4.4" ];
-    extraConfig = ''
-      interface=wlan0
-
-      dhcp-range=192.168.3.2,192.168.3.254
+      ht_capab=[SMPS-STATIC][MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
     '';
   };
-
-  networking.interfaces.wlan0.ipv4.addresses = [ { address = "192.168.3.1"; prefixLength = 24; }];
-  networking.firewall.trustedInterfaces = [ "wlan0" ];
-  networking.nat.enable = true;
-  networking.nat.internalInterfaces = [ "wlan0" ];
 
   environment.systemPackages = with pkgs; [
-    wirelesstools iw
     raspberrypi-tools
     (v4l_utils.override { withGUI = false; })
     rpi_ffmpeg

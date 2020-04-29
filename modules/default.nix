@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... } :
 {
   imports = [
+    ./ap.nix
     ./programs.nix
     ./theme
     ./secrets.nix
