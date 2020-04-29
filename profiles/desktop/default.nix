@@ -165,20 +165,16 @@ with lib;
     enable = true;
     extensions = [
       "kcgpggonjhmeaejebeoeomdlohicfhce" # Cookie Remover
+      "fihnjjcciajhdojfnbdddfaoknhalnja" # I don't care about cookies
       "ihlenndgcmojhcghmfjfneahoeklbjjh" # cVim
       "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
       "cimiefiiaegbelhefglklhhakcgmhkai" # Plasma integration
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
       "pgdnlhfefecpicbbihgmbmffkjpaplco" # uBlock Origin Extra
       "ogfcmafjalglgifnmanfmnieipoejdcf" # uMatrix
-      "naepdomgkenhinolocfifgehidddafch" # Browserpass
+      "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock for youtube
+      "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml" # Bypass Paywalls: Fite me IRL Google.
     ];
-    extraOpts = {
-      ExtensionInstallForcelist = [
-        # Bypass Paywalls: Fite me IRL Google.
-        "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml"
-      ];
-    };
   };
 
   programs.browserpass.enable = true;
