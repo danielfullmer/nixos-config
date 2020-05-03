@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 
+with (import ./nginxCommon.nix);
 {
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
@@ -8,6 +9,7 @@
     locations."/".proxyPass = "http://10.100.0.2/";
     forceSSL = true;
     enableACME = true;
+    extraConfig = denyInternet;
   };
 
   networking.nat.enable = true;
@@ -92,5 +94,6 @@
     };
     forceSSL = true;
     enableACME = true;
+    extraConfig = denyInternet;
   };
 }
