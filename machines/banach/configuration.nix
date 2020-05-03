@@ -29,7 +29,7 @@ in
     hwMode = "g";
     extraConfig = ''
       ieee80211n=1
-      ht_capab=[SMPS-STATIC][MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
+      ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
     '';
   };
 
