@@ -35,13 +35,12 @@ with (import ../../profiles/nginxCommon.nix);
     options = "-d";
   };
 
-  # TODO: Forward to something that resolves over DNS over HTTPS for privacy
   # This is intended just for wireguard clients
+  # See also: includes forwarding config from profiles/base.nix
   services.unbound = {
     enable = true;
     interfaces = [ "127.0.0.1" "::1" "10.200.0.1" ];
     allowedAccess = [ "127.0.0.0/24" "10.200.0.0/24" ];
-    forwardAddresses = [ "8.8.8.8" "8.8.4.4" ];
     extraConfig = ''
       local-zone: "daniel.fullmer.me." static
       local-data: "turn.daniel.fullmer.me. IN A 167.71.187.97"
@@ -51,7 +50,6 @@ with (import ../../profiles/nginxCommon.nix);
           (map (vhost: "local-data: \"${vhost}. IN A ${config.machines.wireguardIP.${machine}}\"") virtualHosts))
         config.machines.virtualHosts));
   };
-  networking.networkmanager.dns = lib.mkForce "default";
 
   services.searx.enable = true; # Default port 8888. http://searx.daniel.fullmer.me
   services.searx.configFile = "/var/lib/searx/settings.yml"; # TODO: Nixify

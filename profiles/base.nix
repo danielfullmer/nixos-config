@@ -29,6 +29,33 @@ in
     email = "danielrf12@gmail.com";
   };
 
+  services.unbound = {
+    enable = true;
+
+    # services.unbound.forwardAddresses doesn't lets us set forward-tls-upstream
+    extraConfig = ''
+      forward-zone:
+        name: "."
+        forward-tls-upstream: yes
+        # Cloudflare DNS
+        forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
+        forward-addr: 1.1.1.1@853#cloudflare-dns.com
+        forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
+        forward-addr: 1.0.0.1@853#cloudflare-dns.com
+        # Quad9
+        forward-addr: 2620:fe::fe@853#dns.quad9.net
+        forward-addr: 9.9.9.9@853#dns.quad9.net
+        forward-addr: 2620:fe::9@853#dns.quad9.net
+        forward-addr: 149.112.112.112@853#dns.quad9.net
+
+      server:
+        tls-cert-bundle: /etc/pki/tls/certs/ca-bundle.crt
+        do-not-query-localhost: no
+        edns-tcp-keepalive: yes
+    '';
+
+  };
+
   environment.etc."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) { source = "/var/secrets/wpa_supplicant.conf"; };
   secrets."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {};
 
