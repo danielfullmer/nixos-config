@@ -9,6 +9,7 @@ with (import ../../profiles/nginxCommon.nix);
   imports = [
     ../../profiles/base.nix
     ../../profiles/wireguard.nix
+    ../../profiles/tor.nix
   ];
 
   networking.hostName = "gauss";
@@ -52,7 +53,7 @@ with (import ../../profiles/nginxCommon.nix);
   };
 
   services.searx.enable = true; # Default port 8888. http://searx.daniel.fullmer.me
-  services.searx.configFile = "/var/lib/searx/settings.yml"; # TODO: Nixify
+  services.searx.configFile = ./searx-settings.yml;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx = {
