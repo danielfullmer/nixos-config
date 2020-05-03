@@ -97,8 +97,10 @@ in
       "daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
     ];
 
-    daemonNiceLevel = 10; # Range: 0-19
     daemonIONiceLevel = 5; # Range: 0-7
+  };
+  systemd.services.nix-daemon.serviceConfig = {
+    CPUSchedulingPolicy = "batch";
   };
 
   users = {
