@@ -48,6 +48,7 @@ in
       extraConfig = ''
         listen-address=192.168.${toString cfg.subnetNumber}.1
         bind-interfaces # Bind to the specific interface, not 0.0.0.0
+        no-hosts # Don't load /etc/hosts, which would include our zerotier hosts as well
 
         dhcp-range=192.168.${toString cfg.subnetNumber}.2,192.168.${toString cfg.subnetNumber}.254
       '';
