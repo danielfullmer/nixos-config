@@ -25,8 +25,13 @@ with lib;
         # If only one window visible, hide borders
         hide_edge_borders smart
       '';
-      i3.bars = [
-        "status_command ${pkgs.i3status}/bin/i3status --config ${./i3status.config}"
+      i3.status.config = builtins.readFile ./i3status.config;
+      i3.status.order = [
+        "cpu_usage"
+        "memory"
+        "disk /"
+        "load"
+        "tztime local"
       ];
     };
 

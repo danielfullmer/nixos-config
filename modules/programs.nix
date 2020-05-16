@@ -74,18 +74,38 @@ with lib;
         type = types.listOf types.lines;
         default = [];
       };
+
+     windowManager.i3.status.config = mkOption {
+        type = types.lines;
+        default = "";
+      };
+
+     windowManager.i3.status.order = mkOption {
+        type = types.listOf types.str;
+        default = [];
+      };
     };
   };
 
   config = {
-    services.xserver.windowManager.i3.configFile = mkIf (config.services.xserver.windowManager.i3.config != "") (pkgs.writeTextFile {
-      name = "i3config";
-      text = config.services.xserver.windowManager.i3.config + (concatMapStrings (barconfig: ''
-        bar {
-          ${barconfig}
-          ${config.services.xserver.windowManager.i3.barsDefaultConfig}
-        }
-      '') config.services.xserver.windowManager.i3.bars);
-    });
+    services.xserver.windowManager.i3 = {
+      configFile = mkIf (config.services.xserver.windowManager.i3.config != "") (pkgs.writeTextFile {
+        name = "i3config";
+        text = config.services.xserver.windowManager.i3.config + (concatMapStrings (barconfig: ''
+          bar {
+            ${barconfig}
+            ${config.services.xserver.windowManager.i3.barsDefaultConfig}
+          }
+        '') config.services.xserver.windowManager.i3.bars);
+      });
+
+      # TODO: Switch to home-manager module?
+      bars = let
+        cfgFile = pkgs.writeText "i3status.config" (
+          config.services.xserver.windowManager.i3.status.config +
+          concatMapStringsSep "\n" (m: "order += \"${m}\"") config.services.xserver.windowManager.i3.status.order
+        );
+      in [ "status_command ${pkgs.i3status}/bin/i3status --config ${cfgFile}" ];
+    };
   };
 }

@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+with lib;
 
 # AMD Ryzen Threadripper 3970X
 # 4x16GB G.Skill Trident Z Neo Series PC4-28800 DDR4 3600MHz CL16-19-19-39 1.35V F4-3600C16D-32GTZNC
@@ -106,4 +107,14 @@
   boot.extraModprobeConfig = ''
     options cfg80211 ieee80211_regdom="US"
   '';
+
+  services.xserver.windowManager.i3.status = {
+    config = ''
+      cpu_temperature 0 {
+              max_threshold = 85
+              path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input"
+      }
+    '';
+    order = mkBefore [ "cpu_temperature 0" ];
+  };
 }
