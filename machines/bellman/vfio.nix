@@ -31,13 +31,14 @@ let
 in
 {
   imports = [
-    ./bellman.nix
+    ./configuration.nix
+    ./hardware-configuration.nix
   ];
 
   boot.kernelModules = [ "vfio" "vfio_pci" "vfio_virqfd" "vfio_iommu_type1" ];
 
   boot.kernelParams = [
-    "intel_iommu=on"
+    "amd_iommu=on"
     "vfio_iommu_type1.allow_unsafe_interrupts=1"
     "kvm.allow_unsafe_assigned_interrupts=1"
     "kvm.ignore_msrs=1"
@@ -83,18 +84,18 @@ in
 
   virtualisation.libvirtd.onShutdown = "shutdown";
 
-    networking.firewall.trustedInterfaces = [ "virbr0" ];
+  #networking.firewall.trustedInterfaces = [ "virbr0" ];
 
-    services.xserver.windowManager.i3.config = ''
-      bindsym $mod+shift+o exec ${pkgs.polkit}/bin/pkexec virsh shutdown win10
-      bindsym $mod+shift+p exec ${pkgs.polkit}/bin/pkexec virsh start win10
-    '';
+  services.xserver.windowManager.i3.config = ''
+    bindsym $mod+shift+o exec ${pkgs.polkit}/bin/pkexec virsh shutdown win10
+    bindsym $mod+shift+p exec ${pkgs.polkit}/bin/pkexec virsh start win10
+  '';
 
-    systemd.extraConfig = ''
-      DefaultCPUAccounting=yes
-      DefaultIOAccounting=yes
-      DefaultBlockIOAccounting=yes
-      DefaultMemoryAccounting=yes
-      DefaultTasksAccounting=yes
-    '';
+  systemd.extraConfig = ''
+    DefaultCPUAccounting=yes
+    DefaultIOAccounting=yes
+    DefaultBlockIOAccounting=yes
+    DefaultMemoryAccounting=yes
+    DefaultTasksAccounting=yes
+  '';
 }
