@@ -27,7 +27,6 @@ with lib;
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
     "nvme" "nvme_core"
-    "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
   ];
 
   # Current partition status:
