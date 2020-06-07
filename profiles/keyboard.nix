@@ -202,13 +202,20 @@
     # kill focused window
     bindsym $mod+Shift+q kill
 
-    bindsym $mod+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
-
-    bindsym $mod+d exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
+    bindsym $mod+p exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
     for_window [title="fzf-menu"] floating enable
 
-    bindsym XF86AudioRaiseVolume exec amixer sset Master 1000+ unmute
-    bindsym XF86AudioLowerVolume exec amixer sset Master 1000- unmute
+    bindsym $mod+Shift+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
+
+    # For reference, a quick way to view this file!
+    bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'vim ${./keyboard.nix}'
+
+    # Use pactl to adjust volume in PulseAudio.
+    set $refresh_i3status killall -SIGUSR1 i3status
+    bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+    bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+    bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+    bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
     bindsym XF86MonBrightnessUp   exec light -A 10
     bindsym XF86MonBrightnessDown exec light -U 10
@@ -257,10 +264,10 @@
     bindsym $mod+space focus mode_toggle
 
     # focus the parent container
-    bindsym $mod+a focus parent
+    bindsym $mod+u focus parent
 
     # focus the child container
-    #bindsym $mod+d focus child
+    bindsym $mod+d focus child
 
     # switch to workspace
     bindsym $mod+1 workspace 1
