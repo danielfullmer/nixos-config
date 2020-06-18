@@ -37,7 +37,8 @@ in
     yubikey-personalization
 
     gnupg
-    (pass.withExtensions (p: with p; [ pass-audit]))
+    pass
+    #(pass.withExtensions (p: with p; [ pass-audit])) # 2020-06-18: broken in nixpkgs
 
     keybase
     kbfs
