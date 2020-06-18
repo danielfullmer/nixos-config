@@ -6,7 +6,6 @@ let
   u2f_file = pkgs.writeText "u2f_mapping" u2f_key;
 in
 {
-  hardware.u2f.enable = true;
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   # For smartcards
