@@ -3,7 +3,7 @@
   environment.systemPackages = (with pkgs; [
     nox
     nix-index
-    vulnix
+    #vulnix
     morph
 
     emacs
