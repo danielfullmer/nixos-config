@@ -126,7 +126,7 @@ in
 
   services.cron.mailto = "cgibreak@gmail.com";
 
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Los_Angeles";
   time.hardwareClockInLocalTime = true;
 
   nixpkgs.config = import ../pkgs/config.nix;

@@ -203,7 +203,7 @@
     bindsym $mod+Shift+q kill
 
     bindsym $mod+p exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
-    for_window [title="fzf-menu"] floating enable
+    for_window [title="fzf-menu"] fullscreen enable
 
     bindsym $mod+Shift+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
 
