@@ -113,7 +113,7 @@ with lib;
     config = ''
       cpu_temperature 0 {
               max_threshold = 85
-              path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input"
+              path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon*/temp1_input"
       }
     '';
     order = mkBefore [ "cpu_temperature 0" ];
