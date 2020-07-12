@@ -29,7 +29,7 @@ in
     ripgrep
     fzf
     git
-    gitAndTools.hub
+    gitAndTools.gh
     neovim
 
     userBin
@@ -77,7 +77,6 @@ in
     vi = "vim";
     nfo="iconv -f IBM775";
     t = "task";
-    git = "hub";
   };
 
   # This is a hack
