@@ -70,13 +70,13 @@ with lib;
   systemd.services.nzxt-aio-curve = {
     # Set fan speed curve. First tuple entry is AIO liquid temperature. Second entry is PWM duty cycle
     script = ''
-      ${pkgs.krakenx}/bin/colctl -fs "(0,60),(35,70),(37,80),(38,85),(39,90),(40,95),(41,98),(42,99)"
+      ${pkgs.krakenx}/bin/colctl -fs "(0,60),(35,50),(37,60),(38,70),(39,80),(40,95),(41,98),(42,99)"
     '';
     serviceConfig.Type = "oneshot";
     wantedBy = [ "multi-user.target" ];
   };
 
-  powerManagement.cpuFreqGovernor = "ondemand"; # Let's save some temperature and electricity
+  powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
 
   # For Seiki 4K monitor
   fonts.fontconfig.dpi = 115;
