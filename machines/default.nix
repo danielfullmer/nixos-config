@@ -24,7 +24,6 @@ in
         banach = "30.0.0.156";
         tarski = "30.0.0.32";
 
-        sysc-2 = "30.0.0.154";
         wrench = "30.0.0.34";
         devnull = "30.0.0.48";
 
@@ -58,7 +57,6 @@ in
         bellman = "BVJ7MGT-A4S3AST-MOI4ROZ-KVNQM5J-34N5IJQ-JIEUFJR-KFEA7HF-RIDQOQJ";
         euler = "V6FOL26-QXGNP4E-25OQLVP-BW7TNIL-Q6KWDHC-56UGUZ7-7PY3DWA-KPN2QQ4";
         euler-win = "QUOVAFW-OIB56KE-JIFL5TT-EXXANDK-L7GVNSH-JBT72WI-NTY5ZOO-R2SBDAN";
-        sysc-2 = "SVORZYT-B75D76Z-JTLBU64-CAV3QR2-IMLOCLG-CPJPNO7-UELWC5U-SAI5CQV";
       };
     };
   }
