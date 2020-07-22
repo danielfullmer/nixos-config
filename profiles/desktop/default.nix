@@ -191,7 +191,9 @@ with lib;
   # HW accelerated video playback
   environment.variables.MPV_HOME = "/etc/mpv";
   environment.etc."mpv/mpv.conf".text = ''
-    hwdec=auto
+    hwdec=auto-safe
+    vo=gpu
+    profile=gpu-hq
   '';
 
   # This is a user-specific hack since it is not trivial to replace the
