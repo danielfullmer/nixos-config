@@ -84,8 +84,8 @@ with lib;
   #services.compton.enable = true;
 
   location = {
-    latitude = 41.3;
-    longitude = -72.9;
+    latitude = 31.2;
+    longitude = -115.1;
   };
   services.redshift = {
     temperature = {
