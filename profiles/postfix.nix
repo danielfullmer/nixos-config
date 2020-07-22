@@ -10,7 +10,6 @@
       inet_protocols = "ipv4";
       relayhost = "[smtp.gmail.com]:587";
       smtp_use_tls = "yes";
-      smtp_tls_CAfile = "/etc/ssl/certs/ca-bundle.crt";
       smtp_sasl_auth_enable = "yes";
       smtp_sasl_password_maps = "hash:/etc/postfix.local/sasl_passwd";
       smtp_sasl_security_options = "noanonymous";
