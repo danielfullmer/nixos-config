@@ -24,7 +24,7 @@ in
         banach = "30.0.0.156";
         tarski = "30.0.0.32";
 
-        wrench = "30.0.0.34";
+        wrench = "30.0.0.14";
         devnull = "30.0.0.48";
 
         pixel3 = "30.0.0.248";
@@ -50,7 +50,7 @@ in
         nyquist = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBEOwL+5XKdvVBNGIT4pUfzNtMyvuvERwWAcE9q8HFVj";
         banach = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGfJCTIzSct/m/Zm/yUb224JhKmr35ISH2CEcxSbkCc";
         gauss = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHsBoQtQeyvKK0IHewwwesgxiiiwxzx5bUqBNKGU3Xuu";
-        wrench = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM6M2q7YcOoHWQRpok1euwQ8FChG34GxxlijFtLHL6uO2myUpstpfvaF4K0Rm5rkiaXGmFZAjgj132JO98JbL1k=";
+        wrench = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEWKX4iWNnZ1sGLWYo8zzoEflXt/USVrYbZReA1smCc";
       };
 
       syncthingID = {
@@ -63,10 +63,11 @@ in
 
   (mkIf config.services.zerotierone.enable {
     # Set up /etc/hosts to use zerotier IP addresses for the virtualHosts
-    networking.hosts = mapAttrs' (machine: ip: nameValuePair ip [ machine ]) cfg.zerotierIP;
-  })
-  (mkIf config.services.zerotierone.enable {
-    networking.hosts = mapAttrs' (machine: virtualHosts: nameValuePair cfg.zerotierIP.${machine} virtualHosts) cfg.virtualHosts;
+    networking.hosts = mkMerge [
+      (mapAttrs' (machine: ip: nameValuePair ip [ machine ]) cfg.zerotierIP)
+      (mapAttrs' (machine: virtualHosts: nameValuePair cfg.zerotierIP.${machine} virtualHosts) cfg.virtualHosts)
+      { "${config.machines.zerotierIP.wrench}" = [ "wrench.fullmer.me" ]; }
+    ];
   })
   {
     programs.ssh.knownHosts = lib.mapAttrs (machine: publicKey: { inherit publicKey; }) cfg.sshPublicKey;
