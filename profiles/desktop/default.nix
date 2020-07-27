@@ -20,7 +20,7 @@ with lib;
         # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
         # 1 pixel window borders
-        new_window pixel 1
+        new_window pixel 3
 
         # If only one window visible, hide borders
         hide_edge_borders smart
