@@ -8,7 +8,7 @@ with lib;
     xkbOptions = "compose:ralt";
     libinput.naturalScrolling = true;
 
-    displayManager.defaultSession = "desktop+i3";
+    displayManager.defaultSession = "none+i3";
     displayManager.lightdm = {
       enable = true;
       background = toString config.theme.background;
@@ -37,34 +37,48 @@ with lib;
 
     desktopManager = {
       xterm.enable = false;
-      session = [ {
-        name = "desktop";
-        start =
-          let
-            xresourcesFile = pkgs.writeText "xresources" config.services.xserver.xresources;
-            dunstFile = pkgs.writeText "dunstFile" (generators.toINI {} config.programs.dunst.config);
-          in
-          ''
-          (${pkgs.xorg.xrdb}/bin/xrdb -merge "${xresourcesFile}") &
-          (${pkgs.xorg.xmodmap}/bin/xmodmap "${./Xmodmap}") &
-          (${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr) &
-          (${pkgs.pasystray}/bin/pasystray) &
-          (${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled) &
-          (${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}) &
-          (${pkgs.dunst}/bin/dunst -conf ${dunstFile}) &
-          (${pkgs.ibus}/bin/ibus-daemon -d) &
-          #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
-
-          ${config.services.xserver.desktopManager.extraSessionCommands}
-        '';
-      } ];
-      extraSessionCommands = mkIf config.networking.networkmanager.enable ''
-        (${pkgs.networkmanagerapplet}/bin/nm-applet) &
-      '';
     };
   };
 
-  i18n.inputMethod.enabled = "ibus";
+  systemd.user.services = mkMerge [
+    (mapAttrs (n: v: v // { wantedBy = [ "graphical-session.target" ]; partOf = [ "graphical-session.target" ]; }) {
+    xrdb.serviceConfig.ExecStart = let
+        xresourcesFile = pkgs.writeText "xresources" config.services.xserver.xresources;
+      in
+        "${pkgs.xorg.xrdb}/bin/xrdb -merge \"${xresourcesFile}\"";
+    xrdb.serviceConfig.Type = "oneshot";
+
+    xmodmap.serviceConfig.ExecStart = "${pkgs.xorg.xmodmap}/bin/xmodmap \"${./Xmodmap}\"";
+    xmodmap.serviceConfig.Type = "oneshot";
+
+    xsetroot.serviceConfig.ExecStart = "${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr";
+    xsetroot.serviceConfig.Type = "oneshot";
+
+    xss-lock.serviceConfig.ExecStart = "${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
+
+    feh.serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}";
+    feh.serviceConfig.Type = "oneshot";
+
+    dunst.serviceConfig.ExecStart = let
+        dunstFile = pkgs.writeText "dunstFile" (generators.toINI {} config.programs.dunst.config);
+      in
+        "${pkgs.dunst}/bin/dunst -conf ${dunstFile}";
+
+    #(${pkgs.ibus}/bin/ibus-daemon -d) &
+    #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
+
+    pasystray.serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
+  })
+  (mkIf config.networking.networkmanager.enable {
+    nm-applet = {
+      serviceConfig.ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+    };
+  })
+  ];
+
+  #i18n.inputMethod.enabled = "ibus";
 
   fonts = {
     fonts = (with pkgs; [

@@ -2,10 +2,15 @@
 
 {
   # An alternative is to use colord + xiccd. But this is more declarative.
-
+  # The downside is that it doesn't respond well to plugging in / removing mointors
   environment.etc."xdg/color.jcnf".text = builtins.toJSON (import ../hardware/monitors/color.jcnf.nix);
 
   # Load display calibration profiles. This needs to happen before redshift gets loaded.
-  # Currently this seems to work ok, but I don't believe it's guaranteed to work. There isn't an explicit dependency.
-  services.xserver.desktopManager.extraSessionCommands = "${pkgs.argyllcms}/bin/dispwin -L";
+  systemd.user.services.argyllcms = {
+    serviceConfig.ExecStart = "${pkgs.argyllcms}/bin/dispwin -L";
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    before = [ "redshift.service" ];
+  };
 }

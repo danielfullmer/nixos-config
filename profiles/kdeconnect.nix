@@ -2,10 +2,13 @@
 {
   environment.systemPackages = with pkgs; [ kdeconnect ];
 
-  services.xserver.desktopManager.extraSessionCommands = ''
-    ${pkgs.kdeconnect}/lib/libexec/kdeconnectd &
-    ${pkgs.kdeconnect}/bin/kdeconnect-indicator &
-  '';
+  systemd.user.services = {
+    kdeconnect-indicator = {
+      serviceConfig.ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+    };
+  };
 
   # KDE Connect
   networking.firewall.allowedTCPPortRanges = [ { from=1714; to=1764; } ];

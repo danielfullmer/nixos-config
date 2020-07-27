@@ -70,12 +70,6 @@ with (import ../../profiles/nginxCommon.nix);
   programs.adb.enable = true;
   users.users.danielrf.extraGroups = [ "adbusers" ];
 
-  services.xserver.desktopManager.extraSessionCommands = ''
-      (yubioath-gui -t) &
-      (keybase-gui) &
-      (signal-desktop --start-in-tray) &
-    '';
-
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
   services.nginx.virtualHosts."daniel.fullmer.me" = {

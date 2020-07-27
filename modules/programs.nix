@@ -55,11 +55,6 @@ with lib;
         default = "";
       };
 
-      desktopManager.extraSessionCommands = mkOption {
-        type = types.lines;
-        default = "";
-      };
-
      windowManager.i3.config = mkOption {
         type = types.lines;
         default = "";
