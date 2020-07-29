@@ -60,7 +60,37 @@ with lib;
   boot.initrd.postDeviceCommands = mkAfter ''
     zfs load-key pool/root < /bellman-zfs.key
     zfs load-key pool/home < /bellman-zfs.key
+    zfs load-key tank/backup < /bellman-zfs.key
   '';
+
+  services.sanoid = {
+    enable = true;
+    templates.common = {
+      hourly = 48;
+      daily = 30;
+      monthly = 6;
+      yearly = 0;
+    };
+    datasets."pool/home".useTemplate = [ "common" ];
+    datasets."pool/root".useTemplate = [ "common" ];
+    datasets."tank/backup".useTemplate = [ "common" ];
+  };
+
+  services.syncoid = {
+    enable = true;
+    commands = let
+      common = {
+        sshKey = "/var/secrets/wrench-zfs-syncoid-ssh";
+        sendOptions = "w"; # send raw for encrpyted volume
+        extraArgs = [ "--no-privilege-elevation" ]; # I use "zfs allow" instead of sudo
+      };
+    in {
+      "pool/home" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/home"; } // common;
+      "pool/root" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/root"; } // common;
+      "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
+    };
+  };
+ secrets."wrench-zfs-syncoid-ssh" = {};
 
   swapDevices = [ ];
 
