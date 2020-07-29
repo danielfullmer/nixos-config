@@ -29,10 +29,15 @@ in
     email = "danielrf12@gmail.com";
   };
 
+  networking.nameservers = [ "127.0.0.1" ];
+  systemd.services.unbound = {
+    wantedBy = [ "network.target" ];
+    before = [ "network.target" ];
+  };
   services.unbound = {
     enable = true;
 
-    # services.unbound.forwardAddresses doesn't lets us set forward-tls-upstream
+    # services.unbound.forwardAddresses doesn't let us set forward-tls-upstream
     extraConfig = ''
       forward-zone:
         name: "."
