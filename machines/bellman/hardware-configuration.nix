@@ -52,6 +52,12 @@ with lib;
       fsType = "vfat";
     };
   };
+  secrets."bellman-zfs.key" = {};
+  boot.initrd.secrets."/bellman-zfs.key" = "/var/secrets/bellman-zfs.key";
+  boot.initrd.postDeviceCommands = mkAfter ''
+    zfs load-key pool/root < /bellman-zfs.key
+    zfs load-key pool/home < /bellman-zfs.key
+  '';
 
   swapDevices = [ ];
 
