@@ -109,7 +109,7 @@ with lib;
   systemd.services.nzxt-aio-curve = {
     # Set fan speed curve. First tuple entry is AIO liquid temperature. Second entry is PWM duty cycle
     script = ''
-      ${pkgs.krakenx}/bin/colctl -fs "(0,60),(35,50),(37,60),(38,70),(39,80),(40,95),(41,98),(42,99)"
+      ${pkgs.krakenx}/bin/colctl -fs "(0,40),(35,50),(37,60),(38,70),(39,80),(40,95),(41,98),(42,99)"
     '';
     serviceConfig.Type = "oneshot";
     wantedBy = [ "multi-user.target" ];
