@@ -113,13 +113,6 @@ with (import ../../profiles/nginxCommon.nix);
 #      maxJobs = 4;
 #      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
 #    }
-#    { hostName = "nyquist";
-#      #sshUser = "nix";
-#      #sshKey = "/none";
-#      system = "x86_64-linux,i686-linux";
-#      maxJobs = 4;
-#      supportedFeatures = [ ];
-#    }
 #    { hostName = "banach";
 #      #sshUser = "nix";
 #      #sshKey = "/none";

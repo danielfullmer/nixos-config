@@ -5,6 +5,6 @@ in
   upload-secrets = pkgs.symlinkJoin {
     name = "upload-secrets";
     paths = (map (machine: (pkgs.nixos (import (./machines + "/${machine}"))).upload-secrets)
-             [ "bellman" "nyquist" "euler" "banach" "gauss" ]);
+             [ "bellman" "euler" "banach" "gauss" ]);
   };
 }

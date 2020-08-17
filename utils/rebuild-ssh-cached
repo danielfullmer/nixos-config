@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-nixos-rebuild --option ssh-substituter-hosts "nyquist bellman" $*
+nixos-rebuild --option ssh-substituter-hosts "bellman" $*

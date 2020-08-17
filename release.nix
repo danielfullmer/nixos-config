@@ -11,7 +11,6 @@ in
 rec {
   bellman = nixos ./machines/bellman;
   #bellman-vfio = nixos ./machines/bellman-vfio;
-  nyquist = nixos ./machines/nyquist;
   euler = nixos ./machines/euler;
   #banach = (./machines/banach.nix;).system;
   spaceheater = nixos ./machines/spaceheater;
@@ -30,7 +29,6 @@ rec {
     constituents = [
         bellman
         #bellman-vfio
-        nyquist
         euler
         #spaceheater
         gauss
