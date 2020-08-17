@@ -166,4 +166,6 @@ with lib;
     '';
     order = mkBefore [ "cpu_temperature 0" ];
   };
+
+  services.apcupsd.enable = true;
 }

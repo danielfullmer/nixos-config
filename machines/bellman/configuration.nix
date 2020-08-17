@@ -105,14 +105,14 @@ with (import ../../profiles/nginxCommon.nix);
 
     # TOOD: Parameterize
     # Used by hydra even if nix.distributedBuilds is false
-  nix.buildMachines = [
-    { hostName = "localhost";
-      #sshUser = "nix";
-      #sshKey = "/none";
-      system = "x86_64-linux,i686-linux,aarch64-linux";
-      maxJobs = 4;
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-    }
+#  nix.buildMachines = [
+#    { hostName = "localhost";
+#      #sshUser = "nix";
+#      #sshKey = "/none";
+#      system = "x86_64-linux,i686-linux,aarch64-linux";
+#      maxJobs = 4;
+#      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+#    }
 #    { hostName = "nyquist";
 #      #sshUser = "nix";
 #      #sshKey = "/none";
@@ -127,7 +127,7 @@ with (import ../../profiles/nginxCommon.nix);
 #      maxJobs = 2;
 #      supportedFeatures = [ ];
 #    }
-  ];
+#  ];
   #nix.distributedBuilds = true;
 
   # Remote hosts often have better connection to cache than direct to this host
