@@ -11,16 +11,6 @@ let
     ];
   }).config;
 in with super; {
-### Example to patch a derivation
-#  zerotierone = pkgs.zerotierone.overrideAttrs (attrs: {
-#    patches = [
-#      (fetchurl {
-#        url = "https://github.com/zerotier/ZeroTierOne/commit/039790cf267cb67a5130fb82caf97998d8b0959e.patch";
-#        sha256 = "1n93gvi3d3jsb84k496rhs61ycq5wih1yn47wiz2jwfd83bryarj";
-#      })
-#    ];
-#  });
-
   # Packages
   adapta-gtk-theme = adapta-gtk-theme.overrideAttrs (attrs: {
     configureFlags = attrs.configureFlags ++ (with config.theme.colors; [
@@ -75,10 +65,13 @@ in with super; {
 
   xcompose = callPackage ./xcompose {};
 
-  fuse = fuse.overrideAttrs (attrs: {
-    # TODO: should be "attrs ++" or something like that but seems to get applied multiple times.
-    patches = [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
-  });
+  netgear-exporter = callPackage ./netgear-exporter {};
+  systemd-exporter = callPackage ./systemd-exporter {};
+
+#  fuse = fuse.overrideAttrs (attrs: {
+#    # TODO: should be "attrs ++" or something like that but seems to get applied multiple times.
+#    patches = [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
+#  });
 
   #### Environments ####
 

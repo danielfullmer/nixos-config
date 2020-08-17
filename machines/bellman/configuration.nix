@@ -198,5 +198,110 @@ with (import ../../profiles/nginxCommon.nix);
 #  services.xserver.desktopManager.plasma5.enable = true;
 
   programs.ccache.enable = true;
+  services.grafana.enable = true;
+  services.prometheus = {
+    enable = true;
+    globalConfig.scrape_interval = "15s";
+    scrapeConfigs = [
+      {
+        job_name = "node";
+        static_configs = [ { targets = [ "localhost:9100" ]; } ];
+      }
+      {
+        job_name = "systemd";
+        static_configs = [ { targets = [ "localhost:9558" ]; } ];
+      }
+      {
+        job_name = "apcupsd";
+        static_configs = [ { targets = [ "localhost:${builtins.toString config.services.prometheus.exporters.apcupsd.port}" ]; } ];
+      }
+    ];
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [
+          "logind"
+          "wifi"
+          #"perf"
+        ];
+        extraFlags = [
+          "--collector.textfile.directory=/var/lib/prometheus-node-exporter-text-files"
+        ];
+      };
+      dnsmasq.enable = true;
+      nginx.enable = true;
+      #tor.enable = true;
+      wireguard.enable = true;
+      apcupsd.enable = true;
+    };
+  };
 
+  systemd.services.systemd-exporter = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.ExecStart = "${pkgs.systemd-exporter}/bin/systemd_exporter --web.listen-address=127.0.0.1:9558 --collector.enable-ip-accounting";
+  };
+
+  systemd.tmpfiles.rules = [ "d /var/lib/prometheus-node-exporter-text-files 1755 root root 10d" ];
+
+  system.activationScripts.node-exporter-system-version = ''
+    (
+      mkdir -p /var/lib/prometheus-node-exporter-text-files
+      cd /var/lib/prometheus-node-exporter-text-files
+      (
+        echo -n "system_version ";
+        readlink /nix/var/nix/profiles/system | cut -d- -f2
+      ) > system-version.prom.next
+      mv system-version.prom.next system-version.prom
+    )
+  '';
+
+  systemd.services.prometheus-smartmon = let
+    scripts = pkgs.fetchFromGitHub {
+      owner = "prometheus-community";
+      repo = "node-exporter-textfile-collector-scripts";
+      rev = "57d05ce7ab752ec6795b452b1b660b736a32dcd5"; # 2020-08-04
+      sha256 = "05pvi9kh35a2ixdm8i5bnkq992srd8b9ysb4cbxi684hl74q2444";
+    };
+  in {
+    script = "${pkgs.python3}/bin/python ${scripts}/smartmon.py > /var/lib/prometheus-node-exporter-text-files/smartmon.prom";
+    serviceConfig.Type = "oneshot";
+    path = with pkgs; [ smartmontools ];
+  };
+
+  systemd.timers.prometheus-smartmon = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      Unit = "prometheus-smartmon.service";
+      OnCalendar = "*:0/5"; # Every 5 minutes
+    };
+  };
+
+  systemd.services.prometheus-nvme = let
+    scripts = pkgs.stdenv.mkDerivation {
+      name = "node-exporter-textfile-collector-scripts";
+      src = pkgs.fetchFromGitHub {
+        owner = "prometheus-community";
+        repo = "node-exporter-textfile-collector-scripts";
+        rev = "57d05ce7ab752ec6795b452b1b660b736a32dcd5"; # 2020-08-04
+        sha256 = "05pvi9kh35a2ixdm8i5bnkq992srd8b9ysb4cbxi684hl74q2444";
+      };
+      buildInputs = [ pkgs.python3 ];
+      installPhase = "mkdir -p $out/bin; cp * $out/bin/";
+    };
+  in {
+    script = "${scripts}/bin/nvme_metrics.sh > /var/lib/prometheus-node-exporter-text-files/nvme.prom";
+    serviceConfig.Type = "oneshot";
+    path = with pkgs; [ nvme-cli gawk jq ];
+  };
+
+  systemd.timers.prometheus-nvme = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      Unit = "prometheus-nvme.service";
+      OnCalendar = "*:0/5"; # Every 5 minutes
+    };
+  };
+
+  #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
+  systemd.enableCgroupAccounting = true;
 }
