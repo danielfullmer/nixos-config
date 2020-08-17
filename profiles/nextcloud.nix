@@ -29,7 +29,6 @@ with (import ./nginxCommon.nix);
       services.nextcloud = {
         enable = true;
         hostName = "nextcloud.fullmer.me";
-        nginx.enable = true;
         autoUpdateApps.enable = true;
         config = {
           dbtype = "sqlite";
