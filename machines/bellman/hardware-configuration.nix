@@ -60,8 +60,8 @@ with lib;
   boot.initrd.postDeviceCommands = mkAfter ''
     zfs load-key pool/root < /bellman-zfs.key
     zfs load-key pool/home < /bellman-zfs.key
-    zfs load-key tank/backup < /bellman-zfs.key
   '';
+  systemd.services."zfs-import-tank".serviceConfig.RequiresMountsFor="/var/secrets/bellman-zfs.key";
 
   services.sanoid = {
     enable = true;
@@ -90,7 +90,7 @@ with lib;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
   };
- secrets."wrench-zfs-syncoid-ssh" = {};
+  secrets."wrench-zfs-syncoid-ssh" = {};
 
   swapDevices = [ ];
 
