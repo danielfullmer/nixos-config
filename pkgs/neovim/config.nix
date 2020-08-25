@@ -121,6 +121,9 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 
+autocmd FileType go set noexpandtab
+autocmd FileType go set shiftwidth=8
+
 set colorcolumn=+1
 let g:indent_guides_auto_colors=1
 let g:indent_guides_enable_on_vim_startup=1
