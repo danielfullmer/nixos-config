@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, utils, ... }:
 
 with lib;
 let
@@ -33,6 +33,11 @@ in
       '';
       wpaPassphrase = "verysecure";
     };
+
+    # Sometimes, the device crashes and restarts, since hostapd has BindTo the
+    # device, and we want hostapd to restart when the device comes back up, add
+    # a WantedBy relationship here.
+    systemd.services.hostapd.wantedBy = [ "sys-subsystem-net-device-${utils.escapeSystemdPath cfg.interface}.device" ];
 
     networking.interfaces."${cfg.interface}".ipv4.addresses = [ { address = "192.168.${toString cfg.subnetNumber}.1"; prefixLength = 24; }];
     networking.firewall.interfaces."${cfg.interface}" = {
