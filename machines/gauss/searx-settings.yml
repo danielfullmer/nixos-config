@@ -23,32 +23,44 @@ ui:
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
     theme_args :
         oscar_style : logicodev # default style of oscar
+#   categories_order :
+#     - general
+#     - files
+#     - map
+#     - it
+#     - science
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
+# the key is base64 encoded (keep the !!binary notation)
+# Note: since commit af77ec3, morty accepts a base64 encoded key.
 #result_proxy:
 #    url : http://127.0.0.1:3000/
-#    key : your_morty_proxy_key
+#    key : !!binary "your_morty_proxy_key"
 
 outgoing: # communication with search engines
-    request_timeout : 1.5 # seconds
+    request_timeout : 2.0 # default timeout in seconds, can be override by engine
+    # max_request_timeout: 10.0 # the maximum timeout in seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
-# SOCKS proxies are also supported: see http://docs.python-requests.org/en/master/user/advanced/#socks
-
-# TOR socks proxies
-    proxies :
-        http : http://127.0.0.1:8118
-        https: http://127.0.0.1:8118
-
+# SOCKS proxies are also supported: see http://requests.readthedocs.io/en/master/user/advanced/#socks
+#    proxies :
+#        http : http://127.0.0.1:8080
+#        https: http://127.0.0.1:8080
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
+#
+# TOR socks proxies
+#    proxies :
+#        http : http://127.0.0.1:8118
+#        https: http://127.0.0.1:8118
+
 
 engines:
   - name: apk mirror
@@ -200,6 +212,11 @@ engines:
     shortcut : ddi
     timeout: 3.0
 
+  - name : etools
+    engine : etools
+    shortcut : eto
+    disabled : True
+
   - name : etymonline
     engine : xpath
     paging : True
@@ -209,11 +226,6 @@ engines:
     content_xpath : //section[contains(@class, "word__defination")]
     first_page_num : 1
     shortcut : et
-    disabled : True
-
-  - name : faroo
-    engine : faroo
-    shortcut : fa
     disabled : True
 
   - name : 1x
@@ -752,6 +764,20 @@ engines:
     shortcut : speu
     engine : seedpeer
     categories: files, music, videos
+
+  - name : rubygems
+    shortcut: rbg
+    engine: xpath
+    paging : True
+    search_url : https://rubygems.org/search?page={pageno}&query={query}
+    results_xpath: /html/body/main/div/a[@class="gems__gem"]
+    url_xpath : ./@href
+    title_xpath : ./span/h2
+    content_xpath : ./span/p
+    suggestion_xpath : /html/body/main/div/div[@class="search__suggestions"]/p/a
+    first_page_num : 1
+    categories: it
+    disabled : True
 
 #  - name : yacy
 #    engine : yacy
