@@ -32,6 +32,10 @@ in
     gitAndTools.gh
     neovim
 
+    taskwarrior
+    timewarrior
+    vit
+
     userBin
   ]);
 
@@ -77,6 +81,7 @@ in
     vi = "vim";
     nfo="iconv -f IBM775";
     t = "task";
+    tw = "timew";
   };
 
   # This is a hack
