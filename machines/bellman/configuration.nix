@@ -139,11 +139,28 @@ with (import ../../profiles/nginxCommon.nix);
     };
   };
 
+  systemd.user.services.gmailieer-aht = {
+    serviceConfig = {
+      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
+      Type = "oneshot";
+      WorkingDirectory = "/home/danielrf/mail/dfullmer.aht";
+    };
+  };
+
   systemd.user.timers.gmailieer = {
     requires = [ "network-online.target" ];
     wantedBy = [ "timers.target" ];
     timerConfig = {
       Unit = "gmailieer.service";
+      OnCalendar = "*:0/3"; # Every 3 minutes
+    };
+  };
+
+  systemd.user.timers.gmailieer-aht = {
+    requires = [ "network-online.target" ];
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      Unit = "gmailieer-aht.service";
       OnCalendar = "*:0/3"; # Every 3 minutes
     };
   };
