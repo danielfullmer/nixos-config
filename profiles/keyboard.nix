@@ -208,7 +208,8 @@
     bindsym $mod+Shift+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
 
     # For reference, a quick way to view this file!
-    bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'vim ${./keyboard.nix}'
+    bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.termite}/bin/termite -t 'help-screen' -e 'vim ${./keyboard.nix}'
+    for_window [title="help-screen"] fullscreen enable
 
     # Use pactl to adjust volume in PulseAudio.
     set $refresh_i3status killall -SIGUSR1 i3status
