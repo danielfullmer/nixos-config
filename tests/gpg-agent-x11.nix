@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
+import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
 
 {
   name = "gpg-agent-x11";
@@ -23,13 +23,14 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
 
   testScript =
       ''
-      $machine->waitForX;
+      machine.wait_for_x()
 
       # Ensure pinentry shows up in X11;
-      subtest "Pinentry", sub {
-          $machine->succeed("DISPLAY=:0 gpg-connect-agent 'get_passphrase x Invalid Prompt Description' /bye &\n");
-          $machine->waitForWindow("^pinentry");
-          $machine->screenshot("pinentry");
-      };
+      with subtest("Pinentry"):
+          machine.succeed(
+              "DISPLAY=:0 gpg-connect-agent 'get_passphrase x Invalid Prompt Description' /bye &\n"
+          )
+          machine.wait_for_window("^pinentry")
+          machine.screenshot("pinentry")
     '';
 })

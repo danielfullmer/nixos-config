@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
+import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
 
 {
   name = "vim";
@@ -15,34 +15,31 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
   # Part of this cribbed from login.nix
   testScript =
     ''
-      $machine->waitForUnit('multi-user.target');
-      $machine->waitUntilSucceeds("pgrep -f 'agetty.*tty1'");
+      machine.wait_for_unit("multi-user.target")
+      machine.wait_until_succeeds("pgrep -f 'agetty.*tty1'")
 
-      subtest "create user", sub {
-          $machine->succeed("useradd -m alice");
-          $machine->succeed("(echo foobar; echo foobar) | passwd alice");
-      };
+      with subtest("create user"):
+          machine.succeed("useradd -m alice")
+          machine.succeed("(echo foobar; echo foobar) | passwd alice")
 
       # Log in as alice on a virtual console.
-      subtest "virtual console login", sub {
-          $machine->waitUntilTTYMatches(1, "login: ");
-          $machine->sendChars("alice\n");
-          $machine->waitUntilTTYMatches(1, "login: alice");
-          $machine->waitUntilSucceeds("pgrep login");
-          $machine->waitUntilTTYMatches(1, "Password: ");
-          $machine->sendChars("foobar\n");
-          $machine->waitUntilSucceeds("pgrep -u alice bash");
-          $machine->sendChars("touch done\n");
-          $machine->waitForFile("/home/alice/done");
-      };
+      with subtest("virtual console login"):
+          machine.wait_until_tty_matches(1, "login: ")
+          machine.send_chars("alice\n")
+          machine.wait_until_tty_matches(1, "login: alice")
+          machine.wait_until_succeeds("pgrep login")
+          machine.wait_until_tty_matches(1, "Password: ")
+          machine.send_chars("foobar\n")
+          machine.wait_until_succeeds("pgrep -u alice bash")
+          machine.send_chars("touch done\n")
+          machine.wait_for_file("/home/alice/done")
 
       # Start up VIM and write an empty file
-      subtest "vim", sub {
-          $machine->sendChars("vim\n");
-          $machine->sleep(5);
-          $machine->screenshot("vim");
-          $machine->sendChars(":w test\n");
-          $machine->waitForFile("/home/alice/test");
-      };
+      with subtest("vim"):
+          machine.send_chars("vim\n")
+          machine.sleep(5)
+          machine.screenshot("vim")
+          machine.send_chars(":w test\n")
+          machine.wait_for_file("/home/alice/test")
     '';
 })

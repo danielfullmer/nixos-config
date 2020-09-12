@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
+import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
   name = "yubikey";
 
   machine = { config, pkgs, ... }: {
@@ -16,8 +16,8 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} : {
   };
 
   testScript = ''
-    $machine->waitForUnit("multi-user.target");
-    $machine->succeed("su - danielrf -s /bin/sh -c 'gpg2 --card-status'");
+    machine.wait_for_unit("multi-user.target")
+    machine.succeed("su - danielrf -s /bin/sh -c 'gpg2 --card-status'")
 
     # TODO: Come up with test for u2f, ykpersonalize, and yubioath-gui
   '';

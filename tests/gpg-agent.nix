@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
+import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
 
 {
   name = "gpg-agent";
@@ -22,33 +22,32 @@ import <nixpkgs/nixos/tests/make-test.nix> ({ pkgs, ...} :
   # Part of this cribbed from login.nix
   testScript =
     ''
-      $machine->waitForUnit('multi-user.target');
-      $machine->waitUntilSucceeds("pgrep -f 'agetty.*tty1'");
-      $machine->screenshot("postboot");
+      machine.wait_for_unit("multi-user.target")
+      machine.wait_until_succeeds("pgrep -f 'agetty.*tty1'")
+      machine.screenshot("postboot")
 
-      subtest "create user", sub {
-          $machine->succeed("useradd -m alice");
-          $machine->succeed("(echo foobar; echo foobar) | passwd alice");
-      };
+      with subtest("create user"):
+          machine.succeed("useradd -m alice")
+          machine.succeed("(echo foobar; echo foobar) | passwd alice")
 
       # Log in as alice on a virtual console.
-      subtest "virtual console login", sub {
-          $machine->waitUntilTTYMatches(1, "login: ");
-          $machine->sendChars("alice\n");
-          $machine->waitUntilTTYMatches(1, "login: alice");
-          $machine->waitUntilSucceeds("pgrep login");
-          $machine->waitUntilTTYMatches(1, "Password: ");
-          $machine->sendChars("foobar\n");
-          $machine->waitUntilSucceeds("pgrep -u alice bash");
-          $machine->sendChars("touch done\n");
-          $machine->waitForFile("/home/alice/done");
-      };
+      with subtest("virtual console login"):
+          machine.wait_until_tty_matches(1, "login: ")
+          machine.send_chars("alice\n")
+          machine.wait_until_tty_matches(1, "login: alice")
+          machine.wait_until_succeeds("pgrep login")
+          machine.wait_until_tty_matches(1, "Password: ")
+          machine.send_chars("foobar\n")
+          machine.wait_until_succeeds("pgrep -u alice bash")
+          machine.send_chars("touch done\n")
+          machine.wait_for_file("/home/alice/done")
 
       # Ensure pinentry shows up on our tty
-      subtest "Pinentry", sub {
-          $machine->sendChars("gpg-connect-agent 'get_passphrase x Invalid Prompt Description' /bye\n");
-          $machine->waitUntilTTYMatches(1, "<OK>");
-          $machine->screenshot("pinentry");
-      };
+      with subtest("Pinentry"):
+          machine.send_chars(
+              "gpg-connect-agent 'get_passphrase x Invalid Prompt Description' /bye\n"
+          )
+          machine.wait_until_tty_matches(1, "<OK>")
+          machine.screenshot("pinentry")
     '';
 })
