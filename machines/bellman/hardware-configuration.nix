@@ -167,5 +167,9 @@ with lib;
     order = mkBefore [ "cpu_temperature 0" ];
   };
 
+  hardware.bluetooth.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  hardware.pulseaudio.zeroconf.discovery.enable = true;
+
   services.apcupsd.enable = true;
 }
