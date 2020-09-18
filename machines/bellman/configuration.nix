@@ -21,6 +21,7 @@ with (import ../../profiles/nginxCommon.nix);
     #../../profiles/backup.nix
     #../../xrdesktop-overlay
     #../../profiles/cameras.nix
+    ../../profiles/fdm-printer.nix
 
     ./ap.nix
   ];
