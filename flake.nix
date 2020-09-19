@@ -33,5 +33,7 @@
       #zerotier-simple = (import ./tests/zerotier {}).simple;
       #zerotier-doubleNat = (import ./tests/zerotier {}).doubleNat;
     };
+
+    hydraJobs = nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
   };
 }
