@@ -32,7 +32,7 @@ in
   };
   security.pam.services."sshd".u2fAuth = false;
 
-  environment.systemPackages = (with pkgs; [
+  environment.systemPackages = with pkgs; [
     yubico-piv-tool
     yubikey-personalization
 
@@ -45,8 +45,9 @@ in
   ] ++ lib.optionals (config.services.xserver.enable) [
     yubioath-desktop
     yubikey-personalization-gui
+  ] ++ lib.optionals (config.services.xserver.enable && pkgs.stdenv.isx86_64) [
     keybase-gui
-  ]);
+  ];
 
   systemd.services.gpg-key-import = {
     description = "Import gpg keys";
