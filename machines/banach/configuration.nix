@@ -42,6 +42,8 @@
       Group = "video";
       Restart = "always";
       RestartSec = 15;
+      StartLimitInterval="1min";
+      StartLimitBurst="4";
     };
   };
 }
