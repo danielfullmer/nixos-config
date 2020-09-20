@@ -3,6 +3,7 @@
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/fdm-printer.nix
   ];
 
   networking.hostName = "banach";
