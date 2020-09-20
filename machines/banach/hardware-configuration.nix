@@ -25,6 +25,7 @@
     # ffmpeg -f video4linux2 -input_format h264 -video_size 1024x768 -framerate 30 -i /dev/video0 -vcodec copy test.mkv
 
     #kernelPackages = pkgs.linuxPackages_rpi3;
+    kernelPackages = pkgs.linuxPackages_4_19; # 5.4 doesn't seem to work with camera
 
     initrd.availableKernelModules = [
       # Allows early (earlier) modesetting for the Raspberry Pi
