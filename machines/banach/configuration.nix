@@ -31,11 +31,11 @@
     ffmpeg_4
   ];
 
-  systemd.services."camera-livingroom" = {
+  systemd.services."camera" = {
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
     script = ''
-      ${ffmpeg_4.bin}/bin/ffmpeg -nostats -f video4linux2 -input_format h264 -video_size 640x480 -framerate 30 -i /dev/video0 -vcodec copy -f flv "rtmp://bellman/live/livingroom"
+      ${pkgs.ffmpeg_4.bin}/bin/ffmpeg -nostats -f video4linux2 -input_format h264 -video_size 640x480 -framerate 30 -i /dev/video0 -vcodec copy -f flv "rtmp://bellman/live/ender3"
     '';
     serviceConfig = {
       DynamicUser = true;
