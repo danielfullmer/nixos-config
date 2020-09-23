@@ -48,7 +48,7 @@ with (import ../../profiles/nginxCommon.nix);
     '' +
       concatStringsSep "\n" (flatten
         (mapAttrsToList (machine: virtualHosts:
-          (map (vhost: "local-data: \"${vhost}. IN A ${config.machines.wireguardIP.${machine}}\"") virtualHosts))
+          (map (vhost: "local-data: \"${vhost}. IN A ${config.machines.wireguardIP.${machine} or config.machines.zerotierIP.${machine}}\"") virtualHosts))
         config.machines.virtualHosts));
   };
 
