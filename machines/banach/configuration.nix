@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 
+with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
@@ -13,17 +14,24 @@
   documentation.enable = false;
 
   # This is just on an RPI 3b (no 5ghz and AC)
-  controlnet.ap = {
+#  controlnet.ap = {
+#    enable = true;
+#    interface = "wlan0";
+#    subnetNumber = 4;
+#  };
+#  services.hostapd = {
+#    hwMode = "g";
+#    extraConfig = ''
+#      ieee80211n=1
+#      ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
+#    '';
+#  };
+
+  services.nginx = {
     enable = true;
-    interface = "wlan0";
-    subnetNumber = 4;
-  };
-  services.hostapd = {
-    hwMode = "g";
-    extraConfig = ''
-      ieee80211n=1
-      ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
-    '';
+    virtualHosts."printer.daniel.fullmer.me" = {
+      locations."/".proxyPass = "http://127.0.0.1:5000/";
+    } // vhostPrivate;
   };
 
   environment.systemPackages = with pkgs; [

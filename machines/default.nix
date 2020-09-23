@@ -40,6 +40,7 @@ in
           "attestation" "hydra" "playmaker" "fdroid" "office" "zoneminder" "home"
         ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
         gauss = [ "searx.${config.networking.domain}" ];
+        banach = [ "printer.${config.networking.domain}" ];
       };
 
       publicVirtualHosts = [ "daniel.fullmer.me" ];
