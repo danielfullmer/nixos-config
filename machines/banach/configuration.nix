@@ -29,8 +29,12 @@ with (import ../../profiles/nginxCommon.nix);
 
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
     virtualHosts."printer.daniel.fullmer.me" = {
-      locations."/".proxyPass = "http://127.0.0.1:5000/";
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:5000/";
+        proxyWebsockets = true;
+      };
     } // vhostPrivate;
   };
 
