@@ -52,7 +52,7 @@
   };
 
 
-  hardware.firmware = with pkgs; [ raspberrypiWirelessFirmware ];
+  hardware.firmware = with pkgs; [ raspberrypiWirelessFirmware raspberrypifw ];
 
   nix.maxJobs = 2;
   nix.buildCores = 4;
