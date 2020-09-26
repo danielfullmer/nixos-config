@@ -24,6 +24,17 @@ with lib;
 
         # If only one window visible, hide borders
         hide_edge_borders smart
+
+        set $ws1 "1:gen"
+        set $ws2 "2:gen"
+        set $ws3 "3:robotnix"
+        set $ws4 "4:aht"
+        set $ws5 "5"
+        set $ws6 "6"
+        set $ws7 "7"
+        set $ws8 "8"
+        set $ws9 "9"
+        set $ws10 "10"
       '';
       i3.status.config = builtins.readFile ./i3status.config;
       i3.status.order = [
