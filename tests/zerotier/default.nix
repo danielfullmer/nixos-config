@@ -53,16 +53,6 @@ let
       services.zerotierone.enable = true;
       nixpkgs.config.allowUnfree = true;
 
-      # TODO: Remove when fixed in nixpkgs
-      environment.etc."systemd/network/50-zerotier.link".text = ''
-        [Match]
-        OriginalName=zt*
-
-        [Link]
-        AutoNegotiation=false
-        MACAddressPolicy=none
-      '';
-
       # Ensure .moon file is available to all nodes
       systemd.services.zerotierone.preStart = ''
         mkdir -p /var/lib/zerotier-one/moons.d
@@ -189,5 +179,4 @@ let
 
 in mapAttrs (const: (attrs: makeTest (attrs // {
   skipLint = true;
-
 }))) testCases
