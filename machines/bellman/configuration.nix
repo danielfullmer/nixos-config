@@ -22,6 +22,7 @@ with (import ../../profiles/nginxCommon.nix);
     #../../xrdesktop-overlay
     #../../profiles/cameras.nix
     ../../profiles/fdm-printer.nix
+    ../../profiles/rtlsdr.nix
 
     ./ap.nix
   ];
