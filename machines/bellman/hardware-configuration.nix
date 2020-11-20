@@ -81,8 +81,8 @@ with lib;
     commands = let
       common = {
         sshKey = "/var/secrets/wrench-zfs-syncoid-ssh";
-        sendOptions = "w"; # send raw for encrpyted volume
-        extraArgs = [ "--no-privilege-elevation" ]; # I use "zfs allow" instead of sudo
+        sendOptions = "w"; # send raw for encrypted volume
+        extraArgs = [ "--no-sync-snap" ]; # Don't create any snapshots, just send them
       };
     in {
       "pool/home" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/home"; } // common;
