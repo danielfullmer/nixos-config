@@ -2,7 +2,7 @@
 
 with lib;
 {
-  services.udev.packages = with pkgs; [ rtl-sdr ];
+  hardware.rtl-sdr.enable = true;
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 
   # GUI stuff
