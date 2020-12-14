@@ -195,13 +195,23 @@ with (import ../../profiles/nginxCommon.nix);
   services.attestation-server = {
     enable = true;
     domain = "attestation.daniel.fullmer.me";
-    # TODO: Extract from NixDroid configuration
-    deviceFamily = "crosshatch";
+
+    # TODO: Extract from robotnix configuration
+    device = "crosshatch";
     signatureFingerprint = "30E3A2C19024A208DF0D4FE0633AE3663B22AD4868F446B1AC36D526CA8E95FA";
     avbFingerprint = "F7B29168803BA73C31641D2770C2A84D4FF68C157F0B8BFE0BDC1958D4310491";
+
+    email = {
+      username = "cgibreak@gmail.com";
+      passwordFile = "/var/secrets/attestation-server-email-password";
+      host = "smtp.gmail.com";
+      port = 465;
+    };
+
+    disableAccountCreation = true;
+    nginx.enableACME = true;
   };
   services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
-    enableACME = true;
     extraConfig = denyInternet;
   } // vhostPrivate;
 
