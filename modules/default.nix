@@ -9,7 +9,7 @@
 #    /home/danielrf/robotnix/nixos
     ((builtins.fetchGit {
       url = "https://github.com/danielfullmer/robotnix";
-      rev = "2b7b19a601e3ac2199f55f217584c9fc0f537d66";
+      rev = "3d379babfdcb739835f5fb06bc79c2c03f4c801d";
       #sha256 = "";
     }) + /nixos)
     ./playmaker.nix
