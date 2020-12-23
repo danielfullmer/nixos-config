@@ -16,7 +16,7 @@ buildGoPackage rec {
 
   meta = with lib; {
     homepage = "https://github.com/povilasv/systemd_exporter";
-    license = [ licenses.apl2 ];
+    license = [ licenses.asl20 ];
     description = "Exporter for systemd unit metrics";
   };
 }
