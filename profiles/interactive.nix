@@ -34,7 +34,7 @@ in
 
     taskwarrior
     timewarrior
-    vit
+    # vit # tasklib failing as of 2020-12-23
 
     userBin
   ]);
