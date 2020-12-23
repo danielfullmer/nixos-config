@@ -1,27 +1,34 @@
 { config, pkgs, lib, ... }:
+# Try out https://github.com/NixOS/nixpkgs/pull/83443
+let
+  #interface = "enp69s0";
+  interface = "enp68s0";
+  subnetNumber = 5;
+  networkPrefix = "192.168.${toString subnetNumber}";
+in
 {
-  networking.interfaces.enp5s0.ipv4.addresses = [ { address = "10.0.0.1"; prefixLength = 24; } ];
-  networking.firewall.trustedInterfaces = [ "enp5s0" ]; # TODO. Manually set ports to be exported
-  networking.nat.internalInterfaces = [ "enp5s0" ];
+  networking.interfaces.${interface}.ipv4.addresses = [ { address = "${networkPrefix}.1"; prefixLength = 24; } ];
+  networking.firewall.trustedInterfaces = [ interface ]; # TODO. Manually set ports to be exported
+  networking.nat.internalInterfaces = [ interface ];
 
   services.nfs.server = {
     enable = true;
-    hostName = "10.0.0.1"; # Listen on this address
+    hostName = "192.168.1.200"; # Listen on this address
     exports = ''
-      /nix/store 10.0.0.0/24(ro)
+      /nix/store 192.168.1.0/16(ro)
     '';
+      #/nix/store ${networkPrefix}.0/24(ro)
   };
 
   services.dnsmasq = {
     enable = true;
-    resolveLocalQueries = false;
-    servers = [ "8.8.8.8" "8.8.4.4" ];
     extraConfig = ''
-      interface=enp5s0
-      bind-dynamic
+      interface=${interface}
 
-      #port=0
-      dhcp-range=10.0.0.2,10.0.0.254
+      # First MAC address is for pinecube uboot, native linux has a different
+      # MAC and will use normal DHCP
+      dhcp-host=02:01:51:db:b2:9d,set:pxe
+      dhcp-range=interface:${interface},tag:pxe,${networkPrefix}.2,${networkPrefix}.254
       enable-tftp
       tftp-root=/var/lib/tftpboot
     '';

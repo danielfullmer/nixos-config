@@ -48,14 +48,9 @@ in
 
     services.dnsmasq = {
       enable = true;
-      resolveLocalQueries = false;
-      servers = [ "127.0.0.1" ]; # Use local unbound server
       extraConfig = ''
-        listen-address=192.168.${toString cfg.subnetNumber}.1
-        bind-interfaces # Bind to the specific interface, not 0.0.0.0
-        no-hosts # Don't load /etc/hosts, which would include our zerotier hosts as well
-
-        dhcp-range=192.168.${toString cfg.subnetNumber}.2,192.168.${toString cfg.subnetNumber}.254
+        interface=${cfg.interface}
+        dhcp-range=interface:${cfg.interface},192.168.${toString cfg.subnetNumber}.2,192.168.${toString cfg.subnetNumber}.254
       '';
     };
 
