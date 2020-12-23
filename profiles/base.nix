@@ -74,7 +74,7 @@ in
   };
 
   # Provides cloudflare DNS over TOR
-  systemd.services.tor-dns = {
+  systemd.services.tor-dns = mkIf config.services.tor.enable {
     script = ''
       ${pkgs.socat}/bin/socat TCP4-LISTEN:853,bind=127.0.0.1,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:853,socksport=9063
     '';
