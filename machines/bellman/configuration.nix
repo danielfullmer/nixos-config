@@ -130,9 +130,11 @@ with (import ../../profiles/nginxCommon.nix);
   nix.extraOptions = ''
     builders-use-substitutes = true
     secret-key-files = /var/secrets/bellman-nix-key.sec
+    experimental-features = nix-command flakes
   '';
   secrets."bellman-nix-key.sec" = {};
 
+  nix.package = pkgs.nixFlakes;
 
   systemd.user.services.gmailieer = {
     serviceConfig = {
