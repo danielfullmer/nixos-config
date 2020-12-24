@@ -35,6 +35,7 @@ in
   networking.nameservers = [ "127.0.0.1" ];
   services.unbound = {
     enable = true;
+    interfaces = [ "127.0.0.1" "::1" ];
     package = pkgs.unbound.overrideAttrs (
       { configureFlags ? [], nativeBuildInputs ? [], buildInputs ? [], ... }:
       {

@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 
 with (import ./nginxCommon.nix);
-{
+let
+  hostAddress = "10.100.0.1";
+  localAddress = "10.100.0.2";
+in {
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
 
@@ -11,20 +14,24 @@ with (import ./nginxCommon.nix);
     enableACME = true;
     extraConfig = denyInternet;
   };
-
   networking.nat.enable = true;
-  networking.nat.internalIPs = [ "10.100.0.2" ];
+  networking.nat.internalIPs = [ localAddress ];
+  services.unbound.interfaces = [ hostAddress ];
+  services.unbound.allowedAccess = [ "10.100.0.0/24" ];
+  networking.firewall.interfaces."ve-nextcloud".allowedUDPPorts = [ 53 ];
   containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;
-    hostAddress = "10.100.0.1";
-    localAddress = "10.100.0.2";
+    inherit hostAddress localAddress;
+
     config = { config, pkgs, ... }:
     {
       networking.hosts = {
-        "10.100.0.1" = [ "office.daniel.fullmer.me" ];
+        "${hostAddress}" = [ "office.daniel.fullmer.me" ];
       };
-      networking.nameservers = [ "8.8.8.8" ];
+      networking.nameservers = [ "10.100.0.1" ];
+      networking.useHostResolvConf = false;
+      services.resolved.enable = true;
 
       services.nextcloud = {
         enable = true;
@@ -38,7 +45,7 @@ with (import ./nginxCommon.nix);
           #dbname = "nextcloud";
           adminpassFile = "/var/secrets/nextcloud";
           adminuser = "root";
-          extraTrustedDomains = [ "10.100.0.2" ]; # Ensure the "proxyPass" location is a valid domain
+          extraTrustedDomains = [ localAddress ]; # Ensure the "proxyPass" location is a valid domain
           overwriteProtocol = "https"; # Since we're behind nginx reverse proxy, we need to know that we should always use https
         };
       };
