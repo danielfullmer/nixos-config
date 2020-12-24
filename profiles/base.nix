@@ -11,6 +11,9 @@ in
     ./zerotier.nix
   ];
 
+  # Save some space by only supporting a few locales
+  i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "en_US/ISO-8859-1"];
+
   # Self-signed Certificate Authority I use to sign other certs
   security.pki.certificateFiles = [ ../certs/ca.crt ];
 
