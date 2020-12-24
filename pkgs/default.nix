@@ -35,6 +35,7 @@ in with super; {
       vam.knownPlugins = config.programs.vim.knownPlugins;
       vam.pluginDictionaries = config.programs.vim.pluginDictionaries;
       customRC = config.programs.vim.config;
+      beforePlugins = config.programs.vim.configBeforePlugins;
     };
   };
 

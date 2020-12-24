@@ -37,6 +37,11 @@ with lib;
           default = [];
         };
 
+        configBeforePlugins = mkOption {
+          type = types.lines;
+          default = "";
+        };
+
         config = mkOption {
           type = types.lines;
           default = "";

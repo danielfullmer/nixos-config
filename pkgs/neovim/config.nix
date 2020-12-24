@@ -50,7 +50,7 @@
       "fugitive"
       "gitgutter"
       "webapi-vim"
-      "vim-gist"
+      #"vim-gist"
       #" }}}
       #" General Coding {{{
       "ale" # TODO: See about language server support
@@ -97,6 +97,10 @@
 #      vim-pandoc-syntax
     ]; }
   ];
+  programs.vim.configBeforePlugins = ''
+    " Polyglot bring in latex-box which conflicts with vimtex
+    let g:polyglot_disabled = ['latex']
+  '';
   programs.vim.config = ''
 set nocompatible
 set backspace=indent,eol,start
@@ -160,59 +164,6 @@ endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-autocmd Filetype tex call ncm2#register_source({
-        \ 'name' : 'vimtex-cmds',
-        \ 'priority': 8, 
-        \ 'complete_length': -1,
-        \ 'scope': ['tex'],
-        \ 'matcher': {'name': 'prefix', 'key': 'word'},
-        \ 'word_pattern': '\w+',
-        \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
-        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-        \ })
-autocmd Filetype tex call ncm2#register_source({
-        \ 'name' : 'vimtex-labels',
-        \ 'priority': 8, 
-        \ 'complete_length': -1,
-        \ 'scope': ['tex'],
-        \ 'matcher': {'name': 'combine',
-        \             'matchers': [
-        \               {'name': 'substr', 'key': 'word'},
-        \               {'name': 'substr', 'key': 'menu'},
-        \             ]},
-        \ 'word_pattern': '\w+',
-        \ 'complete_pattern': g:vimtex#re#ncm2#labels,
-        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-        \ })
-autocmd Filetype tex call ncm2#register_source({
-        \ 'name' : 'vimtex-files',
-        \ 'priority': 8, 
-        \ 'complete_length': -1,
-        \ 'scope': ['tex'],
-        \ 'matcher': {'name': 'combine',
-        \             'matchers': [
-        \               {'name': 'abbrfuzzy', 'key': 'word'},
-        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
-        \             ]},
-        \ 'word_pattern': '\w+',
-        \ 'complete_pattern': g:vimtex#re#ncm2#files,
-        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-        \ })
-autocmd Filetype tex call ncm2#register_source({
-        \ 'name' : 'bibtex',
-        \ 'priority': 8, 
-        \ 'complete_length': -1,
-        \ 'scope': ['tex'],
-        \ 'matcher': {'name': 'combine',
-        \             'matchers': [
-        \               {'name': 'prefix', 'key': 'word'},
-        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
-        \               {'name': 'abbrfuzzy', 'key': 'menu'},
-        \             ]},
-        \ 'word_pattern': '\w+',
-        \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
-        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-        \ })
 
 " supress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
@@ -242,11 +193,9 @@ let g:pymode_rope = 0
 
 let g:haddock_browser = "xdg-open"
 let g:pandoc_syntax_dont_use_conceal_for_rules = ['atx', 'titleblock']
+# TODO: vimtex now uses g:vimtex_syntax_conceal
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 let g:vimtex_fold_enabled = 1
-
-" Polyglot bring in latex-box which conflicts with vimtex
-let g:polyglot_disabled = ['latex']
   '';
 }
