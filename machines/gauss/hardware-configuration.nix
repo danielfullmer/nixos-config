@@ -1,11 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 
 let
   externalIP = "167.71.187.97";
 in
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   system.stateVersion = "19.03";
