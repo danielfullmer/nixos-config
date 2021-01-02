@@ -3,7 +3,7 @@ rec {
     listen = [
       { addr = "0.0.0.0"; port = 80; }
       { addr = "0.0.0.0"; port = 443; ssl = true; }
-      { addr = "0.0.0.0"; port = 8443; ssl = true; extraParameters = [ "proxy_protocol" ]; }
+      { addr = "0.0.0.0"; port = 9443; ssl = true; extraParameters = [ "proxy_protocol" ]; }
     ];
     forceSSL = true;
     enableACME = true;

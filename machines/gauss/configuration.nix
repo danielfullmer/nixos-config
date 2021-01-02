@@ -65,7 +65,7 @@ with (import ../../profiles/nginxCommon.nix);
         # TODO: Use vhostPrivate here, modified to exclude listen on 443?
         listen = [
           { addr = "0.0.0.0"; port = 80; }
-          { addr = "0.0.0.0"; port = 8443; ssl = true; extraParameters = [ "proxy_protocol" ]; }
+          { addr = "0.0.0.0"; port = 9443; ssl = true; extraParameters = [ "proxy_protocol" ]; }
         ];
         forceSSL = true;
         enableACME = true;
@@ -87,7 +87,7 @@ with (import ../../profiles/nginxCommon.nix);
     appendConfig = let
       targetMapping = concatStringsSep "\n" (flatten
         (mapAttrsToList (machine: virtualHosts:
-          (map (vhost: "${vhost} ${config.machines.zerotierIP.${machine}}:8443;") virtualHosts))
+          (map (vhost: "${vhost} ${config.machines.zerotierIP.${machine}}:9443;") virtualHosts))
         config.machines.virtualHosts));
     in ''
       stream {
