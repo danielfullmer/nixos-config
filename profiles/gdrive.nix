@@ -15,6 +15,9 @@
 
   environment.systemPackages = with pkgs; [ rclone ];
 
-  environment.etc."rclone.conf".source = "/var/secrets/rclone.conf";
-  secrets."rclone.conf" = {};
+  environment.etc."rclone.conf".source = config.sops.secrets.rclone.path;
+  sops.secrets.rclone = {
+    format = "binary";
+    sopsFile = ../secrets/rclone.conf;
+  };
 }

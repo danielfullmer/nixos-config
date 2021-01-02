@@ -7,7 +7,6 @@ with lib;
     dataDir = "/home/danielrf/.syncthing/";
     declarative = {
       overrideDevices = true;
-      # TODO: Track certs and private keys in secrets?
       devices = mapAttrs (machine: id: {
         inherit id;
         addresses = [ "tcp://${config.machines.zerotierIP.${machine}}:22000" ];
@@ -17,7 +16,14 @@ with lib;
         path = "/home/danielrf/Sync";
         devices = attrNames config.services.syncthing.declarative.devices;
       };
+
+      cert = config.sops.secrets.syncthing-cert.path;
+      key = config.sops.secrets.syncthing-key.path;
     };
+  };
+  sops.secrets = {
+    syncthing-cert = { owner = config.services.syncthing.user; };
+    syncthing-key = { owner = config.services.syncthing.user; };
   };
   # networking.firewall.allowedTCPPorts = [ 22000 ]; # Don't open port. Just work over zerotier
   #services.nginx.virtualHosts.localhost.locations."/syncthing/".proxyPass = "http://127.0.0.1:8384/";

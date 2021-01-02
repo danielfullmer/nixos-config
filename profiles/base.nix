@@ -9,7 +9,12 @@ in
     ../modules
     ../pkgs/custom-config.nix
     ./zerotier.nix
+
+    # 2021-01-01 nix-sops
+    "${import ../modules/sops.nix}/modules/sops"
   ];
+
+  sops.defaultSopsFile = ../machines + "/${config.networking.hostName}/secrets/secrets.yaml";
 
   # Save some space by only supporting a few locales
   i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "en_US/ISO-8859-1"];
@@ -89,8 +94,13 @@ in
     wantedBy = [ "unbound.service" ];
   };
 
-  environment.etc."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) { source = "/var/secrets/wpa_supplicant.conf"; };
-  secrets."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {};
+  environment.etc."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {
+    source = config.sops.secrets."wpa_supplicant.conf".path;
+  };
+  sops.secrets."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {
+    format = "binary";
+    sopsFile = ../secrets/wpa_supplicant.conf;
+  };
 
   boot.cleanTmpDir = true;
 

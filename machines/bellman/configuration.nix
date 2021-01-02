@@ -95,7 +95,7 @@ with (import ../../profiles/nginxCommon.nix);
     useSubstitutes = true;
     #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
-    extraConfig = "binary_cache_secret_key_file = /var/secrets/bellman-nix-key.sec";
+    extraConfig = "binary_cache_secret_key_file = ${config.sops.secrets.nix-key.path}";
 
     # Patch to allow builtins.fetchTarball
     package = pkgs.hydra-unstable.overrideAttrs (attrs: { patches = (if attrs ? patches then attrs.patches else []) ++ [ ../../pkgs/hydra/no-restrict-eval.patch ]; });
@@ -129,10 +129,10 @@ with (import ../../profiles/nginxCommon.nix);
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''
     builders-use-substitutes = true
-    secret-key-files = /var/secrets/bellman-nix-key.sec
+    secret-key-files = ${config.sops.secrets.nix-key.path}
     experimental-features = nix-command flakes
   '';
-  secrets."bellman-nix-key.sec" = {};
+  sops.secrets.nix-key = {};
 
   nix.package = pkgs.nixFlakes;
 
@@ -190,7 +190,6 @@ with (import ../../profiles/nginxCommon.nix);
   services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/";
   } // vhostPrivate;
-  secrets."htpasswd" = { user = "nginx"; group = "nginx"; };
   services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
   } // vhostPrivate;

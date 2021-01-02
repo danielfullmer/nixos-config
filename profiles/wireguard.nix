@@ -34,7 +34,8 @@ with lib;
         endpoint = "167.71.187.97:${toString config.networking.wireguard.interfaces.wg0.listenPort}";
       }
     ];
-    privateKeyFile = "/var/secrets/${config.networking.hostName}-wireguard.private";
+    privateKeyFile = config.sops.secrets.wireguard.path;
   };
-  secrets."${config.networking.hostName}-wireguard.private" = {};
+
+  sops.secrets.wireguard = {};
 }

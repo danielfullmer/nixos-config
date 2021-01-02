@@ -1,0 +1,41 @@
+keys:
+  - &danielfullmer FA0ED54AE0DBF4CDC4B4FEADD1481BC2EF6B0CB0
+  - &danielfullmer-offlinekey 7242A6FEF237A429E981576F6EDF0AEEA2D9FA5D
+  - &bellman 2CDAFDCB8F320753F59E1B31EF942D14867FCACA
+  - &gauss 17577213896ED87177A71D00A4A02C44B781588E
+  - &banach 50FA682AF4D40AC551963CA0971337F9A34AB5AB
+  - &laplace ED8A6848AE92FD517EBF44673FED6D228CA9F576
+creation_rules:
+  - path_regex: machines/bellman/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      - *bellman
+  - path_regex: machines/gauss/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      - *gauss
+  - path_regex: machines/banach/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      - *banach
+  - path_regex: machines/laplace/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      - *laplace
+  - path_regex: secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      - *bellman
+      - *gauss
+      - *banach
+      - *laplace

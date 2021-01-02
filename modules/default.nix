@@ -4,7 +4,6 @@
     ./ap.nix
     ./programs.nix
     ./theme
-    ./secrets.nix
 
 #    /home/danielrf/robotnix/nixos
     ((builtins.fetchGit {

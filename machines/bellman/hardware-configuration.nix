@@ -55,13 +55,15 @@ with lib;
       fsType = "vfat";
     };
   };
-  secrets."bellman-zfs.key" = {};
-  boot.initrd.secrets."/bellman-zfs.key" = "/var/secrets/bellman-zfs.key";
+  sops.secrets."zfs-key" = {
+    format = "binary";
+    sopsFile = ./secrets/zfs.key;
+  };
+  boot.initrd.secrets."/zfs.key" = config.sops.secrets.zfs-key.path;
   boot.initrd.postDeviceCommands = mkAfter ''
-    zfs load-key pool/root < /bellman-zfs.key
-    zfs load-key pool/home < /bellman-zfs.key
+    zfs load-key pool/root < /zfs.key
+    zfs load-key pool/home < /zfs.key
   '';
-  systemd.services."zfs-import-tank".serviceConfig.RequiresMountsFor="/var/secrets/bellman-zfs.key";
 
   services.sanoid = {
     enable = true;
@@ -80,7 +82,7 @@ with lib;
     enable = true;
     commands = let
       common = {
-        sshKey = "/var/secrets/wrench-zfs-syncoid-ssh";
+        sshKey = config.sops.secrets.wrench-zfs-syncoid-ssh.path;
         sendOptions = "w"; # send raw for encrypted volume
         extraArgs = [ "--no-sync-snap" ]; # Don't create any snapshots, just send them
       };
@@ -90,7 +92,10 @@ with lib;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
   };
-  secrets."wrench-zfs-syncoid-ssh" = {};
+  sops.secrets.wrench-zfs-syncoid-ssh = {
+    owner = config.services.syncoid.user;
+  };
+  systemd.services.syncoid.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 
   swapDevices = [ ];
 

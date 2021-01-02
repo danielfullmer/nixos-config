@@ -81,6 +81,18 @@ in
   systemd.services."network-link-ztmjfpigyc".wantedBy = mkForce [ "multi-user.target" ];
   systemd.services."network-link-ztmjfpigyc".before = mkForce [];
 
+  sops.secrets.zerotier-public = {
+    path = "/var/lib/zerotier-one/identity.public";
+  };
+  sops.secrets.zerotier-secret = {
+    path = "/var/lib/zerotier-one/identity.secret";
+  };
+  sops.secrets.zerotier-moon = {
+    path = "/var/lib/zerotier-one/moons.d/00000027a17298e1.moon";
+    format = "binary";
+    sopsFile = ../secrets/00000027a17298e1.moon;
+  };
+
   # Kinda gross hack to make upnp work. Holds open an incoming firewall exception from ssdp udp source port (1900) for 3 seconds
   # Couldn't figure out how to make SSDP connection tracking work.
   # As of 2020-01-11. upnp seems to make things worse
