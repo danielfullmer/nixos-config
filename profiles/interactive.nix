@@ -22,6 +22,8 @@ in
     wget
     #cachix
 
+    libarchive # Provides bsdtar, for unzipping stuff
+
     zerotierone
 
     tmux
