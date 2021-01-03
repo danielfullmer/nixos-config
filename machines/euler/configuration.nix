@@ -5,6 +5,7 @@
     ../../profiles/base.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix
+    ../../profiles/zerotier.nix
     ../../profiles/yubikey.nix
     ../../profiles/syncthing.nix
     ../../profiles/desktop/default.nix

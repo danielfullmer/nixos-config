@@ -8,10 +8,6 @@ in
     ../machines
     ../modules
     ../pkgs/custom-config.nix
-    ./zerotier.nix
-
-    # 2021-01-01 nix-sops
-    "${import ../modules/sops.nix}/modules/sops"
   ];
 
   sops.defaultSopsFile = ../machines + "/${config.networking.hostName}/secrets/secrets.yaml";

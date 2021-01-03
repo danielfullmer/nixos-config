@@ -4,6 +4,7 @@ with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/zerotier.nix
     ../../profiles/fdm-printer.nix
   ];
 
@@ -39,7 +40,7 @@ with (import ../../profiles/nginxCommon.nix);
   };
 
   environment.systemPackages = with pkgs; [
-    raspberrypi-tools
+    libraspberrypi
     (v4l_utils.override { withGUI = false; })
     ffmpeg_4
   ];
