@@ -27,11 +27,16 @@ in
       inherit (cfg) interface;
       # For each device, they are going to have to add their own hwMode, extraConfig for ht_capab, what ieee modes are supported etc.
       extraConfig = ''
+        wpa=1
+        wpa_psk_file=${config.sops.secrets.wpa_psk_file.path}
         country_code=US
         rsn_pairwise=CCMP
         wpa_key_mgmt=WPA-PSK
       '';
-      wpaPassphrase = "verysecure";
+    };
+    sops.secrets.wpa_psk_file = {
+      format = "binary";
+      sopsFile = ../secrets/wpa_psk_file;
     };
 
     # Sometimes, the device crashes and restarts, since hostapd has BindTo the
