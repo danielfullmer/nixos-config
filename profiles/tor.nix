@@ -6,4 +6,9 @@
     client.enable = true;
     client.dns.enable = true;
   };
+
+  services.privoxy = {
+    enable = true;
+    enableTor = true;
+  };
 }
