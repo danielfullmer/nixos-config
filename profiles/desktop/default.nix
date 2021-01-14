@@ -79,6 +79,8 @@ with lib;
     #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
     pasystray.serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
+
+    plex-mpv-shim.serviceConfig.ExecStart = "${pkgs.plex-mpv-shim}/bin/plex-mpv-shim";
   })
   (mkIf config.networking.networkmanager.enable {
     nm-applet = {
