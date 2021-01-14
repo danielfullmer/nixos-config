@@ -71,10 +71,7 @@ in with lib;
 
     background = mkOption {
       type = types.path;
-      default = pkgs.fetchurl {
-        url = "http://i.imgur.com/S16TU7B.jpg";
-        sha256 = "0kx499ngd5l1jjs0425h79w8bs97cqhpfghfwff25n33xlkdyi0f";
-      };
+      default = ./806427.jpg;
     };
   };
 
