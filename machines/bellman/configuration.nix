@@ -6,6 +6,7 @@ with (import ../../profiles/nginxCommon.nix);
     ../../profiles/base.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix
+    ../../profiles/oled.nix
     ../../profiles/zerotier.nix
     ../../profiles/kdeconnect.nix
     ../../profiles/yubikey.nix
@@ -64,7 +65,6 @@ with (import ../../profiles/nginxCommon.nix);
   services.acpid.enable = true;
 
   services.redshift.enable = true;
-  theme.base16Name = "bright";
 
   # For serial interface to reflash x39 monitor firmware
   services.udev.packages = lib.singleton (pkgs.writeTextFile {
