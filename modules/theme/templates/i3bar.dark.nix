@@ -3,7 +3,7 @@
 with colors; ''
     colors {
         separator $base03
-        background $base01
+        background $base00
         statusline $base05
         focused_workspace $base0C $base0D $base00
         active_workspace $base02 $base02 $base07
