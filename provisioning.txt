@@ -14,9 +14,6 @@ $ cd ~/.config/nixpkgs
 $ ln -s ../../nixos-config/pkgs/config.nix
 $ ln -s ../../nixos-config/pkgs/overlays.nix
 
-# Sign into keybase
-$ keybase login
-
 # Checkout password-store (requires keybase)
 $ git clone keybase://private/danielfullmer/password-store .password-store
 

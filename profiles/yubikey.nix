@@ -31,6 +31,7 @@ in
     cue = true;
   };
   security.pam.services."sshd".u2fAuth = false;
+  security.pam.services."sudo".u2fAuth = false;
 
   environment.systemPackages = with pkgs; [
     yubico-piv-tool
@@ -39,14 +40,9 @@ in
     gnupg
     pass
     #(pass.withExtensions (p: with p; [ pass-audit])) # 2020-06-18: broken in nixpkgs
-
-    keybase
-    kbfs
   ] ++ lib.optionals (config.services.xserver.enable) [
     yubioath-desktop
     yubikey-personalization-gui
-  ] ++ lib.optionals (config.services.xserver.enable && pkgs.stdenv.isx86_64) [
-    keybase-gui
   ];
 
   systemd.services.gpg-key-import = {
@@ -66,8 +62,4 @@ in
     '';
     # TODO: Maybe create a udev rule to run "gpg --card-status" when yubikey plugged in first time
   };
-
-  services.keybase.enable = true;
-  services.kbfs.enable = true;
-  services.kbfs.enableRedirector = true;
 }
