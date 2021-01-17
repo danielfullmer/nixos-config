@@ -109,7 +109,10 @@ with lib;
     lm_sensors
     krakenx # For NZXT X62 AIO cooler
     #openrgb # For RGB lights
+    rivalcfg # For Steelseries Rival 3 mouse
   ];
+
+  #services.udev.packages = with pkgs; [ rivalcfg ]; # Current udev rules are too permissive
 
   systemd.services.nzxt-aio-curve = {
     # Set fan speed curve. First tuple entry is AIO liquid temperature. Second entry is PWM duty cycle

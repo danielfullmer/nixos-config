@@ -41,6 +41,8 @@ in with super; {
 
   playmaker = python3Packages.callPackage ./playmaker {};
 
+  rivalcfg = python2Packages.callPackage ./rivalcfg {};
+
   sanoid = sanoid.overrideAttrs ({ patches, ... }: {
     patches = patches ++ [
       # https://github.com/jimsalterjrs/sanoid/issues/528
