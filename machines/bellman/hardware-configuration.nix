@@ -141,7 +141,7 @@ with lib;
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
     Option         "nvidiaXineramaInfoOrder" "DFP-6"
-    Option         "metamodes" "DVI-D-0: nvidia-auto-select +5760+0 {rotation=left}, DP-4: 3840x2160 +1920+200, HDMI-0: nvidia-auto-select +0+200"
+    Option         "metamodes" "HDMI-0: nvidia-auto-select +0+840, DP-0: nvidia-auto-select +3840+0 {rotation=right}"
     Option         "SLI" "Off"
     Option         "MultiGPU" "Off"
     Option         "BaseMosaic" "off"
