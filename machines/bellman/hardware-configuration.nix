@@ -114,14 +114,6 @@ with lib;
 
   #services.udev.packages = with pkgs; [ rivalcfg ]; # Current udev rules are too permissive
 
-  systemd.services.nzxt-aio-curve = {
-    # Set fan speed curve. First tuple entry is AIO liquid temperature. Second entry is PWM duty cycle
-    script = ''
-      ${pkgs.krakenx}/bin/colctl -fs "(0,40),(35,50),(37,60),(38,70),(39,80),(40,95),(41,98),(42,99)"
-    '';
-    serviceConfig.Type = "oneshot";
-    wantedBy = [ "multi-user.target" ];
-  };
 
   powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
 
