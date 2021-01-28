@@ -29,6 +29,9 @@
       banach = mkSystem "banach" "aarch64-linux" {};
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
+
+      # AHT relay
+      aht-relay = mkSystem "aht-relay" "x86_64-linux" {};
     };
 
     #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
