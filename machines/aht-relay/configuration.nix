@@ -7,9 +7,7 @@
 
   boot.cleanTmpDir = true;
   networking.hostName = "aht-relay";
-  networking.firewall.allowPing = true;
   services.openssh.enable = true;
-
   services.openssh.passwordAuthentication = false;
 
   services.zerotierone.enable = true;
@@ -36,4 +34,22 @@
   sops.secrets.twosix-pritunl-pin = {};
   sops.secrets.twosix-pritunl-otp = {};
   sops.secrets.twosix-pritunl-ovpn = {};
+
+  #networking.nameservers = lib.mkBefore [ "10.80.4.5" ];
+
+  networking.nameservers = lib.mkBefore [ "127.0.0.1" ];
+  services.unbound = {
+    enable = true;
+    interfaces = [ "127.0.0.1" "::1" ];
+    extraConfig = ''
+      forward-zone:
+        name: "twosix.local."
+        forward-addr: 10.80.4.5
+      server:
+        #verbosity: 2
+
+        # Disable DNSSEC, not working for .local
+        module-config: "iterator"
+    '';
+  };
 }
