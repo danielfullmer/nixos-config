@@ -52,4 +52,10 @@
         module-config: "iterator"
     '';
   };
+
+  services.privoxy = {
+    enable = true;
+    listenAddress = "0.0.0.0:8118";
+  };
+  networking.firewall.interfaces."ztbto3oiwt".allowedTCPPorts = [ 8118 ]; # Only allow access over zerotier
 }
