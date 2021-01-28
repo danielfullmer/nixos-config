@@ -6,7 +6,7 @@ with lib;
   services.xserver = {
     enable = true;
     xkbOptions = "compose:ralt";
-    libinput.naturalScrolling = true;
+    libinput.touchpad.naturalScrolling = true;
 
     displayManager.defaultSession = "none+i3";
     displayManager.lightdm = {

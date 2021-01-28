@@ -54,7 +54,21 @@ with (import ../../profiles/nginxCommon.nix);
   };
 
   services.searx.enable = true; # Default port 8888. http://searx.daniel.fullmer.me
-  services.searx.configFile = ./searx-settings.yml;
+  services.searx.environmentFile = config.sops.secrets.searx-env.path;
+  services.searx.settings = {
+    search.autocomplete = "google";
+    search.language = "en-US";
+    server.base_url = "https://searx.daniel.fullmer.me/";
+    server.image_proxy = true;
+    server.secret_key = "@SEARX_SECRET_KEY@";
+
+    # Tor proxies
+    outgoing.proxies = {
+      http = "http://127.0.0.1:8118";
+      https = "http://127.0.0.1:8118";
+    };
+  };
+  sops.secrets.searx-env = {};
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx = {

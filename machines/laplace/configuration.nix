@@ -37,7 +37,7 @@ in
   services.xserver.videoDrivers = [ "modesetting" ];
   services.xserver.libinput = {
     enable = true;
-    accelSpeed = "0.35";
+    touchpad.accelSpeed = "0.35";
   };
 
   theme.fontSize = 12;

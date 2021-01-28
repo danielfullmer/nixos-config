@@ -16,14 +16,14 @@ with lib;
   boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
   #boot.kernelPatches = [ { name = "OpenRGB"; patch = "${pkgs.openrgb.src}/OpenRGB.patch"; } ];
   boot.kernelModules = [
     "kvm-amd"
     "it87" # For sensors on gigabyte motherboard
     "i2c-dev" "i2c-piix4" # Ensure we can access i2c bus for RGB memory
   ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
+  #boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.cpu.amd.updateMicrocode = true;
 
   boot.initrd.availableKernelModules = [
