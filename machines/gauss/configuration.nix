@@ -8,6 +8,7 @@ with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/dns.nix
     ../../profiles/wireguard.nix
     ../../profiles/zerotier.nix
     ../../profiles/tor.nix

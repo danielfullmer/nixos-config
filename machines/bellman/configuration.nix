@@ -4,6 +4,7 @@ with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/dns.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix
     ../../profiles/oled.nix

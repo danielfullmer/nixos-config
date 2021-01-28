@@ -3,6 +3,7 @@
 {
   imports = [
     ../../profiles/base.nix
+    ../../profiles/dns.nix
     ../../profiles/zerotier.nix
   ];
 
