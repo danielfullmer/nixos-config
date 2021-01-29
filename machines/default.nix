@@ -27,6 +27,8 @@ in
         devnull = "30.0.0.48";
 
         pixel3 = "30.0.0.248";
+
+        aht-relay = "192.168.192.122"; # On another zerotier network
       };
 
       wireguardIP = {
