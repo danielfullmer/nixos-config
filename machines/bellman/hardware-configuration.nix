@@ -46,7 +46,7 @@ with lib;
     "/home" = { device = "pool/home"; fsType = "zfs"; };
     "/homecache" = { device = "pool/homecache"; fsType = "zfs"; };
     "/nix" = { device = "pool/nix"; fsType = "zfs"; };
-    "/tmp" = { device = "pool/tmp"; fsType = "zfs"; };
+    #"/tmp" = { device = "pool/tmp"; fsType = "zfs"; };
     "/mnt/backup" = { device = "tank/backup"; fsType = "zfs"; options = [ "nofail" ]; };
     "/mnt/cache" = { device = "tank/cache"; fsType = "zfs"; options = [ "nofail" ]; };
 
@@ -103,7 +103,16 @@ with lib;
   nix.buildCores = 64;
 
   zramSwap.enable = true;
-  #boot.tmpOnTmpfs = true; # XXX: Building big programs doesn't work so hot with this.
+  #boot.tmpOnTmpfs = true;
+  # Since tmpOnTmpfs defaults to only 50% memory usage:
+  systemd.mounts = [
+    {
+      what = "tmpfs";
+      where = "/tmp";
+      type = "tmpfs";
+      mountConfig.Options = [ "mode=1777" "strictatime" "rw" "nosuid" "nodev" "size=75%" ];
+    }
+  ];
 
   environment.systemPackages = with pkgs; [
     lm_sensors
