@@ -4,8 +4,9 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.sops-nix.url = "github:Mic92/sops-nix";
   inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.robotnix.url = "github:danielfullmer/robotnix";
 
-  outputs = { self, nixpkgs, sops-nix }: {
+  outputs = { self, nixpkgs, sops-nix, robotnix }: {
 
     nixosConfigurations = let
       mkSystem = name: system: attrs: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
@@ -14,6 +15,7 @@
           (./machines + "/${name}/configuration.nix")
           (./machines + "/${name}/hardware-configuration.nix")
           sops-nix.nixosModules.sops
+          robotnix.nixosModules.attestation-server
         ];
       } attrs);
     in {
