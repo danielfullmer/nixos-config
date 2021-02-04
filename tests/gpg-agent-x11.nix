@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
+{ pkgs, ...} :
 
 {
   name = "gpg-agent-x11";
@@ -6,7 +6,7 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
   machine =
     { config, pkgs, lib, ... }:
     {
-      imports = [ <nixpkgs/nixos/tests/common/x11.nix> ];
+      imports = [ "${pkgs.path}/nixos/tests/common/x11.nix" ];
 
       programs.ssh.startAgent = false;
       programs.gnupg.agent = {
@@ -33,4 +33,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
           machine.wait_for_window("^pinentry")
           machine.screenshot("pinentry")
     '';
-})
+}

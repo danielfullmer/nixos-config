@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
+{ pkgs, controlnetModules, ...} : {
   name = "desktop";
 
   machine = { config, pkgs, ... }: {
@@ -7,7 +7,7 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
       ../profiles/interactive.nix
       ../profiles/desktop/default.nix
       ../profiles/autologin.nix
-    ];
+    ] ++ controlnetModules;
     environment.systemPackages = with pkgs; [ awf termite ];
   };
 
@@ -46,4 +46,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
       machine.screenshot("gtk3widgets")
       machine.succeed("su - danielrf -s /bin/sh -c 'kill `pgrep awf-gtk`'")
     '';
-})
+}

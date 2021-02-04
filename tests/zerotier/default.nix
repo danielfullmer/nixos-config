@@ -3,7 +3,9 @@
 , pkgs ? import <nixpkgs> { inherit system config; }
 }:
 
-with import <nixpkgs/nixos/lib/testing-python.nix> { inherit system pkgs; };
+with import <nixpkgs/nixos/lib/testing-python.nix> {
+  inherit system pkgs;
+};
 with pkgs.lib;
 
 # A few connectivity modes to test:
@@ -102,7 +104,7 @@ let
           # Ensure we can ping ourself on this zerotier network
           m.wait_until_succeeds("ping -c 1 " + m.ZTIPAddress)
 
-      # Ensure all machines can ping each other
+      # Ensure all machines can ping each other over zerotier
       for client in MACHINES:
           for host in MACHINES:
               if client != host:

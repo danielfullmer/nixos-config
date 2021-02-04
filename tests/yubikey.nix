@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
+{ pkgs, ...} : {
   name = "yubikey";
 
   machine = { config, pkgs, ... }: {
@@ -21,4 +21,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
 
     # TODO: Come up with test for u2f, ykpersonalize, and yubioath-gui
   '';
-})
+}

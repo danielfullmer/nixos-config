@@ -6,7 +6,12 @@
   inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.robotnix.url = "github:danielfullmer/robotnix";
 
-  outputs = { self, nixpkgs, sops-nix, robotnix }: {
+  outputs = { self, nixpkgs, sops-nix, robotnix }: let
+    controlnetModules = [
+      sops-nix.nixosModules.sops
+      robotnix.nixosModules.attestation-server
+    ];
+  in {
 
     nixosConfigurations = let
       mkSystem = name: system: attrs: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
@@ -40,31 +45,23 @@
 
     #defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
 
-    checks.x86_64-linux = {
-      #desktop = nixpkgs.lib.hydraJob (import ./tests/desktop.nix {});
-      #gpg-agent = nixpkgs.lib.hydraJob (import ./tests/gpg-agent.nix {});
-      #gpg-agent-x11 = nixpkgs.lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
-      #latex-pdf = nixpkgs.lib.hydraJob (import ./tests/latex-pdf.nix {});
-      #vim = nixpkgs.lib.hydraJob (import ./tests/vim.nix {});
-      #zerotier-simple = (import ./tests/zerotier {}).simple;
-      #zerotier-doubleNat = (import ./tests/zerotier {}).doubleNat;
-    };
+    checks.x86_64-linux = {};
 
     hydraJobs = let
       mkTest = system: path:
         nixpkgs.lib.hydraJob
           (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
             (import path)
-            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; }
+            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; inherit controlnetModules; }
           );
     in {
       desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
-      gpg-agent.x86_64-linux = nixpkgs.lib.hydraJob (import ./tests/gpg-agent.nix {});
-      gpg-agent-x11.x86_64-linux = nixpkgs.lib.hydraJob (import ./tests/gpg-agent-x11.nix {});
-      latex-pdf.x86_64-linux = nixpkgs.lib.hydraJob (import ./tests/latex-pdf.nix {});
-      vim.x86_64-linux = nixpkgs.lib.hydraJob (import ./tests/vim.nix {});
-      zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
-      zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
+      gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
+      #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
+      latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
+      #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
+      #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
+      #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
     } // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
   };
 }

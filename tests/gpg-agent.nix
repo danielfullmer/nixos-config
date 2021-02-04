@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
+{ pkgs, ...} :
 
 {
   name = "gpg-agent";
@@ -50,4 +50,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
           machine.wait_until_tty_matches(1, "<OK>")
           machine.screenshot("pinentry")
     '';
-})
+}

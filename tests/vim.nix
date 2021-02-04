@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
+{ pkgs, ...} :
 
 {
   name = "vim";
@@ -42,4 +42,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} :
           machine.send_chars(":w test\n")
           machine.wait_for_file("/home/alice/test")
     '';
-})
+}

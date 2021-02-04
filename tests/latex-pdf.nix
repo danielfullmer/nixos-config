@@ -1,4 +1,4 @@
-import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
+{ pkgs, controlnetModules, ...} : {
   name = "latex-pdf";
 
   machine = { config, pkgs, ... }: {
@@ -8,7 +8,7 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
       ../profiles/desktop/default.nix
       ../profiles/academic.nix
       ../profiles/autologin.nix
-    ];
+    ] ++ controlnetModules;
     virtualisation.memorySize = 1024;
   };
 
@@ -30,4 +30,4 @@ import <nixpkgs/nixos/tests/make-test-python.nix> ({ pkgs, ...} : {
       machine.sleep(5)
       machine.screenshot("zathura")
     '';
-})
+}
