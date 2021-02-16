@@ -102,7 +102,9 @@ with lib;
   nix.maxJobs = 4;
   nix.buildCores = 64;
 
+  # Currently have 96GB of RAM.
   zramSwap.enable = true;
+  zramSwap.memoryPercent = 150;
   #boot.tmpOnTmpfs = true;
   # Since tmpOnTmpfs defaults to only 50% memory usage:
   systemd.mounts = [
@@ -110,7 +112,7 @@ with lib;
       what = "tmpfs";
       where = "/tmp";
       type = "tmpfs";
-      mountConfig.Options = [ "mode=1777" "strictatime" "rw" "nosuid" "nodev" "size=75%" ];
+      mountConfig.Options = [ "mode=1777" "strictatime" "rw" "nosuid" "nodev" "size=150G" ]; # 120G is more ram than we have, would need zram compression to fill up.
     }
   ];
 
