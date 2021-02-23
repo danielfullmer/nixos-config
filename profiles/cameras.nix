@@ -2,10 +2,12 @@
 
 with (import ./nginxCommon.nix);
 {
+  networking.firewall.allowedTCPPorts = [ 1935 ];
   # Stuff for streaming cameras?
   # Currently unencrypted. Maybe fix in the future?
   # https://github.com/arut/nginx-rtmp-module/wiki/Directives#hls
   # TODO: Need to mkdir and chown in startup
+  # Can watch rtmp without latency of HLS using e.g. mpv --no-buffer "rtmp://bellman/live/ender3"
   services.nginx.appendConfig = ''
     rtmp {
       server {
@@ -16,7 +18,7 @@ with (import ./nginxCommon.nix);
           live on;
           record off;
           hls on;
-          hls_path /tmp/hls;
+          hls_path /dev/shm/hls;
           hls_fragment 2s;
           hls_playlist_length 10s;
         }
@@ -26,7 +28,7 @@ with (import ./nginxCommon.nix);
   services.nginx.virtualHosts."daniel.fullmer.me" = {
     locations."/cameras".extraConfig = denyInternet;
     locations."/cameras/hls/" = {
-      alias = "/tmp/hls/";
+      alias = "/dev/shm/hls/";
       extraConfig = ''
         types {
           application/vnd.apple.mpegurl m3u8;
