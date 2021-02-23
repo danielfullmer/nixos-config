@@ -206,6 +206,7 @@
     for_window [title="fzf-menu"] floating enable
 
     bindsym $mod+Shift+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
+    bindsym $mod+m exec astroid
 
     # For reference, a quick way to view this file!
     bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.termite}/bin/termite -t 'help-screen' -e 'vim ${./keyboard.nix}'
