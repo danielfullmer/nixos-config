@@ -39,6 +39,7 @@ in
     # vit # tasklib failing as of 2020-12-23
 
     sops
+    direnv
 
     userBin
   ]);
@@ -74,6 +75,14 @@ in
 
   environment.interactiveShellInit = ''
     eval $(${pkgs.coreutils}/bin/dircolors "${./dircolors}")
+  '';
+
+  programs.bash.interactiveShellInit = ''
+    eval "$(direnv hook bash)"
+  '';
+
+  programs.zsh.interactiveShellInit = ''
+    eval "$(direnv hook zsh)"
   '';
 
   environment.extraInit = ''
