@@ -39,15 +39,15 @@ with (import ./nginxCommon.nix);
     };
   };
 
-  services.zoneminder = {
-    enable = true;
-    database = {
-      createLocally = true;
-      username = "zoneminder";
-    };
-    hostname = "zoneminder.daniel.fullmer.me";
-  };
-  services.nginx.virtualHosts."${config.services.zoneminder.hostname}" = {
-    default = lib.mkForce false; # Override some defaults set in nixos module
-  } // vhostPrivate;
+#  services.zoneminder = {
+#    enable = true;
+#    database = {
+#      createLocally = true;
+#      username = "zoneminder";
+#    };
+#    hostname = "zoneminder.daniel.fullmer.me";
+#  };
+#  services.nginx.virtualHosts."${config.services.zoneminder.hostname}" = {
+#    default = lib.mkForce false; # Override some defaults set in nixos module
+#  } // vhostPrivate;
 }
