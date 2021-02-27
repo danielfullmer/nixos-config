@@ -1,2 +1,1 @@
-[ (import ./default.nix {})
-]
+[ (import ./overlay.nix {}) ]
