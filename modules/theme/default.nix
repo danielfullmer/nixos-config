@@ -103,7 +103,6 @@ in with lib;
 
     programs.vim.pluginDictionaries = [
       { names = [
-        "airline"
         "airlineThemeBase16" # Custom base16 colors
       ]; }
     ];

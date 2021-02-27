@@ -17,6 +17,7 @@
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
       # Plug 'edkolev/tmuxline.vim'
       # ":Tmuxline airline
+      "airline"
       # ":TmuxlineSnapshot ~/.tmux.line
       #
       # Plug 'merlinrebrovic/focus.vim'
