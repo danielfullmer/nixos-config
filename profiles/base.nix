@@ -112,5 +112,5 @@ in
   time.hardwareClockInLocalTime = true;
 
   nixpkgs.config = import ../pkgs/config.nix;
-  nixpkgs.overlays =  [ (import ../pkgs/default.nix { _config=config; }) ];
+  nixpkgs.overlays =  [ (import ../pkgs/overlay.nix { _config=config; }) ];
 }
