@@ -6,14 +6,18 @@
     # TODO: security options. Cert or password?
     rootAlias = "cgibreak@gmail.com"; # TODO
     config = {
-      mynetworks = ["127.0.0.0/8" "30.0.0.0/8"];
+      mynetworks = [ "127.0.0.0/8" "30.0.0.0/8" ];
       inet_protocols = "ipv4";
-      sender_dependent_relayhost_maps = "hash:/etc/postfix.local/relay_maps";
+      sender_dependent_relayhost_maps = "texthash:" + builtins.toString (pkgs.writeText "relay_maps" ''
+        @gmail.com   [smtp.gmail.com]:587
+        @aht.ai      [smtp.gmail.com]:587
+      '');
       smtp_use_tls = "yes";
       smtp_sasl_auth_enable = "yes";
-      smtp_sasl_password_maps = "hash:/etc/postfix.local/sasl_passwd";
+      smtp_sasl_password_maps = "texthash:${config.sops.secrets.postfix-sasl_passwd.path}";
       smtp_sender_dependent_authentication = "yes";
       smtp_sasl_security_options = "noanonymous";
     };
   };
+  sops.secrets.postfix-sasl_passwd = {};
 }
