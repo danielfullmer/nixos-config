@@ -1,15 +1,27 @@
 {
   description = "My NixOS configurations";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.sops-nix.url = "github:Mic92/sops-nix";
-  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.robotnix.url = "github:danielfullmer/robotnix";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs, sops-nix, robotnix }: let
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    robotnix.url = "github:danielfullmer/robotnix";
+
+    home-manager.url = "github:nix-community/home-manager";
+  };
+
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager }: let
     controlnetModules = [
       sops-nix.nixosModules.sops
       robotnix.nixosModules.attestation-server
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.danielrf = import ./home;
+      }
     ];
   in {
 
@@ -19,9 +31,7 @@
         modules = [
           (./machines + "/${name}/configuration.nix")
           (./machines + "/${name}/hardware-configuration.nix")
-          sops-nix.nixosModules.sops
-          robotnix.nixosModules.attestation-server
-        ];
+        ] ++ controlnetModules;
       } attrs);
     in {
       # Main desktop

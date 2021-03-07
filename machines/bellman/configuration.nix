@@ -139,40 +139,6 @@ with (import ../../profiles/nginxCommon.nix);
 
   nix.package = pkgs.nixFlakes;
 
-  systemd.user.services.gmailieer = {
-    serviceConfig = {
-      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
-      Type = "oneshot";
-      WorkingDirectory = "/home/danielrf/mail/cgibreak.gmail";
-    };
-  };
-
-  systemd.user.services.gmailieer-aht = {
-    serviceConfig = {
-      ExecStart = "${pkgs.gmailieer}/bin/gmi sync";
-      Type = "oneshot";
-      WorkingDirectory = "/home/danielrf/mail/dfullmer.aht";
-    };
-  };
-
-  systemd.user.timers.gmailieer = {
-    requires = [ "network-online.target" ];
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      Unit = "gmailieer.service";
-      OnCalendar = "*:0/3"; # Every 3 minutes
-    };
-  };
-
-  systemd.user.timers.gmailieer-aht = {
-    requires = [ "network-online.target" ];
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      Unit = "gmailieer-aht.service";
-      OnCalendar = "*:0/3"; # Every 3 minutes
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     #bcachefs-tools
     keyboard-firmware
