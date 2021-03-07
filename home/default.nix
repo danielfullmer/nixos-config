@@ -25,7 +25,9 @@
       };
 
       astroid.enable = true;
+      astroid.sendMailCommand = "sendmail -i -t";
     };
+
     accounts.dfullmer-aht = {
       address = "dfullmer@aht.ai";
       realName = "Daniel Fullmer";
@@ -41,6 +43,7 @@
       };
 
       astroid.enable = true;
+      astroid.sendMailCommand = "gmi send -t -C ${config.accounts.email.accounts.dfullmer-aht.maildir.absPath}";
     };
   };
 
@@ -49,6 +52,11 @@
     zsh.enable = true;
     notmuch.enable = true;
     lieer.enable = true;
+    astroid.enable = true;
+    astroid.pollScript =
+      lib.concatStringsSep "\n"
+        (lib.mapAttrsToList (name: account: "systemctl --user start lieer-${account.name}")
+          (lib.filterAttrs (name: account: account.lieer.sync.enable) config.accounts.email.accounts));
   };
 
   services.lieer.enable = true;
