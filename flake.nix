@@ -10,9 +10,11 @@
     robotnix.url = "github:danielfullmer/robotnix";
 
     home-manager.url = "github:nix-community/home-manager";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs }: let
     controlnetModules = [
       sops-nix.nixosModules.sops
       robotnix.nixosModules.attestation-server
@@ -51,11 +53,23 @@
       aht-relay = mkSystem "aht-relay" "x86_64-linux" {};
     };
 
+    # Settings for deploy-rs
+    deploy = {
+      sshUser = "root";
+      user = "root";
+
+      nodes = nixpkgs.lib.mapAttrs (hostname: system: {
+        inherit hostname;
+        profiles.system.path = deploy-rs.lib.${system.config.nixpkgs.localSystem.system}.activate.nixos system;
+      }) self.nixosConfigurations;
+    };
+
     #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
     #defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
 
-    checks.x86_64-linux = {};
+    #checks.x86_64-linux = {};
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     hydraJobs = let
       mkTest = system: path:
