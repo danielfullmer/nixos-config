@@ -19,11 +19,11 @@
       sops-nix.nixosModules.sops
       robotnix.nixosModules.attestation-server
       home-manager.nixosModules.home-manager
-      {
+      ({ config, lib, ... }: lib.mkIf (config.networking.hostName == "bellman") {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.danielrf = import ./home;
-      }
+      })
     ];
   in {
 
