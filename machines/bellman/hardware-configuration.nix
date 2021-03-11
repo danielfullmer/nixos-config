@@ -65,17 +65,19 @@ with lib;
     zfs load-key pool/home < /zfs.key
   '';
 
-  services.sanoid = {
-    enable = true;
-    templates.common = {
+  services.sanoid = let
+    common = {
       hourly = 48;
       daily = 30;
       monthly = 6;
       yearly = 0;
     };
-    datasets."pool/home".useTemplate = [ "common" ];
-    datasets."pool/root".useTemplate = [ "common" ];
-    datasets."tank/backup".useTemplate = [ "common" ];
+  in {
+    enable = true;
+    extraArgs = [ "--verbose" ];
+    datasets."pool/home" = common;
+    datasets."pool/root" = common;
+    datasets."tank/backup" = common;
   };
 
   services.syncoid = {
