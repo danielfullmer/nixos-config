@@ -63,6 +63,7 @@ with lib;
   boot.initrd.postDeviceCommands = mkAfter ''
     zfs load-key pool/root < /zfs.key
     zfs load-key pool/home < /zfs.key
+    zfs load-key pool/win10 < /zfs.key
   '';
 
   services.sanoid = let
@@ -77,6 +78,7 @@ with lib;
     extraArgs = [ "--verbose" ];
     datasets."pool/home" = common;
     datasets."pool/root" = common;
+    datasets."pool/win10" = common;
     datasets."tank/backup" = common;
   };
 
@@ -91,6 +93,7 @@ with lib;
     in {
       "pool/home" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/home"; } // common;
       "pool/root" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/root"; } // common;
+      "pool/win10" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10"; } // common;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
   };
