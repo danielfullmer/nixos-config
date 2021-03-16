@@ -25,16 +25,17 @@
         home-manager.users.danielrf = import ./home;
       })
     ];
+
+    mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
+      inherit system;
+      modules = [
+        (./machines + "/${name}/configuration.nix")
+        (./machines + "/${name}/hardware-configuration.nix")
+      ] ++ controlnetModules ++ [ extraConfig ];
+    } {});
   in {
 
     nixosConfigurations = let
-      mkSystem = name: system: attrs: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
-        inherit system;
-        modules = [
-          (./machines + "/${name}/configuration.nix")
-          (./machines + "/${name}/hardware-configuration.nix")
-        ] ++ controlnetModules;
-      } attrs);
     in {
       # Main desktop
       bellman = mkSystem "bellman" "x86_64-linux" {};
@@ -64,9 +65,15 @@
       }) self.nixosConfigurations;
     };
 
-    #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    #defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
+    packages.x86_64-linux.tftpboot = import ./tftpboot.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      pxeSystems = {
+        "01-b8-27-eb-9d-0f-b0" = mkSystem "banach" "aarch64-linux" {
+          imports = [ ./profiles/pxe-client.nix ];
+          boot.initrd.availableKernelModules = [ "smsc95xx" ]; # For RPI3Bv1.2 networking
+        };
+      };
+    };
 
     #checks.x86_64-linux = {};
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
