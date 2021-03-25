@@ -3,14 +3,7 @@
   services.unbound = {
     enable = true;
     interfaces = [ "127.0.0.1" "::1" ];
-    package = pkgs.unbound.overrideAttrs (
-      { configureFlags ? [], nativeBuildInputs ? [], buildInputs ? [], ... }:
-      {
-        configureFlags = configureFlags ++ [ "--enable-systemd" ];
-        nativeBuildInputs = nativeBuildInputs ++ [ pkgs.pkg-config ];
-        buildInputs = buildInputs ++ [ pkgs.systemd ];
-      }
-    );
+    package = pkgs.unbound-with-systemd;
 
     # services.unbound.forwardAddresses doesn't let us set forward-tls-upstream
     extraConfig = ''
