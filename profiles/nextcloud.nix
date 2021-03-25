@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 
-with (import ./nginxCommon.nix);
 let
   hostAddress = "10.100.0.1";
   localAddress = "10.100.0.2";
@@ -8,12 +7,7 @@ in {
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
 
-  services.nginx.virtualHosts."nextcloud.fullmer.me" = {
-    locations."/".proxyPass = "http://10.100.0.2/";
-    forceSSL = true;
-    enableACME = true;
-    extraConfig = denyInternet;
-  };
+  services.nginx.virtualHosts."nextcloud.fullmer.me".locations."/".proxyPass = "http://10.100.0.2/";
   networking.nat.enable = true;
   networking.nat.internalIPs = [ localAddress ];
   services.unbound.interfaces = [ hostAddress ];
@@ -98,8 +92,5 @@ in {
 #        proxy_read_timeout 3600
 #      '';
     };
-    forceSSL = true;
-    enableACME = true;
-    extraConfig = denyInternet;
   };
 }

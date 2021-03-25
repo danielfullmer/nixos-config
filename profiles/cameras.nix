@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 
-with (import ./nginxCommon.nix);
 {
   networking.firewall.allowedTCPPorts = [ 1935 ];
   # Stuff for streaming cameras?
@@ -26,7 +25,7 @@ with (import ./nginxCommon.nix);
     }
   '';
   services.nginx.virtualHosts."daniel.fullmer.me" = {
-    locations."/cameras".extraConfig = denyInternet;
+    locations."/cameras".public = false;
     locations."/cameras/hls/" = {
       alias = "/dev/shm/hls/";
       extraConfig = ''
@@ -36,6 +35,7 @@ with (import ./nginxCommon.nix);
         }
         add_header Cache-Control no-cache;
       '';
+      public = false;
     };
   };
 
@@ -49,5 +49,5 @@ with (import ./nginxCommon.nix);
 #  };
 #  services.nginx.virtualHosts."${config.services.zoneminder.hostname}" = {
 #    default = lib.mkForce false; # Override some defaults set in nixos module
-#  } // vhostPrivate;
+#  };
 }

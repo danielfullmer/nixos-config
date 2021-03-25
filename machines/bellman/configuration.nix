@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 
-with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
@@ -69,8 +68,9 @@ with (import ../../profiles/nginxCommon.nix);
   services.nginx.recommendedProxySettings = true;
   services.nginx.virtualHosts."daniel.fullmer.me" = {
     default = true;
+    public = true;
     root = "/data/webroot";
-  } // vhostPublic;
+  };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.hydra = {
@@ -90,7 +90,7 @@ with (import ../../profiles/nginxCommon.nix);
   };
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
-  } // vhostPrivate;
+  };
 
   boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
@@ -141,12 +141,12 @@ with (import ../../profiles/nginxCommon.nix);
   # Port 5000 has no access control--anyone who can connect can add/remove packages.
   # We'll rely on firewall to ensure only zerotier network can access port 5000,
   # and additionally pass through the fdroid repo it generates via nginx.
-  services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
-    locations."/".proxyPass = "http://127.0.0.1:5000/";
-  } // vhostPrivate;
-  services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
-    locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
-  } // vhostPrivate;
+#  services.nginx.virtualHosts."playmaker.daniel.fullmer.me" = {
+#    locations."/".proxyPass = "http://127.0.0.1:5000/";
+#  };
+#  services.nginx.virtualHosts."fdroid.daniel.fullmer.me" = {
+#    locations."/".proxyPass = "http://127.0.0.1:5000/fdroid/"; # Fdroid client isn't working over SSL for some reason
+#  };
 
   services.attestation-server = {
     enable = true;
@@ -167,9 +167,6 @@ with (import ../../profiles/nginxCommon.nix);
     disableAccountCreation = true;
     nginx.enableACME = true;
   };
-  services.nginx.virtualHosts."${config.services.attestation-server.domain}" = {
-    extraConfig = denyInternet;
-  } // vhostPrivate;
 
   # For testing xrdesktop
 #  services.xserver.desktopManager.gnome3.enable = true;

@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 
-with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
@@ -37,7 +36,7 @@ with (import ../../profiles/nginxCommon.nix);
         proxyPass = "http://127.0.0.1:5000/";
         proxyWebsockets = true;
       };
-    } // vhostPrivate;
+    };
   };
 
   environment.systemPackages = with pkgs; [

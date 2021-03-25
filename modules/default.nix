@@ -2,8 +2,9 @@
 {
   imports = [
     ./ap.nix
+    ./nginx-private.nix
+    ./playmaker.nix
     ./programs.nix
     ./theme
-    ./playmaker.nix
   ];
 }

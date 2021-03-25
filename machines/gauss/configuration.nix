@@ -4,7 +4,6 @@
 # Minimize and private/secret information on this host.
 # Forward any sensitive service to another host over zerotier
 with lib;
-with (import ../../profiles/nginxCommon.nix);
 {
   imports = [
     ../../profiles/base.nix
@@ -76,24 +75,14 @@ with (import ../../profiles/nginxCommon.nix);
     enable = true;
     recommendedProxySettings = true;
     virtualHosts = {
-      "searx.daniel.fullmer.me" = {
-        locations."/".proxyPass = "http://127.0.0.1:8888/";
-        # TODO: Use vhostPrivate here, modified to exclude listen on 443?
-        listen = [
-          { addr = "0.0.0.0"; port = 80; }
-          { addr = "0.0.0.0"; port = 9443; ssl = true; extraParameters = [ "proxy_protocol" ]; }
-        ];
-        forceSSL = true;
-        enableACME = true;
-        extraConfig = denyInternet + ''
-          set_real_ip_from ${config.machines.zerotierIP.gauss}/32;
-          real_ip_header proxy_protocol;
-        '';
-      };
+      "searx.daniel.fullmer.me".locations."/".proxyPass = "http://127.0.0.1:8888/";
     } //
     (listToAttrs (flatten
       (mapAttrsToList (machine: virtualHosts: (map (vhost:
-        nameValuePair vhost { locations."/".proxyPass = "http://${config.machines.zerotierIP.${machine}}/"; })
+        nameValuePair vhost {
+          locations."/".proxyPass = "http://${config.machines.zerotierIP.${machine}}/";
+          autoControlNet = false; # Don't enable stuff like ACME ourselves, that'll be done downstream
+        })
       virtualHosts)) (filterAttrs (machine: virtualHosts: machine != config.networking.hostName) config.machines.virtualHosts))));
 
     # Proxy port 80 stuff
