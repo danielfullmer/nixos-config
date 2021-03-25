@@ -28,7 +28,7 @@ with (import ../../profiles/nginxCommon.nix);
     ../../profiles/rtlsdr.nix
 
     ./ap.nix
-    ../../profiles/pxe.nix
+    ../../profiles/pxe-server.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
