@@ -115,8 +115,9 @@ with lib;
     longitude = -115.1;
   };
   services.redshift = {
+    executable = "/bin/redshift-gtk";
     temperature = {
-      day = 5500;
+      day = 25000;
       night = 3700;
     };
   };
