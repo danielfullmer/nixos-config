@@ -10,11 +10,6 @@
     weechat
     mutt
 
-    gmailieer
-    alot
-    notmuch
-    #notmuch-bower
-    astroid
     w3m
 
     glances
