@@ -148,8 +148,8 @@ with lib;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
-    Option         "nvidiaXineramaInfoOrder" "DFP-6"
-    Option         "metamodes" "HDMI-0: nvidia-auto-select +0+840, DP-0: nvidia-auto-select +3840+0 {rotation=right}"
+    Option         "nvidiaXineramaInfoOrder" "DFP-1"
+    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+840, DP-0: nvidia-auto-select +6400+0 {rotation=right}, DVI-D-0: nvidia-auto-select +0+1200"
     Option         "SLI" "Off"
     Option         "MultiGPU" "Off"
     Option         "BaseMosaic" "off"
