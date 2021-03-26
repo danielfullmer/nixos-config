@@ -174,19 +174,78 @@
 #  services.xserver.desktopManager.plasma5.enable = true;
 
   programs.ccache.enable = true;
+  programs.firejail.enable = true;
+
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.extraConfig = ''
+    # Needed for virtio-fs
+    memory_backing_dir = "/dev/shm/"
+  '';
+
+
+#  services.mosquitto = {
+#    enable = true;
+#    # Not enabling SSL--so be sure to only access it over zerotier/wireguard
+#    host = "0.0.0.0";
+#    checkPasswords = true;
+#    users.pixel3xl.hashedPassword = "";
+#  };
+
+  #services.jellyfin.enable = true;
+  #services.netdata.enable = true; # Monitoring stuff
+
+#  virtualisation.docker.enable = true;
+#  xdg.portal.enable = true;
+#  services.flatpak.enable = true;
+  security.tpm2 = {
+    enable = true;
+    tctiEnvironment.enable = true;
+    #abrmd.enable = true;
+  };
+
+#  services.fwupd.enable = true;
+
+#  services.samba = {
+#    enable = true;
+#    shares.home = {
+#      path = "/home/danielrf";
+#      "read only" = false;
+#    };
+#  };
+#  networking.firewall.interfaces.virbr0 = {
+#    allowedTCPPorts = [ 139 445 ];
+#  };
+
+#  boot.loader.systemd-boot.counters = {
+#    enable = true;
+#    tries = 2;
+#  };
+
+  #services.grocy = {
+  #  enable = true;
+  #  hostName = "grocy.daniel.fullmer.me";
+  #};
+  #services.nginx.virtualHosts."${config.services.grocy.hostName}".public = true;
+
+  # services.tvheadend.enable = true;
+  # hardware.firmware = [ pkgs.openelec-dvb-firmware ];
+
+  services.nginx.statusPage = true; # for nginx exporter
+
   services.grafana.enable = true;
   services.prometheus = {
     enable = true;
+    retentionTime = "365d";
     globalConfig.scrape_interval = "15s";
     scrapeConfigs = [
       {
         job_name = "node";
         static_configs = [ { targets = [ "localhost:9100" ]; } ];
       }
-      {
-        job_name = "systemd";
-        static_configs = [ { targets = [ "localhost:9558" ]; } ];
-      }
+#      {
+#        job_name = "systemd";
+#        static_configs = [ { targets = [ "localhost:9558" ]; } ];
+#      }
       {
         job_name = "apcupsd";
         static_configs = [ { targets = [ "localhost:${builtins.toString config.services.prometheus.exporters.apcupsd.port}" ]; } ];
@@ -212,10 +271,10 @@
     };
   };
 
-  systemd.services.systemd-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.ExecStart = "${pkgs.systemd-exporter}/bin/systemd_exporter --web.listen-address=127.0.0.1:9558 --collector.enable-ip-accounting";
-  };
+#  systemd.services.systemd-exporter = {
+#    wantedBy = [ "multi-user.target" ];
+#    serviceConfig.ExecStart = "${pkgs.systemd-exporter}/bin/systemd_exporter --web.listen-address=127.0.0.1:9558 --collector.enable-ip-accounting";
+#  };
 
   systemd.tmpfiles.rules = [ "d /var/lib/prometheus-node-exporter-text-files 1755 root root 10d" ];
 
