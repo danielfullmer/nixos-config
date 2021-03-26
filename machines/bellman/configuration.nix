@@ -159,7 +159,7 @@
 
     email = {
       username = "cgibreak@gmail.com";
-      passwordFile = "/var/secrets/attestation-server-email-password";
+      passwordFile = config.sops.secrets.attestation-server-email-password.path;
       host = "smtp.gmail.com";
       port = 465;
     };
@@ -167,6 +167,7 @@
     disableAccountCreation = true;
     nginx.enableACME = true;
   };
+  sops.secrets.attestation-server-email-password = {};
 
   # For testing xrdesktop
 #  services.xserver.desktopManager.gnome3.enable = true;
