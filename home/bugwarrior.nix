@@ -1,8 +1,20 @@
 { config, pkgs, lib, ... }:
 let
+  # Workaround for https://github.com/ralphbean/bugwarrior/issues/805
+  # using https://github.com/ralphbean/taskw/pull/141
+  bugwarrior = pkgs.python3Packages.bugwarrior.override {
+    taskw = pkgs.python3Packages.taskw.overrideAttrs ({ patches ? [], ... }: {
+      patches = patches ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/ralphbean/taskw/commit/2c78af798c4844c07b442abd62d4277ce76a6012.patch";
+          sha256 = "14501mk6lr9d678z1mb8jq6ja02f4g4rvb8924d1f7hxp7f9nk11";
+        })
+      ];
+    });
+  };
+
   # Needed to serparate configurations so that we can use https_proxy for one of them.
   # TODO: Put tokens into nix-sops somehow? https://github.com/Mic92/sops-nix/issues/62
-
   commonConfig = {
     general = {
       inline_links = false;
@@ -38,7 +50,7 @@ let
     systemd.user.services."bugwarrior-${name}" = {
       Service = {
         Type = "oneshot";
-        ExecStart = "${pkgs.python3Packages.bugwarrior}/bin/bugwarrior-pull";
+        ExecStart = "${bugwarrior}/bin/bugwarrior-pull";
         Environment = [
           "BUGWARRIORRC=${pkgs.writeText "bugwarrior.rc" (lib.generators.toINI {} config)}"
           "PATH=${lib.makeBinPath (with pkgs; [ taskwarrior gnugrep coreutils ])}"
@@ -57,6 +69,8 @@ in lib.mkMerge [
   (mkConfig "github" githubConfig)
   {
     # Proxy via aht-relay
-    systemd.user.services.bugwarrior-aht.Service.Environment = [ "https_proxy=https://aht-relay:8118" ];
+    systemd.user.services.bugwarrior-aht.Service.Environment = [ "https_proxy=http://aht-relay:8118" ];
+    # Using http:// instead of https:// since passing through HTTPS with
+    # privoxy not working. The data is encrypted on my network by zerotier anyway.
   }
 ]
