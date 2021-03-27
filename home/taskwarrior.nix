@@ -1,9 +1,24 @@
 { config, lib, pkgs, ... }:
 
+let
+  hooks = pkgs.linkFarm "taskwarrior-hooks" [
+    { name = "on-modify.timewarrior";
+      path = pkgs.substituteAll {
+        src = ./on-modify.timewarrior;
+        isExecutable = true;
+        python3 = pkgs.python3.interpreter;
+        timewarrior = pkgs.timewarrior;
+      };
+    }
+  ];
+in
 {
   programs.taskwarrior = {
     enable = true;
     dataLocation = "/home/danielrf/task";
+    config = {
+      hooks.location = "${hooks}";
+    };
     extraConfig = ''
       # Bugwarrior UDAs
       uda.gitlabtitle.type=string
