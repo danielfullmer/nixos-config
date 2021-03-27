@@ -55,7 +55,10 @@
   programs = {
     bash.enable = true;
     zsh.enable = true;
-    notmuch.enable = true;
+    notmuch = {
+      enable = true;
+      new.tags = [ "new" ]; # Tag for new mail
+    };
     lieer.enable = true;
     astroid.enable = true;
     astroid.pollScript =
