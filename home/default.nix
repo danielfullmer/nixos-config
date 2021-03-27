@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ./taskwarrior.nix
+    ./bugwarrior.nix
+  ];
+
   programs.git = {
     enable = true;
     userName = "Daniel Fullmer";
