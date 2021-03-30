@@ -60,11 +60,14 @@
       new.tags = [ "new" ]; # Tag for new mail
     };
     lieer.enable = true;
-    astroid.enable = true;
-    astroid.pollScript =
-      lib.concatStringsSep "\n"
-        (lib.mapAttrsToList (name: account: "systemctl --user start lieer-${account.name}")
-          (lib.filterAttrs (name: account: account.lieer.sync.enable) config.accounts.email.accounts));
+    astroid = {
+      enable = true;
+      pollScript =
+        lib.concatStringsSep "\n"
+          (lib.mapAttrsToList (name: account: "systemctl --user start lieer-${account.name}")
+            (lib.filterAttrs (name: account: account.lieer.sync.enable) config.accounts.email.accounts));
+      externalEditor = "termite -e \"vim -c 'set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' %1\"";
+    };
   };
 
   services.lieer.enable = true;
