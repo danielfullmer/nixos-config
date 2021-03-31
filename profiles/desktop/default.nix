@@ -159,6 +159,11 @@ with lib;
 
   environment.etc."zathurarc".text = config.programs.zathura.config;
 
+  programs.zathura.config = ''
+    # Don't horizontally center on search result
+    set search-hadjust false
+  '';
+
   ### THEMES ###
   # Note: Use package "awf" to test gtk themes
   environment.etc."xdg/gtk-3.0/settings.ini".text = ''
