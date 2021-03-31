@@ -203,7 +203,6 @@ with lib;
       "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
       "cimiefiiaegbelhefglklhhakcgmhkai" # Plasma integration
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-      "pgdnlhfefecpicbbihgmbmffkjpaplco" # uBlock Origin Extra
       "ogfcmafjalglgifnmanfmnieipoejdcf" # uMatrix
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock for youtube
       "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml" # Bypass Paywalls: Fite me IRL Google.
