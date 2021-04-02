@@ -69,14 +69,13 @@ in
     useSandbox = true;
     trustedUsers = [ "root" "danielrf" ];
 
-    binaryCaches = [ "https://cache.nixos.org/" "https://daniel.cachix.org/" ];
+    # binaryCaches = [ "https://daniel.cachix.org/" ];
 
-    trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "https://hydra.daniel.fullmer.me";
+    # trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "https://hydra.daniel.fullmer.me";
 
     binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "bellman-1:zgaxZSNzvCMGY5sjjgsxEC2uKn3OTW9LWEN0uhjJoO4="
-      "daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
+      #"daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
     ];
 
     daemonIONiceLevel = 5; # Range: 0-7
