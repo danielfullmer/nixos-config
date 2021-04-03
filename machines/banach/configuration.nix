@@ -31,6 +31,7 @@
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
+    clientMaxBodySize = "100m"; # For large gcode files
     virtualHosts."printer.daniel.fullmer.me" = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:5000/";
