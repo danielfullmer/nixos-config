@@ -121,4 +121,7 @@ in
       install -Dm644 vgpuConfig.xml $out/vgpuConfig.xml
     '';
   });
+
+  environment.systemPackages = [ pkgs.mdevctl ];
+  services.udev.packages = [ pkgs.mdevctl ];
 }

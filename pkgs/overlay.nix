@@ -63,6 +63,8 @@ in with super; {
     configFile = writeText "termite-config" config.programs.termite.config;
   });
 
+  mdevctl = callPackage ./mdevctl {};
+
   my_qemu = qemu_kvm.overrideAttrs (attrs: {
     patches = [
    #   (fetchurl {
