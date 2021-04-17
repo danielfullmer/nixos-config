@@ -10,6 +10,8 @@ with lib;
 # EVGA 750 GQ 210-GQ-0750-V1 80+ GOLD 750W PSU
 # LIAN LI PC-O11 Dynamic Black Case
 {
+  imports = [ ../../profiles/nvidia-vgpu.nix ];
+
   system.stateVersion = "18.03";
 
   boot.loader.systemd-boot.enable = true;

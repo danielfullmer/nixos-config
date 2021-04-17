@@ -29,6 +29,8 @@ in with super; {
 
   keyboard-firmware = callPackage ./keyboard-firmware { keymap=config.hardware.dactyl.keymap; };
 
+  frida = callPackage ./frida {};
+
   neovim = neovim.override {
     vimAlias = true;
     configure = {
