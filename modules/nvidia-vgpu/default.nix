@@ -3,17 +3,18 @@
 # Example usage:
 #
 # {
+#   imports = [ ((builtins.fetchTarball "https://github.com/danielfullmer/archive/master.tar.gz") + /modules/nvidia-vgpu) ];
+#
 #   nvidia.vgpu.enable = true;
 #   nvidia.vgpu.unlock.enable = true;
 # }
 #
-# This module needs mdevctl and frida from pkgs/ in this repo.
 # This currently creates a merged driver from the KVM + GRID drivers for using native desktop + VM guest simultaneously.
 # The merging stuff should probably be optional.
 
-# See: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/assembly_managing-nvidia-vgpu-devices_configuring-and-managing-virtualization
+# See also: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/assembly_managing-nvidia-vgpu-devices_configuring-and-managing-virtualization
 
-# I've tested my own 1080Ti by running:
+# I've tested on my own 1080 Ti by running:
 # mdevctl start -u 2d3a3f00-633f-48d3-96f0-17466845e672 -p 0000:03:00.0 --type nvidia-51
 # # nvidia-51 is the code for "GRID P40-8Q" in vgpuConfig.xml
 # mdevctl define --auto --uuid 2d3a3f00-633f-48d3-96f0-17466845e672
@@ -21,7 +22,8 @@
 let
   cfg = config.nvidia.vgpu;
 
-  frida = pkgs.python3Packages.callPackage ../pkgs/frida {};
+  mdevctl = pkgs.callPackage ./mdevctl {};
+  frida = pkgs.python3Packages.callPackage ./frida {};
 
   nvidia-vgpu-kvm-src = pkgs.runCommand "nvidia-460.32.04-vgpu-kvm-src" {
     src = pkgs.requireFile {
@@ -162,7 +164,7 @@ in
 
     boot.kernelModules = [ "nvidia-vgpu-vfio" ];
 
-    environment.systemPackages = [ pkgs.mdevctl ];
-    services.udev.packages = [ pkgs.mdevctl ];
+    environment.systemPackages = [ mdevctl ];
+    services.udev.packages = [ mdevctl ];
   };
 }

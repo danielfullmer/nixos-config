@@ -29,8 +29,6 @@ in with super; {
 
   keyboard-firmware = callPackage ./keyboard-firmware { keymap=config.hardware.dactyl.keymap; };
 
-  frida = callPackage ./frida {};
-
   neovim = neovim.override {
     vimAlias = true;
     configure = {
@@ -62,8 +60,6 @@ in with super; {
   termite = (termite.override {
     configFile = writeText "termite-config" config.programs.termite.config;
   });
-
-  mdevctl = callPackage ./mdevctl {};
 
   my_qemu = qemu_kvm.overrideAttrs (attrs: {
     patches = [

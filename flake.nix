@@ -55,6 +55,10 @@
       aht-relay = mkSystem "aht-relay" "x86_64-linux" {};
     };
 
+    nixosModules = {
+      nvidia-vgpu = import ./modules/nvidia-vgpu;
+    };
+
     # Settings for deploy-rs
     deploy = {
       sshUser = "root";
