@@ -5,8 +5,8 @@
 # {
 #   imports = [ ((builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/master.tar.gz") + /modules/nvidia-vgpu) ];
 #
-#   nvidia.vgpu.enable = true;
-#   nvidia.vgpu.unlock.enable = true;
+#   hardware.nvidia.vgpu.enable = true;
+#   hardware.nvidia.vgpu.unlock.enable = true;
 # }
 #
 # This currently creates a merged driver from the KVM + GRID drivers for using native desktop + VM guest simultaneously.
@@ -20,7 +20,7 @@
 # mdevctl define --auto --uuid 2d3a3f00-633f-48d3-96f0-17466845e672
 
 let
-  cfg = config.nvidia.vgpu;
+  cfg = config.hardware.nvidia.vgpu;
 
   mdevctl = pkgs.callPackage ./mdevctl {};
   frida = pkgs.python3Packages.callPackage ./frida {};
@@ -63,7 +63,7 @@ let
 in
 {
   options = {
-    nvidia.vgpu = {
+    hardware.nvidia.vgpu = {
       enable = lib.mkEnableOption "vGPU support";
 
       unlock.enable = lib.mkOption {
