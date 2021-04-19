@@ -3,7 +3,7 @@
 # Example usage:
 #
 # {
-#   imports = [ ((builtins.fetchTarball "https://github.com/danielfullmer/archive/master.tar.gz") + /modules/nvidia-vgpu) ];
+#   imports = [ ((builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/master.tar.gz") + /modules/nvidia-vgpu) ];
 #
 #   nvidia.vgpu.enable = true;
 #   nvidia.vgpu.unlock.enable = true;
@@ -28,7 +28,7 @@ let
   nvidia-vgpu-kvm-src = pkgs.runCommand "nvidia-460.32.04-vgpu-kvm-src" {
     src = pkgs.requireFile {
       name = "NVIDIA-Linux-x86_64-460.32.04-vgpu-kvm.run";
-      message = "Extracted from NVIDIA-GRID-Linux-KVM-460.32.04-460.32.03-461.33.zip";
+      message = "Manually NVIDIA-Linux-x86_64-460.32.04-vgpu-kvm.run to nix store, can be extracted from NVIDIA-GRID-Linux-KVM-460.32.04-460.32.03-461.33.zip";
       sha256 = "00ay1f434dbls6p0kaawzc6ziwlp9dnkg114ipg9xx8xi4360zzl";
     };
   } ''
@@ -79,7 +79,7 @@ in
       { patches ? [], postUnpack ? "", postPatch ? "", preFixup ? "", ... }@attrs: {
       src = pkgs.requireFile {
         name = "NVIDIA-Linux-x86_64-460.32.03-grid.run";
-        message = "Extracted from NVIDIA-GRID-Linux-KVM-460.32.04-460.32.03-461.33.zip";
+        message = "Manually add NVIDIA-Linux-x86_64-460.32.03-grid.run to nix store, can be extracted from NVIDIA-GRID-Linux-KVM-460.32.04-460.32.03-461.33.zip";
         sha256 = "0smvmxalxv7v12m0hvd5nx16jmcc7018s8kac3ycmxam8l0k9mw9";
       };
 
