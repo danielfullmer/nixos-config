@@ -13,13 +13,16 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
+
+    nvidia-vgpu.url = "github:danielfullmer/nixos-nvidia-vgpu";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, nvidia-vgpu }: let
     controlnetModules = [
       sops-nix.nixosModules.sops
       robotnix.nixosModules.attestation-server
       home-manager.nixosModules.home-manager
+      nvidia-vgpu.nixosModules.nvidia-vgpu
       ({ config, lib, ... }: lib.mkIf (config.networking.hostName == "bellman") {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
@@ -53,10 +56,6 @@
 
       # AHT relay
       aht-relay = mkSystem "aht-relay" "x86_64-linux" {};
-    };
-
-    nixosModules = {
-      nvidia-vgpu = import ./modules/nvidia-vgpu;
     };
 
     # Settings for deploy-rs
