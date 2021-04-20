@@ -3,7 +3,7 @@
 # Example usage:
 #
 # {
-#   imports = [ ((builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/master.tar.gz") + /modules/nvidia-vgpu) ];
+#   imports = [ "${builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/master.tar.gz"}/modules/nvidia-vgpu" ];
 #
 #   hardware.nvidia.vgpu.enable = true;
 #   hardware.nvidia.vgpu.unlock.enable = true;
