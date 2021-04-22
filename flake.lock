@@ -79,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1616318638,
-        "narHash": "sha256-E6ABXtzw6bHmrIirB1sJL6S2MEa3sfcvRLzRa92frCo=",
+        "lastModified": 1618962339,
+        "narHash": "sha256-Ecud4mXuA96NTCDUWGp5GVVNarZFWZL3YUZ0I8mQKIs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ddcd476603dfd3388b1dc8234fa9d550156a51f5",
+        "rev": "db00b39a9abec04245486a01b236b8d9734c9ad0",
         "type": "github"
       },
       "original": {
@@ -131,11 +131,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1616527350,
-        "narHash": "sha256-VkMevY2WLU+K7T/P4wVj18Ms8zyeRfp05ILf556m5Y8=",
+        "lastModified": 1618801528,
+        "narHash": "sha256-1ru9LzP33ElEAZcDzYLgJQG3/uHhAg0LFJEfVZSOPZg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d3f7e969b9860fb80750147aeb56dab1c730e756",
+        "rev": "0a5f5bab0e08e968ef25cff393312aa51a3512cf",
         "type": "github"
       },
       "original": {
@@ -177,17 +177,32 @@
         "type": "github"
       }
     },
+    "nvidia-vgpu": {
+      "locked": {
+        "lastModified": 1618898574,
+        "narHash": "sha256-86P4xuYWu+LR5JYliNtkpfn6ondczlhpGnx6fQdh+hM=",
+        "owner": "danielfullmer",
+        "repo": "nixos-nvidia-vgpu",
+        "rev": "921374c9a583a4a6f5bcd832704a2d04669768cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danielfullmer",
+        "repo": "nixos-nvidia-vgpu",
+        "type": "github"
+      }
+    },
     "robotnix": {
       "inputs": {
         "androidPkgs": "androidPkgs",
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1616627883,
-        "narHash": "sha256-Y5aaE1JMGuu1nYhHvbhVpZq4tU0pUpjKHjoLGSc7KuA=",
+        "lastModified": 1618812839,
+        "narHash": "sha256-CLuRrR04dOX1KjC0H3YAgsi9c5k4VoYrbhILf4qX0qY=",
         "owner": "danielfullmer",
         "repo": "robotnix",
-        "rev": "65ef49b47237927d43669781a265d0d757cb8630",
+        "rev": "3caa9cdb4eb63acc67f5b17809bc7274a3b25cdb",
         "type": "github"
       },
       "original": {
@@ -201,6 +216,7 @@
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
+        "nvidia-vgpu": "nvidia-vgpu",
         "robotnix": "robotnix",
         "sops-nix": "sops-nix"
       }
@@ -212,11 +228,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1615031779,
-        "narHash": "sha256-uCdrsI0poKOAt0BxxjbLMNY6bOZNrDxOTAx4DQQTAEM=",
+        "lastModified": 1618840526,
+        "narHash": "sha256-3VAac44xE+kO8o7BQXLqHrAMUQT+XqIK8BcLkEEDwOA=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "137d387e784783eac52dfd9d1b35227eb0c211f1",
+        "rev": "4f384662a85804fa2bc1bc1f99e70bb468e76f88",
         "type": "github"
       },
       "original": {
