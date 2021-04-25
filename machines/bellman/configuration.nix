@@ -27,6 +27,7 @@
     ../../profiles/rtlsdr.nix
 
     ./ap.nix
+    ./vfio.nix
     ../../profiles/pxe-server.nix
   ];
 
@@ -340,21 +341,4 @@
   #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
   systemd.enableCgroupAccounting = true;
 
-  # For windows VM
-  hardware.nvidia.vgpu.enable = true;
-  hardware.nvidia.vgpu.unlock.enable = true;
-  # Add permission to evdev devices
-  virtualisation.libvirtd.qemuVerbatimConfig = let
-    kbd_path = "/dev/input/by-id/usb-CM_Storm_Side_print-event-kbd";
-    mouse_path = "/dev/input/by-id/usb-SteelSeries_SteelSeries_Rival_3-event-mouse";
-  in ''
-    cgroup_device_acl = [
-       "/dev/null", "/dev/full", "/dev/zero",
-       "/dev/random", "/dev/urandom",
-       "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
-       "/dev/rtc", "/dev/hpet", "/dev/net/tun",
-       "${kbd_path}", "${mouse_path}"
-    ]
-  '';
-  networking.firewall.allowedUDPPorts = [ 4010 ]; # For Scream audio from windows VM
 }
