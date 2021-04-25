@@ -19,6 +19,7 @@
     ../../profiles/gdrive.nix
     ../../profiles/wireguard.nix
     ../../profiles/tor.nix
+    ../../profiles/cuttlefish.nix
     ../../profiles/nextcloud.nix
     #../../profiles/backup.nix
     #../../xrdesktop-overlay

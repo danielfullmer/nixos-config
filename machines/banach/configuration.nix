@@ -6,6 +6,7 @@
     ../../profiles/dns.nix
     ../../profiles/zerotier.nix
     ../../profiles/fdm-printer.nix
+    ../../profiles/cuttlefish.nix
   ];
 
   networking.hostName = "banach";
