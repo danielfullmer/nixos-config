@@ -99,11 +99,13 @@ in
   systemd.tmpfiles.rules = [
     "f /dev/shm/looking-glass 0660 danielrf qemu-libvirtd -"
   ];
-  systemd.user.services.scream-ivshmem = {
+  systemd.user.services.scream = let
+    scream-receivers = pkgs.scream-receivers.override { pulseSupport = true; };
+  in {
     enable = true;
     description = "Scream";
     serviceConfig = {
-      ExecStart = "${pkgs.scream-receivers}/bin/scream-pulse";
+      ExecStart = "${scream-receivers}/bin/scream-pulse";
       Restart = "always";
     };
     wantedBy = [ "multi-user.target" ];
