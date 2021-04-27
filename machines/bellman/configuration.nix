@@ -207,17 +207,6 @@
 
 #  services.fwupd.enable = true;
 
-#  services.samba = {
-#    enable = true;
-#    shares.home = {
-#      path = "/home/danielrf";
-#      "read only" = false;
-#    };
-#  };
-#  networking.firewall.interfaces.virbr0 = {
-#    allowedTCPPorts = [ 139 445 ];
-#  };
-
 #  boot.loader.systemd-boot.counters = {
 #    enable = true;
 #    tries = 2;

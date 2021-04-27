@@ -112,4 +112,17 @@ in
     requires = [ "pulseaudio.service" ];
   };
   networking.firewall.interfaces."virbr0".allowedUDPPorts = [ 4010 ]; # For Scream audio from windows VM
+
+  # Samba + steam games
+  services.samba = {
+    enable = true;
+    shares.steam = {
+      path = "/homecache/danielrf/.local/share";
+      "read only" = false;
+    };
+  };
+  networking.firewall.interfaces.virbr0 = {
+    allowedTCPPorts = [ 139 445 ];
+  };
+
 }
