@@ -10,15 +10,14 @@ with lib;
 # EVGA 750 GQ 210-GQ-0750-V1 80+ GOLD 750W PSU
 # LIAN LI PC-O11 Dynamic Black Case
 {
-  imports = [ ../../profiles/nvidia-vgpu.nix ];
-
   system.stateVersion = "18.03";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_5_10;
+  #boot.kernelPackages = pkgs.linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_5_4;
   #boot.kernelPatches = [ { name = "OpenRGB"; patch = "${pkgs.openrgb.src}/OpenRGB.patch"; } ];
   boot.kernelModules = [
     "kvm-amd"
