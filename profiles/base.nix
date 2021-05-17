@@ -91,14 +91,14 @@ in
     };
     users = {
       danielrf = {
-        description     = "Daniel Fullmer";
-        group           = "danielrf";
-        extraGroups     = [ "users" "wheel" "video" "audio" "networkmanager"
-                            "vboxsf" "docker" "libvirtd" "systemd-journal"
-                          ];
-        home            = "/home/danielrf";
-        createHome      = true;
-        password        = "changeme";
+        isNormalUser = true;
+        description = "Daniel Fullmer";
+        group = "danielrf";
+        extraGroups = [
+          "users" "wheel" "video" "audio" "networkmanager" "vboxsf" "docker"
+          "libvirtd" "systemd-journal"
+        ];
+        initialPassword = "changeme";
         openssh.authorizedKeys.keys = [ ssh-yubikey ];
       };
       root.openssh.authorizedKeys.keys = [ ssh-yubikey ];
