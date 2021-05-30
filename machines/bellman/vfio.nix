@@ -100,16 +100,15 @@ in
     "f /dev/shm/looking-glass 0660 danielrf qemu-libvirtd -"
   ];
   systemd.user.services.scream = let
-    scream-receivers = pkgs.scream-receivers.override { pulseSupport = true; };
+    scream = pkgs.scream.override { pulseSupport = true; };
   in {
     enable = true;
     description = "Scream";
     serviceConfig = {
-      ExecStart = "${scream-receivers}/bin/scream-pulse";
+      ExecStart = "${scream}/bin/scream-pulse";
       Restart = "always";
     };
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "pulseaudio.service" ];
+    partOf = [ "graphical-session.target" ];
   };
   networking.firewall.interfaces."virbr0".allowedUDPPorts = [ 4010 ]; # For Scream audio from windows VM
 

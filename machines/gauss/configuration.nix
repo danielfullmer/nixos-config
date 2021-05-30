@@ -41,16 +41,20 @@ with lib;
   # See also: includes forwarding config from profiles/base.nix
   services.unbound = {
     enable = true;
-    interfaces = [ "127.0.0.1" "::1" "10.200.0.1" ];
-    allowedAccess = [ "127.0.0.0/24" "10.200.0.0/24" ];
-    extraConfig = ''
-      local-zone: "daniel.fullmer.me." static
-      local-data: "turn.daniel.fullmer.me. IN A 167.71.187.97"
-    '' +
-      concatStringsSep "\n" (flatten
-        (mapAttrsToList (machine: virtualHosts:
-          (map (vhost: "local-data: \"${vhost}. IN A ${config.machines.wireguardIP.${machine} or config.machines.zerotierIP.${machine}}\"") virtualHosts))
-        config.machines.virtualHosts));
+    settings = {
+      server = {
+        interface = [ "10.200.0.1" ];
+        access-control = [ "10.200.0.0/24 allow" ];
+
+        local-zone = "\"daniel.fullmer.me.\" static";
+        local-data = [
+          "\"turn.daniel.fullmer.me. IN A 167.71.187.97\""
+        ] ++
+          (flatten (mapAttrsToList (machine: virtualHosts:
+            (map (vhost: "\"${vhost}. IN A ${config.machines.wireguardIP.${machine} or config.machines.zerotierIP.${machine}}\"") virtualHosts))
+            config.machines.virtualHosts));
+      };
+    };
   };
 
   services.searx.enable = true; # Default port 8888. http://searx.daniel.fullmer.me

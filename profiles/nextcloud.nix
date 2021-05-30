@@ -10,8 +10,8 @@ in {
   services.nginx.virtualHosts."nextcloud.fullmer.me".locations."/".proxyPass = "http://10.100.0.2/";
   networking.nat.enable = true;
   networking.nat.internalIPs = [ localAddress ];
-  services.unbound.interfaces = [ hostAddress ];
-  services.unbound.allowedAccess = [ "10.100.0.0/24" ];
+  services.unbound.settings.server.interface = [ hostAddress ];
+  services.unbound.settings.server.access-control = [ "10.100.0.0/24 allow" ];
   networking.firewall.interfaces."ve-nextcloud".allowedUDPPorts = [ 53 ];
   containers.nextcloud = {
     autoStart = true;

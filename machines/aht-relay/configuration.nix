@@ -40,22 +40,24 @@
   networking.nameservers = lib.mkBefore [ "127.0.0.1" ];
   services.unbound = {
     enable = true;
-    interfaces = [ "127.0.0.1" "::1" ];
-    extraConfig = ''
-      forward-zone:
-        name: "twosix.local."
-        forward-addr: 10.80.4.5
-      server:
+    settings = {
+      forward-zone = [ {
+        name = "\"twosix.local.\"";
+        forward-addr = "10.80.4.5";
+      } ];
+      server = {
+        interface = [ "127.0.0.1" "::1" ];
         #verbosity: 2
 
         # Disable DNSSEC, not working for .local
-        module-config: "iterator"
-    '';
+        module-config = "iterator";
+      };
+    };
   };
 
   services.privoxy = {
     enable = true;
-    listenAddress = "0.0.0.0:8118";
+    settings.listen-address = "0.0.0.0:8118";
   };
   networking.firewall.interfaces."ztbto3oiwt".allowedTCPPorts = [ 8118 ]; # Only allow access over zerotier
 }

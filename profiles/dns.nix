@@ -2,32 +2,36 @@
   networking.nameservers = [ "127.0.0.1" ];
   services.unbound = {
     enable = true;
-    interfaces = [ "127.0.0.1" "::1" ];
     package = pkgs.unbound-with-systemd;
 
     # services.unbound.forwardAddresses doesn't let us set forward-tls-upstream
-    extraConfig = ''
-      forward-zone:
-        name: "."
-        forward-tls-upstream: yes
-        # Cloudflare DNS
-        forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
-        forward-addr: 1.1.1.1@853#cloudflare-dns.com
-        forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
-        forward-addr: 1.0.0.1@853#cloudflare-dns.com
-        # Quad9
-        forward-addr: 2620:fe::fe@853#dns.quad9.net
-        forward-addr: 9.9.9.9@853#dns.quad9.net
-        forward-addr: 2620:fe::9@853#dns.quad9.net
-        forward-addr: 149.112.112.112@853#dns.quad9.net
-        # TOR
-        #forward-addr: 127.0.0.1@853#cloudflare-dns.com
+    settings = {
+      forward-zone = [ {
+        name = ".";
+        forward-tls-upstream = true;
+        forward-addr = [
+          # Cloudflare DNS
+          "2606:4700:4700::1111@853#cloudflare-dns.com"
+          "1.1.1.1@853#cloudflare-dns.com"
+          "2606:4700:4700::1001@853#cloudflare-dns.com"
+          "1.0.0.1@853#cloudflare-dns.com"
+          # Quad9
+          "2620:fe::fe@853#dns.quad9.net"
+          "9.9.9.9@853#dns.quad9.net"
+          "2620:fe::9@853#dns.quad9.net"
+          "149.112.112.112@853#dns.quad9.net"
+          # TOR
+          #"127.0.0.1@853#cloudflare-dns.com"
+        ];
+      } ];
 
-      server:
-        tls-cert-bundle: /etc/pki/tls/certs/ca-bundle.crt
-        do-not-query-localhost: no
-        edns-tcp-keepalive: yes
-    '';
+      server = {
+        interface = [ "127.0.0.1" "::1" ];
+        access-control = [ "127.0.0.0/8 allow" "::1/128 allow" ];
+        do-not-query-localhost = false;
+        edns-tcp-keepalive = true;
+      };
+    };
   };
 
   # Hook up dnsmasq (if used) to unbound
