@@ -38,11 +38,12 @@ in
       };
 
       virtualHosts = {
-        bellman = (map (name: "${name}.${config.networking.domain}") [ 
+        bellman = (map (name: "${name}.daniel.fullmer.me") [
           "attestation" "hydra" "playmaker" "fdroid" "office" "zoneminder" "home"
+          "grocy"
         ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
-        gauss = [ "searx.${config.networking.domain}" ];
-        banach = [ "printer.${config.networking.domain}" ];
+        gauss = [ "searx.daniel.fullmer.me" ];
+        banach = [ "printer.daniel.fullmer.me" ];
       };
 
       publicVirtualHosts = [ "daniel.fullmer.me" ];
