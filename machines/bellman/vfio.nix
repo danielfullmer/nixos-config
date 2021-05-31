@@ -105,7 +105,7 @@ in
     enable = true;
     description = "Scream";
     serviceConfig = {
-      ExecStart = "${scream}/bin/scream-pulse";
+      ExecStart = "${scream}/bin/scream";
       Restart = "always";
     };
     partOf = [ "graphical-session.target" ];
