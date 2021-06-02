@@ -151,7 +151,7 @@ with lib;
     gnome3.gnome_themes_standard
     gnome3.adwaita-icon-theme
 
-    adapta-gtk-theme
+    orchis
 
     zathura
     chromium

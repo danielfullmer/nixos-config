@@ -61,7 +61,7 @@ in with lib;
 
     gtkTheme = mkOption {
       type = types.str;
-      default = "Adapta";
+      default = "Orchis";
     };
 
     gtkIconTheme = mkOption {
