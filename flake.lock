@@ -192,6 +192,22 @@
         "type": "github"
       }
     },
+    "pinebook-pro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1622572024,
+        "narHash": "sha256-mUKF/Tk+95TYeBLyApxsyCi98RhbkX9EFKAo6weUpiM=",
+        "owner": "samueldr",
+        "repo": "wip-pinebook-pro",
+        "rev": "748f247ba13054114e98e7cc216b308da3b9ddf0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "samueldr",
+        "repo": "wip-pinebook-pro",
+        "type": "github"
+      }
+    },
     "robotnix": {
       "inputs": {
         "androidPkgs": "androidPkgs",
@@ -217,6 +233,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
         "nvidia-vgpu": "nvidia-vgpu",
+        "pinebook-pro": "pinebook-pro",
         "robotnix": "robotnix",
         "sops-nix": "sops-nix"
       }

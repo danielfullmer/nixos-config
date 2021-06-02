@@ -1,12 +1,6 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-let
-  pinebook_pro = import ((builtins.fetchGit {
-      url = "https://github.com/samueldr/wip-pinebook-pro.git";
-      rev = "8c8105d093860754d2c1ed276451dd8b4031ef05";
-    }) + "/pinebook_pro.nix");
-in
 {
   imports = [
     ../../profiles/base.nix
@@ -19,8 +13,6 @@ in
     ../../profiles/desktop/default.nix
     #../../profiles/academic.nix
     #../../profiles/gdrive.nix
-
-    pinebook_pro
   ];
 
   networking.hostName = "laplace";

@@ -9,6 +9,7 @@ with lib;
 
   boot.initrd.availableKernelModules = [ "usbhid" ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelPackages = pkgs.linuxPackages_pinebookpro_lts;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 

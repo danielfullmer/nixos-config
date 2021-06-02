@@ -15,9 +15,12 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     nvidia-vgpu.url = "github:danielfullmer/nixos-nvidia-vgpu";
+
+    pinebook-pro.url = "github:samueldr/wip-pinebook-pro";
+    pinebook-pro.flake = false;
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, nvidia-vgpu }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, nvidia-vgpu, pinebook-pro }: let
     controlnetModules = [
       sops-nix.nixosModules.sops
       robotnix.nixosModules.attestation-server
@@ -44,9 +47,11 @@
       # Main desktop
       bellman = mkSystem "bellman" "x86_64-linux" {};
       # Laptop (surface pro 4)
-      euler = mkSystem "euler" "x86_64-linux" {};
+      #euler = mkSystem "euler" "x86_64-linux" {};
       # Laptop (pinebook pro)
-      laplace = mkSystem "laplace" "aarch64-linux" {};
+      laplace = mkSystem "laplace" "aarch64-linux" {
+        imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
+      };
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3
