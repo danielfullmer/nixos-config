@@ -79,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1622317957,
-        "narHash": "sha256-F+8J8W8aBe5QwxDLnS/0PLuOueNqPcorZntlE7FJcy0=",
+        "lastModified": 1622678600,
+        "narHash": "sha256-mDNqOvtiZs6HuNxkfMUGhmUwAbQxdOyqecf0rVGq7h0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "07ad6a4f76d9402ae8af1507b4158b52aa59fcea",
+        "rev": "95da56b783e4ccc8ded71137e4add780b239dd46",
         "type": "github"
       },
       "original": {
@@ -131,11 +131,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1622194753,
-        "narHash": "sha256-76qtvFp/vFEz46lz5iZMJ0mnsWQYmuGYlb0fHgKqqMg=",
+        "lastModified": 1622629464,
+        "narHash": "sha256-o7HBgsi0eUkuLheM+ur86900OP+6dQlrawTVDqa20Rk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "540dccb2aeaffa9dc69bfdc41c55abd7ccc6baa3",
+        "rev": "239da47116274ee326a965d80b3ed1d3bf08af62",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1622067804,
-        "narHash": "sha256-nNqy96fa38WOQwV5f4j9HxMKTzpmShGPZkjakOC8MIc=",
+        "lastModified": 1622415323,
+        "narHash": "sha256-kVAai16KIea00bSh5nCFUfkHlpv5FvB17HMaggZbvT4=",
         "owner": "danielfullmer",
         "repo": "robotnix",
-        "rev": "e1605e8919d71b00f3ef09600c945a75ec4d08ff",
+        "rev": "e4123dae86eb4514074c04985c60d6039800788d",
         "type": "github"
       },
       "original": {

@@ -43,16 +43,6 @@ in with super; {
 
   rivalcfg = python2Packages.callPackage ./rivalcfg {};
 
-  sanoid = sanoid.overrideAttrs ({ patches, ... }: {
-    patches = patches ++ [
-      # https://github.com/jimsalterjrs/sanoid/issues/528
-      (fetchpatch {
-        url = "https://github.com/jimsalterjrs/sanoid/pull/510/commits/b808a74e2e7d509b3231c41784df4920468e9709.patch";
-        sha256 = "083xv4yv5syc1n2bq9cga4m80391x6kvp18rgiv054r127pi2x8n";
-      })
-    ];
-  });
-
   st = (st.override {
     conf = (callPackage st/config.h.nix { theme=config.theme; });
   });
