@@ -96,7 +96,7 @@ with lib;
   fonts = {
     fonts = (with pkgs; [
       powerline-fonts
-      font-awesome-ttf
+      font-awesome
       corefonts
       lmodern
       #source-code-pro
@@ -141,15 +141,14 @@ with lib;
     dunst
 
     termite
-    rxvt_unicode-with-plugins
     st
 
     mpv
 
     pavucontrol
 
-    gnome3.gnome_themes_standard
-    gnome3.adwaita-icon-theme
+    gnome.gnome-themes-extra
+    gnome.adwaita-icon-theme
 
     orchis
 

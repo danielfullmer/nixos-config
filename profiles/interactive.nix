@@ -31,7 +31,7 @@ in
     ripgrep
     fzf
     git
-    gitAndTools.gh
+    gh
     neovim
 
     taskwarrior

@@ -6,7 +6,7 @@
     { names = [
       "vim2nix"
       "vim-nix"
-      "vimproc"
+      "vimproc-vim"
 
       # UI {{{
       "Colour-Sampler-Pack"
@@ -17,13 +17,13 @@
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
       # Plug 'edkolev/tmuxline.vim'
       # ":Tmuxline airline
-      "airline"
+      "vim-airline"
       # ":TmuxlineSnapshot ~/.tmux.line
       #
       # Plug 'merlinrebrovic/focus.vim'
       # }}}
       # Text/File Navigation {{{
-      "easymotion"
+      "vim-easymotion"
       "fzf-vim"
       "fzfWrapper"
       # }}}
@@ -39,31 +39,32 @@
       "ncm2-ultisnips"
       "ultisnips"
       "vim-snippets"
-      "The_NERD_tree"
+      "nerdtree"
       # }}}
       # Editing {{{
       "align"
       # Plug 'tpope/vim-abolish'
-      "surround"
+      "vim-surround"
       "editorconfig-vim"
       # }}}
       # GIT {{{
-      "fugitive"
-      "gitgutter"
+      "vim-fugitive"
+      "vim-gitgutter"
       "webapi-vim"
       #"vim-gist"
       #" }}}
       #" General Coding {{{
       "ale" # TODO: See about language server support
-      "commentary"
+      "vim-commentary"
       "FastFold"
-      "polyglot" # Language pack
+      "vim-polyglot" # Language pack
       #" }}}
       #" Misc {{{
       #Plug 'benmills/vimux'
       "neco-vim"
-      "tmux-navigator"
-      "gundo"
+      "vim-tmux-navigator"
+      "gundo-vim"
+      "vim-ledger"
       #" }}}
     ]; }
     { ft_regex = "^tex\$";
@@ -72,7 +73,7 @@
     ]; }
     { ft_regex = "^python\$";
       names = [
-        "ipython"
+        "vim-ipython"
         #Plug 'klen/python-mode'
         #Plug 'alfredodeza/pytest.vim'
         #Plug 'julienr/vimux-pyutils'
