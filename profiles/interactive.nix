@@ -35,8 +35,9 @@ in
     neovim
 
     taskwarrior
+    taskwarrior-tui
     timewarrior
-    # vit # tasklib failing as of 2020-12-23
+    vit
 
     sops
     direnv
