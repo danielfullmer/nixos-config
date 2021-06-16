@@ -58,6 +58,19 @@
     notmuch = {
       enable = true;
       new.tags = [ "new" ]; # Tag for new mail
+      hooks.postNew = ''
+        notmuch tag +ng911 -new -- tag:new and from:gitlab@twosixtech.com
+
+        # Github projects
+        notmuch tag +robotnix -new -- tag:new and to:robotnix@noreply.github.com
+        notmuch tag +nixpkgs -new -- tag:new and to:nixpkgs@noreply.github.com
+
+        # Mailing lists
+        notmuch tag +android-building -new -- tag:new and to:android-building@googlegroups.com
+
+        # finally, retag all "new" messages "inbox" and "unread"
+        notmuch tag -new -- tag:new
+      '';
     };
     lieer.enable = true;
     astroid = {
