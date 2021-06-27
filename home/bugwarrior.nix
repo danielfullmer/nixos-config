@@ -40,9 +40,8 @@ let
       service = "gitlab";
       "gitlab.login" = "daniel.fullmer";
       "gitlab.token" = "@oracle:eval:cat $HOME/bugwarrior-aht";
-      "gitlab.include_repos" = "NM4RA/Backend/ng911-simulator";
-      "gitlab.host" = "gitlab.twosix.local";
-      "gitlab.verify_ssl" = "False"; # TODO
+      "gitlab.include_repos" = "ng911/ng911-simulator";
+      "gitlab.host" = "gitlab.aht.ai";
     };
   };
 
@@ -67,10 +66,4 @@ let
 in lib.mkMerge [
   (mkConfig "aht" ahtConfig)
   (mkConfig "github" githubConfig)
-  {
-    # Proxy via aht-relay
-    systemd.user.services.bugwarrior-aht.Service.Environment = [ "https_proxy=http://aht-relay:8118" ];
-    # Using http:// instead of https:// since passing through HTTPS with
-    # privoxy not working. The data is encrypted on my network by zerotier anyway.
-  }
 ]
