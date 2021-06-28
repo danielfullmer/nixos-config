@@ -131,16 +131,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1624626397,
-        "narHash": "sha256-+h0ulo5//RqStx6g6MDqD9MzgmBfeZ1VYxwEaSmw/Zs=",
-        "owner": "NixOS",
+        "lastModified": 1624851267,
+        "narHash": "sha256-QQabB4+tFw4/iPrFknM1P8pXR+8/2g15H/Ws+egBjsQ=",
+        "owner": "danielfullmer",
         "repo": "nixpkgs",
-        "rev": "e1f8852faac7638e88d5e8a5b9ee2a7568685e3f",
+        "rev": "b809a638173f5fde716c289d875edcb274c766b1",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "danielfullmer",
+        "ref": "octoprint-websocket-six",
         "repo": "nixpkgs",
         "type": "github"
       }
