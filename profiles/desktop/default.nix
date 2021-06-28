@@ -150,7 +150,7 @@ with lib;
     gnome.gnome-themes-extra
     gnome.adwaita-icon-theme
 
-    orchis
+    orchis-theme
 
     zathura
     chromium
