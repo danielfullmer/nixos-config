@@ -224,6 +224,7 @@
   services.nginx.statusPage = true; # for nginx exporter
 
   services.grafana.enable = true;
+  services.grafana.port = 3030;
   services.prometheus = {
     enable = true;
     retentionTime = "365d";
