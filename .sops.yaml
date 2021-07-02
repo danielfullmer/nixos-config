@@ -5,7 +5,6 @@ keys:
   - &gauss 17577213896ED87177A71D00A4A02C44B781588E
   - &banach 50FA682AF4D40AC551963CA0971337F9A34AB5AB
   - &laplace ED8A6848AE92FD517EBF44673FED6D228CA9F576
-  - &aht-relay BBD1DB92C3B1B1F6D683929D6166796A79532265
 creation_rules:
   - path_regex: machines/bellman/secrets/[^/]+$
     key_groups:
@@ -31,12 +30,6 @@ creation_rules:
       - *danielfullmer
       - *danielfullmer-offlinekey
       - *laplace
-  - path_regex: machines/aht-relay/secrets/[^/]+$
-    key_groups:
-    - pgp:
-      - *danielfullmer
-      - *danielfullmer-offlinekey
-      - *aht-relay
   - path_regex: secrets/[^/]+$
     key_groups:
     - pgp:
