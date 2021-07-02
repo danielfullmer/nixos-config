@@ -196,7 +196,7 @@
   #services.jellyfin.enable = true;
   #services.netdata.enable = true; # Monitoring stuff
 
-#  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = true;
 #  xdg.portal.enable = true;
 #  services.flatpak.enable = true;
   security.tpm2 = {
