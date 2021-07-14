@@ -27,6 +27,8 @@
     ../../profiles/fdm-printer.nix
     ../../profiles/rtlsdr.nix
 
+    ../../profiles/robotnix-infra.nix
+
     ./ap.nix
     ./vfio.nix
     ../../profiles/pxe-server.nix
