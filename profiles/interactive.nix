@@ -32,7 +32,12 @@ in
     fzf
     git
     gh
+
+    # Stuff for nvim
     neovim
+    nodePackages.typescript-language-server
+    rnix-lsp nixpkgs-fmt
+    # haskell-language-server # Too Heavy
 
     taskwarrior
     taskwarrior-tui
@@ -46,7 +51,7 @@ in
   ]);
 
   environment.variables = {
-    EDITOR = "vim";
+    EDITOR = "${pkgs.neovim}/bin/vim";
 
     # See also: https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
     FZF_TMUX = "1";
