@@ -46,6 +46,7 @@ in
         gauss = [ "searx.daniel.fullmer.me" ];
         banach = [ "printer.daniel.fullmer.me" ];
         hercules = [ "gitlab.aht.ai" "ng911-demo.aht.ai" ];
+        wrench = [ "wrench.fullmer.me" ];
       };
 
       publicVirtualHosts = [ "daniel.fullmer.me" ];
