@@ -11,6 +11,18 @@
     userName = "Daniel Fullmer";
     userEmail = "danielrf12@gmail.com";
     signing.key = "EF6B0CB0";
+
+    delta.enable = true;
+
+    extraConfig = {
+      color.ui = "auto";
+      push.default = "simple";
+
+      merge.tool = "fugitive";
+      "mergetool \"fugitive\"".cmd = "vim -f -c \"Gdiff\" \"$MERGED\"";
+
+      github.user = "danielfullmer";
+    };
   };
 
   accounts.email = {

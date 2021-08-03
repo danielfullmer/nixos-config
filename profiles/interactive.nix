@@ -30,7 +30,6 @@ in
     silver-searcher
     ripgrep
     fzf
-    git
     gh
 
     # Stuff for nvim
@@ -103,19 +102,18 @@ in
     tw = "timew";
   };
 
-  # This is a hack
-  system.activationScripts = {
-    dotfiles = lib.stringAfter [ "users" ]
-    ''
-      cd /home/danielrf
-      ln -fs ${../dotfiles}/.gitconfig
-      mkdir -p .gnupg
-      chown danielrf:danielrf .gnupg
-      chmod 700 .gnupg
-      ln -fs ${../dotfiles}/.latexmkrc
-      ln -fs ${../dotfiles}/.taskrc
-      touch .zshrc
-      chown danielrf:danielrf .zshrc
-    '';
-  };
+#  # This is a hack
+#  system.activationScripts = {
+#    dotfiles = lib.stringAfter [ "users" ]
+#    ''
+#      cd /home/danielrf
+#      mkdir -p .gnupg
+#      chown danielrf:danielrf .gnupg
+#      chmod 700 .gnupg
+#      ln -fs ${../dotfiles}/.latexmkrc
+#      ln -fs ${../dotfiles}/.taskrc
+#      touch .zshrc
+#      chown danielrf:danielrf .zshrc
+#    '';
+#  };
 }
