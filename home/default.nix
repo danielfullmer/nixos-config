@@ -3,7 +3,7 @@
 {
   imports = [
     ./taskwarrior.nix
-    ./bugwarrior.nix
+    #./bugwarrior.nix
   ];
 
   programs.git = {
