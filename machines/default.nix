@@ -28,7 +28,8 @@ in
 
         pixel3 = "30.0.0.248";
 
-        aht-relay = "192.168.192.122"; # On another zerotier network
+        # AHT work machines
+        hercules = "192.168.192.71";
       };
 
       wireguardIP = {
@@ -44,6 +45,7 @@ in
         ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
         gauss = [ "searx.daniel.fullmer.me" ];
         banach = [ "printer.daniel.fullmer.me" ];
+        hercules = [ "gitlab.aht.ai" "ng911-demo.aht.ai" ];
       };
 
       publicVirtualHosts = [ "daniel.fullmer.me" ];
