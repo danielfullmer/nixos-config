@@ -3,7 +3,7 @@
 let
   mirrors = {
     "https://android.googlesource.com" = "/nix/mirror/aosp";
-    "https://github.com/LineageOS" = "/nix/mirror/lineageos";
+    "https://github.com/LineageOS" = "/nix/mirror/lineageos/LineageOS";
     "https://github.com/TheMuppets" = "/mnt/cache/muppets/TheMuppets";
   };
 in
