@@ -5,21 +5,19 @@ with lib;
     enable = true;
     user = "danielrf";
     dataDir = "/home/danielrf/.syncthing/";
-    declarative = {
-      overrideDevices = true;
-      devices = mapAttrs (machine: id: {
-        inherit id;
-        addresses = [ "tcp://${config.machines.zerotierIP.${machine}}:22000" ];
-      }) (filterAttrs (machine: id: machine != config.networking.hostName) config.machines.syncthingID); # Filter ourself out
+    overrideDevices = true;
+    devices = mapAttrs (machine: id: {
+      inherit id;
+      addresses = [ "tcp://${config.machines.zerotierIP.${machine}}:22000" ];
+    }) (filterAttrs (machine: id: machine != config.networking.hostName) config.machines.syncthingID); # Filter ourself out
 
-      folders.Sync = {
-        path = "/home/danielrf/Sync";
-        devices = attrNames config.services.syncthing.declarative.devices;
-      };
-
-      cert = config.sops.secrets.syncthing-cert.path;
-      key = config.sops.secrets.syncthing-key.path;
+    folders.Sync = {
+      path = "/home/danielrf/Sync";
+      devices = attrNames config.services.syncthing.devices;
     };
+
+    cert = config.sops.secrets.syncthing-cert.path;
+    key = config.sops.secrets.syncthing-key.path;
   };
   sops.secrets = {
     syncthing-cert = { owner = config.services.syncthing.user; };
