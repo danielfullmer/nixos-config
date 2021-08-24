@@ -32,6 +32,9 @@
         home-manager.useUserPackages = true;
         home-manager.users.danielrf = import ./home;
       })
+      ({
+        nix.registry.nixpkgs.flake = nixpkgs;
+      })
     ];
 
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
