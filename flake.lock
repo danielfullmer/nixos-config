@@ -214,11 +214,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1628176565,
-        "narHash": "sha256-CTE3RTPl64+VwpVnqWwCxLQLJ8KufRHtmJU7abYl0YI=",
+        "lastModified": 1629760733,
+        "narHash": "sha256-T9qHdi09dk8HpeQqJFCFigaKLP6eERHx4uaBAoXSwZ0=",
         "owner": "danielfullmer",
         "repo": "robotnix",
-        "rev": "e4fe7728bcc5bcac5babbc58237b2a0889eeae7c",
+        "rev": "c2c1b8094cecf93d02f424226c417cc367286e75",
         "type": "github"
       },
       "original": {
