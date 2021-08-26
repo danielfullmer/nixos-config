@@ -179,11 +179,11 @@
     },
     "nvidia-vgpu": {
       "locked": {
-        "lastModified": 1624420541,
-        "narHash": "sha256-hY0i/yBDpIlP1sjQ4Fxp+AwVtKNzQYp/0LmBiBufRP8=",
+        "lastModified": 1629956048,
+        "narHash": "sha256-mhKZWRn6swGwwfdb/bRrDB6GkA8V5sMhlOS60Jm/dM0=",
         "owner": "danielfullmer",
         "repo": "nixos-nvidia-vgpu",
-        "rev": "3c1f0d45e27e6750d55f2a5e66f1bfa38bdd73b0",
+        "rev": "a4be77969dc2a8acbe3a4882ba5f0324cca138b6",
         "type": "github"
       },
       "original": {
