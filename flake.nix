@@ -53,9 +53,18 @@
       # Laptop (surface pro 4)
       #euler = mkSystem "euler" "x86_64-linux" {};
       # Laptop (pinebook pro)
-      laplace = mkSystem "laplace" "aarch64-linux" {
+      laplace = mkSystem "laplace" "aarch64-linux" ({ config, lib, pkgs, ... }: {
         imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
-      };
+        nixpkgs.overlays = lib.mkAfter [
+          (let
+            p = (nixpkgs.legacyPackages.x86_64-linux.pkgsCross.aarch64-multiplatform.appendOverlays [ (import "${pinebook-pro}/overlay.nix") ]);
+          in (self: super: {
+            inherit (p)
+              linuxPackages_pinebookpro_latest
+              linuxPackages_pinebookpro_lts;
+          }))
+        ];
+      });
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3

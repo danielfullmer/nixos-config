@@ -7,9 +7,10 @@ with lib;
 {
   nixpkgs.localSystem = { system = "aarch64-linux"; config = "aarch64-unknown-linux-gnu"; };
 
+  #boot.kernelParams = [ "cma=32M" ];
   boot.initrd.availableKernelModules = [ "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  #boot.kernelPackages = pkgs.linuxPackages_pinebookpro_lts;
+  boot.kernelPackages = pkgs.linuxPackages_pinebookpro_lts;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 
