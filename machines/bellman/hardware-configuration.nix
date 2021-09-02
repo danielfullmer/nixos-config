@@ -79,6 +79,7 @@ with lib;
     datasets."pool/home" = common;
     datasets."pool/root" = common;
     datasets."pool/win10" = common;
+    datasets."pool/win10-vr" = common;
     datasets."tank/backup" = common;
   };
 
@@ -94,6 +95,7 @@ with lib;
       "pool/home" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/home"; } // common;
       "pool/root" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/root"; } // common;
       "pool/win10" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10"; } // common;
+      "pool/win10-vr" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10-vr"; } // common;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
   };
