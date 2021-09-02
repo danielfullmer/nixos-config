@@ -106,8 +106,9 @@ with lib;
 
   swapDevices = [ ];
 
-  nix.maxJobs = 4;
+  nix.maxJobs = 16;
   nix.buildCores = 64;
+  #nix.systemFeatures = [ "x86_64-linux:kvm" "nixos-test" "benchmark" "big-parallel" ];
 
   # Currently have 96GB of RAM.
   zramSwap.enable = true;
