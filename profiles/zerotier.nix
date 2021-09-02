@@ -45,13 +45,13 @@ in
 {
   services.zerotierone.enable = true;
   services.zerotierone.joinNetworks = [ "8056c2e21c36f91e" ];
+  networking.firewall.trustedInterfaces = [ (ifrname "8056c2e21c36f91e") ];
 
   networking.dhcpcd.denyInterfaces = map (s: ifrname s) config.services.zerotierone.joinNetworks;
-  networking.firewall.trustedInterfaces = map (s: ifrname s) config.services.zerotierone.joinNetworks;
 
   systemd.services.zerotierone.serviceConfig.TimeoutSec = 10; # Zerotier sometimes decides not to shutdown quickly
 
-  # If we have incoming traffic to our ZT address from an internet address--this traffic has been forwareded from our external machine.
+  # If we have incoming traffic to our ZT address from an internet address--this traffic has been forwarded from our external machine.
   # Ensure any traffic responding to this goes out on the right interface.
   networking.iproute2 = {
     enable = true;
