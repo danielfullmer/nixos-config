@@ -16,8 +16,7 @@ with lib;
   boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_5_10;
-  boot.kernelPackages = pkgs.linuxPackages_5_4;
+  #boot.kernelPackages = pkgs.linuxPackages_5_4;
   #boot.kernelPatches = [ { name = "OpenRGB"; patch = "${pkgs.openrgb.src}/OpenRGB.patch"; } ];
   boot.kernelModules = [
     "kvm-amd"
