@@ -92,8 +92,8 @@ in
 #    bindsym $mod+shift+p exec ${pkgs.polkit}/bin/pkexec virsh start win10
 #  '';
 
-  hardware.nvidia.vgpu.enable = true;
-  hardware.nvidia.vgpu.unlock.enable = true;
+#  hardware.nvidia.vgpu.enable = true;
+#  hardware.nvidia.vgpu.unlock.enable = true;
 
   # Scream audio
   systemd.tmpfiles.rules = [
