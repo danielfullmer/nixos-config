@@ -124,4 +124,95 @@ in
     allowedTCPPorts = [ 139 445 ];
   };
 
+  # Inspired by snippets from cole-h/nixos-config
+  systemd.services.libvirtd = {
+    path = with pkgs; [ libvirt kmod psmisc systemd ];
+    preStart = let
+      # https://github.com/PassthroughPOST/VFIO-Tools/blob/0bdc0aa462c0acd8db344c44e8692ad3a281449a/libvirt_hooks/qemu
+      qemuHook = pkgs.writeShellScript "qemu" ''
+        #
+        # Author: Sebastiaan Meijer (sebastiaan@passthroughpo.st)
+        #
+        # Copy this file to /etc/libvirt/hooks, make sure it's called "qemu".
+        # After this file is installed, restart libvirt.
+        # From now on, you can easily add per-guest qemu hooks.
+        # Add your hooks in /etc/libvirt/hooks/qemu.d/vm_name/hook_name/state_name.
+        # For a list of available hooks, please refer to https://www.libvirt.org/hooks.html
+        #
+        GUEST_NAME="$1"
+        HOOK_NAME="$2"
+        STATE_NAME="$3"
+        MISC="''${@:4}"
+        BASEDIR="$(dirname $0)"
+        HOOKPATH="$BASEDIR/qemu.d/$GUEST_NAME/$HOOK_NAME/$STATE_NAME"
+        set -e # If a script exits with an error, we should as well.
+        # check if it's a non-empty executable file
+        if [ -f "$HOOKPATH" ] && [ -s "$HOOKPATH"] && [ -x "$HOOKPATH" ]; then
+            eval \"$HOOKPATH\" "$@"
+        elif [ -d "$HOOKPATH" ]; then
+            while read file; do
+                # check for null string
+                if [ ! -z "$file" ]; then
+                  eval \"$file\" "$@"
+                fi
+            done <<< "$(find -L "$HOOKPATH" -maxdepth 1 -type f -executable -print;)"
+        fi
+      '';
+      start = pkgs.writeShellScript "start.sh" ''
+        systemctl stop display-manager.service
+
+        /run/current-system/sw/bin/mdevctl stop -u 2d3a3f00-633f-48d3-96f0-17466845e672
+
+        # Unbind VTconsoles
+        echo 0 > /sys/class/vtconsole/vtcon0/bind
+        echo 0 > /sys/class/vtconsole/vtcon1/bind
+
+        # Unbind EFI-Framebuffer
+        echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
+
+        systemctl stop nvidia-vgpu-mgr
+
+        fuser -k /dev/dri/card0 /dev/nvidia*
+
+        rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia_vgpu_vfio nvidia
+
+        sleep 3
+
+        modprobe vfio_pci
+        virsh nodedev-detach pci_0000_03_00_0
+        virsh nodedev-detach pci_0000_03_00_1
+        virsh nodedev-detach pci_0000_22_00_3
+      '';
+      stop = pkgs.writeShellScript "stop.sh" ''
+        virsh nodedev-reattach pci_0000_03_00_0
+        virsh nodedev-reattach pci_0000_03_00_1
+        virsh nodedev-reattach pci_0000_22_00_3
+
+        modprobe nvidia
+        modprobe nvidia_modeset
+        modprobe nvidia_uvm
+        modprobe nvidia_drm
+        modprobe nvidia_vgpu_vfio
+
+        # Bind VTconsoles
+        echo 1 > /sys/class/vtconsole/vtcon0/bind
+        echo 1 > /sys/class/vtconsole/vtcon1/bind
+
+        # Bind EFI-Framebuffer
+        echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/bind
+
+        systemctl start nvidia-vgpud.service
+        systemctl start nvidia-vgpu-mgr.service
+        systemctl start display-manager.service
+      '';
+    in ''
+      mkdir -p /var/lib/libvirt/hooks
+      mkdir -p /var/lib/libvirt/hooks/qemu.d/win10-vr/prepare/begin
+      mkdir -p /var/lib/libvirt/hooks/qemu.d/win10-vr/release/end
+
+      ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
+      ln -sf ${start} /var/lib/libvirt/hooks/qemu.d/win10-vr/prepare/begin/start.sh
+      ln -sf ${stop}  /var/lib/libvirt/hooks/qemu.d/win10-vr/release/end/stop.sh
+    '';
+  };
 }
