@@ -19,6 +19,7 @@ in
         euler-win = "30.0.0.205";
         gauss = "30.0.0.84";
         spaceheater = "30.0.0.40";
+        laplace = "30.0.0.23";
 
         banach = "30.0.0.156";
         tarski = "30.0.0.32";
