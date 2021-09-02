@@ -130,13 +130,11 @@
 
   environment.systemPackages = with pkgs; [
     #bcachefs-tools
-    keyboard-firmware
+    #keyboard-firmware
     signal-desktop
   ];
 
   #system.autoUpgrade.enable = true;
-
-  #nix.package = import /home/danielrf/NixDroid/misc/nix.nix { inherit pkgs; };
 
   #virtualisation.anbox.enable = true;
 
