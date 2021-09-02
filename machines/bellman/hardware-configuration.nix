@@ -137,8 +137,7 @@ with lib;
   powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
 
   # For Seiki 4K monitor
-  fonts.fontconfig.dpi = 115;
-  fonts.fontconfig.subpixel.rgba = "bgr";
+  #services.xserver.dpi = 115;
   theme.fontSize = 12;
 #  services.xserver.monitorSection = ''
 #    DisplaySize 698 393
@@ -152,7 +151,7 @@ with lib;
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
     Option         "nvidiaXineramaInfoOrder" "DFP-1"
-    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+840, DP-0: nvidia-auto-select +6400+0 {rotation=right}, DVI-D-0: nvidia-auto-select +0+1200"
+    Option         "metamodes" "DVI-D-0: nvidia-auto-select +0+840, HDMI-0: nvidia-auto-select +2560+840, DP-0: nvidia-auto-select +6400+0 {rotation=right}"
     Option         "SLI" "Off"
     Option         "MultiGPU" "Off"
     Option         "BaseMosaic" "off"
