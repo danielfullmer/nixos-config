@@ -98,11 +98,11 @@ with lib;
       "pool/win10-vr" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10-vr"; } // common;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
+    service.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
   };
   sops.secrets.wrench-zfs-syncoid-ssh = {
     owner = config.services.syncoid.user;
   };
-  systemd.services.syncoid.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 
   swapDevices = [ ];
 
