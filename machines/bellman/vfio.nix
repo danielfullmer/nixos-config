@@ -160,6 +160,7 @@ in
       '';
       start = pkgs.writeShellScript "start.sh" ''
         systemctl stop display-manager.service
+        systemctl stop redshift.service
 
         /run/current-system/sw/bin/mdevctl stop -u 2d3a3f00-633f-48d3-96f0-17466845e672
 
@@ -204,6 +205,7 @@ in
         systemctl start nvidia-vgpud.service
         systemctl start nvidia-vgpu-mgr.service
         systemctl start display-manager.service
+        systemctl start redshift.service
       '';
     in ''
       mkdir -p /var/lib/libvirt/hooks
