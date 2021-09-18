@@ -117,7 +117,7 @@ with lib;
   services.redshift = {
     executable = "/bin/redshift-gtk";
     temperature = {
-      day = 25000;
+      day = 6500;
       night = 3700;
     };
   };
