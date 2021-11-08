@@ -18,6 +18,7 @@ with lib;
       gauss = "10.200.0.1/24";
       bellman = "10.200.0.2/24";
       pixel3 = "10.200.0.3/24";
+      pixel6 = "10.200.0.4/24";
     }.${config.networking.hostName}];
     peers = [
       { # bellman
@@ -27,6 +28,10 @@ with lib;
       { # pixel3
         publicKey = "U/Qt+Qa/vy+Clw5Aeq2xo9BbZdL2IBttSG2vpafUkQQ=";
         allowedIPs = [ "10.200.0.3/32" ];
+      }
+      { # pixel6pro
+        publicKey = "leJuu5MF7Rp4TL3ZvCC8G//YQYOVgk9fLC+8E7OMDxA=";
+        allowedIPs = [ "10.200.0.4/32" ];
       }
       { # gauss
         publicKey = "EaKu1LrJO5PBwrXk5u34fwMa7uzx1J4UF9WTAZA3mWQ=";
