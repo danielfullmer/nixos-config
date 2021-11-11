@@ -30,7 +30,7 @@ with lib;
         allowedIPs = [ "10.200.0.3/32" ];
       }
       { # pixel6pro
-        publicKey = "leJuu5MF7Rp4TL3ZvCC8G//YQYOVgk9fLC+8E7OMDxA=";
+        publicKey = "HhB9PE3ApfULJaBkhyHZvE8iEO9O9MX/4Xkb+leTsVQ=";
         allowedIPs = [ "10.200.0.4/32" ];
       }
       { # gauss
