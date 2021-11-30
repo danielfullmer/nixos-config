@@ -72,9 +72,7 @@ in
     ];
 
     daemonIONiceLevel = 5; # Range: 0-7
-  };
-  systemd.services.nix-daemon.serviceConfig = {
-    CPUSchedulingPolicy = "batch";
+    daemonCPUSchedPolicy = "batch";
   };
 
   users = {
