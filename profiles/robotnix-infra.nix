@@ -8,9 +8,7 @@ let
   };
 in
 {
-  systemd.services.nix-daemon.serviceConfig.Environment = [
-    ("ROBOTNIX_GIT_MIRRORS=" + lib.concatStringsSep "|" (lib.mapAttrsToList (local: remote: "${local}=${remote}") mirrors))
-  ];
+  nix.envVars.ROBOTNIX_GIT_MIRRORS = lib.concatStringsSep "|" (lib.mapAttrsToList (local: remote: "${local}=${remote}") mirrors);
 
   nix.sandboxPaths = lib.attrValues mirrors;
 }

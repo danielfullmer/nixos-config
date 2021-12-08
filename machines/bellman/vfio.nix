@@ -73,7 +73,7 @@ in
 #  '';
 
   # Add permission to evdev devices
-  virtualisation.libvirtd.qemuVerbatimConfig = ''
+  virtualisation.libvirtd.qemu.verbatimConfig = ''
     cgroup_device_acl = [
        "/dev/null", "/dev/full", "/dev/zero",
        "/dev/random", "/dev/urandom",

@@ -71,7 +71,7 @@ in
       #"daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
     ];
 
-    daemonIONiceLevel = 5; # Range: 0-7
+    daemonIOSchedPriority = 5; # Range: 0-7
     daemonCPUSchedPolicy = "batch";
   };
 
