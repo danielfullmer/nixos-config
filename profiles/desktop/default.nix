@@ -210,6 +210,7 @@ with lib;
       "ogfcmafjalglgifnmanfmnieipoejdcf" # uMatrix
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock for youtube
       "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml" # Bypass Paywalls: Fite me IRL Google.
+      "naepdomgkenhinolocfifgehidddafch" # Browserpass
     ];
   };
 
