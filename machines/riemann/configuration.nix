@@ -28,6 +28,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest; # For wifi support
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   services.fprintd.enable = true; # Fingerprint support
+  services.fwupd.enable = true; # Firmware updates
 
   services.xserver.libinput.enable = true;
 
