@@ -49,6 +49,8 @@
     in {
       # Main desktop
       bellman = mkSystem "bellman" "x86_64-linux" {};
+      # Laptop (Framework 2020)
+      riemann = mkSystem "riemann" "x86_64-linux" {};
       # Laptop (surface pro 4)
       #euler = mkSystem "euler" "x86_64-linux" {};
       # Laptop (pinebook pro)

@@ -5,6 +5,7 @@ keys:
   - &gauss 17577213896ED87177A71D00A4A02C44B781588E
   - &banach 50FA682AF4D40AC551963CA0971337F9A34AB5AB
   - &laplace ED8A6848AE92FD517EBF44673FED6D228CA9F576
+  - &riemann age13mfy89qgy00yq4pvm0grt3ncexh5sl0xwuu0hzjdjjw0wzjs244qtxwtsc
 creation_rules:
   - path_regex: machines/bellman/secrets/[^/]+$
     key_groups:
@@ -30,6 +31,13 @@ creation_rules:
       - *danielfullmer
       - *danielfullmer-offlinekey
       - *laplace
+  - path_regex: machines/riemann/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+    - age:
+      - *riemann
   - path_regex: secrets/[^/]+$
     key_groups:
     - pgp:
@@ -39,3 +47,4 @@ creation_rules:
       - *gauss
       - *banach
       - *laplace
+      - *riemann
