@@ -45,9 +45,14 @@
   #networking.networkmanager.enable = true;
   #networking.interfaces.enp68s0.useDHCP = true;
 
+  # 2.5/5Gbit (red) interface
+  networking.interfaces.enp69s0 = {
+    useDHCP = true;
+    macAddress = "b4:2e:99:a7:0b:e8";
+  };
+
   networking.useDHCP = false;
   networking.interfaces.enp68s0.ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
-  networking.defaultGateway = "192.168.1.1";
 
   networking.vlans.netboot = {
     id = 3;
