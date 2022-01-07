@@ -29,7 +29,7 @@ in
 
   security.acme = {
     acceptTerms = true;
-    email = "danielrf12@gmail.com";
+    defaults.email = "danielrf12@gmail.com";
   };
 
   environment.etc."wpa_supplicant.conf" = lib.mkIf (config.networking.wireless.enable || config.networking.networkmanager.enable) {
