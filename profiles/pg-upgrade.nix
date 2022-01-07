@@ -1,8 +1,10 @@
 { pkgs, config, lib, ... }:
+
+# Module from https://nixos.org/manual/nixos/stable/index.html#module-services-postgres-upgrading
 {
   containers.temp-pg.config.services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_12;
+    package = pkgs.postgresql_13;
     ## set a custom new dataDir
     # dataDir = "/some/data/dir";
   };
