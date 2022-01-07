@@ -32,11 +32,14 @@
     ./ap.nix
     ./vfio.nix
     ../../profiles/pxe-server.nix
-    ../../profiles/pg-upgrade.nix
+    #../../profiles/pg-upgrade.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
   networking.hostId = "f6bb12be";
+
+  system.stateVersion = "18.03";
+  services.postgresql.package = pkgs.postgresql_12; # Override outdated one from stateVersion
 
   #networking.wireless.enable = true;
   #networking.networkmanager.enable = true;
