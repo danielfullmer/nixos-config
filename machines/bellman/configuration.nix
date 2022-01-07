@@ -32,6 +32,7 @@
     ./ap.nix
     ./vfio.nix
     ../../profiles/pxe-server.nix
+    ../../profiles/pg-upgrade.nix
   ];
 
   networking.hostName = "bellman"; # Define your hostname.
