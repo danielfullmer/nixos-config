@@ -54,11 +54,29 @@
   networking.useDHCP = false;
   networking.interfaces.enp68s0.ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
 
-  networking.vlans.netboot = {
-    id = 3;
-    interface = "enp68s0";
+  networking.vlans = {
+    netboot = {
+      id = 3;
+      interface = "enp68s0";
+    };
+    iot = {
+      id = 4;
+      interface = "enp68s0";
+    };
   };
 
+  # IoT vlan
+  networking.interfaces.iot.ipv4.addresses = [ { address = "192.168.6.1"; prefixLength=24; } ];
+  networking.firewall.interfaces.iot.allowedUDPPorts = [ 53 67 ]; # DNS and DHCP
+  networking.nat.internalInterfaces = [ "iot" ];
+  # TODO: Firewall individual devices
+  services.dnsmasq = {
+    enable = true;
+    extraConfig = ''
+      interface=iot
+      dhcp-range=interface:iot,192.168.6.2,192.168.6.254
+    '';
+  };
 
   services.acpid.enable = true;
 
