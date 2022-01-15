@@ -134,9 +134,9 @@ with lib;
 
   powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
 
-  # For Seiki 4K monitor
-  #services.xserver.dpi = 115;
-  theme.fontSize = 12;
+  # For LG 55inch C1 OLED TV
+  services.xserver.dpi = 120; # Not accurate, but used to get good scaling at viewing distance. True value is more like 80 dpi
+  #theme.fontSize = 12;
 #  services.xserver.monitorSection = ''
 #    DisplaySize 698 393
 #  '';
