@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  networking.firewall.allowedTCPPorts = [ 1935 ];
   # Stuff for streaming cameras?
   # Currently unencrypted. Maybe fix in the future?
   # https://github.com/arut/nginx-rtmp-module/wiki/Directives#hls

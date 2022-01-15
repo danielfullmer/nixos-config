@@ -50,6 +50,7 @@
     useDHCP = true;
     macAddress = "b4:2e:99:a7:0b:e8";
   };
+  networking.firewall.interfaces.enp69s0.allowedUDPPorts = [ 68 ]; # DHCP Client
 
   networking.useDHCP = false;
   networking.interfaces.enp68s0.ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
@@ -78,6 +79,14 @@
     '';
   };
 
+  # Firewall
+  services.openssh.openFirewall = false;
+  # 1935 # RTMP
+  # 10000 # SRT
+  networking.firewall.interfaces.ztmjfpigyc.allowedTCPPorts = [ 22 80 443 1935 10000 ];
+  networking.firewall.interfaces.wlo2.allowedTCPPorts = [ 22 80 443 1935 10000 ];
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 22 80 443 1935 10000 ];
+
   services.acpid.enable = true;
 
   services.redshift.enable = true;
@@ -102,7 +111,6 @@
     public = true;
     root = "/data/webroot";
   };
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.hydra = {
     enable = true;
