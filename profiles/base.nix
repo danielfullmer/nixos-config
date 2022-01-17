@@ -73,6 +73,10 @@ in
 
     daemonIOSchedPriority = 5; # Range: 0-7
     daemonCPUSchedPolicy = "batch";
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   users = {

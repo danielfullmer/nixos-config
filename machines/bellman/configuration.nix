@@ -157,7 +157,6 @@
   nix.extraOptions = ''
     builders-use-substitutes = true
     secret-key-files = ${config.sops.secrets.nix-key.path}
-    experimental-features = nix-command flakes
   '';
   sops.secrets.nix-key = {};
 
