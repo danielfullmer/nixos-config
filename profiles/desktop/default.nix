@@ -202,7 +202,7 @@ with lib;
     enable = true;
     extensions = [
       "kcgpggonjhmeaejebeoeomdlohicfhce" # Cookie Remover
-      "ihlenndgcmojhcghmfjfneahoeklbjjh" # cVim
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
       "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
       "cimiefiiaegbelhefglklhhakcgmhkai" # Plasma integration
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
