@@ -21,27 +21,13 @@
   };
 
   outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, nvidia-vgpu, pinebook-pro }: let
-    controlnetModules = [
-      sops-nix.nixosModules.sops
-      robotnix.nixosModules.attestation-server
-      home-manager.nixosModules.home-manager
-      nvidia-vgpu.nixosModules.nvidia-vgpu
-      ({ config, lib, ... }: lib.mkIf (config.networking.hostName == "bellman") {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.danielrf = import ./home;
-      })
-      ({
-        nix.registry.nixpkgs.flake = nixpkgs;
-      })
-    ];
-
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
       inherit system;
       modules = [
         (./machines + "/${name}/configuration.nix")
         (./machines + "/${name}/hardware-configuration.nix")
-      ] ++ controlnetModules ++ [ extraConfig ];
+        self.nixosModules.base
+      ] ++ [ extraConfig ];
     } {});
   in {
 
@@ -72,6 +58,25 @@
       banach = mkSystem "banach" "aarch64-linux" {};
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
+
+    nixosModules = {
+      base = {
+        imports = [
+          sops-nix.nixosModules.sops
+          robotnix.nixosModules.attestation-server
+          home-manager.nixosModules.home-manager
+          nvidia-vgpu.nixosModules.nvidia-vgpu
+          ({ config, lib, ... }: lib.mkIf (config.networking.hostName == "bellman") {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.danielrf = import ./home;
+          })
+          ({
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+          (import ./profiles/base.nix)
+        ];
+      };
     };
 
     # Settings for deploy-rs
@@ -98,21 +103,21 @@
     #checks.x86_64-linux = {};
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-    hydraJobs = let
-      mkTest = system: path:
-        nixpkgs.lib.hydraJob
-          (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
-            (import path)
-            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; inherit controlnetModules; }
-          );
-    in {
-      desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
-      gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
-      #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
-      latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
-      #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
-      #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
-      #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
-    } // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
+    #hydraJobs = let
+    #  mkTest = system: path:
+    #    nixpkgs.lib.hydraJob
+    #      (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
+    #        (import path)
+    #        { inherit system; pkgs = nixpkgs.legacyPackages.${system}; inherit controlnetModules; }
+    #      );
+    #in {
+    #  desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
+    #  gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
+    #  #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
+    #  latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
+    #  #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
+    #  #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
+    #  #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
+    #} // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
   };
 }

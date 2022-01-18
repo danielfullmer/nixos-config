@@ -79,8 +79,6 @@ with lib;
     #(${pkgs.emacs}/bin/emacs --daemon && ${pkgs.emacs}/bin/emacsclient -c) &
 
     pasystray.serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
-
-    plex-mpv-shim.serviceConfig.ExecStart = "${pkgs.plex-mpv-shim}/bin/plex-mpv-shim";
   })
   (mkIf config.networking.networkmanager.enable {
     nm-applet = {
@@ -198,22 +196,6 @@ with lib;
     export GDK_PIXBUF_MODULE_FILE=$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)
   '';
 
-  programs.chromium = {
-    enable = true;
-    extensions = [
-      "kcgpggonjhmeaejebeoeomdlohicfhce" # Cookie Remover
-      "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
-      "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
-      "cimiefiiaegbelhefglklhhakcgmhkai" # Plasma integration
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-      "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock for youtube
-      "dcpihecpambacapedldabdbpakmachpb;https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/src/updates/updates.xml" # Bypass Paywalls: Fite me IRL Google.
-      "naepdomgkenhinolocfifgehidddafch" # Browserpass
-    ];
-  };
-
-  programs.browserpass.enable = true;
-
   environment.variables = {
     BROWSER = "chromium";
   };
@@ -226,20 +208,21 @@ with lib;
     profile=gpu-hq
   '';
 
+  # TODO
   # This is a user-specific hack since it is not trivial to replace the
   # internal Compose file under ${xlibs.libX11}/share/X11/locale/*/Compose
   # without rebuilding lots of stuff
-  system.activationScripts = {
-    xcompose = let
-      # See example at https://github.com/kragen/xcompose
-      XComposeFile = pkgs.writeTextFile {
-        name = "XCompose";
-        text = import ./XCompose.nix { inherit pkgs; };
-      };
-    in
-    lib.stringAfter [ "users" ]
-    ''
-      ln -fs ${XComposeFile} /home/danielrf/.XCompose
-    '';
-  };
+#  system.activationScripts = {
+#    xcompose = let
+#      # See example at https://github.com/kragen/xcompose
+#      XComposeFile = pkgs.writeTextFile {
+#        name = "XCompose";
+#        text = import ./XCompose.nix { inherit pkgs; };
+#      };
+#    in
+#    lib.stringAfter [ "users" ]
+#    ''
+#      ln -fs ${XComposeFile} /home/danielrf/.XCompose
+#    '';
+#  };
 }

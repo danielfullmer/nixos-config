@@ -9,8 +9,6 @@ in
     ./keyboard.nix
   ];
 
-  users.users.danielrf.shell = "/run/current-system/sw/bin/zsh";
-
   environment.systemPackages = (with pkgs; [
     binutils
     pciutils

@@ -13,7 +13,7 @@
     w3m
 
     glances
-    bandwhich
+    #bandwhich
     iotop
 
     youtube-dl

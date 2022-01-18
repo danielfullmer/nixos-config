@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../profiles/base.nix
+    ../../profiles/personal.nix
     ../../profiles/dns.nix
     ../../profiles/zerotier.nix
   ];

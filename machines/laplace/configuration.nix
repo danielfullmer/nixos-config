@@ -3,7 +3,7 @@
 with lib;
 {
   imports = [
-    ../../profiles/base.nix
+    ../../profiles/personal.nix
     ../../profiles/dns.nix
     ../../profiles/interactive.nix
     ../../profiles/extended.nix

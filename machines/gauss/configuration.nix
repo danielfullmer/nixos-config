@@ -6,7 +6,7 @@
 with lib;
 {
   imports = [
-    ../../profiles/base.nix
+    ../../profiles/personal.nix
     ../../profiles/dns.nix
     ../../profiles/wireguard.nix
     ../../profiles/zerotier.nix
