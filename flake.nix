@@ -77,6 +77,8 @@
           (import ./profiles/base.nix)
         ];
       };
+      interactive = import ./profiles/interactive.nix;
+      desktop = import ./profiles/desktop;
     };
 
     # Settings for deploy-rs
