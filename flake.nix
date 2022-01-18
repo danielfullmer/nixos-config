@@ -59,6 +59,8 @@
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
 
+    };
+
     nixosModules = {
       base = {
         imports = [
