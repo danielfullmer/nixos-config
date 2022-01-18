@@ -51,6 +51,8 @@ in
 
   systemd.services.zerotierone.serviceConfig.TimeoutSec = 10; # Zerotier sometimes decides not to shutdown quickly
 
+  environment.systemPackages = [ pkgs.zerotierone ];
+
   # If we have incoming traffic to our ZT address from an internet address--this traffic has been forwarded from our external machine.
   # Ensure any traffic responding to this goes out on the right interface.
   networking.iproute2 = {

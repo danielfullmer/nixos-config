@@ -22,8 +22,6 @@ in
 
     libarchive # Provides bsdtar, for unzipping stuff
 
-    zerotierone
-
     tmux
     silver-searcher
     ripgrep
