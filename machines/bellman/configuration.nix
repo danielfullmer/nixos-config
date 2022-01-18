@@ -10,7 +10,7 @@
     ../../profiles/zerotier.nix
     ../../profiles/kdeconnect.nix
     ../../profiles/yubikey.nix
-    ../../profiles/syncthing.nix
+    #../../profiles/syncthing.nix
     ../../profiles/desktop/default.nix
     ../../profiles/monitors-calibrate.nix
     ../../profiles/gaming.nix

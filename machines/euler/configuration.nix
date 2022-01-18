@@ -8,10 +8,10 @@
     ../../profiles/extended.nix
     ../../profiles/zerotier.nix
     ../../profiles/yubikey.nix
-    ../../profiles/syncthing.nix
+    #../../profiles/syncthing.nix
     ../../profiles/desktop/default.nix
     ../../profiles/academic.nix
-    ../../profiles/gdrive.nix
+    #../../profiles/gdrive.nix
   ];
 
   networking.hostName = "euler";
