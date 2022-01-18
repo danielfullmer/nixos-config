@@ -30,7 +30,7 @@
   #'';
 
   nix = {
-    package = pkgs.nixFlake;
+    package = pkgs.nixFlakes;
 
     autoOptimiseStore = true;
     useSandbox = true;
