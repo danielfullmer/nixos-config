@@ -160,8 +160,6 @@
   '';
   sops.secrets.nix-key = {};
 
-  nix.package = pkgs.nixFlakes;
-
   environment.systemPackages = with pkgs; [
     #bcachefs-tools
     #keyboard-firmware

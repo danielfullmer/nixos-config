@@ -30,6 +30,8 @@
   #'';
 
   nix = {
+    package = pkgs.nixFlake;
+
     autoOptimiseStore = true;
     useSandbox = true;
     trustedUsers = [ "root" ];
