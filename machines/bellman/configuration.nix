@@ -364,4 +364,29 @@
   #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
   systemd.enableCgroupAccounting = true;
 
+  # Switch LG TV based on if CM storm keyboard is added/removed
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2516", ATTRS{idProduct}=="0017", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/cmstorm"
+    ACTION=="remove", SUBSYSTEM=="usb", ATTRS{idVendor}=="2516", ATTRS{idProduct}=="0017", TAG+="systemd"
+  '';
+  sops.secrets.lgtv = {
+    format = "binary";
+    sopsFile = ../../secrets/lgtv_config;
+  };
+
+  systemd.services.cm-keyboard-attached = let
+    lgtv = pkgs.runCommand "lgtv" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+      install -Dm755 ${./lgtv} $out/bin/lgtv
+      wrapProgram $out/bin/lgtv --prefix PATH : ${lib.makeBinPath [ pkgs.websocat ]}
+    '';
+  in {
+    wantedBy = [ "sys-devices-cmstorm.device" ];
+    bindsTo = [ "sys-devices-cmstorm.device" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${lgtv}/bin/lgtv -c ${config.sops.secrets.lgtv.path} tv switchInput HDMI_1";
+      ExecStop = "${lgtv}/bin/lgtv -c ${config.sops.secrets.lgtv.path} tv switchInput HDMI_2";
+    };
+  };
 }
