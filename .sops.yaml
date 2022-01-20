@@ -47,4 +47,5 @@ creation_rules:
       - *gauss
       - *banach
       - *laplace
+    - age:
       - *riemann
