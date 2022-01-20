@@ -15,11 +15,12 @@
     delta.enable = true;
 
     extraConfig = {
+      init.defaultBranch = "master";
       color.ui = "auto";
       push.default = "simple";
 
       merge.tool = "fugitive";
-      "mergetool \"fugitive\"".cmd = "vim -f -c \"Gdiff\" \"$MERGED\"";
+      "mergetool \"fugitive\"".cmd = "vim -f -c \"Gdiffsplit!\" \"$MERGED\"";
 
       github.user = "danielfullmer";
     };
