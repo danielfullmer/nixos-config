@@ -36,7 +36,7 @@ creation_rules:
     - pgp:
       - *danielfullmer
       - *danielfullmer-offlinekey
-    - age:
+      age:
       - *riemann
   - path_regex: secrets/[^/]+$
     key_groups:
@@ -47,5 +47,5 @@ creation_rules:
       - *gauss
       - *banach
       - *laplace
-    - age:
+      age:
       - *riemann

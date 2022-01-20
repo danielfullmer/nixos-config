@@ -1,0 +1,392 @@
+#!/bin/sh
+
+# lgtv - command line webOS remote for LGTVs
+# Copyright (C) 2018 Sascha Wessel
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+SIGNATURE="\
+eyJhbGdvcml0aG0iOiJSU0EtU0hBMjU2Iiwia2V5SWQiOiJ0ZXN0LXNpZ25pbmctY2VydCIsInNpZ25\
+hdHVyZVZlcnNpb24iOjF9.hrVRgjCwXVvE2OOSpDZ58hR+59aFNwYDyjQgKk3auukd7pcegmE2CzPCa\
+0bJ0ZsRAcKkCTJrWo5iDzNhMBWRyaMOv5zWSrthlf7G128qvIlpMT0YNY+n/FaOHE73uLrS/g7swl3/\
+qH/BGFG2Hu4RlL48eb3lLKqTt2xKHdCs6Cd4RMfJPYnzgvI4BNrFUKsjkcu+WD4OO2A27Pq1n50cMch\
+mcaXadJhGrOqH5YmHdOCj5NSHzJYrsW0HPlpuAx/ECMeIZYDh6RMqaFM2DXzdKX9NmmyqzJ3o/0lkk/\
+N97gfVRLW5hA29yeAwaCViZNCP8iC9aO0q9fQojoa7NQnAtw=="
+
+MANIFEST="\
+{\
+\"appVersion\":\"1.1\",\
+\"manifestVersion\":1,\
+\"permissions\":[\
+\"LAUNCH\",\
+\"LAUNCH_WEBAPP\",\
+\"APP_TO_APP\",\
+\"CLOSE\",\
+\"TEST_OPEN\",\
+\"TEST_PROTECTED\",\
+\"CONTROL_AUDIO\",\
+\"CONTROL_DISPLAY\",\
+\"CONTROL_INPUT_JOYSTICK\",\
+\"CONTROL_INPUT_MEDIA_RECORDING\",\
+\"CONTROL_INPUT_MEDIA_PLAYBACK\",\
+\"CONTROL_INPUT_TV\",\
+\"CONTROL_POWER\",\
+\"READ_APP_STATUS\",\
+\"READ_CURRENT_CHANNEL\",\
+\"READ_INPUT_DEVICE_LIST\",\
+\"READ_NETWORK_STATE\",\
+\"READ_RUNNING_APPS\",\
+\"READ_TV_CHANNEL_LIST\",\
+\"WRITE_NOTIFICATION_TOAST\",\
+\"READ_POWER_STATE\",\
+\"READ_COUNTRY_INFO\"\
+],\
+\"signatures\":[\
+{\
+\"signature\":\"$SIGNATURE\",\
+\"signatureVersion\":1\
+}\
+],\
+\"signed\":{\
+\"appId\":\"com.lge.test\",\
+\"created\":\"20140509\",\
+\"localizedAppNames\":{\
+\"\":\"LG Remote App\",\
+\"ko-KR\":\"\ub9ac\ubaa8\ucee8 \uc571\",\
+\"zxx-XX\":\"\u041b\u0413 R\u044d\u043cot\u044d A\u041f\u041f\"\
+},\
+\"localizedVendorNames\":{\
+\"\":\"LG Electronics\"\
+},\
+\"permissions\":[\
+\"TEST_SECURE\",\
+\"CONTROL_INPUT_TEXT\",\
+\"CONTROL_MOUSE_AND_KEYBOARD\",\
+\"READ_INSTALLED_APPS\",\
+\"READ_LGE_SDX\",\
+\"READ_NOTIFICATIONS\",\
+\"SEARCH\",\
+\"WRITE_SETTINGS\",\
+\"WRITE_NOTIFICATION_ALERT\",\
+\"CONTROL_POWER\",\
+\"READ_CURRENT_CHANNEL\",\
+\"READ_RUNNING_APPS\",\
+\"READ_UPDATE_INFO\",\
+\"UPDATE_FROM_REMOTE_APP\",\
+\"READ_LGE_TV_INPUT_EVENTS\",\
+\"READ_TV_CURRENT_TIME\"\
+],\
+\"serial\":\"2f930e2d2cfe083771f68e4fe7bb07\",\
+\"vendorId\":\"com.lge\"\
+}\
+}"
+
+# helper scripts for websocat's sh-c
+#   $LGTV_REG and $LGTV_REQ passed via env vars
+#   stdin: read from the websocket connected to the tv
+#   stdout: write to the websocket connected to the tv
+#   fd 8: write to this script's stdout
+#   fd 9: write to stdout of a subshell to assign output to a var
+exec 8>&1
+CMD='\
+printf "%s\n" "$LGTV_REG" >&8
+printf "%s\n" "$LGTV_REG"
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$LGTV_REQ" >&8
+printf "%s\n" "$LGTV_REQ"
+read R
+printf "%s\n" "$R" >&8'
+CMDI='\
+printf "%s\n" "$LGTV_REG" >&8
+printf "%s\n" "$LGTV_REG"
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$R" >&9
+printf "%s\n" "$LGTV_REQ" >&8
+printf "%s\n" "$LGTV_REQ"
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$R" >&9'
+CMDR='\
+printf "%s\n" "$LGTV_REG" >&8
+printf "%s\n" "$LGTV_REG"
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$R" >&9
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$R" >&9
+printf "%s\n" "$LGTV_REQ" >&8
+printf "%s\n" "$LGTV_REQ"
+read R
+printf "%s\n" "$R" >&8
+printf "%s\n" "$R" >&9'
+
+IP=""
+MAC=""
+KEY=""
+
+CFG="$HOME/.config/lgtv/config"
+if [ "$1" = "-c" ]; then
+  CFG="$2"
+  shift
+  shift
+fi
+
+################################################################################
+
+# send a request without payload
+lgtv0() {
+  URI="$1"
+  REG="{\"manifest\":$MANIFEST,\"client-key\":\"$KEY\"}"
+  export LGTV_REG="{\"type\":\"register\",\"id\":\"1\",\"payload\":$REG}"
+  export LGTV_REQ="{\"type\":\"request\",\"id\":\"2\",\"uri\":\"$URI\"}"
+  exec timeout 2 websocat -B 1048576 -t "ws://$IP:3000/" sh-c:"$CMD"
+}
+
+# send a request with payload
+lgtvP() {
+  URI="$1"
+  REQ="$2"
+  REG="{\"manifest\":$MANIFEST,\"client-key\":\"$KEY\"}"
+  export LGTV_REG="{\"type\":\"register\",\"id\":\"1\",\"payload\":$REG}"
+  export LGTV_REQ="{\"type\":\"request\",\"id\":\"2\",\"uri\":\"$URI\",\"payload\":$REQ}"
+  exec timeout 2 websocat -B 1048576 -t "ws://$IP:3000/" sh-c:"$CMD"
+}
+
+# request an input socket and send an input event to this 2nd websocket
+lgtvI() {
+  MSG="$1"
+  URI="ssap://com.webos.service.networkinput/getPointerInputSocket"
+  REG="{\"manifest\":$MANIFEST,\"client-key\":\"$KEY\"}"
+  export LGTV_REG="{\"type\":\"register\",\"id\":\"1\",\"payload\":$REG}"
+  export LGTV_REQ="{\"type\":\"request\",\"id\":\"2\",\"uri\":\"$URI\"}"
+  OUT="$( (exec 9>&1; timeout 2 websocat -B 1048576 -t "ws://$IP:3000/" sh-c:"$CMDI") )"
+  WS="ws://$IP$(printf "%s\n" "$OUT" | grep -Po ':3000\/[a-z0-9\/]*.pointer.sock')"
+  printf "PointerInputSocket: %s\n" "$WS"
+  printf "Message: %s\n" "$MSG"
+  # wait for 200 ms before closing the socket
+  (printf "%b\n" "$MSG"; sleep .2) | timeout 2 websocat --no-line "$WS"
+  exit
+}
+
+# register without "client-key" to get a new KEY and get the MAC from SWInformation
+lgtvR() {
+  URI="ssap://com.webos.service.update/getCurrentSWInformation"
+  REG="{\"manifest\":$MANIFEST,\"pairingType\":\"PROMPT\"}"
+  export LGTV_REG="{\"type\":\"register\",\"id\":\"1\",\"payload\":$REG}"
+  export LGTV_REQ="{\"type\":\"request\",\"id\":\"2\",\"uri\":\"$URI\"}"
+  printf "\nPlease accept the request on your TV\n\n"
+  OUT="$( (exec 9>&1; websocat -t "ws://$IP:3000/" sh-c:"$CMDR") )"
+  KEY="$(printf "%s\n" "$OUT" | grep -Po '[a-z0-9]{32}')"
+  MAC="$(printf "%s\n" "$OUT" | grep -Po '([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})')"
+  printf "\nPlease copy the following 3 lines to your config file: %s\n" "$CFG"
+  printf "IP=\"%s\"\nMAC=\"%s\"\nKEY=\"%s\"\n\n" "$IP" "$MAC" "$KEY"
+  exit
+}
+
+################################################################################
+
+command -v timeout >/dev/null 2>&1 || {
+  printf "Error: timeout required but not installed. Aborting.\n"
+  exit 1
+}
+
+command -v grep >/dev/null 2>&1 || {
+  printf "Error: grep required but not installed. Aborting.\n"
+  exit 1
+}
+
+command -v websocat >/dev/null 2>&1 || {
+  printf "Error: websocat required but not installed. Aborting.\n"
+  exit 1
+}
+
+if [ "$1" = "auth" ]; then
+  IP="$2"
+  lgtvR
+  exit
+fi
+
+if [ -e "$CFG" ]; then
+  . "$CFG"
+else
+  printf "Error: No config file found in %s. Aborting.\n" "$CFG"
+  printf "Generate one with: lgtv auth <ip>\n"
+  exit 1
+fi
+
+case "$1" in
+  wakeonlan)
+    command -v wakeonlan >/dev/null 2>&1 || {
+      printf "Error: wakeonlan required but not installed. Aborting.\n"
+      exit 1
+    }
+    exec wakeonlan "$MAC";;
+  ssap://*)
+    if [ "$2" = "" ]; then lgtv0 "$1"; else lgtvP "$1" "$2"; fi;;
+  input)
+    case "$2" in
+      type:*) lgtvI "$2";;
+      button)
+        case "$3" in
+          LEFT|RIGHT|DOWN|UP|HOME|BACK|ENTER|DASH|INFO|ASTERISK|\
+          EXIT|[0-9]|CC|MUTE|RED|GREEN|BLUE|VOLUMEUP|VOLUMEDOWN|\
+          CHANNELUP|CHANNELDOWN) lgtvI "type:$2\nname:$3\n";;
+        esac;;
+      click)  lgtvI "type:$2\n";;
+      move)   lgtvI "type:$2\ndx:$3\ndy:$4\ndown:$5\n";;
+      scroll) lgtvI "type:$2\ndx:$3\ndy:$4\n";;
+    esac;;
+  api)
+    case "$2" in
+      getServiceList) lgtv0 "ssap://$1/$2";;
+    esac;;
+  audio)
+    case "$2" in
+      volumeDown|volumeUp|getVolume|getStatus) lgtv0 "ssap://$1/$2";;
+      setMute)   lgtvP "ssap://$1/$2" "{\"mute\":$3}";;
+      setVolume) lgtvP "ssap://$1/$2" "{\"volume\":$3}";;
+    esac;;
+  com.webos.applicationManager)
+    case "$2" in
+      getForegroundAppInfo|listApps|listLaunchPoints) lgtv0 "ssap://$1/$2";;
+      launch) lgtvP "ssap://$1/$2" "{\"id\":\"$3\"}";;
+    esac;;
+  com.webos.service.ime)
+    case "$2" in
+      sendEnterKey)     lgtv0 "ssap://$1/$2";;
+      deleteCharacters) lgtvP "ssap://$1/$2" "{\"count\":$3}";;
+      insertText)       lgtvP "ssap://$1/$2" "{\"text\":\"$3\",\"replace\":$4}";;
+    esac;;
+  com.webos.service.update)
+    case "$2" in
+      getCurrentSWInformation) lgtv0 "ssap://$1/$2";;
+    esac;;
+  media.controls)
+    case "$2" in
+      play|pause|stop|rewind|fastForward) lgtv0 "ssap://$1/$2";;
+    esac;;
+  system)
+    case "$2" in
+      turnOff) lgtv0 "ssap://$1/$2";;
+    esac;;
+  system.launcher)
+    case "$2" in
+      launch|close) lgtvP "ssap://$1/$2" "{\"id\":\"$3\"}";;
+      open)         lgtvP "ssap://$1/$2" "{\"target\":\"$3\"}";;
+    esac;;
+  system.notifications)
+    case "$2" in
+      createToast) lgtvP "ssap://$1/$2" "{\"message\":\"$3\"}";;
+    esac;;
+  tv)
+    case "$2" in
+      channelDown|channelUp|getChannelList|getCurrentChannel|\
+      getExternalInputList|getChannelProgramInfo) lgtv0 "ssap://$1/$2";;
+      openChannel) lgtvP "ssap://$1/$2" "{\"channelNumber\":\"$3\"}";;
+      switchInput) lgtvP "ssap://$1/$2" "{\"inputId\":\"$3\"}";;
+    esac;;
+esac
+
+################################################################################
+
+printf 'lgtv - command line webOS remote for LGTVs
+
+Usage: lgtv [-c <config>] <cmd> [<args>]
+
+Get a client key:
+  lgtv auth <ip>
+
+Turn on TV:
+  lgtv wakeonlan
+
+Simple request:
+  lgtv ssap://com.webos.service.update/getCurrentSWInformation
+
+Request with payload:
+  lgtv ssap://tv/openChannel {\"channelNumber\":\"2\"}
+
+Request an input socket and send an input event:
+  lgtv input "type:button\\nname:INFO\\n"
+
+Pretty print JSON response:
+  lgtv audio getStatus | grep response | python -m json.tool
+
+Input examples:
+  lgtv input button LEFT
+  lgtv input button RIGHT
+  lgtv input button DOWN
+  lgtv input button UP
+  lgtv input button HOME
+  lgtv input button BACK
+  lgtv input button ENTER
+  lgtv input button DASH
+  lgtv input button INFO
+  lgtv input button 0
+  lgtv input button 9
+  lgtv input button ASTERISK
+  lgtv input button CC
+  lgtv input button EXIT
+  lgtv input button MUTE
+  lgtv input button RED
+  lgtv input button GREEN
+  lgtv input button BLUE
+  lgtv input button VOLUMEUP
+  lgtv input button VOLUMEDOWN
+  lgtv input button CHANNELUP
+  lgtv input button CHANNELDOWN
+  lgtv input click
+  lgtv input move 10 10 0
+  lgtv input scroll 1 1
+
+Request examples:
+  lgtv api getServiceList
+  lgtv audio volumeDown
+  lgtv audio volumeUp
+  lgtv audio getVolume
+  lgtv audio getStatus
+  lgtv audio setMute false
+  lgtv audio setVolume 100
+  lgtv com.webos.applicationManager getForegroundAppInfo
+  lgtv com.webos.applicationManager launch com.webos.app.livetv
+  lgtv com.webos.applicationManager listApps
+  lgtv com.webos.applicationManager listLaunchPoints
+  lgtv com.webos.service.ime deleteCharacters 5
+  lgtv com.webos.service.ime insertText abc 0
+  lgtv com.webos.service.ime sendEnterKey
+  lgtv com.webos.service.update getCurrentSWInformation
+  lgtv media.controls play
+  lgtv media.controls pause
+  lgtv media.controls stop
+  lgtv media.controls rewind
+  lgtv media.controls fastForward
+  lgtv system turnOff
+  lgtv system.launcher launch com.webos.app.livetv
+  lgtv system.launcher close com.webos.app.livetv
+  lgtv system.launcher open https://github.com
+  lgtv system.notifications createToast "Hello World"
+  lgtv tv channelDown
+  lgtv tv channelUp
+  lgtv tv getChannelList
+  lgtv tv getChannelProgramInfo
+  lgtv tv getCurrentChannel
+  lgtv tv getExternalInputList
+  lgtv tv openChannel 52
+  lgtv tv switchInput HDMI_2
+'
+
