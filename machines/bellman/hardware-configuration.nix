@@ -110,7 +110,7 @@ with lib;
 
   # Currently have 96GB of RAM.
   zramSwap.enable = true;
-  zramSwap.memoryPercent = 150;
+  zramSwap.memoryPercent = 200;
   #boot.tmpOnTmpfs = true;
   # Since tmpOnTmpfs defaults to only 50% memory usage:
   systemd.mounts = [
