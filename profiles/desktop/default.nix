@@ -196,6 +196,7 @@ with lib;
     export GDK_PIXBUF_MODULE_FILE=$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)
   '';
 
+  programs.chromium.enable = true;
   environment.variables = {
     BROWSER = "chromium";
   };
