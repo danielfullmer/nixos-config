@@ -51,6 +51,7 @@
     macAddress = "b4:2e:99:a7:0b:e8";
   };
   networking.firewall.interfaces.enp69s0.allowedUDPPorts = [ 68 ]; # DHCP Client
+  networking.nat.externalInterface = "enp69s0";
 
   networking.useDHCP = false;
   networking.interfaces.enp68s0.ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
