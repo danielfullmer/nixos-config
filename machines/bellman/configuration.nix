@@ -365,6 +365,14 @@
   #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
   systemd.enableCgroupAccounting = true;
 
+  # For printer
+  services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+
+  services.avahi.interfaces = [ "enp68s0" config.controlnet.ap.interface ];
+  services.avahi.openFirewall = false; # Port 5353
+
   # Switch LG TV based on if CM storm keyboard is added/removed
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2516", ATTRS{idProduct}=="0017", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/cmstorm"
