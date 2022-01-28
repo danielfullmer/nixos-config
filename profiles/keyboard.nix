@@ -219,6 +219,9 @@
     bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
     bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+    # Lock screen
+    bindsym $mod+Control+l exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled
+
     bindsym XF86MonBrightnessUp   exec light -A 10
     bindsym XF86MonBrightnessDown exec light -U 10
 
