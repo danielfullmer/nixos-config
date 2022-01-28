@@ -45,6 +45,10 @@ in
     sops
     direnv
 
+    gnupg
+    pass
+    #(pass.withExtensions (p: with p; [ pass-audit])) # 2020-06-18: broken in nixpkgs
+
     userBin
   ]);
 
@@ -115,4 +119,33 @@ in
 #      chown danielrf:danielrf .zshrc
 #    '';
 #  };
+
+  # Use gpg-agent instead of system-wide ssh-agent
+  programs.ssh.startAgent = false;
+  programs.ssh.askPassword = "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
+  programs.gnupg = {
+    agent.enable = true;
+    agent.enableSSHSupport = true;
+    agent.enableExtraSocket = true;
+    agent.enableBrowserSocket = true;
+    dirmngr.enable = true;
+  };
+
+  systemd.services.gpg-key-import = {
+    description = "Import gpg keys";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "danielrf";
+      Group = "danielrf";
+    };
+    script = ''
+      ${lib.getBin pkgs.gnupg}/bin/gpg --import ${../keys/users/danielfullmer-yubikey.asc} ${../keys/users/danielfullmer-offlinekey.asc}
+      ${lib.getBin pkgs.gnupg}/bin/gpg --import-ownertrust << EOF
+      FA0ED54AE0DBF4CDC4B4FEADD1481BC2EF6B0CB0:6:
+      7242A6FEF237A429E981576F6EDF0AEEA2D9FA5D:6:
+      EOF
+    '';
+    # TODO: Maybe create a udev rule to run "gpg --card-status" when yubikey plugged in first time
+  };
 }
