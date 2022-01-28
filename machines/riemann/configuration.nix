@@ -33,7 +33,7 @@
 
   services.xserver.libinput.enable = true;
 
-  theme.fontSize = 8;
+  theme.fontSize = 14;
 
   # HW Accelerated video decoding
   nixpkgs.config.packageOverrides = pkgs: {
