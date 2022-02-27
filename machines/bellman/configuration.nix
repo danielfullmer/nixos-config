@@ -398,4 +398,14 @@
       ExecStop = "${lgtv}/bin/lgtv -c ${config.sops.secrets.lgtv.path} tv switchInput HDMI_2";
     };
   };
+
+  boot.kernelPatches = [
+    {
+      name = "steamvr";
+      patch = (pkgs.fetchpatch {
+        url = "https://github.com/torvalds/linux/commit/8590222e4b021054a7167a4dd35b152a8ed7018e.patch";
+        sha256 = "11wjqxzmcmhb7fajjbjj3nw0d3q1fbbfhh8mxwq8hp378rqdl6jw";
+      });
+    }
+  ];
 }
