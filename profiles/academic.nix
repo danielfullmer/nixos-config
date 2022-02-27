@@ -10,7 +10,7 @@
     proselint
 
     zotero # mendeley alternative
-    papis # CLI mendeley alternative
+    #papis # CLI mendeley alternative
     rmapi # Remarkable API
   ]);
 
