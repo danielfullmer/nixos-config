@@ -25,10 +25,10 @@ with lib;
         # If only one window visible, hide borders
         hide_edge_borders smart
 
-        set $ws1 "1:gen"
-        set $ws2 "2:gen"
-        set $ws3 "3:robotnix"
-        set $ws4 "4:aht"
+        set $ws1 "1"
+        set $ws2 "2"
+        set $ws3 "3"
+        set $ws4 "4"
         set $ws5 "5"
         set $ws6 "6"
         set $ws7 "7"
