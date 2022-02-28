@@ -104,8 +104,8 @@ with lib;
 
   swapDevices = [ ];
 
-  nix.maxJobs = 16;
-  nix.buildCores = 64;
+  nix.settings.max-jobs = 16;
+  nix.settings.cores = 64;
   #nix.systemFeatures = [ "x86_64-linux:kvm" "nixos-test" "benchmark" "big-parallel" ];
 
   # Currently have 96GB of RAM.

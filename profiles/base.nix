@@ -32,16 +32,15 @@
   nix = {
     package = pkgs.nixFlakes;
 
-    autoOptimiseStore = true;
-    useSandbox = true;
-    trustedUsers = [ "root" ];
+    settings = {
+      auto-optimise-store = true;
+      trusted-users = [ "root" ];
+
+      experimental-features = [ "nix-command" "flakes" ];
+    };
 
     daemonIOSchedPriority = 5; # Range: 0-7
     daemonCPUSchedPolicy = "batch";
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
   };
 
   time.timeZone = "America/Los_Angeles";

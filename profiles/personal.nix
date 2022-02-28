@@ -25,14 +25,14 @@ in
     sopsFile = ../secrets/wpa_supplicant.conf;
   };
 
-  nix = {
-    trustedUsers = [ "danielrf" ];
+  nix.settings = {
+    trusted-users = [ "danielrf" ];
 
-    # binaryCaches = [ "https://daniel.cachix.org/" ];
+    # binary-caches = [ "https://daniel.cachix.org/" ];
 
-    # trustedBinaryCaches = lib.optional (config.networking.hostName != "bellman") "https://hydra.daniel.fullmer.me";
+    # trusted-binary-caches = lib.optional (config.networking.hostName != "bellman") "https://hydra.daniel.fullmer.me";
 
-    binaryCachePublicKeys = [
+    trusted-public-keys = [
       "bellman-1:zgaxZSNzvCMGY5sjjgsxEC2uKn3OTW9LWEN0uhjJoO4="
       #"daniel.cachix.org-1:0DFbZ4j3tqoJyqlV8TTd2Vz+CdqKwyuYPTaDPioz4vw="
     ];

@@ -10,5 +10,5 @@ in
 {
   nix.envVars.ROBOTNIX_GIT_MIRRORS = lib.concatStringsSep "|" (lib.mapAttrsToList (local: remote: "${local}=${remote}") mirrors);
 
-  nix.sandboxPaths = lib.attrValues mirrors;
+  nix.settings.extra-sandbox-paths = lib.attrValues mirrors;
 }
