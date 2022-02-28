@@ -10,7 +10,7 @@ with lib;
   #boot.kernelParams = [ "cma=32M" ];
   boot.initrd.availableKernelModules = [ "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_pinebookpro_lts;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 
