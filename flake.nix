@@ -18,9 +18,11 @@
 
     pinebook-pro.url = "github:samueldr/wip-pinebook-pro";
     pinebook-pro.flake = false;
+
+    colmena.url = "github:zhaofengli/colmena";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, nvidia-vgpu, pinebook-pro }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, colmena, nvidia-vgpu, pinebook-pro }: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
       inherit system;
       modules = [
@@ -74,16 +76,16 @@
       desktop = import ./profiles/desktop;
     };
 
-    # Settings for deploy-rs
-    deploy = {
-      sshUser = "root";
-      user = "root";
-
-      nodes = nixpkgs.lib.mapAttrs (hostname: system: {
-        inherit hostname;
-        profiles.system.path = deploy-rs.lib.${system.config.nixpkgs.localSystem.system}.activate.nixos system;
-      }) self.nixosConfigurations;
-    };
+#    # Settings for deploy-rs
+#    deploy = {
+#      sshUser = "root";
+#      user = "root";
+#
+#      nodes = nixpkgs.lib.mapAttrs (hostname: system: {
+#        inherit hostname;
+#        profiles.system.path = deploy-rs.lib.${system.config.nixpkgs.localSystem.system}.activate.nixos system;
+#      }) self.nixosConfigurations;
+#    };
 
     packages.x86_64-linux.tftpboot = import ./tftpboot.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -96,23 +98,23 @@
     };
 
     #checks.x86_64-linux = {};
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+    #checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-    #hydraJobs = let
-    #  mkTest = system: path:
-    #    nixpkgs.lib.hydraJob
-    #      (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
-    #        (import path)
-    #        { inherit system; pkgs = nixpkgs.legacyPackages.${system}; inherit controlnetModules; }
-    #      );
-    #in {
-    #  desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
-    #  gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
-    #  #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
-    #  latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
-    #  #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
-    #  #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
-    #  #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
-    #} // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
+    hydraJobs = let
+      mkTest = system: path:
+        nixpkgs.lib.hydraJob
+          (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
+            (import path)
+            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; }
+          );
+    in {
+      desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
+      gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
+      #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
+      latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
+      #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
+      #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
+      #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
+    } // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
   };
 }

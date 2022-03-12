@@ -208,7 +208,7 @@
 #  services.xserver.desktopManager.gnome3.enable = true;
 #  services.xserver.desktopManager.plasma5.enable = true;
 
-  programs.ccache.enable = true;
+  #programs.ccache.enable = true;
   programs.firejail.enable = true;
 
   virtualisation.libvirtd.enable = true;

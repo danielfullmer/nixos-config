@@ -211,7 +211,7 @@ with lib;
 
   # TODO
   # This is a user-specific hack since it is not trivial to replace the
-  # internal Compose file under ${xlibs.libX11}/share/X11/locale/*/Compose
+  # internal Compose file under ${xorg.libX11}/share/X11/locale/*/Compose
   # without rebuilding lots of stuff
 #  system.activationScripts = {
 #    xcompose = let
