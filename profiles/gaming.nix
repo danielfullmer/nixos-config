@@ -22,4 +22,10 @@
 #  }) ];
 #  nixpkgs.config.allowBroken = true;
 
+  # Valheim keybinds
+#  services.xserver.windowManager.i3.config = ''
+#    #bindsym --whole-window button8 exec ${pkgs.xdotool}/bin/xdotool search --name valheim key 2 3
+#    bindsym --whole-window button9 exec ${pkgs.xdotool}/bin/xdotool search --name valheim key 1
+#    bindsym --whole-window button8 exec ${pkgs.xdotool}/bin/xdotool key 1
+#  '';
 }

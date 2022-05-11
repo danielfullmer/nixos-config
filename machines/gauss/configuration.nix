@@ -113,4 +113,23 @@ with lib;
       }
     '';
   };
+
+  # TODO: Enable secure TLS version? Necessary?
+  # https://help.nextcloud.com/t/howto-setup-nextcloud-talk-with-turn-server/30794
+  # https://www.foxypossibilities.com/2018/05/19/setting-up-a-turn-sever-for-matrix-on-nixos/
+  #networking.firewall.allowedTCPPorts = [ 3478 3479 ];
+  #networking.firewall.allowedUDPPortRanges = [
+  #  { from=49152; to=49999; } # TURN relay
+  #];
+  # TODO: Need to verify that this can't be used to access internal zerotier network from outside
+  #services.coturn = {
+  #  enable = true;
+  #  realm = "turn.daniel.fullmer.me";
+  #  lt-cred-mech = true;
+  #  use-auth-secret = true;
+  #  static-auth-secret = "insecurepass"; # TODO: Put this in secrets before committing
+  #  no-tcp-relay = true;
+  #  min-port = 49152;
+  #  max-port = 49999;
+  #};
 }

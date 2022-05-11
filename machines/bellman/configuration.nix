@@ -21,10 +21,9 @@
     ../../profiles/tor.nix
     ../../profiles/cuttlefish.nix
     ../../profiles/nextcloud.nix
-    #../../profiles/backup.nix
     #../../xrdesktop-overlay
-    #../../profiles/cameras.nix
-    ../../profiles/fdm-printer.nix
+    ../../profiles/cameras.nix
+
     ../../profiles/rtlsdr.nix
 
     ../../profiles/robotnix-infra.nix
@@ -364,6 +363,35 @@
 
   #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
   systemd.enableCgroupAccounting = true;
+
+  # Listens for HTTPS on port 8443
+  services.unifi = {
+    enable = true;
+    openFirewall = false;
+  };
+  users.users.unifi.group = "unifi";
+  users.groups.unifi = {};
+  #systemd.services.unifi.enable = false;
+  networking.firewall.interfaces.enp68s0.allowedTCPPorts = [ 8080 8880 8843 6789 ];
+  networking.firewall.interfaces.enp68s0.allowedUDPPorts = [ 3478 10001 ];
+
+#  services.hledger-web = {
+#    enable = true;
+#    host = "127.0.0.1";
+#    port = 5150;
+#
+#    journalFiles = [ "all.journal" ];
+#  };
+
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+  boot.kernelModules = [ "v4l2loopback" "snd-aloop" ];
+
+  security.pam.loginLimits = [{
+    domain = "*";
+    type = "soft";
+    item = "nofile";
+    value = "4096";
+  }];
 
   # For printer
   services.printing.enable = true;

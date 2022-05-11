@@ -12,7 +12,7 @@ rec {
   bellman = nixos ./machines/bellman;
   #bellman-vfio = nixos ./machines/bellman-vfio;
   euler = nixos ./machines/euler;
-  #banach = (./machines/banach.nix;).system;
+  banach = nixos ./machines/banach;
   spaceheater = nixos ./machines/spaceheater;
   gauss = nixos ./machines/gauss;
 

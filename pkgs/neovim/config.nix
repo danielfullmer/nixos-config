@@ -12,6 +12,7 @@
       "Colour-Sampler-Pack"
       "vim-indent-guides"
       "vim-highlightedyank"
+      "which-key-nvim"
       #" Colorscheme
       # Plug 'edkolev/promptline.vim'
       # ":PromptlineSnapshot ~/.zshrc.prompt airline
@@ -197,6 +198,12 @@ let g:pandoc_syntax_dont_use_conceal_for_rules = ['atx', 'titleblock']
 let g:tex_conceal = "admgs"
 let g:tex_flavor = "latex"
 let g:vimtex_fold_enabled = 1
+
+lua << EOF
+require("which-key").setup {
+
+}
+EOF
 
 
 lua << EOF

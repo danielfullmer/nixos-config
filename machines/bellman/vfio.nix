@@ -61,6 +61,7 @@ in
 #  } ];
 
   virtualisation.libvirtd.enable = true;
+  #virtualisation.libvirtd.qemuPackage = true;
 
   environment.systemPackages = [ pkgs.virtmanager ];
 
@@ -73,15 +74,15 @@ in
 #  '';
 
   # Add permission to evdev devices
-  virtualisation.libvirtd.qemu.verbatimConfig = ''
-    cgroup_device_acl = [
-       "/dev/null", "/dev/full", "/dev/zero",
-       "/dev/random", "/dev/urandom",
-       "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
-       "/dev/rtc", "/dev/hpet", "/dev/net/tun",
-       "${kbd_path}", "${mouse_path}"
-    ]
-  '';
+#  virtualisation.libvirtd.qemu.verbatimConfig = ''
+#    cgroup_device_acl = [
+#       "/dev/null", "/dev/full", "/dev/zero",
+#       "/dev/random", "/dev/urandom",
+#       "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+#       "/dev/rtc", "/dev/hpet", "/dev/net/tun",
+#       "${kbd_path}", "${mouse_path}"
+#    ]
+#  '';
 
   virtualisation.libvirtd.onShutdown = "shutdown";
 
@@ -183,11 +184,17 @@ in
         virsh nodedev-detach pci_0000_03_00_0
         virsh nodedev-detach pci_0000_03_00_1
         virsh nodedev-detach pci_0000_22_00_3
+        virsh nodedev-detach pci_0000_05_00_3
+        virsh nodedev-detach pci_0000_47_00_1
+        virsh nodedev-detach pci_0000_47_00_3
       '';
       stop = pkgs.writeShellScript "stop.sh" ''
         virsh nodedev-reattach pci_0000_03_00_0
         virsh nodedev-reattach pci_0000_03_00_1
         virsh nodedev-reattach pci_0000_22_00_3
+        virsh nodedev-reattach pci_0000_05_00_3
+        virsh nodedev-reattach pci_0000_47_00_1
+        virsh nodedev-reattach pci_0000_47_00_3
 
         modprobe nvidia
         modprobe nvidia_modeset

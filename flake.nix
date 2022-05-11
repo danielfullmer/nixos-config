@@ -32,9 +32,7 @@
       ] ++ [ extraConfig ];
     } {});
   in {
-
-    nixosConfigurations = let
-    in {
+    nixosConfigurations = {
       # Main desktop
       bellman = mkSystem "bellman" "x86_64-linux" {};
       # Laptop (Framework 2020)
@@ -52,6 +50,16 @@
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
 
+#      example = nixpkgs.lib.nixosSystem { system="x86_64-linux"; modules = [ self.nixosModules.base {
+#        imports = [
+#          self.nixosModules.interactive
+#          self.nixosModules.desktop
+#        ];
+#        users.users.dfullmer = {
+#          isNormalUser = true;
+#          initialPassword = "changeme";
+#        };
+#      }]; };
     };
 
     nixosModules = {

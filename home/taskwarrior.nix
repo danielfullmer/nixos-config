@@ -18,6 +18,8 @@ in
     dataLocation = "/home/danielrf/task";
     config = {
       hooks.location = "${hooks}";
+      context.aht = "pro:aht or pro:ng911-simulator or pro:power";
+      context.robotnix = "pro:robotnix";
     };
     extraConfig = ''
       # Bugwarrior UDAs

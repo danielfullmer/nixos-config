@@ -1,4 +1,4 @@
-{ pkgs, controlnetModules, ...} : {
+{ pkgs, ...} : {
   name = "desktop";
 
   machine = { config, pkgs, ... }: {
@@ -7,7 +7,7 @@
       ../profiles/interactive.nix
       ../profiles/desktop/default.nix
       ../profiles/autologin.nix
-    ] ++ controlnetModules;
+    ];
     environment.systemPackages = with pkgs; [ awf termite ];
   };
 

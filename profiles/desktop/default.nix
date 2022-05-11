@@ -51,6 +51,13 @@ with lib;
     };
   };
 
+  services.picom = {
+    #enable = true;
+    fade = true;
+    fadeDelta = 5;
+    vSync = true;
+  };
+
   systemd.user.services = mkMerge [
     (mapAttrs (n: v: v // { wantedBy = [ "graphical-session.target" ]; partOf = [ "graphical-session.target" ]; }) {
     xrdb.serviceConfig.ExecStart = let

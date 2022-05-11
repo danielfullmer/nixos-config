@@ -5,22 +5,6 @@
   <uuid>2ca9b556-8a2a-48bb-ad29-890bca792cbb</uuid>
   <memory unit='KiB'>10240000</memory>
   <currentMemory unit='KiB'>10240000</currentMemory>
-  <vcpu placement='static'>6</vcpu>
-  <cputune>
-    <vcpupin vcpu='0' cpuset='1'/>
-    <vcpupin vcpu='1' cpuset='5'/>
-    <vcpupin vcpu='2' cpuset='2'/>
-    <vcpupin vcpu='3' cpuset='6'/>
-    <vcpupin vcpu='4' cpuset='3'/>
-    <vcpupin vcpu='5' cpuset='7'/>
-    <emulatorpin cpuset='0,4'/>
-    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='3' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='4' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='5' scheduler='fifo' priority='1'/>
-  </cputune>
   <resource>
     <partition>/machine</partition>
   </resource>
@@ -119,31 +103,6 @@
       <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </video>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
-      </source>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
-      <rom file='${./1080ti-evga-sc2-hybrid-gaming.rom}'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x01' slot='0x00' function='0x1'/>
-      </source>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x09' function='0x0'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
-      </source>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x0a' function='0x0'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x00' slot='0x14' function='0x0'/>
-      </source>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x0b' function='0x0'/>
-    </hostdev>
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='2'/>
     </redirdev>

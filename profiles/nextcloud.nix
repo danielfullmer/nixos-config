@@ -52,6 +52,13 @@ in {
         '';
       };
 
+#      systemd.services.local-dns-tunnel = {
+#        script = ''
+#          ${pkgs.socat}/bin/socat UDP4-LISTEN:53,reuseaddr,fork UDP4-CONNECT:10.100.0.1:53
+#        '';
+#        wantedBy = [ "multi-user.target" ];
+#      };
+
       # ensure that postgres is running *before* running the setup
       #systemd.services."nextcloud-setup" = {
       #  requires = ["postgresql.service"];
@@ -64,24 +71,24 @@ in {
     };
   };
 
-#  docker-containers.onlyoffice = {
+#  virtualisation.oci-containers.onlyoffice = {
 #    image = "onlyoffice/documentserver";
 #    ports = [ "9980:80" ];
 #    extraDockerOptions = [ "--add-host=office.daniel.fullmer.me:30.0.0.222" ];
 #  };
 
   # https://www.collaboraoffice.com/code/docker/ for instructions
-  docker-containers.code = {
-    image = "collabora/code";
-    ports = [ "9980:9980" ];
-    environment = {
-      domain = "nextcloud\\.fullmer\\.me";
-    };
-    extraDockerOptions = [
-      "--cap-add=MKNOD"
-      "--add-host=office.daniel.fullmer.me:30.0.0.222"
-    ];
-  };
+#  docker-containers.code = {
+#    image = "collabora/code";
+#    ports = [ "9980:9980" ];
+#    environment = {
+#      domain = "nextcloud\\.fullmer\\.me";
+#    };
+#    extraDockerOptions = [
+#      "--cap-add=MKNOD"
+#      "--add-host=office.daniel.fullmer.me:30.0.0.222"
+#    ];
+#  };
   services.nginx.virtualHosts."office.daniel.fullmer.me" = {
     locations."/" = {
       proxyPass = "https://[::1]:9980";

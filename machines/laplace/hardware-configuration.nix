@@ -12,7 +12,7 @@ with lib;
   boot.initrd.kernelModules = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
+  #boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";

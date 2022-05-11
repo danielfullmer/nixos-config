@@ -101,7 +101,7 @@ in
     ls = "ls --color";
     vi = "vim";
     nfo="iconv -f IBM775";
-    t = "task";
+    t = "task rc.context=$(cat $HOME/.task-context)";
     tw = "timew";
   };
 

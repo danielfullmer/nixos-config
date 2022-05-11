@@ -20,6 +20,8 @@
 
     jq
     tig
+
+    hledger
   ]);
 
   programs.fish = {

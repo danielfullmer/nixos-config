@@ -12,9 +12,11 @@ with lib;
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.memtest86.enable = true;
+  boot.loader.systemd-boot.consoleMode = "auto";
   boot.loader.efi.canTouchEfiVariables = true;
 
   #boot.kernelPackages = pkgs.linuxPackages_5_4;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   #boot.kernelPatches = [ { name = "OpenRGB"; patch = "${pkgs.openrgb.src}/OpenRGB.patch"; } ];
   boot.kernelModules = [
     "kvm-amd"
@@ -129,10 +131,13 @@ with lib;
     rivalcfg # For Steelseries Rival 3 mouse
   ];
 
-  #services.udev.packages = with pkgs; [ rivalcfg ]; # Current udev rules are too permissive
-
+  services.udev.packages = with pkgs; [
+    #openrgb
+    #rivalcfg # Current udev rules are too permissive
+  ];
 
   powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
+  powerManagement.powertop.enable = true;
 
   # For LG 55inch C1 OLED TV
   services.xserver.dpi = 120; # Not accurate, but used to get good scaling at viewing distance. True value is more like 80 dpi
@@ -155,6 +160,7 @@ with lib;
     Option         "BaseMosaic" "off"
     Option         "AllowIndirectGLXProtocol" "off"
     Option         "TripleBuffer" "on"
+    Option     "RegistryDwords"  "RMUseSwI2c=0x01; RMI2cSpeed=100"
   '';
 #  services.xserver.xrandrHeads = [
 #    { output = "DP-0"; primary = true; }
@@ -171,7 +177,9 @@ with lib;
   hardware.enableRedistributableFirmware = true;
   boot.extraModprobeConfig = ''
     options cfg80211 ieee80211_regdom="US"
+    options nvidia NVreg_RegistryDwords=RMUseSwI2c=0x01;RMI2cSpeed=100
   '';
+  # nvidia options are for DDC/CI support
 
   services.xserver.windowManager.i3.status = {
     config = ''
@@ -186,6 +194,9 @@ with lib;
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.pulseaudio.zeroconf.discovery.enable = true;
+  hardware.pulseaudio.daemon.config = {
+    default-sample-channels = 6; # 5.1 surround: https://help.ubuntu.com/community/SurroundSound
+  };
 
   services.apcupsd.enable = true;
 }
