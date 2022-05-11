@@ -63,11 +63,12 @@ in
 
   services.cron.mailto = "cgibreak@gmail.com";
 
-  services.ssmtp = lib.mkIf (config.networking.hostName != "bellman") {
-    enable = true;
-    hostName = "bellman";
-    root = "cgibreak@gmail.com";
-  };
+# TODO: ssmtp removed in nixpkgs
+#  services.ssmtp = lib.mkIf (config.networking.hostName != "bellman") {
+#    enable = true;
+#    hostName = "bellman";
+#    root = "cgibreak@gmail.com";
+#  };
 
   programs.chromium.extensions = [
     "kcgpggonjhmeaejebeoeomdlohicfhce" # Cookie Remover
