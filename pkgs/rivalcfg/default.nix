@@ -1,17 +1,17 @@
-{ buildPythonApplication, fetchFromGitHub, python, hidapi }:
+{ buildPythonApplication, fetchFromGitHub, python, setuptools, hidapi }:
 
 buildPythonApplication rec {
   pname = "rivalcfg";
-  version = "4.2.0";
+  version = "4.5.0";
 
   src = fetchFromGitHub {
     owner = "flozz";
     repo = "rivalcfg";
     rev = "v${version}";
-    sha256 = "1m0nk6zvv7mkgbyffm7nl44a7f09hxw5azwkxrrabf97dbsnr0vd";
+    sha256 = "sha256-T2DS4T2bfyNewwqAJRPaBZNS2/amL00Oq2P8GqyeQCE=";
   };
 
-  propagatedBuildInputs = [ hidapi ];
+  propagatedBuildInputs = [ setuptools hidapi ];
 
   postBuild = ''
     ${python.interpreter} <<EOF
@@ -25,4 +25,6 @@ buildPythonApplication rec {
     mkdir -p $out/lib/udev/rules.d
     mv 99-steelseries-rival.rules $out/lib/udev/rules.d
   '';
+
+  doCheck = false;
 }
