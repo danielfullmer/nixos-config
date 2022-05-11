@@ -60,4 +60,7 @@
   services.blueman.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+
+  programs.captive-browser.enable = true;
+  programs.captive-browser.interface = "wlp170s0";
 }
