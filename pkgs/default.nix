@@ -6,10 +6,12 @@
 let
   lock = builtins.fromJSON (builtins.readFile ../flake.lock);
 
-  nixpkgs = fetchTarball (with lock.nodes.${lock.nodes.root.inputs.nixpkgs}.locked; {
-    url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-    sha256 = narHash;
-  });
+  flake-compat = fetchTarball {
+    url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
+    sha256 = lock.nodes.flake-compat.locked.narHash;
+  };
+
+  nixpkgs = (import flake-compat { src = ../.; }).defaultNix.inputs.nixpkgs;
 
 in
 import nixpkgs ({

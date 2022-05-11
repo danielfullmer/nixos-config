@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -22,7 +25,7 @@
     colmena.url = "github:zhaofengli/colmena";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, colmena, nvidia-vgpu, pinebook-pro }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, colmena, nvidia-vgpu, pinebook-pro, flake-compat }: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
       inherit system;
       modules = [
