@@ -84,6 +84,7 @@ in
   programs.browserpass.enable = config.programs.chromium.enable;
 
   systemd.user.services = lib.mkIf config.services.xserver.enable {
-    plex-mpv-shim.serviceConfig.ExecStart = "${pkgs.plex-mpv-shim}/bin/plex-mpv-shim";
+    #plex-mpv-shim.serviceConfig.ExecStart = "${pkgs.plex-mpv-shim}/bin/plex-mpv-shim";
+    jellyfin-mpv-shim.serviceConfig.ExecStart = "${pkgs.jellyfin-mpv-shim}/bin/jellyfin-mpv-shim";
   };
 }
