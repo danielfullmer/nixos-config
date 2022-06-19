@@ -26,6 +26,8 @@ with lib;
   #boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.cpu.amd.updateMicrocode = true;
 
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
     "nvme" "nvme_core"

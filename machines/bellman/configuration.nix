@@ -361,7 +361,6 @@
     };
   };
 
-  #boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=1" ];
   systemd.enableCgroupAccounting = true;
 
   # Listens for HTTPS on port 8443
