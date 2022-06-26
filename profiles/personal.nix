@@ -39,7 +39,6 @@ in
   };
 
   users = {
-    defaultUserShell = "/run/current-system/sw/bin/zsh";
     groups = {
       danielrf = {};
       vboxsf = {};
@@ -55,7 +54,6 @@ in
         ];
         initialPassword = "changeme";
         openssh.authorizedKeys.keys = [ ssh-yubikey ];
-        shell = "/run/current-system/sw/bin/zsh";
       };
       root.openssh.authorizedKeys.keys = [ ssh-yubikey ];
     };

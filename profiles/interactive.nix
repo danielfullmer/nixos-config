@@ -76,6 +76,7 @@ in
     autosuggestions.enable = true;
     promptInit = "source ${../pkgs/zsh/zshrc.prompt}";
   };
+  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
   programs.command-not-found.enable = true;
 
