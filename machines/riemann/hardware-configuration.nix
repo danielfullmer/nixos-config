@@ -48,7 +48,12 @@
               path = "/sys/class/power_supply/BAT%d/uevent"
               low_threshold = 10
       }
+
+      cpu_temperature 0 {
+              max_threshold = 85
+              path = "/sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input"
+      }
     '';
-    order = lib.mkBefore [ "battery 1" ];
+    order = lib.mkBefore [ "battery 1" "cpu_temperature 0" ];
   };
 }
