@@ -229,8 +229,8 @@
     # Lock screen
     bindsym $mod+Control+l exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled
 
-    bindsym XF86MonBrightnessUp   exec light -A 10
-    bindsym XF86MonBrightnessDown exec light -U 10
+    bindsym XF86MonBrightnessUp   exec light -T 1.3
+    bindsym XF86MonBrightnessDown exec light -T 0.77
 
     # change focus
     bindsym $mod+h focus left
