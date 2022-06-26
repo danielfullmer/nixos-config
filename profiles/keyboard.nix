@@ -219,6 +219,13 @@
     bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
     bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+    # Media control
+    bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause && $refresh_i3status
+    bindsym XF86AudioPause exec --no-startup-id playerctl pause && $refresh_i3status
+    bindsym XF86AudioStop exec --no-startup-id playerctl stop && $refresh_i3status
+    bindsym XF86AudioNext exec --no-startup-id playerctl next && $refresh_i3status
+    bindsym XF86AudioPrev exec --no-startup-id playerctl previous && $refresh_i3status
+
     # Lock screen
     bindsym $mod+Control+l exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled
 

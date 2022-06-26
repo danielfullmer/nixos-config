@@ -94,6 +94,13 @@ with lib;
       partOf = [ "graphical-session.target" ];
     };
   })
+  (mkIf config.hardware.bluetooth.enable {
+    mpris-proxy = {
+      serviceConfig.ExecStart = "${config.hardware.bluetooth.package}/bin/mpris-proxy";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+    };
+  })
   ];
 
   #i18n.inputMethod.enabled = "ibus";
@@ -159,6 +166,8 @@ with lib;
 
     mpv
 
+    playerctl
+    pulseaudio
     pavucontrol
 
     gnome.gnome-themes-extra
