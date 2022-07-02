@@ -27,6 +27,8 @@ in with super; {
 
   #emacs = callPackage ./emacs {};
 
+  gamescope = callPackage ./gamescope {};
+
   keyboard-firmware = callPackage ./keyboard-firmware { keymap=config.hardware.dactyl.keymap; };
 
   neovim = neovim.override {

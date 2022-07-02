@@ -6,6 +6,10 @@
   hardware.opengl.driSupport32Bit = true; # Needed for steam
   hardware.pulseaudio.support32Bit = true;
 
+  environment.systemPackages = with pkgs; [
+    gamescope
+  ];
+
 #  nixpkgs.overlays = [ (self: super: {
 #    steam = super.steam.override (
 #      { #nativeOnly = true; # Otherwise the qt libraries below try to pull in steam runtime libs (which are too old): https://github.com/NixOS/nixpkgs/issues/32881#issuecomment-426513878
