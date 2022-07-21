@@ -75,8 +75,11 @@
     enable = true;
     extraConfig = ''
       interface=iot
-      dhcp-range=interface:iot,192.168.6.2,192.168.6.254
+      dhcp-range=interface:iot,192.168.6.10,192.168.6.254
+      dhcp-host=00:1a:70:0a:22:a0,192.168.6.2,iot-wifi
     '';
+    # iot-wifi is an old 2.4GHz router (Linksys WCG200). It's IP is set
+    # statically, but I add it here too for documentation. Need to lock it down better.
   };
 
   # Firewall
