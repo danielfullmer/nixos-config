@@ -61,4 +61,6 @@
 
   programs.captive-browser.enable = true;
   programs.captive-browser.interface = "wlp170s0";
+
+  services.redshift.enable = true;
 }
