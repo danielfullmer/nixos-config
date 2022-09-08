@@ -16,18 +16,18 @@
   documentation.enable = false;
 
   # This is just on an RPI 3b (no 5ghz and AC)
-#  controlnet.ap = {
-#    enable = true;
-#    interface = "wlan0";
-#    subnetNumber = 4;
-#  };
-#  services.hostapd = {
-#    hwMode = "g";
-#    extraConfig = ''
-#      ieee80211n=1
-#      ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
-#    '';
-#  };
+  controlnet.ap = {
+    enable = true;
+    interface = "wlan0";
+    subnetNumber = 4;
+  };
+  services.hostapd = {
+    hwMode = "g";
+    extraConfig = ''
+      ieee80211n=1
+      ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
+    '';
+  };
 
   services.nginx = {
     enable = true;
