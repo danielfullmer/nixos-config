@@ -29,6 +29,7 @@
   }) ];
   services.hostapd = {
     hwMode = "a"; # Just means 5ghz
+    # See: https://en.wikipedia.org/wiki/List_of_WLAN_channels
     #channel = 0; # ACS. Doesn't work for me.
     channel = 36;
     # https://wiki.gentoo.org/wiki/Hostapd

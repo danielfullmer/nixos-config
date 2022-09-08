@@ -17,14 +17,18 @@ in
       subnetNumber = mkOption {
         type = types.int;
       };
+
+      ssid = mkOption {
+        default = "controlnet_nomap";
+        type = types.str;
+      };
     };
   };
 
   config = mkIf cfg.enable {
     services.hostapd = {
       enable = true;
-      ssid = "controlnet_nomap";
-      inherit (cfg) interface;
+      inherit (cfg) interface ssid;
       # For each device, they are going to have to add their own hwMode, extraConfig for ht_capab, what ieee modes are supported etc.
       extraConfig = ''
         wpa=2

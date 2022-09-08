@@ -20,6 +20,7 @@
     enable = true;
     interface = "wlan0";
     subnetNumber = 4;
+    ssid = "controlnet24ghz_nomap";
   };
   services.hostapd = {
     hwMode = "g";
@@ -61,5 +62,11 @@
       StartLimitInterval="1min";
       StartLimitBurst="4";
     };
+  };
+
+  systemd.watchdog = {
+    runtimeTime = "30s";
+    rebootTime = "1min";
+    kexecTime = "1min";
   };
 }
