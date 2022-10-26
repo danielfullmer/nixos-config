@@ -155,8 +155,11 @@ with lib;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
-    Option         "nvidiaXineramaInfoOrder" "DFP-1"
-    Option         "metamodes" "DVI-D-0: nvidia-auto-select +0+840 {ForceCompositionPipeline=On}, HDMI-0: nvidia-auto-select +2560+840 {ForceCompositionPipeline=On}, DP-0: nvidia-auto-select +6400+0 {rotation=right, ForceCompositionPipeline=On}"
+    Option         "nvidiaXineramaInfoOrder" "DFP-2"
+    Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
+
+    Option          "ModeValidation" "AllowNonEdidModes, NoHorizSyncCheck, NoVertRefreshCheck"
+
     Option         "SLI" "Off"
     Option         "MultiGPU" "Off"
     Option         "BaseMosaic" "off"
@@ -164,6 +167,20 @@ with lib;
     Option         "TripleBuffer" "on"
     Option     "RegistryDwords"  "RMUseSwI2c=0x01; RMI2cSpeed=100"
   '';
+  # NVIDIA 1080ti (Pascal) does not support Display Stream Compression (DSC).
+  # So we have to use a custom modeline to have it fit into DisplayPort HBR3
+  # https://tomverbeure.github.io/video_timings_calculator
+  # CVT-RBv2 (reduced blanking) timings don't seem to work, but CVT-RB does.
+  # 117Hz is the fastest CVT-RB can do while still staying below the bandwidth limit of HBR3
+  #
+  # To manually switch into this mode, use: xrandr --output DP-0 --mode "3840x2160" -r 116.98
+  #
+  # See also: https://www.reddit.com/r/OLED_Gaming/comments/mbpiwy/lg_oled_gamingpc_monitor_recommended_settings/
+  services.xserver.monitorSection = ''
+    Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
+  '';
+  services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
+
 #  services.xserver.xrandrHeads = [
 #    { output = "DP-0"; primary = true; }
 #    { output = "DP-4"; }
