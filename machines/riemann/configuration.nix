@@ -25,8 +25,7 @@
 
   programs.light.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_5_17; # For wifi support. Latest that supports ZFS as of 2022-05-11
-  nixpkgs.config.allowBroken = true; # To allow ZFS with latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_6_0; # For wifi support.
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   services.fprintd.enable = true; # Fingerprint support
   services.fwupd.enable = true; # Firmware updates

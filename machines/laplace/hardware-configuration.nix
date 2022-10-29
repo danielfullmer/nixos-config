@@ -10,7 +10,7 @@ with lib;
   #boot.kernelParams = [ "cma=32M" ];
   boot.initrd.availableKernelModules = [ "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_5_17;
+  boot.kernelPackages = pkgs.linuxPackages_6_0;
   boot.kernelModules = [ ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 

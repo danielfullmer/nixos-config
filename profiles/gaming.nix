@@ -7,7 +7,7 @@
   hardware.pulseaudio.support32Bit = true;
 
   environment.systemPackages = with pkgs; [
-    gamescope
+    #gamescope # Broken as of 2022-10-29
   ];
 
 #  nixpkgs.overlays = [ (self: super: {
