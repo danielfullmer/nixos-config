@@ -3,7 +3,7 @@
 {
   name = "gpg-agent";
 
-  machine =
+  nodes.machine =
     { config, pkgs, lib, ... }:
     {
       programs.ssh.startAgent = false;
@@ -32,11 +32,11 @@
 
       # Log in as alice on a virtual console.
       with subtest("virtual console login"):
-          machine.wait_until_tty_matches(1, "login: ")
+          machine.wait_until_tty_matches("1", "login: ")
           machine.send_chars("alice\n")
-          machine.wait_until_tty_matches(1, "login: alice")
+          machine.wait_until_tty_matches("1", "login: alice")
           machine.wait_until_succeeds("pgrep login")
-          machine.wait_until_tty_matches(1, "Password: ")
+          machine.wait_until_tty_matches("1", "Password: ")
           machine.send_chars("foobar\n")
           machine.wait_until_succeeds("pgrep -u alice bash")
           machine.send_chars("touch done\n")
@@ -47,7 +47,7 @@
           machine.send_chars(
               "gpg-connect-agent 'get_passphrase x Invalid Prompt Description' /bye\n"
           )
-          machine.wait_until_tty_matches(1, "<OK>")
+          machine.wait_until_tty_matches("1", "<OK>")
           machine.screenshot("pinentry")
     '';
 }
