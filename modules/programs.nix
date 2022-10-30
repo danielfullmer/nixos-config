@@ -27,13 +27,13 @@ with lib;
       };
 
       vim = {
-        knownPlugins = mkOption {
-          type = types.attrs;
-          default = {};
+        packages = mkOption {
+          type = types.listOf types.package;
+          default = [];
         };
 
-        pluginDictionaries = mkOption {
-          type = types.listOf types.attrs;
+        optionalPackages = mkOption {
+          type = types.listOf types.package;
           default = [];
         };
 

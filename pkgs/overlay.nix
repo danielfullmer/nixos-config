@@ -34,8 +34,10 @@ in with super; {
   neovim = neovim.override {
     vimAlias = true;
     configure = {
-      vam.knownPlugins = config.programs.vim.knownPlugins;
-      vam.pluginDictionaries = config.programs.vim.pluginDictionaries;
+      packages.myPlugins = {
+        start = config.programs.vim.packages;
+        opt = config.programs.vim.optionalPackages;
+      };
       customRC = config.programs.vim.config;
       beforePlugins = config.programs.vim.configBeforePlugins;
     };

@@ -1,106 +1,103 @@
 # vim: foldmethod=marker
 { config, pkgs, ... }:
 {
-  programs.vim.knownPlugins = pkgs.vimPlugins // pkgs.callPackage ./plugins.nix {};
-  programs.vim.pluginDictionaries = [
-    { names = [
-      "vim2nix"
-      "vim-nix"
-      "vimproc-vim"
+  programs.vim.packages = with pkgs.vimPlugins; [
+    vim2nix
+    vim-nix
+    vimproc-vim
 
-      # UI {{{
-      "Colour-Sampler-Pack"
-      "vim-indent-guides"
-      "vim-highlightedyank"
-      "which-key-nvim"
-      #" Colorscheme
-      # Plug 'edkolev/promptline.vim'
-      # ":PromptlineSnapshot ~/.zshrc.prompt airline
-      # Plug 'edkolev/tmuxline.vim'
-      # ":Tmuxline airline
-      "vim-airline"
-      # ":TmuxlineSnapshot ~/.tmux.line
-      #
-      # Plug 'merlinrebrovic/focus.vim'
-      # }}}
-      # Text/File Navigation {{{
-      "vim-easymotion"
-      "fzf-vim"
-      "fzfWrapper"
-      # }}}
-      # Code Completion / Navigation {{{
-      "nvim-compe"
-      # "ultisnips"
-      # "vim-snippets"
-      "nerdtree"
-      # }}}
-      # NVIM-specific stuff {{{
-      "nvim-treesitter"
-      "nvim-ts-rainbow"
-      "playground" # Treesitter playground
-      "nvim-lspconfig"
-      "completion-nvim"
-      # "telescope.nvim"
-      # "lualine.nvim" (replace tmuxline?)
-      # }}}
-      # Editing {{{
-      "align"
-      # Plug 'tpope/vim-abolish'
-      "vim-surround"
-      "editorconfig-vim"
-      # }}}
-      # GIT {{{
-      "vim-fugitive"
-      "vim-gitgutter"
-      "webapi-vim"
-      #"vim-gist"
-      #" }}}
-      # General Coding {{{
-      #"ale" # TODO: See about language server support
-      "vim-commentary"
-      "FastFold"
-      #"vim-polyglot" # Language pack
-      #" }}}
-      # Misc {{{
-      #Plug 'benmills/vimux'
-      "neco-vim"
-      "vim-tmux-navigator"
-      "gundo-vim"
-      "vim-ledger"
-      #" }}}
-    ]; }
-    { ft_regex = "^tex\$";
-      names = [
-      "vimtex" # TODO: Too slow
-    ]; }
-    { ft_regex = "^python\$";
-      names = [
-        #"vim-ipython"
-        #Plug 'klen/python-mode'
-        #Plug 'alfredodeza/pytest.vim'
-        #Plug 'julienr/vimux-pyutils'
-    ]; }
-    { ft_regex = "^haskell\$";
-      names = [
-        "neco-ghc"
-        #"haskell-vim"
-        #Plug 'lukerandall/haskellmode-vim'
-    ]; }
-    { ft_regex = "^go\$";
-      names = [
-        #Plug 'jnwhiteh/vim-golang'
-    ]; }
-    { ft_regex = "^html\$";
-      names = [
-        #Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-        #Plug 'lukaszb/vim-web-indent'
-    ]; }
-    { ft_regex = "^markdown\$";
-      names = [
-#      vim-pandoc
-#      vim-pandoc-syntax
-    ]; }
+    # UI
+    Colour-Sampler-Pack
+    vim-indent-guides
+    vim-highlightedyank
+    which-key-nvim
+
+    # Colorscheme
+    # Plug 'edkolev/promptline.vim'
+    # :PromptlineSnapshot ~/.zshrc.prompt airline
+    # Plug 'edkolev/tmuxline.vim'
+    # :Tmuxline airline
+    vim-airline
+    # :TmuxlineSnapshot ~/.tmux.line
+    # Plug 'merlinrebrovic/focus.vim'
+
+    # Text/File Navigation
+    vim-easymotion
+    fzf-vim
+    fzfWrapper
+
+    # Code Completion / Navigation
+    nvim-compe
+    # ultisnips
+    # vim-snippets
+    nerdtree
+
+    # NVIM-specific stuff
+    nvim-treesitter
+    nvim-ts-rainbow
+    playground # Treesitter playground
+    nvim-lspconfig
+    completion-nvim
+    # telescope.nvim
+    # lualine.nvim (replace tmuxline?)
+
+    # Editing
+    align
+    # Plug 'tpope/vim-abolish'
+    vim-surround
+    editorconfig-vim
+
+    # GIT
+    vim-fugitive
+    vim-gitgutter
+    webapi-vim
+    #vim-gist
+
+    # General Coding
+    #ale # TODO: See about language server support
+    vim-commentary
+    # FastFold
+    #vim-polyglot # Language pack
+
+    # Misc
+    #Plug 'benmills/vimux'
+    neco-vim
+    vim-tmux-navigator
+    gundo-vim
+    vim-ledger
   ];
+#    { ft_regex = "^tex\$";
+#      names = [
+#      "vimtex" # TODO: Too slow
+#    ]; }
+#    { ft_regex = "^python\$";
+#      names = [
+#        #"vim-ipython"
+#        #Plug 'klen/python-mode'
+#        #Plug 'alfredodeza/pytest.vim'
+#        #Plug 'julienr/vimux-pyutils'
+#    ]; }
+#    { ft_regex = "^haskell\$";
+#      names = [
+#        "neco-ghc"
+#        #"haskell-vim"
+#        #Plug 'lukerandall/haskellmode-vim'
+#    ]; }
+#    { ft_regex = "^go\$";
+#      names = [
+#        #Plug 'jnwhiteh/vim-golang'
+#    ]; }
+#    { ft_regex = "^html\$";
+#      names = [
+#        #Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+#        #Plug 'lukaszb/vim-web-indent'
+#    ]; }
+#    { ft_regex = "^markdown\$";
+#      names = [
+##      vim-pandoc
+##      vim-pandoc-syntax
+#    ]; }
+#  ];
   programs.vim.configBeforePlugins = ''
     " Polyglot bring in latex-box which conflicts with vimtex
     let g:polyglot_disabled = ['latex']

@@ -92,19 +92,13 @@ in with lib;
         font = ${termFontName} ${toString fontSize}
       '' + template "termite";
 
-    programs.vim.knownPlugins = {
+    programs.vim.packages = [
       # Airline theme can't be directly sourced anymore. Needs to be in under <rtp>/autoload/airline/themes/
-      airlineThemeBase16 = pkgs.vimUtils.buildVimPlugin {
+      (pkgs.vimUtils.buildVimPlugin {
         name = "airlineThemeBase16";
         # TODO: Should be able to use writeTextDir, but that's broken too: https://github.com/NixOS/nixpkgs/issues/50347
         src = pkgs.writeTextFile {name="airlineTheme"; destination="/autoload/airline/themes/base16_nixos_configured.vim"; text=template "airline";};
-      };
-    };
-
-    programs.vim.pluginDictionaries = [
-      { names = [
-        "airlineThemeBase16" # Custom base16 colors
-      ]; }
+      })
     ];
 
     programs.vim.config = let
