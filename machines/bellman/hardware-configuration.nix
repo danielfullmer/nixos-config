@@ -15,8 +15,6 @@ with lib;
   boot.loader.systemd-boot.consoleMode = "auto";
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_5_4;
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
   #boot.kernelPatches = [ { name = "OpenRGB"; patch = "${pkgs.openrgb.src}/OpenRGB.patch"; } ];
   boot.kernelModules = [
     "kvm-amd"
@@ -25,8 +23,6 @@ with lib;
   ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   hardware.cpu.amd.updateMicrocode = true;
-
-  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
@@ -155,7 +151,6 @@ with lib;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
-    Option         "nvidiaXineramaInfoOrder" "DFP-2"
     Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
 
     Option          "ModeValidation" "AllowNonEdidModes, NoHorizSyncCheck, NoVertRefreshCheck"
@@ -179,7 +174,8 @@ with lib;
   services.xserver.monitorSection = ''
     Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
   '';
-  services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production; # v515.x works with my custom modeline, but 520.56 didn't...
+  #services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
 
 #  services.xserver.xrandrHeads = [
 #    { output = "DP-0"; primary = true; }
