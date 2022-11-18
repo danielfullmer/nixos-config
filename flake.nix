@@ -15,17 +15,13 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    deploy-rs.url = "github:serokell/deploy-rs";
-
     nvidia-vgpu.url = "github:danielfullmer/nixos-nvidia-vgpu";
 
     pinebook-pro.url = "github:samueldr/wip-pinebook-pro";
     pinebook-pro.flake = false;
-
-    colmena.url = "github:zhaofengli/colmena";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, deploy-rs, colmena, nvidia-vgpu, pinebook-pro, flake-compat }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat }: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
       inherit system;
       modules = [
@@ -87,17 +83,6 @@
       desktop = import ./profiles/desktop;
     };
 
-#    # Settings for deploy-rs
-#    deploy = {
-#      sshUser = "root";
-#      user = "root";
-#
-#      nodes = nixpkgs.lib.mapAttrs (hostname: system: {
-#        inherit hostname;
-#        profiles.system.path = deploy-rs.lib.${system.config.nixpkgs.localSystem.system}.activate.nixos system;
-#      }) self.nixosConfigurations;
-#    };
-
     packages.x86_64-linux.tftpboot = import ./tftpboot.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pxeSystems = {
@@ -107,9 +92,6 @@
         };
       };
     };
-
-    #checks.x86_64-linux = {};
-    #checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     hydraJobs = let
       mkTest = system: path:
