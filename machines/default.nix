@@ -29,9 +29,6 @@ in
         devnull = "30.0.0.48";
 
         pixel3 = "30.0.0.248";
-
-        # AHT work machines
-        hercules = "192.168.192.71";
       };
 
       wireguardIP = {
@@ -47,7 +44,6 @@ in
         ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
         gauss = [ "searx.daniel.fullmer.me" ];
         banach = [ "printer.daniel.fullmer.me" ];
-        hercules = [ "gitlab.aht.ai" "ng911-demo.aht.ai" ];
         wrench = [ "wrench.fullmer.me" ];
       };
 
