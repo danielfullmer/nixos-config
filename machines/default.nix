@@ -21,6 +21,7 @@ in
         spaceheater = "30.0.0.40";
         laplace = "30.0.0.23";
         riemann = "30.0.0.11";
+        noether = "30.0.0.62";
 
         banach = "30.0.0.156";
         tarski = "30.0.0.32";

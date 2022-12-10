@@ -19,9 +19,11 @@
 
     pinebook-pro.url = "github:samueldr/wip-pinebook-pro";
     pinebook-pro.flake = false;
+
+    jetpack-nixos.url = "github:anduril/jetpack-nixos";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat }: let
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos }: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
       inherit system;
       modules = [
@@ -48,6 +50,8 @@
       banach = mkSystem "banach" "aarch64-linux" {};
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
+      # Xavier AGX devkit
+      noether = mkSystem "noether" "aarch64-linux" {};
 
 #      example = nixpkgs.lib.nixosSystem { system="x86_64-linux"; modules = [ self.nixosModules.base {
 #        imports = [
@@ -68,6 +72,7 @@
           robotnix.nixosModules.attestation-server
           home-manager.nixosModules.home-manager
           nvidia-vgpu.nixosModules.nvidia-vgpu
+          jetpack-nixos.nixosModules.default
           ({ config, lib, ... }: lib.mkIf (config.networking.hostName == "bellman") {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
