@@ -92,5 +92,11 @@ in
   #  user = "kodi";
   #  program = "${my_kodi}/bin/kodi-standalone";
   #};
+
+  users.users.nixbuilder = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDlZYgyRN9jAt8dPaO7+Kbet20UlOYTtmlTHlVLo7z3HXIT/Qv3HO0hECxln2VmaibosQS1PQrX8r0hRT7ODlV0gLI1aMLX4qARJ1S6Mh+z+vmQUVQFW0Qw01uyF8S0kJEpsIQcpUgg/l1CZ5mZU1G6qcMzaJWJ5Ofn52bWJE2boaXD3qxdP+3NdXSMYcwA/9xXZnMGiR1qb6l6+uI8EcSWwyd3qDn2lR1F2zpWcghVIY5BszL0Sd1fo3y2ENT3dGZbtN/j8HAnO1l4ERy8NdJn9yIFkiqg3iI1TSR5cdCmQ9T6AX21Zk8utfFRWdqMEvlKALx8z16XqoecSYpHzQF50P15KaEFT+Gucg5q7Jg1rSn59t5bOef17D1cvoGi2isd4vmBdf0RVeanz98iTX5BnQGXieCWBOUUEj/Lo4ynrdzMrNwCBi5lKQgrL6aKPrCAFHnqZhMkkj9TxbrG30ySpdr76yYh76xQRDwGLrOa35dksNjz1Iu47hob1ZbZJf8= nixbuilder@noether" ];
+  };
+  nix.settings.trusted-users = [ "nixbuilder" ];
 }
 

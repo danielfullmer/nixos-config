@@ -134,7 +134,7 @@
     locations."/".proxyPass = "http://127.0.0.1:5001/";
   };
 
-  boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
+  #boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
     # TOOD: Parameterize
     # Used by hydra even if nix.distributedBuilds is false
@@ -142,19 +142,23 @@
     { hostName = "localhost";
       #sshUser = "nix";
       #sshKey = "/none";
-      systems = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
+      systems = [ "x86_64-linux" "i686-linux" ];
       maxJobs = 4;
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     }
-#    { hostName = "banach";
-#      #sshUser = "nix";
-#      #sshKey = "/none";
-#      system = "aarch64-linux";
-#      maxJobs = 2;
-#      supportedFeatures = [ ];
-#    }
+    { hostName = "noether";
+      sshUser = "nixbuilder";
+      sshKey = config.sops.secrets.noether-nixbuilder.path;
+      systems = [ "aarch64-linux" "armv7l-linux" ];
+      maxJobs = 4;
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+    }
   ];
-#  nix.distributedBuilds = true;
+  sops.secrets.noether-nixbuilder = {
+    owner = config.users.users.hydra-queue-runner.name;
+  };
+  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+  nix.distributedBuilds = true;
 
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''

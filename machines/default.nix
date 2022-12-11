@@ -55,6 +55,7 @@ in
         banach = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGfJCTIzSct/m/Zm/yUb224JhKmr35ISH2CEcxSbkCc";
         gauss = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHsBoQtQeyvKK0IHewwwesgxiiiwxzx5bUqBNKGU3Xuu";
         wrench = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEWKX4iWNnZ1sGLWYo8zzoEflXt/USVrYbZReA1smCc";
+        noether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0lzqGprX5qYUhTkwQVHtXKsYUCeiaYEw3w6wnnh7mk";
       };
 
       syncthingID = {
