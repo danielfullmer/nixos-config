@@ -9,6 +9,7 @@
     ../../profiles/zerotier.nix
     ../../profiles/yubikey.nix
     ../../profiles/desktop/default.nix
+    ../../profiles/gaming.nix
   ];
 
   system.stateVersion = "22.05";
