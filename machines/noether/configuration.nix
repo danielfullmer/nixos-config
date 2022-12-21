@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   my_kodi = pkgs.kodi-wayland.withPackages (p: with p; [
@@ -71,27 +71,28 @@ in
 
   users.users.kodi = {
     isNormalUser = true;
-    extraGroups = [ "video" ];
+    extraGroups = [ "input" "video" "audio" ];
   };
 
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "kodi";
-  services.xserver.enable = true;
-  #services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.desktopManager.kodi.enable = true;
-  services.xserver.desktopManager.kodi.package = my_kodi;
-  #services.xserver.desktopManager.retroarch.enable = true;
+#  services.xserver.displayManager.autoLogin.enable = true;
+#  services.xserver.displayManager.autoLogin.user = "kodi";
+#  services.xserver.enable = true;
+#  #services.xserver.desktopManager.xfce.enable = true;
+#  services.xserver.desktopManager.kodi.enable = true;
+#  services.xserver.desktopManager.kodi.package = my_kodi;
+#  #services.xserver.desktopManager.retroarch.enable = true;
 
   # Disable DPMS
   services.xserver.monitorSection = ''
     Option "DPMS" "true"
   '';
 
-  #services.cage = {
-  #  enable = true;
-  #  user = "kodi";
-  #  program = "${my_kodi}/bin/kodi-standalone";
-  #};
+  services.cage = {
+    enable = true;
+    user = "kodi";
+    program = "${my_kodi}/bin/kodi-standalone";
+  };
+  hardware.nvidia-jetpack.modesetting.enable = true;
 
   users.users.nixbuilder = {
     isNormalUser = true;
