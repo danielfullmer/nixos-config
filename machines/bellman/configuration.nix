@@ -23,6 +23,7 @@
     ../../profiles/nextcloud.nix
     #../../xrdesktop-overlay
     ../../profiles/cameras.nix
+    ../../profiles/noether-remote-builder.nix
 
     ../../profiles/rtlsdr.nix
 
@@ -136,29 +137,10 @@
 
   #boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
-    # TOOD: Parameterize
-    # Used by hydra even if nix.distributedBuilds is false
-  nix.buildMachines = [
-    { hostName = "localhost";
-      #sshUser = "nix";
-      #sshKey = "/none";
-      systems = [ "x86_64-linux" "i686-linux" ];
-      maxJobs = 4;
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-    }
-    { hostName = "noether";
-      sshUser = "nixbuilder";
-      sshKey = config.sops.secrets.noether-nixbuilder.path;
-      systems = [ "aarch64-linux" "armv7l-linux" ];
-      maxJobs = 4;
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-    }
-  ];
   sops.secrets.noether-nixbuilder = {
     owner = config.users.users.hydra-queue-runner.name;
   };
   systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
-  nix.distributedBuilds = true;
 
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''

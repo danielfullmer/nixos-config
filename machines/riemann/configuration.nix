@@ -10,6 +10,7 @@
     ../../profiles/yubikey.nix
     ../../profiles/desktop/default.nix
     ../../profiles/gaming.nix
+    ../../profiles/noether-remote-builder.nix
   ];
 
   system.stateVersion = "22.05";
