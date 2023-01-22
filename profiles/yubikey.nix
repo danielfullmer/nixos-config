@@ -26,7 +26,7 @@ in
     yubico-piv-tool
     yubikey-personalization
   ] ++ lib.optionals (config.services.xserver.enable) [
-    yubioath-desktop
+    yubioath-flutter
     yubikey-personalization-gui
   ];
 }
