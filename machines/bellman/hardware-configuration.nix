@@ -151,7 +151,7 @@ with lib;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
   services.xserver.screenSection = ''
     Option         "Stereo" "0"
-    Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
+    #Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
 
     Option          "ModeValidation" "AllowNonEdidModes, NoHorizSyncCheck, NoVertRefreshCheck"
 
@@ -171,10 +171,10 @@ with lib;
   # To manually switch into this mode, use: xrandr --output DP-0 --mode "3840x2160" -r 116.98
   #
   # See also: https://www.reddit.com/r/OLED_Gaming/comments/mbpiwy/lg_oled_gamingpc_monitor_recommended_settings/
-  services.xserver.monitorSection = ''
-    Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
-  '';
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production; # v515.x works with my custom modeline, but 520.56 didn't...
+#  services.xserver.monitorSection = ''
+#    Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
+#  '';
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production; # v515.x works with my custom modeline, but 520.56 didn't...
   #services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
 
 #  services.xserver.xrandrHeads = [
