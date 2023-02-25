@@ -74,25 +74,30 @@ in
     extraGroups = [ "input" "video" "audio" ];
   };
 
-#  services.xserver.displayManager.autoLogin.enable = true;
-#  services.xserver.displayManager.autoLogin.user = "kodi";
-#  services.xserver.enable = true;
-#  #services.xserver.desktopManager.xfce.enable = true;
-#  services.xserver.desktopManager.kodi.enable = true;
-#  services.xserver.desktopManager.kodi.package = my_kodi;
-#  #services.xserver.desktopManager.retroarch.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "kodi";
+  services.xserver.enable = true;
+  #services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.desktopManager.kodi.enable = true;
+  services.xserver.desktopManager.kodi.package = my_kodi;
+  #services.xserver.desktopManager.retroarch.enable = true;
+
+  # TODO: Figure out why seat0 has CanGraphical=false
+  services.xserver.displayManager.lightdm.extraConfig = ''
+    logind-check-graphical = false
+  '';
 
   # Disable DPMS
   services.xserver.monitorSection = ''
     Option "DPMS" "true"
   '';
 
-  services.cage = {
-    enable = true;
-    user = "kodi";
-    program = "${my_kodi}/bin/kodi-standalone";
-  };
-  hardware.nvidia-jetpack.modesetting.enable = true;
+#  services.cage = {
+#    enable = true;
+#    user = "kodi";
+#    program = "${my_kodi}/bin/kodi-standalone";
+#  };
+#  hardware.nvidia-jetpack.modesetting.enable = true;
 
   users.users.nixbuilder = {
     isNormalUser = true;
