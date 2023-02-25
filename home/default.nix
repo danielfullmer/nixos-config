@@ -6,6 +6,8 @@
     #./bugwarrior.nix
   ];
 
+  home.stateVersion = "22.11";
+
   programs.git = {
     enable = true;
     userName = "Daniel Fullmer";
