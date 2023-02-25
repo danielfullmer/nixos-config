@@ -27,7 +27,7 @@
 
   programs.light.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_0; # For wifi support.
+  boot.kernelPackages = pkgs.linuxPackages_6_1; # For wifi support.
   nixpkgs.config.allowBroken = true; # For ZFS with kernel 6.0
   boot.kernelParams = [ "mem_sleep_default=deep" "nvme.noacpi=1" ];
   services.fprintd.enable = true; # Fingerprint support
