@@ -36,7 +36,7 @@
 
   # Hook up dnsmasq (if used) to unbound
   services.dnsmasq = {
-    servers = [ "127.0.0.1" ];
+    settings.server = [ "127.0.0.1" ];
     resolveLocalQueries = false;
     extraConfig = ''
       except-interface=lo
