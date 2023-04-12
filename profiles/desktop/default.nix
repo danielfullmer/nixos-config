@@ -177,6 +177,8 @@ with lib;
 
     zathura
     chromium
+
+    haskellPackages.arbtt
   ]);
 
   environment.etc."zathurarc".text = config.programs.zathura.config;
@@ -251,4 +253,6 @@ with lib;
 #      ln -fs ${XComposeFile} /home/danielrf/.XCompose
 #    '';
 #  };
+
+  services.arbtt.enable = true;
 }
