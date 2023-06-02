@@ -2,7 +2,8 @@
   description = "My NixOS configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:danielfullmer/nixpkgs/my-nixos-config";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
@@ -41,9 +42,9 @@
       # Laptop (surface pro 4)
       #euler = mkSystem "euler" "x86_64-linux" {};
       # Laptop (pinebook pro)
-      laplace = mkSystem "laplace" "aarch64-linux" ({ config, lib, pkgs, ... }: {
-        imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
-      });
+      #laplace = mkSystem "laplace" "aarch64-linux" ({ config, lib, pkgs, ... }: {
+      #  imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
+      #});
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3

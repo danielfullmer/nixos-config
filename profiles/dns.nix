@@ -38,11 +38,11 @@
   services.dnsmasq = {
     settings.server = [ "127.0.0.1" ];
     resolveLocalQueries = false;
-    extraConfig = ''
-      except-interface=lo
-      bind-interfaces
-      no-hosts
-    '';
+    settings = {
+      except-interface = "lo";
+      bind-interfaces = true;
+      no-hosts = true;
+    };
   };
 
   # Provides cloudflare DNS over TOR

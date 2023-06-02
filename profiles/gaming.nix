@@ -9,7 +9,7 @@
   services.xserver.modules = [ pkgs.xorg.xf86inputjoystick ];
 
   environment.systemPackages = with pkgs; [
-    #gamescope # Broken as of 2022-10-29
+    gamescope
   ];
 
 #  nixpkgs.overlays = [ (self: super: {

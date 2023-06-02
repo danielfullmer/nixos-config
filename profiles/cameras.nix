@@ -73,9 +73,7 @@ lib.mkMerge [
   };
 
   # Allow clients connected directly to wifi AP to access this
-  services.dnsmasq.extraConfig = ''
-    address=/obs.daniel.fullmer.me/192.168.3.1
-  '';
+  services.dnsmasq.settings.address = "/obs.daniel.fullmer.me/192.168.3.1";
 
 #  services.zoneminder = {
 #    enable = true;
@@ -89,13 +87,13 @@ lib.mkMerge [
 #    default = lib.mkForce false; # Override some defaults set in nixos module
 #  };
 
-  nixpkgs.overlays = [
-    (self: super: {
-      # For SRT streaming support
-      mpv-unwrapped = super.mpv-unwrapped.override { ffmpeg = self.ffmpeg-full; };
-      libvlc = super.libvlc.override { ffmpeg_4 = self.ffmpeg-full; };
-    })
-  ];
+#  nixpkgs.overlays = [
+#    (self: super: {
+#      # For SRT streaming support
+#      mpv-unwrapped = super.mpv-unwrapped.override { ffmpeg = self.ffmpeg-full; };
+#      libvlc = super.libvlc.override { ffmpeg_4 = self.ffmpeg-full; };
+#    })
+#  ];
 
   environment.systemPackages = with pkgs; [
     obs-studio
@@ -113,16 +111,18 @@ lib.mkMerge [
   # TODO: Firewall individual devices
   services.dnsmasq = {
     enable = true;
-    extraConfig = ''
-      interface=cameras
-      dhcp-range=interface:cameras,192.168.7.2,192.168.7.254
-      dhcp-host=24:52:6a:2d:f0:bc,192.168.7.2,gym-cam
-      dhcp-host=6c:1c:71:93:a1:a7,192.168.7.3,garage-cam
-      dhcp-host=6c:1c:71:93:a1:d0,192.168.7.4,stair-cam
-    '';
+    settings = {
+      interface = "cameras";
+      dhcp-range = "interface:cameras,192.168.7.2,192.168.7.254";
+      dhcp-host = [
+        "24:52:6a:2d:f0:bc,192.168.7.2,gym-cam"
+        "6c:1c:71:93:a1:a7,192.168.7.3,garage-cam"
+        "6c:1c:71:93:a1:d0,192.168.7.4,stair-cam"
+      ];
+    };
   };
 
-  services.rtsp-simple-server = {
+  services.mediamtx = {
     enable = true;
     settings = {
       paths = {

@@ -57,10 +57,10 @@ in
 
     services.dnsmasq = {
       enable = true;
-      extraConfig = ''
-        interface=${cfg.interface}
-        dhcp-range=interface:${cfg.interface},192.168.${toString cfg.subnetNumber}.2,192.168.${toString cfg.subnetNumber}.254
-      '';
+      settings = {
+        interface = cfg.interface;
+        dhcp-range = "interface:${cfg.interface},192.168.${toString cfg.subnetNumber}.2,192.168.${toString cfg.subnetNumber}.254";
+      };
     };
 
     environment.systemPackages = with pkgs; [ wirelesstools iw ];

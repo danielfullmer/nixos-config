@@ -50,7 +50,7 @@ in
         group = "danielrf";
         extraGroups = [
           "users" "wheel" "video" "audio" "networkmanager" "vboxsf" "docker"
-          "libvirtd" "systemd-journal"
+          "libvirtd" "systemd-journal" "input"
         ];
         initialPassword = "changeme";
         openssh.authorizedKeys.keys = [ ssh-yubikey ];

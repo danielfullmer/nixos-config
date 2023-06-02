@@ -29,6 +29,7 @@
       ht_capab=[MAX-AMSDU-3839][SHORT-GI-20][DSSS_CCK-40]
     '';
   };
+  #networking.nat.externalInterface = "eth0";
 
   services.nginx = {
     enable = true;

@@ -22,14 +22,14 @@ in
 
   services.dnsmasq = {
     enable = true;
-    extraConfig = ''
-      interface=${interface}
+    settings = {
+      inherit interface;
 
       # First MAC address is for pinecube uboot, native linux has a different
       # MAC and will use normal DHCP
-      dhcp-range=interface:${interface},${networkPrefix}.2,${networkPrefix}.254
-      enable-tftp
-      tftp-root=/var/lib/tftpboot
-    '';
+      dhcp-range = "interface:${interface},${networkPrefix}.2,${networkPrefix}.254";
+      enable-tftp = true;
+      tftp-root = "/var/lib/tftpboot";
+    };
   };
 }

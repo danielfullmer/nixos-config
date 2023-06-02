@@ -74,12 +74,12 @@
   # TODO: Firewall individual devices
   services.dnsmasq = {
     enable = true;
-    extraConfig = ''
-      interface=iot
-      dhcp-range=interface:iot,192.168.6.10,192.168.6.254
-      dhcp-host=00:1a:70:0a:22:a0,192.168.6.2,iot-wifi
-    '';
-    # iot-wifi is an old 2.4GHz router (Linksys WCG200). It's IP is set
+    settings = {
+      interface = "iot";
+      dhcp-range = "interface:iot,192.168.6.10,192.168.6.254";
+      dhcp-host = "00:1a:70:0a:22:a0,192.168.6.2,iot-wifi";
+    };
+    # iot-wifi is an old 2.4GHz router (Linksys WCG200). Its IP is set
     # statically, but I add it here too for documentation. Need to lock it down better.
   };
 
@@ -386,7 +386,7 @@
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
 
-  services.avahi.interfaces = [ "enp68s0" config.controlnet.ap.interface ];
+  services.avahi.allowInterfaces = [ "enp68s0" config.controlnet.ap.interface ];
   services.avahi.openFirewall = false; # Port 5353
 
   # Switch LG TV based on if CM storm keyboard is added/removed
@@ -415,13 +415,8 @@
     };
   };
 
-  boot.kernelPatches = [
-    {
-      name = "steamvr";
-      patch = (pkgs.fetchpatch {
-        url = "https://github.com/torvalds/linux/commit/8590222e4b021054a7167a4dd35b152a8ed7018e.patch";
-        sha256 = "11wjqxzmcmhb7fajjbjj3nw0d3q1fbbfhh8mxwq8hp378rqdl6jw";
-      });
-    }
-  ];
+  services.fwupd.enable = true;
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }
