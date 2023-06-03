@@ -26,6 +26,7 @@ in
   hardware.nvidia-jetpack.enable = true;
   hardware.nvidia-jetpack.som = "orin-agx";
   hardware.nvidia-jetpack.carrierBoard = "devkit";
+  hardware.nvidia-jetpack.firmware.autoUpdate = true;
   services.nvpmodel.profileNumber = 0;
 
   hardware.opengl.enable = true;
