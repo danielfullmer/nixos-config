@@ -43,6 +43,14 @@
 
     daemonIOSchedPriority = 5; # Range: 0-7
     daemonCPUSchedPolicy = "batch";
+
+    buildMachines = lib.mkIf config.nix.distributedBuilds [
+      { hostName = "localhost";
+        systems = [ "x86_64-linux" "i686-linux" ];
+        maxJobs = 8;
+        supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      }
+    ];
   };
 
   time.timeZone = "America/Los_Angeles";
