@@ -34,8 +34,6 @@
   #'';
 
   nix = {
-    package = pkgs.nixFlakes;
-
     settings = {
       auto-optimise-store = true;
       trusted-users = [ "root" ];
