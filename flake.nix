@@ -2,8 +2,8 @@
   description = "My NixOS configurations";
 
   inputs = {
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:danielfullmer/nixpkgs/my-nixos-config";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:danielfullmer/nixpkgs/my-nixos-config";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
