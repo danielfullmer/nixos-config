@@ -41,12 +41,13 @@ in
         inherit (cfg) ssid;
         authentication = {
           mode = "wpa2-sha256";
-          #mode = "wpa3-sae-transition"; # TODO: Switch to wpa3-sae entirely, remove WPA-PSK
+          #mode = "wpa3-sae-transition"; # TODO: Switch to wpa3-sae entirely, remove WPA-PSK. 8sleep doesn't support WPA3
           wpaPskFile = config.sops.secrets.wpa_psk_file.path;
           saePasswordsFile = config.sops.secrets.sae_passwords.path;
         };
 
         managementFrameProtection = "disabled"; # TODO: https://github.com/anduril/jetpack-nixos/issues/108
+        settings.wpa_key_mgmt = lib.mkForce "WPA-PSK"; # TODO: 8sleep doesn't like WPA-PSK-SHA256. Put it on a different interface
       };
     };
     sops.secrets.wpa_psk_file = {
