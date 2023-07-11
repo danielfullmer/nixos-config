@@ -39,13 +39,20 @@ in
 #      '';
       radios.${cfg.interface}.networks.${cfg.interface} = {
         inherit (cfg) ssid;
-        authentication.saePasswordsFile = config.sops.secrets.sae_passwords.path;
+        authentication = {
+          mode = "wpa2-sha256";
+          #mode = "wpa3-sae-transition"; # TODO: Switch to wpa3-sae entirely, remove WPA-PSK
+          wpaPskFile = config.sops.secrets.wpa_psk_file.path;
+          saePasswordsFile = config.sops.secrets.sae_passwords.path;
+        };
+
+        managementFrameProtection = "disabled"; # TODO: https://github.com/anduril/jetpack-nixos/issues/108
       };
     };
-    #sops.secrets.wpa_psk_file = {
-    #  format = "binary";
-    #  sopsFile = ../secrets/wpa_psk_file;
-    #};
+    sops.secrets.wpa_psk_file = {
+      format = "binary";
+      sopsFile = ../secrets/wpa_psk_file;
+    };
     sops.secrets.sae_passwords.sopsFile = ../secrets/secrets.yaml;
 
     # Sometimes, the device crashes and restarts, since hostapd has BindTo the
