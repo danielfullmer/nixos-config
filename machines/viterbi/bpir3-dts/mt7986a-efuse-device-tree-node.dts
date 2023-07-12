@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "mediatek,mt7986a";
+
+	fragment@0 {
+		target-path = "/soc";
+		__overlay__ {
+			efuse: efuse@11d00000 {
+				compatible = "mediatek,mt7986-efuse",
+					     "mediatek,efuse";
+				reg = <0 0x11d00000 0 0x1000>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				thermal_calibration: calib@274 {
+					reg = <0x274 0xc>;
+				};
+			};
+		};
+	};
+};

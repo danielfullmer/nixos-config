@@ -53,6 +53,8 @@
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
       # Xavier AGX devkit
       noether = mkSystem "noether" "aarch64-linux" {};
+      # Banana Pi R3 wifi router
+      viterbi = mkSystem "viterbi" "aarch64-linux" {};
 
 #      example = nixpkgs.lib.nixosSystem { system="x86_64-linux"; modules = [ self.nixosModules.base {
 #        imports = [
