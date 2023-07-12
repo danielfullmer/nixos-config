@@ -7,6 +7,7 @@ keys:
   - &laplace ED8A6848AE92FD517EBF44673FED6D228CA9F576
   - &riemann age13mfy89qgy00yq4pvm0grt3ncexh5sl0xwuu0hzjdjjw0wzjs244qtxwtsc
   - &noether age1tmmp92pmf7ngshe65e7cmfllu9gnvcy4weuxckvs8wuzpf4uscvst46kp5
+  - &viterbi age14wp59ju8r43lqzrrv94s5w4y7rwjp960meezjw3xfhsfmkphvp0qfrjyqu
 creation_rules:
   - path_regex: machines/bellman/secrets/[^/]+$
     key_groups:
@@ -46,6 +47,13 @@ creation_rules:
       - *danielfullmer-offlinekey
       age:
       - *noether
+  - path_regex: machines/viterbi/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      age:
+      - *viterbi
   - path_regex: secrets/[^/]+$
     key_groups:
     - pgp:
@@ -58,3 +66,4 @@ creation_rules:
       age:
       - *riemann
       - *noether
+      - *viterbi
