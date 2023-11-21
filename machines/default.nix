@@ -41,7 +41,7 @@ in
       virtualHosts = {
         bellman = (map (name: "${name}.daniel.fullmer.me") [
           "attestation" "hydra" "playmaker" "fdroid" "office" "zoneminder" "home"
-          "grocy" "obs"
+          "grocy" "obs" "invidious"
         ]) ++ [ "daniel.fullmer.me" "nextcloud.fullmer.me" ];
         gauss = [ "searx.daniel.fullmer.me" ];
         banach = [ "printer.daniel.fullmer.me" ];
