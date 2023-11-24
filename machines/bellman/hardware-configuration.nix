@@ -72,7 +72,7 @@ with lib;
       yearly = 0;
     };
   in {
-    enable = true;
+    #enable = true;
     extraArgs = [ "--verbose" ];
     datasets."pool/home" = common;
     datasets."pool/root" = common;
@@ -82,7 +82,7 @@ with lib;
   };
 
   services.syncoid = {
-    enable = true;
+    #enable = true;
     commands = let
       common = {
         sshKey = config.sops.secrets.wrench-zfs-syncoid-ssh.path;
@@ -98,9 +98,9 @@ with lib;
     };
     service.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
   };
-  sops.secrets.wrench-zfs-syncoid-ssh = {
-    owner = config.services.syncoid.user;
-  };
+  #sops.secrets.wrench-zfs-syncoid-ssh = {
+  #  owner = config.services.syncoid.user;
+  #};
 
   swapDevices = [ ];
 

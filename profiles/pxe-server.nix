@@ -28,8 +28,8 @@ in
       # First MAC address is for pinecube uboot, native linux has a different
       # MAC and will use normal DHCP
       dhcp-range = "interface:${interface},${networkPrefix}.2,${networkPrefix}.254";
-      enable-tftp = true;
-      tftp-root = "/var/lib/tftpboot";
+      #enable-tftp = true;
+      #tftp-root = "/var/lib/tftpboot";
     };
   };
 }

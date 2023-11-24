@@ -27,10 +27,10 @@
 
     ../../profiles/rtlsdr.nix
 
-    ../../profiles/robotnix-infra.nix
+    #../../profiles/robotnix-infra.nix
 
     ./ap.nix
-    ./vfio.nix
+    #./vfio.nix
     ../../profiles/pxe-server.nix
     #../../profiles/pg-upgrade.nix
   ];
@@ -117,7 +117,7 @@
   };
 
   services.hydra = {
-    enable = true;
+    #enable = true;
     listenHost = "localhost";
     port = 5001;
     hydraURL = "https://hydra.daniel.fullmer.me/";
@@ -137,10 +137,10 @@
 
   #boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
-  sops.secrets.noether-nixbuilder = {
-    owner = config.users.users.hydra-queue-runner.name;
-  };
-  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+  #sops.secrets.noether-nixbuilder = {
+  #  owner = config.users.users.hydra-queue-runner.name;
+  #};
+  #systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''
@@ -172,7 +172,7 @@
 #  };
 
   services.attestation-server = {
-    enable = true;
+    #enable = true;
     domain = "attestation.daniel.fullmer.me";
 
     # TODO: Extract from robotnix configuration
@@ -199,11 +199,11 @@
   #programs.ccache.enable = true;
   programs.firejail.enable = true;
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.extraConfig = ''
-    # Needed for virtio-fs
-    memory_backing_dir = "/dev/shm/"
-  '';
+  #virtualisation.libvirtd.enable = true;
+  #virtualisation.libvirtd.extraConfig = ''
+  #  # Needed for virtio-fs
+  #  memory_backing_dir = "/dev/shm/"
+  #'';
 
 
 #  services.mosquitto = {
@@ -353,12 +353,12 @@
   systemd.enableCgroupAccounting = true;
 
   # Listens for HTTPS on port 8443
-  services.unifi = {
-    enable = true;
-    openFirewall = false;
-  };
-  users.users.unifi.group = "unifi";
-  users.groups.unifi = {};
+  #services.unifi = {
+  #  enable = true;
+  #  openFirewall = false;
+  #};
+  #users.users.unifi.group = "unifi";
+  #users.groups.unifi = {};
   #systemd.services.unifi.enable = false;
   networking.firewall.interfaces.enp68s0.allowedTCPPorts = [ 8080 8880 8843 6789 ];
   networking.firewall.interfaces.enp68s0.allowedUDPPorts = [ 3478 10001 ];

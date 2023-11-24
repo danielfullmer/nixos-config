@@ -46,7 +46,6 @@ in
           saePasswordsFile = config.sops.secrets.sae_passwords.path;
         };
 
-        managementFrameProtection = "disabled"; # TODO: https://github.com/anduril/jetpack-nixos/issues/108
         settings.wpa_key_mgmt = lib.mkForce "WPA-PSK"; # TODO: 8sleep doesn't like WPA-PSK-SHA256. Put it on a different interface
       };
     };

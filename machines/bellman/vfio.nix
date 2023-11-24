@@ -63,7 +63,7 @@ in
   virtualisation.libvirtd.enable = true;
   #virtualisation.libvirtd.qemuPackage = true;
 
-  environment.systemPackages = [ pkgs.virtmanager ];
+  environment.systemPackages = [ pkgs.virt-manager ];
 
   # Add my own xml file. Use mkAfter to ensure it occurs after nixos replaces the qemu path.
 #  systemd.services.libvirtd.preStart = let
