@@ -29,6 +29,9 @@ in
   hardware.nvidia-jetpack.firmware.autoUpdate = true;
   services.nvpmodel.profileNumber = 0;
 
+  # Avoid kernel crashes
+  boot.kernelParams = [ "initcall_blacklist=tegra_se_module_init" ];
+
   hardware.opengl.enable = true;
 
   # Use the systemd-boot EFI boot loader.
