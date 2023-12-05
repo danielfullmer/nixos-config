@@ -1,9 +1,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "thunderbolt" "nvme" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -30,7 +30,7 @@
 
   hardware.enableRedistributableFirmware = true;
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -49,8 +49,8 @@
       }
 
       cpu_temperature 0 {
-              max_threshold = 85
-              path = "/sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input"
+              max_threshold = 90
+              path = "/sys/bus/pci/devices/0000:00:18.3/hwmon/hwmon*/temp1_input"
       }
     '';
     order = lib.mkBefore [ "battery 1" "cpu_temperature 0" ];

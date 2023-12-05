@@ -27,9 +27,6 @@
 
   programs.light.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_1; # For wifi support.
-  nixpkgs.config.allowBroken = true; # For ZFS with kernel 6.0
-  boot.kernelParams = [ "mem_sleep_default=deep" "nvme.noacpi=1" ];
   services.fprintd.enable = true; # Fingerprint support
   services.fwupd.enable = true; # Firmware updates
 
@@ -38,21 +35,16 @@
   theme.fontSize = 14;
 
   # HW Accelerated video decoding
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
   };
 
   environment.variables = {
-    LIBVA_DRIVER_NAME="iHD";
+    LIBVA_DRIVER_NAME="radeonsi";
   };
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=VaapiVideoDecoder";
@@ -63,7 +55,7 @@
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   programs.captive-browser.enable = true;
-  programs.captive-browser.interface = "wlp170s0";
+  programs.captive-browser.interface = "wlp1s0";
 
   services.redshift.enable = true;
 }
