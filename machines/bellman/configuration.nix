@@ -425,4 +425,11 @@
     domain = "invidious.daniel.fullmer.me";
     nginx.enable = true;
   };
+
+  programs.hyprland.enable = true;
+  programs.hyprland.nvidiaPatches = true;
+  programs.hyprland.xwayland.enable = true;
+  programs.xwayland.enable = true;
+
+  programs.sway.enable = true;
 }

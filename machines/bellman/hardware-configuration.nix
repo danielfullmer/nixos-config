@@ -188,7 +188,16 @@ with lib;
 #    }
 #  ];
 
-  hardware.firmware = [ pkgs.wireless-regdb ];
+  # EDID file made by adding 117hz mode using CRU.exe
+  boot.kernelParams = [ "drm.edid_firmware=DP-3:edid_117.bin" ];
+
+  hardware.firmware = [
+    pkgs.wireless-regdb
+    (pkgs.runCommand "custom-edid" {} ''
+      mkdir -p $out/lib/firmware
+      cp ${./edid_117.bin} $out/lib/firmware/edid_117.bin
+    '')
+  ];
   hardware.enableRedistributableFirmware = true;
   boot.extraModprobeConfig = ''
     options cfg80211 ieee80211_regdom="US"
