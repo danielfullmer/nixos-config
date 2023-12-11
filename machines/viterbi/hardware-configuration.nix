@@ -3,25 +3,30 @@
 # See https://github.com/nakato/nixos-bpir3-example for reference, and for uboot firmware
 let
   kernelPatches = [
-    {
-      # Cold boot PCIe/NVMe have stability issues.
-      # See: https://forum.banana-pi.org/t/bpi-r3-problem-with-pcie/15152
-      #
-      # FrankW's first patch added a 100ms sleep, this was rejected upstream.
-      # Jianjun posted a patch to the forum for testing, and it appears to me
-      # to have accidentally missed a write to the registers between the two
-      # sleeps.  This version is modified to include the write, and results
-      # in the PCI bridge appearing reliably, but not the NVMe device.
-      #
-      # Without this patch, the PCI bridge is not present, and rescan does
-      # not discover it.  Removing the bridge and then rescanning repeatably
-      # gets the NVMe working on cold-boot.
-      name = "PCI: mediatek-gen3: handle PERST after reset";
-      patch = ./linux-mtk-pcie.patch;
-    }
+#    {
+#      # Cold boot PCIe/NVMe have stability issues.
+#      # See: https://forum.banana-pi.org/t/bpi-r3-problem-with-pcie/15152
+#      #
+#      # FrankW's first patch added a 100ms sleep, this was rejected upstream.
+#      # Jianjun posted a patch to the forum for testing, and it appears to me
+#      # to have accidentally missed a write to the registers between the two
+#      # sleeps.  This version is modified to include the write, and results
+#      # in the PCI bridge appearing reliably, but not the NVMe device.
+#      #
+#      # Without this patch, the PCI bridge is not present, and rescan does
+#      # not discover it.  Removing the bridge and then rescanning repeatably
+#      # gets the NVMe working on cold-boot.
+#      name = "PCI: mediatek-gen3: handle PERST after reset";
+#      patch = ./linux-mtk-pcie.patch;
+#    }
+    # Patches from Banana Pi forums. Makes it so that 2.5G SFP + autoneg works
+    { patch = ./0001-net-phy-sfp-Fixup-for-OEM-SFP-2.5G-T-module.patch; }
+    { patch = ./0002-net-phylink-rtl822x-SFP-module-no-inband-negotiation.patch; }
+    { patch = ./0003-net-phy-realtek-Migrate-rtl822x-to-Clause-45.patch; }
+    { patch = ./0004-Add-FS-SFP-2.5G-T.patch; }
   ];
 
-  linux_bpir3 = pkgs.linux_6_4.override {
+  linux_bpir3 = pkgs.linux_6_6.override {
     inherit kernelPatches;
 
     # This will take ~22GB to build.  /tmp better be big.
@@ -59,7 +64,7 @@ let
       MT76_CORE  = module;
       MT76_LEDS = yes;
       MT76_CONNAC_LIB = module;
-      MT7815E = module;
+      MT7915E = module;
       MT7986_WMAC = yes;
       # Pinctrl
       EINT_MTK = yes;

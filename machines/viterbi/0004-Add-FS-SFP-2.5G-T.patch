@@ -1,0 +1,25 @@
+From cd1d0bde843b520ef3500d6ffa86af4063b657fc Mon Sep 17 00:00:00 2001
+From: Daniel Fullmer <danielrf12@gmail.com>
+Date: Sat, 29 Jul 2023 22:29:45 -0700
+Subject: [PATCH 4/4] Add FS SFP-2.5G -T
+
+---
+ drivers/net/phy/sfp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 816bcc914eec..72f3f8df9966 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -460,7 +460,7 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 		  sfp_fixup_ignore_tx_fault),
+ 
+ 	// FS 2.5G Base-T
+-	SFP_QUIRK_M("FS", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
++	SFP_QUIRK_F("FS", "SFP-2.5G-T", sfp_fixup_oem_2_5g),
+ 
+ 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
+ 	// 2500MBd NRZ in their EEPROM
+-- 
+2.42.0
+

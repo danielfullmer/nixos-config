@@ -1,0 +1,428 @@
+From 9a6cffe0cbfa609e7312f0907d64843b8aefa4d3 Mon Sep 17 00:00:00 2001
+From: Your Name <you@example.com>
+Date: Fri, 28 Jul 2023 16:19:47 +0200
+Subject: [PATCH 3/4] net: phy: realtek: Migrate rtl822x to Clause 45.
+
+Because the RollBall protocol only sets up Clause 45 read/write, the realtek
+phy driver for the rtl822x needs to migrate to Clause 45, if it is being used
+on a RollBall SFP module.
+
+In the datasheet, all registers are documented as Clause 45 registers.
+
+This patch also adds code the is used when the phy is in "Rate Adaptor Mode".
+
+Because there is no openly documented way to determine if the rtl822x is in
+"Rate Adaptor Mode", assume when a rtl822x is usiing RollBall protocol
+address, it is setup in this mode. Can change this, if a better option is
+known to detect this mode.
+---
+ drivers/net/phy/realtek.c | 277 +++++++++++++++++++++-----------------
+ 1 file changed, 154 insertions(+), 123 deletions(-)
+
+diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
+index 894172a3e15f..ed2a77d6b8b8 100644
+--- a/drivers/net/phy/realtek.c
++++ b/drivers/net/phy/realtek.c
+@@ -69,10 +69,27 @@
+ #define RTL9000A_GINMR_LINK_STATUS		BIT(4)
+ 
+ #define RTLGEN_SPEED_MASK			0x0630
++#define RTLGEN_SPEED_10					0x0000
++#define RTLGEN_SPEED_100				0x0010
++#define RTLGEN_SPEED_1000				0x0020
++#define RTLGEN_SPEED_2500_LITE				0x0230
++#define RTLGEN_SPEED_2500				0x0210
++#define RTLGEN_SPEED_5000				0x0220
++#define RTLGEN_SPEED_10000				0x0200
+ 
+ #define RTL_GENERIC_PHYID			0x001cc800
+ #define RTL_8211FVD_PHYID			0x001cc878
+ 
++
++#define RTL_V2_GBCR				0xa412 
++#define RTL_V2_GBCR_1000BASET_FULL_DUPLEX_CAP		BIT(9)
++
++#define RTL_V2_GANLPAR				0xa414
++#define RTL_V2_GANLPAR_LP_1000BASET_HALF_DUPLEX_CAP	BIT(10)
++#define RTL_V2_GANLPAR_LP_1000BASET_FULL_DUPLEX_CAP	BIT(11)
++
++#define RTL_V2_PHYSR				0xa434
++
+ MODULE_DESCRIPTION("Realtek PHY driver");
+ MODULE_AUTHOR("Johnson Leung");
+ MODULE_LICENSE("GPL");
+@@ -537,34 +554,29 @@ static int rtl8366rb_config_init(struct phy_device *phydev)
+ }
+ 
+ /* get actual speed to cover the downshift case */
+-static int rtlgen_get_speed(struct phy_device *phydev)
++static int rtlgen_get_speed(struct phy_device *phydev, int val)
+ {
+-	int val;
+-
+ 	if (!phydev->link)
+ 		return 0;
+ 
+-	val = phy_read_paged(phydev, 0xa43, 0x12);
+-	if (val < 0)
+-		return val;
+-
+ 	switch (val & RTLGEN_SPEED_MASK) {
+-	case 0x0000:
++	case RTLGEN_SPEED_10:
+ 		phydev->speed = SPEED_10;
+ 		break;
+-	case 0x0010:
++	case RTLGEN_SPEED_100:
+ 		phydev->speed = SPEED_100;
+ 		break;
+-	case 0x0020:
++	case RTLGEN_SPEED_1000:
++	case RTLGEN_SPEED_2500_LITE:
+ 		phydev->speed = SPEED_1000;
+ 		break;
+-	case 0x0200:
++	case RTLGEN_SPEED_10000:
+ 		phydev->speed = SPEED_10000;
+ 		break;
+-	case 0x0210:
++	case RTLGEN_SPEED_2500:
+ 		phydev->speed = SPEED_2500;
+ 		break;
+-	case 0x0220:
++	case RTLGEN_SPEED_5000:
+ 		phydev->speed = SPEED_5000;
+ 		break;
+ 	default:
+@@ -576,13 +588,17 @@ static int rtlgen_get_speed(struct phy_device *phydev)
+ 
+ static int rtlgen_read_status(struct phy_device *phydev)
+ {
+-	int ret;
++	int ret, val;
+ 
+ 	ret = genphy_read_status(phydev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return rtlgen_get_speed(phydev);
++	val = phy_read_paged(phydev, 0xa43, 0x12);
++	if (val < 0)
++		return val;
++
++	return rtlgen_get_speed(phydev, val);
+ }
+ 
+ static int rtlgen_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
+@@ -624,108 +640,131 @@ static int rtlgen_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
+ 	return ret;
+ }
+ 
+-static int rtl822x_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
++static int rtl822x_get_features(struct phy_device *phydev)
+ {
+-	int ret = rtlgen_read_mmd(phydev, devnum, regnum);
++	int ret;
+ 
+-	if (ret != -EOPNOTSUPP)
++	ret = genphy_c45_pma_read_abilities(phydev);
++	if (ret < 0)
+ 		return ret;
+ 
+-	if (devnum == MDIO_MMD_PCS && regnum == MDIO_PCS_EEE_ABLE2) {
+-		rtl821x_write_page(phydev, 0xa6e);
+-		ret = __phy_read(phydev, 0x16);
+-		rtl821x_write_page(phydev, 0);
+-	} else if (devnum == MDIO_MMD_AN && regnum == MDIO_AN_EEE_ADV2) {
+-		rtl821x_write_page(phydev, 0xa6d);
+-		ret = __phy_read(phydev, 0x12);
+-		rtl821x_write_page(phydev, 0);
+-	} else if (devnum == MDIO_MMD_AN && regnum == MDIO_AN_EEE_LPABLE2) {
+-		rtl821x_write_page(phydev, 0xa6d);
+-		ret = __phy_read(phydev, 0x10);
+-		rtl821x_write_page(phydev, 0);
+-	}
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phydev->mdio.addr == 17)
++		linkmode_zero(phydev->supported);
++
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
++			phydev->supported);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseX_Full_BIT,
++			phydev->supported);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_TP_BIT,
++			phydev->supported);
+ 
+ 	return ret;
+ }
+ 
+-static int rtl822x_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
+-			     u16 val)
++
++static int rtl822x_config_aneg(struct phy_device *phydev)
+ {
+-	int ret = rtlgen_write_mmd(phydev, devnum, regnum, val);
++	int ret;
++
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phydev->mdio.addr == 17) return 0;
+ 
+-	if (ret != -EOPNOTSUPP)
++	ret = genphy_c45_config_aneg(phydev);
++	if (ret < 0)
+ 		return ret;
+ 
+-	if (devnum == MDIO_MMD_AN && regnum == MDIO_AN_EEE_ADV2) {
+-		rtl821x_write_page(phydev, 0xa6d);
+-		ret = __phy_write(phydev, 0x12, val);
+-		rtl821x_write_page(phydev, 0);
+-	}
++	/* Clause 45 has no standardized support for 1000BaseT, therefore
++	 * use vendor registers for this mode.
++	 */
++	if (linkmode_test_bit(ETHTOOL_LINK_MODE_1000baseT_Full_BIT,
++			phydev->advertising))
++		phy_set_bits_mmd(phydev, MDIO_MMD_VEND2, RTL_V2_GBCR, 
++				RTL_V2_GBCR_1000BASET_FULL_DUPLEX_CAP);
+ 
+ 	return ret;
+ }
+ 
+-static int rtl822x_get_features(struct phy_device *phydev)
+-{
+-	int val;
+-
+-	val = phy_read_paged(phydev, 0xa61, 0x13);
+-	if (val < 0)
+-		return val;
+-
+-	linkmode_mod_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
+-			 phydev->supported, val & RTL_SUPPORTS_2500FULL);
+-	linkmode_mod_bit(ETHTOOL_LINK_MODE_5000baseT_Full_BIT,
+-			 phydev->supported, val & RTL_SUPPORTS_5000FULL);
+-	linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseT_Full_BIT,
+-			 phydev->supported, val & RTL_SUPPORTS_10000FULL);
+-
+-	return genphy_read_abilities(phydev);
+-}
+-
+-static int rtl822x_config_aneg(struct phy_device *phydev)
++static int rtl822x_read_status(struct phy_device *phydev)
+ {
+-	int ret = 0;
++	int ret, val;
+ 
+-	if (phydev->autoneg == AUTONEG_ENABLE) {
+-		u16 adv2500 = 0;
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phydev->mdio.addr == 17) {
++		ret = genphy_c45_read_link(phydev);
++		if (ret)
++			return ret;
+ 
+-		if (linkmode_test_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
+-				      phydev->advertising))
+-			adv2500 = RTL_ADV_2500FULL;
++		linkmode_zero(phydev->lp_advertising);
++		phydev->duplex = DUPLEX_FULL;
++		phydev->speed = SPEED_UNKNOWN;
++		phydev->pause = 0;
++		phydev->asym_pause = 0;
++
++		val = genphy_c45_pma_baset1_read_master_slave(phydev);
++		if (val < 0)
++			return val;
++
++		phydev_dbg(phydev,
++			    "RTL822x genphy_c45 status: %s/%s/%s %*pb %*pb pause=%02x link=%u\n",
++			    phy_modes(phydev->interface),
++			    phy_speed_to_str(phydev->speed),
++			    phy_duplex_to_str(phydev->duplex),
++			    __ETHTOOL_LINK_MODE_MASK_NBITS, phydev->advertising,
++			    __ETHTOOL_LINK_MODE_MASK_NBITS, phydev->lp_advertising,
++			    phydev->pause, phydev->link);
++	} else {
+ 
+-		ret = phy_modify_paged_changed(phydev, 0xa5d, 0x12,
+-					       RTL_ADV_2500FULL, adv2500);
++		ret = genphy_c45_read_status(phydev);
+ 		if (ret < 0)
+ 			return ret;
++
++		/* Clause 45 has no standardized support for 1000BaseT, therefore
++		 * use vendor registers for this mode.
++		 */
++		val = phy_read_mmd(phydev, MDIO_MMD_VEND2, RTL_V2_GANLPAR);
++		if (val < 0)
++			return val;
++
++		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseT_Half_BIT,
++				phydev->lp_advertising,
++				val & RTL_V2_GANLPAR_LP_1000BASET_HALF_DUPLEX_CAP);
++		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseT_Full_BIT,
++				phydev->lp_advertising, 
++				val & RTL_V2_GANLPAR_LP_1000BASET_FULL_DUPLEX_CAP);
+ 	}
+ 
+-	return __genphy_config_aneg(phydev, ret);
++	val = phy_read_mmd(phydev, MDIO_MMD_VEND2, RTL_V2_PHYSR);
++	if (val < 0)
++		return val;
++
++	return rtlgen_get_speed(phydev, val);
+ }
+ 
+-static int rtl822x_read_status(struct phy_device *phydev)
++static int rtl822x_suspend(struct phy_device *phydev)
+ {
+-	int ret;
+-
+-	if (phydev->autoneg == AUTONEG_ENABLE) {
+-		int lpadv = phy_read_paged(phydev, 0xa5d, 0x13);
+-
+-		if (lpadv < 0)
+-			return lpadv;
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phydev->mdio.addr == 17) return 0;
+ 
+-		linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseT_Full_BIT,
+-			phydev->lp_advertising, lpadv & RTL_LPADV_10000FULL);
+-		linkmode_mod_bit(ETHTOOL_LINK_MODE_5000baseT_Full_BIT,
+-			phydev->lp_advertising, lpadv & RTL_LPADV_5000FULL);
+-		linkmode_mod_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
+-			phydev->lp_advertising, lpadv & RTL_LPADV_2500FULL);
+-	}
++	return genphy_c45_pma_suspend(phydev);
++}
+ 
+-	ret = genphy_read_status(phydev);
+-	if (ret < 0)
+-		return ret;
++static int rtl822x_resume(struct phy_device *phydev)
++{
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phydev->mdio.addr == 17) return 0;
+ 
+-	return rtlgen_get_speed(phydev);
++	return genphy_c45_pma_resume(phydev);
+ }
+ 
+ static bool rtlgen_supports_2_5gbps(struct phy_device *phydev)
+@@ -747,8 +786,16 @@ static int rtlgen_match_phy_device(struct phy_device *phydev)
+ 
+ static int rtl8226_match_phy_device(struct phy_device *phydev)
+ {
+-	return phydev->phy_id == RTL_GENERIC_PHYID &&
+-	       rtlgen_supports_2_5gbps(phydev);
++	int val;
++
++	if (phydev->phy_id != RTL_GENERIC_PHYID)
++		return false;
++
++	val = phy_read_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_NG_EXTABLE);
++	if (val < 0)
++		return false;
++
++	return !!(val & MDIO_PMA_NG_EXTABLE_2_5GBT);
+ }
+ 
+ static int rtlgen_resume(struct phy_device *phydev)
+@@ -986,67 +1033,51 @@ static struct phy_driver realtek_drvs[] = {
+ 	}, {
+ 		.name		= "RTL8226 2.5Gbps PHY",
+ 		.match_phy_device = rtl8226_match_phy_device,
+-		.get_features	= rtl822x_get_features,
+-		.config_aneg	= rtl822x_config_aneg,
+-		.read_status	= rtl822x_read_status,
+-		.suspend	= genphy_suspend,
+-		.resume		= rtlgen_resume,
+-		.read_page	= rtl821x_read_page,
+-		.write_page	= rtl821x_write_page,
+-		.read_mmd	= rtl822x_read_mmd,
+-		.write_mmd	= rtl822x_write_mmd,
++		.get_features   = rtl822x_get_features,
++		.config_aneg    = rtl822x_config_aneg,
++		.read_status    = rtl822x_read_status,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc840),
+ 		.name		= "RTL8226B_RTL8221B 2.5Gbps PHY",
+-		.get_features	= rtl822x_get_features,
+-		.config_aneg	= rtl822x_config_aneg,
+-		.read_status	= rtl822x_read_status,
+-		.suspend	= genphy_suspend,
+-		.resume		= rtlgen_resume,
+-		.read_page	= rtl821x_read_page,
+-		.write_page	= rtl821x_write_page,
+-		.read_mmd	= rtl822x_read_mmd,
+-		.write_mmd	= rtl822x_write_mmd,
++		.get_features   = rtl822x_get_features,
++		.config_aneg    = rtl822x_config_aneg,
++		.read_status    = rtl822x_read_status,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc838),
+ 		.name           = "RTL8226-CG 2.5Gbps PHY",
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+ 		.read_status    = rtl822x_read_status,
+-		.suspend        = genphy_suspend,
+-		.resume         = rtlgen_resume,
+-		.read_page      = rtl821x_read_page,
+-		.write_page     = rtl821x_write_page,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc848),
+ 		.name           = "RTL8226B-CG_RTL8221B-CG 2.5Gbps PHY",
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+ 		.read_status    = rtl822x_read_status,
+-		.suspend        = genphy_suspend,
+-		.resume         = rtlgen_resume,
+-		.read_page      = rtl821x_read_page,
+-		.write_page     = rtl821x_write_page,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc849),
+ 		.name           = "RTL8221B-VB-CG 2.5Gbps PHY",
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+ 		.read_status    = rtl822x_read_status,
+-		.suspend        = genphy_suspend,
+-		.resume         = rtlgen_resume,
+-		.read_page      = rtl821x_read_page,
+-		.write_page     = rtl821x_write_page,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc84a),
+ 		.name           = "RTL8221B-VM-CG 2.5Gbps PHY",
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+ 		.read_status    = rtl822x_read_status,
+-		.suspend        = genphy_suspend,
+-		.resume         = rtlgen_resume,
+-		.read_page      = rtl821x_read_page,
+-		.write_page     = rtl821x_write_page,
++		.suspend        = rtl822x_suspend,
++		.resume         = rtl822x_resume,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc961),
+ 		.name		= "RTL8366RB Gigabit Ethernet",
+-- 
+2.42.0
+

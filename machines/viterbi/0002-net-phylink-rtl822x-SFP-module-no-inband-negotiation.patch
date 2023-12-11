@@ -1,0 +1,46 @@
+From 1f8f92e60f372be18def1aac5607b4eeb25b6ec3 Mon Sep 17 00:00:00 2001
+From: Your Name <you@example.com>
+Date: Fri, 28 Jul 2023 16:06:51 +0200
+Subject: [PATCH 2/4] net: phylink: rtl822x SFP module no inband negotiation
+
+The rtl822x dows not seem to support inband negotiation, when it is in
+"Rate Adaptor Mode". The datasheet has very limited information about
+this mode.
+
+Because there is no openly documented way to determine if the rtl822x is in
+"Rate Adaptor Mode", assume when a rtl822x is usiing RollBall protocol
+address, it is setup in this mode. Can change this, if a better option is
+known to detect this mode.
+---
+ drivers/net/phy/phylink.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index b5f012619e42..cbe337c408fb 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -3275,11 +3275,18 @@ static void phylink_sfp_link_up(void *upstream)
+ 	phylink_enable_and_run_resolve(pl, PHYLINK_DISABLE_LINK);
+ }
+ 
+-/* The Broadcom BCM84881 in the Methode DM7052 is unable to provide a SGMII
+- * or 802.3z control word, so inband will not work.
+- */
+ static bool phylink_phy_no_inband(struct phy_device *phy)
+ {
++	/* Assume when a RTL822x is accessed via RollBall address, it uses
++	* "Rate Adaptor Mode", until a better option is known to detect this mode.
++	*/
++	if (phy_id_compare(phy->c45_ids.device_ids[1], 0x001cc840, 0xfffffff0) &&
++			(phy->mdio.addr == 17))
++		return true;
++
++	/* The Broadcom BCM84881 in the Methode DM7052 is unable to provide
++	* a SGMII or 802.3z control word, so inband will not work.
++	*/
+ 	return phy->is_c45 && phy_id_compare(phy->c45_ids.device_ids[1],
+ 					     0xae025150, 0xfffffff0);
+ }
+-- 
+2.42.0
+
