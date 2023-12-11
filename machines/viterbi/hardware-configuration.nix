@@ -65,7 +65,7 @@ let
       MT76_LEDS = yes;
       MT76_CONNAC_LIB = module;
       MT7915E = module;
-      MT7986_WMAC = yes;
+      MT798X_WMAC = yes;
       # Pinctrl
       EINT_MTK = yes;
       PINCTRL_MTK = yes;
