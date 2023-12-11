@@ -106,7 +106,7 @@ with lib;
   #i18n.inputMethod.enabled = "ibus";
 
   fonts = {
-    fonts = (with pkgs; [
+    packages = (with pkgs; [
       powerline-fonts
       font-awesome
       corefonts

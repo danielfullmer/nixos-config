@@ -427,7 +427,7 @@
   };
 
   programs.hyprland.enable = true;
-  programs.hyprland.nvidiaPatches = true;
+  programs.hyprland.enableNvidiaPatches = true;
   programs.hyprland.xwayland.enable = true;
   programs.xwayland.enable = true;
 
