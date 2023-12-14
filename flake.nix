@@ -22,25 +22,30 @@
     pinebook-pro.flake = false;
 
     jetpack-nixos.url = "github:anduril/jetpack-nixos";
+
+    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos }: let
-    mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem (nixpkgs.lib.recursiveUpdate {
+  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
+    mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
         (./machines + "/${name}/configuration.nix")
         (./machines + "/${name}/hardware-configuration.nix")
         self.nixosModules.base
       ] ++ [ extraConfig ];
-    } {});
+      specialArgs.flakeInputs = inputs;
+    };
   in {
     nixosConfigurations = {
       # Main desktop
       bellman = mkSystem "bellman" "x86_64-linux" {};
-      # Laptop (Framework 2020)
+      # Laptop (Framework AMD 7040 series)
       riemann = mkSystem "riemann" "x86_64-linux" {};
-      # Laptop (surface pro 4)
-      #euler = mkSystem "euler" "x86_64-linux" {};
+      # ASUS ROG Ally (Steam deck clone)
+      kelvin = mkSystem "kelvin" "x86_64-linux" {
+        imports = [ jovian-nixos.nixosModules.default ];
+      };
       # Laptop (pinebook pro)
       #laplace = mkSystem "laplace" "aarch64-linux" ({ config, lib, pkgs, ... }: {
       #  imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
