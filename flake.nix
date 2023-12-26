@@ -42,6 +42,8 @@
       bellman = mkSystem "bellman" "x86_64-linux" {};
       # Laptop (Framework AMD 7040 series)
       riemann = mkSystem "riemann" "x86_64-linux" {};
+      # Old 11th gen Intel Framework board in Cooler master case
+      fourier = mkSystem "fourier" "x86_64-linux" {};
       # ASUS ROG Ally (Steam deck clone)
       kelvin = mkSystem "kelvin" "x86_64-linux" {
         imports = [ jovian-nixos.nixosModules.default ];

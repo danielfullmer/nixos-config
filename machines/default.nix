@@ -23,6 +23,7 @@ in
         riemann = "30.0.0.11";
         noether = "30.0.0.62";
         kelvin = "30.0.0.27";
+        fourier = "30.0.0.52";
 
         banach = "30.0.0.156";
         tarski = "30.0.0.32";

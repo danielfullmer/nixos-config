@@ -9,6 +9,7 @@ keys:
   - &noether age1tmmp92pmf7ngshe65e7cmfllu9gnvcy4weuxckvs8wuzpf4uscvst46kp5
   - &viterbi age14wp59ju8r43lqzrrv94s5w4y7rwjp960meezjw3xfhsfmkphvp0qfrjyqu
   - &kelvin age1e7gr07hpdk6uam75d0z6u83ke6y0hu9ld70ea3hemfdqgpdzrvlqdzv4pe
+  - &fourier age173htfqgfpyz53c6u442ny3f2wud8fjd49lcd5dcp053gk2cqvg7s533dyt
 creation_rules:
   - path_regex: machines/bellman/secrets/[^/]+$
     key_groups:
@@ -62,6 +63,13 @@ creation_rules:
       - *danielfullmer-offlinekey
       age:
       - *kelvin
+  - path_regex: machines/fourier/secrets/[^/]+$
+    key_groups:
+    - pgp:
+      - *danielfullmer
+      - *danielfullmer-offlinekey
+      age:
+      - *fourier
   - path_regex: secrets/[^/]+$
     key_groups:
     - pgp:
@@ -76,3 +84,4 @@ creation_rules:
       - *noether
       - *viterbi
       - *kelvin
+      - *fourier
