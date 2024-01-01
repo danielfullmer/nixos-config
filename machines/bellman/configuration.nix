@@ -424,10 +424,10 @@
     enable = true;
     domain = "invidious.daniel.fullmer.me";
     nginx.enable = true;
+    settings.db.user = "invidious";
   };
 
   programs.hyprland.enable = true;
-  programs.hyprland.enableNvidiaPatches = true;
   programs.hyprland.xwayland.enable = true;
   programs.xwayland.enable = true;
 

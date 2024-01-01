@@ -34,7 +34,7 @@
 
     # NVIM-specific stuff
     nvim-treesitter.withAllGrammars
-    nvim-ts-rainbow
+    rainbow-delimiters-nvim
     playground # Treesitter playground
     nvim-lspconfig
     lspsaga-nvim
