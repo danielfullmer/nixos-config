@@ -70,6 +70,7 @@ in
 
   systemd.services.kodi = {
     wantedBy = [ "multi-user.target" ];
+    conflicts = [ "getty@tty1.service" ];
     serviceConfig = {
       User = "kodi";
       Group = "users";
