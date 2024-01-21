@@ -189,7 +189,7 @@ with lib;
 #  ];
 
   # EDID file made by adding 117hz mode using CRU.exe
-  boot.kernelParams = [ "drm.edid_firmware=DP-3:edid_117.bin" ];
+  boot.kernelParams = [ "drm.edid_firmware=DP-3:edid_117.bin" "nvidia-drm.hdmi_deepcolor=1" ];
 
   hardware.firmware = [
     pkgs.wireless-regdb
