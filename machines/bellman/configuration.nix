@@ -384,7 +384,6 @@
   # For printer
   services.printing.enable = true;
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
 
   services.avahi.allowInterfaces = [ "enp68s0" config.controlnet.ap.interface ];
   services.avahi.openFirewall = false; # Port 5353

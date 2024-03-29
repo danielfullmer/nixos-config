@@ -36,7 +36,6 @@ with lib;
   # However, vdevs can't be removed from a pool if they have different ashift values, so just use ashift=12 everywhere.
   boot.supportedFilesystems = [ "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
-  boot.zfs.enableUnstable = true;
   services.zfs.autoScrub.enable = true;
 
   fileSystems = {

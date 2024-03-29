@@ -77,6 +77,5 @@ in
 
     hardware.wirelessRegulatoryDatabase = true;
     environment.systemPackages = with pkgs; [ wirelesstools iw ];
-    services.udev.packages = with pkgs; [ crda ];
   };
 }

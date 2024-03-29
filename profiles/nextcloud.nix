@@ -39,8 +39,10 @@ in {
           #dbname = "nextcloud";
           adminpassFile = "/var/secrets/nextcloud";
           adminuser = "root";
-          extraTrustedDomains = [ localAddress ]; # Ensure the "proxyPass" location is a valid domain
-          overwriteProtocol = "https"; # Since we're behind nginx reverse proxy, we need to know that we should always use https
+        };
+        settings = {
+          trusted_domains = [ localAddress ]; # Ensure the "proxyPass" location is a valid domain
+          overwriteprotocol = "https"; # Since we're behind nginx reverse proxy, we need to know that we should always use https
         };
       };
 
