@@ -6,6 +6,10 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Work around flashing white screen when in fullscreen video
+  # https://community.frame.work/t/tracking-graphical-corruption-in-fedora-39-amd-3-03-bios/39073/51
+  boot.kernelParams = [ "amdgpu.sg_display=0" ];
+
   fileSystems."/" =
     { device = "laplace/root";
       fsType = "zfs";
