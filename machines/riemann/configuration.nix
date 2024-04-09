@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -58,4 +58,20 @@
   programs.captive-browser.interface = "wlp1s0";
 
   services.redshift.enable = true;
+
+  services.upower.enable = true;
+
+  # 0x0f is DisplayPort cable
+  services.xserver.windowManager.i3.config = ''
+    bindsym $mod+Shift+d exec ${pkgs.ddcutil}/bin/ddcutil -l "DELL U3821DW" setvcp 60 0x0f
+  '';
+  environment.systemPackages = with pkgs; [ ddcutil ];
+  boot.kernelModules = [ "i2c-dev" ];
+  services.udev.packages = lib.singleton (pkgs.writeTextFile {
+    name = "ddc-i2c-udev-rules";
+    destination = "/etc/udev/rules.d/51-ddc-i2c-custom.rules";
+    text = ''
+      SUBSYSTEM=="i2c-dev", DRIVERS=="amdgpu", TAG+="uaccess"
+    '';
+  });
 }
