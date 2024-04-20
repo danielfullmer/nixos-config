@@ -47,40 +47,27 @@
 
   # 2.5/5Gbit (red) interface
   networking.interfaces.enp69s0 = {
-    useDHCP = true;
-    macAddress = "b4:2e:99:a7:0b:e8";
+    #useDHCP = true;
+    #macAddress = "b4:2e:99:a7:0b:e8";
+
+    ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
+    ipv4.routes = [ { address = "0.0.0.0"; prefixLength = 0; via = "192.168.1.1"; } ];
   };
   networking.firewall.interfaces.enp69s0.allowedUDPPorts = [ 68 ]; # DHCP Client
+  #networking.firewall.interfaces.enp69s0.allowedTCPPorts = [ 32400 ]; # plex
   networking.nat.externalInterface = "enp69s0";
 
   networking.useDHCP = false;
-  networking.interfaces.enp68s0.ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
+#  networking.interfaces.enp68s0 = {
+#    ipv4.addresses = [ { address = "192.168.1.200"; prefixLength = 24; } ];
+#    ipv4.routes = [ { address = "0.0.0.0"; prefixLength = 0; via = "192.168.1.1"; } ];
+#  };
 
   networking.vlans = {
     netboot = {
       id = 3;
       interface = "enp68s0";
     };
-    iot = {
-      id = 4;
-      interface = "enp68s0";
-    };
-  };
-
-  # IoT vlan
-  networking.interfaces.iot.ipv4.addresses = [ { address = "192.168.6.1"; prefixLength=24; } ];
-  networking.firewall.interfaces.iot.allowedUDPPorts = [ 53 67 ]; # DNS and DHCP
-  networking.nat.internalInterfaces = [ "iot" ];
-  # TODO: Firewall individual devices
-  services.dnsmasq = {
-    enable = true;
-    settings = {
-      interface = "iot";
-      dhcp-range = "interface:iot,192.168.6.10,192.168.6.254";
-      dhcp-host = "00:1a:70:0a:22:a0,192.168.6.2,iot-wifi";
-    };
-    # iot-wifi is an old 2.4GHz router (Linksys WCG200). Its IP is set
-    # statically, but I add it here too for documentation. Need to lock it down better.
   };
 
   # Firewall

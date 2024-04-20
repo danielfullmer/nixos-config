@@ -29,12 +29,14 @@ let
   linux_bpir3 = pkgs.linux_6_6.override {
     inherit kernelPatches;
 
+    #autoModules = false;
+
     # This will take ~22GB to build.  /tmp better be big.
     structuredExtraConfig = with lib.kernel; {
       # Disable extremely unlikely features to reduce build time and storage requirements
       # DRM takes a substantual amount of storage during build
-      DRM = no;
-      SOUND = no;
+      DRM = lib.mkForce no;
+      SOUND = lib.mkForce no;
       # Where would you attach an IB interface?
       INFINIBAND = lib.mkForce no;
 
