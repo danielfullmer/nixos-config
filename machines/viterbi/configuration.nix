@@ -7,7 +7,7 @@
     ../../profiles/dns.nix
     ../../profiles/zerotier.nix
 
-    #../../profiles/cameras.nix
+    ../../profiles/cameras.nix
   ];
 
   networking.hostName = "viterbi";
@@ -87,7 +87,7 @@
   };
   networking.firewall.interfaces.eth1.allowedUDPPorts = [ 68 ]; # DHCP Client
   networking.nat.externalInterface = "eth1";
-  networking.nat.internalInterfaces = [ "br0" ];
+  networking.nat.internalInterfaces = [ "br0" "wan" ];
 
   # Bridge lan0 - lan4
   networking.bridges.br0.interfaces = [ "lan0" "lan1" "lan2" "lan3" "lan4" ];

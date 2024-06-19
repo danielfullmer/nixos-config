@@ -22,7 +22,6 @@
     ../../profiles/cuttlefish.nix
     ../../profiles/nextcloud.nix
     #../../xrdesktop-overlay
-    ../../profiles/cameras.nix
     ../../profiles/noether-remote-builder.nix
 
     ../../profiles/rtlsdr.nix
@@ -63,12 +62,12 @@
 #    ipv4.routes = [ { address = "0.0.0.0"; prefixLength = 0; via = "192.168.1.1"; } ];
 #  };
 
-  networking.vlans = {
-    netboot = {
-      id = 3;
-      interface = "enp68s0";
-    };
-  };
+#  networking.vlans = {
+#    netboot = {
+#      id = 3;
+#      interface = "enp68s0";
+#    };
+#  };
 
   # Firewall
   services.openssh.openFirewall = false;

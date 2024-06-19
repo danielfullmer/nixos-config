@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 
+let
+  iface = "wan";
+in
 lib.mkMerge [
 {
   # Stuff for streaming cameras?
@@ -95,29 +98,24 @@ lib.mkMerge [
 #    })
 #  ];
 
-  environment.systemPackages = with pkgs; [
-    obs-studio
-  ] ++ (with gst_all_1; [ gstreamer gstreamer.dev gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-rtsp-server ]);
+#  environment.systemPackages = with pkgs; [
+#    obs-studio
+#  ] ++ (with gst_all_1; [ gstreamer gstreamer.dev gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-rtsp-server ]);
 }
 {
-  networking.vlans.cameras = {
-    id = 5;
-    interface = "enp68s0";
-  };
-
   # Cameras vlan
-  networking.interfaces.cameras.ipv4.addresses = [ { address = "192.168.7.1"; prefixLength=24; } ];
-  networking.firewall.interfaces.cameras.allowedUDPPorts = [ 53 67 ]; # DNS and DHCP
+  networking.interfaces.${iface}.ipv4.addresses = [ { address = "192.168.5.1"; prefixLength=24; } ];
+  networking.firewall.interfaces.${iface}.allowedUDPPorts = [ 54 67 ]; # DNS and DHCP
   # TODO: Firewall individual devices
   services.dnsmasq = {
     enable = true;
     settings = {
-      interface = "cameras";
-      dhcp-range = "interface:cameras,192.168.7.2,192.168.7.254";
+      interface = iface;
+      dhcp-range = "interface:${iface},192.168.5.2,192.168.5.254";
       dhcp-host = [
-        "24:52:6a:2d:f0:bc,192.168.7.2,gym-cam"
-        "6c:1c:71:93:a1:a7,192.168.7.3,garage-cam"
-        "6c:1c:71:93:a1:d0,192.168.7.4,stair-cam"
+        "24:52:6a:2d:f0:bc,192.168.5.2,gym-cam"
+        "6c:1c:71:93:a1:a7,192.168.5.3,garage-cam"
+        "6c:1c:71:93:a1:d0,192.168.5.4,stair-cam"
       ];
     };
   };
@@ -126,9 +124,9 @@ lib.mkMerge [
     enable = true;
     settings = {
       paths = {
-        gym-cam.source = "rtsp://anon:insecure1@192.168.7.2:554/cam/realmonitor?channel=1&subtype=0";
-        garage-cam.source = "rtsp://anon:insecure1@192.168.7.3:554/cam/realmonitor?channel=1&subtype=0";
-        stair-cam.source = "rtsp://anon:insecure1@192.168.7.4:554/cam/realmonitor?channel=1&subtype=0";
+        gym-cam.source = "rtsp://anon:insecure1@192.168.5.2:554/cam/realmonitor?channel=1&subtype=0";
+        garage-cam.source = "rtsp://anon:insecure1@192.168.5.3:554/cam/realmonitor?channel=1&subtype=0";
+        stair-cam.source = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=0";
       };
     };
   };
