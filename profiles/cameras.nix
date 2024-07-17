@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  iface = "wan";
+  iface = "lan3";
 in
 lib.mkMerge [
 {

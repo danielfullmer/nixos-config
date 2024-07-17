@@ -28,9 +28,9 @@
 
     #../../profiles/robotnix-infra.nix
 
-    ./ap.nix
+    #./ap.nix
     #./vfio.nix
-    ../../profiles/pxe-server.nix
+    #../../profiles/pxe-server.nix
     #../../profiles/pg-upgrade.nix
   ];
 
@@ -371,7 +371,7 @@
   services.printing.enable = true;
   services.avahi.enable = true;
 
-  services.avahi.allowInterfaces = [ "enp68s0" config.controlnet.ap.interface ];
+  services.avahi.allowInterfaces = [ "enp68s0" ];
   services.avahi.openFirewall = false; # Port 5353
 
   # Switch LG TV based on if CM storm keyboard is added/removed
