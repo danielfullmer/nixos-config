@@ -60,28 +60,25 @@ with lib;
   boot.initrd.postDeviceCommands = mkAfter ''
     zfs load-key pool/root < /zfs.key
     zfs load-key pool/home < /zfs.key
-    zfs load-key pool/win10 < /zfs.key
   '';
 
   services.sanoid = let
     common = {
       hourly = 48;
       daily = 30;
-      monthly = 6;
-      yearly = 0;
+      monthly = 12;
+      yearly = 1;
     };
   in {
-    #enable = true;
+    enable = true;
     extraArgs = [ "--verbose" ];
     datasets."pool/home" = common;
     datasets."pool/root" = common;
-    datasets."pool/win10" = common;
-    datasets."pool/win10-vr" = common;
     datasets."tank/backup" = common;
   };
 
   services.syncoid = {
-    #enable = true;
+    enable = true;
     commands = let
       common = {
         sshKey = config.sops.secrets.wrench-zfs-syncoid-ssh.path;
@@ -91,15 +88,13 @@ with lib;
     in {
       "pool/home" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/home"; } // common;
       "pool/root" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/root"; } // common;
-      "pool/win10" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10"; } // common;
-      "pool/win10-vr" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/win10-vr"; } // common;
       "tank/backup" = { target = "zfs-syncoid@wrench:wrenchpool/bellman/backup"; } // common;
     };
     service.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
   };
-  #sops.secrets.wrench-zfs-syncoid-ssh = {
-  #  owner = config.services.syncoid.user;
-  #};
+  sops.secrets.wrench-zfs-syncoid-ssh = {
+    owner = config.services.syncoid.user;
+  };
 
   swapDevices = [ ];
 
