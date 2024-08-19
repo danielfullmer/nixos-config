@@ -32,7 +32,7 @@
 
   services.xserver.libinput.enable = true;
 
-  theme.fontSize = 14;
+  theme.fontSize = 16;
 
   # HW Accelerated video decoding
   hardware.opengl = {
