@@ -95,15 +95,33 @@
   };
   networking.firewall.interfaces.eth1.allowedUDPPorts = [ 68 ]; # DHCP Client
 
+  # Connected to Fiber ONT (Internet)
+  networking.interfaces.wan.useDHCP = true;
+  networking.firewall.interfaces.wan.allowedUDPPorts = [ 68 ]; # DHCP Client
+
   # Bridge lan0 - lan4
   networking.bridges.br0.interfaces = [ "lan0" "lan1" "lan2" "lan4" ];
   networking.interfaces.br0.ipv4.addresses = [ { address = "192.168.1.1"; prefixLength = 24; } ];
   networking.firewall.interfaces.br0.allowedTCPPorts = [ 22 ];
 
-  # wan port goes to PoE switch in closet. Needs to pass VLANs.
-
   networking.firewall.interfaces.wlan1.allowedTCPPorts = [ 22 ];
 
-  networking.nat.externalInterface = "eth1";
+  networking.nat.externalInterface = "wan";
   networking.nat.internalInterfaces = [ "br0" "lan4" ];
+
+  # TODO: Multihomed routing. Two Internet connections.
+  # Naively, we just get two default routes, one with a higher metric. This works fine for outgoing packets if you specify the interface.
+
+  # Added to /etc/iproute2
+  # ip route add table cable default via 107.139.226.1 dev wan
+  # iptables -t mangle -I PREROUTING 1 -s 107.139.226.229 -j MARK --set-mark 2 # 2 is cable
+  # iptables -t mangle -I OUTPUT 1 -s 107.139.226.229 -j MARK --set-mark 2 # 2 is cable
+  # ip rule add fwmark 2 table cable
+  # iptables -t mangle -I nixos-fw-rpfilter 1 -i wan -j RETURN
+  # ip mptcp endpoint add 104.34.221.56 dev eth1 subflow
+  # ip mptcp endpoint add 107.139.226.229 dev wan subflow
+
+  # Ran this on gauss:
+  # ip mptcp endpoint add 167.71.187.97 dev ens3 signal
+  # ip mptcp limits set subflows 2  # For some reason its default is 0
 }
