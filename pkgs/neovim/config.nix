@@ -209,7 +209,6 @@ local nvim_lsp = require('lspconfig')
 
 -- Add python-lsp-server[all] to project (via poetry, etc)
 nvim_lsp.pylsp.setup{}
-nvim_lsp.tsserver.setup{}
 nvim_lsp.nil_ls.setup{}
 nvim_lsp.hls.setup{}
 
