@@ -141,6 +141,7 @@ with lib;
 
   # Nvidia 1080ti
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.open = false; # The onen driver only works on Turing (2xxx) and later cards
   hardware.nvidia.modesetting.enable = true;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
   services.xserver.screenSection = ''
@@ -182,7 +183,7 @@ with lib;
 #    }
 #  ];
 
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   # EDID file made by adding 110hz mode using CRU.exe
   boot.kernelParams = [ "drm.edid_firmware=DP-3:edid_110.bin" ];

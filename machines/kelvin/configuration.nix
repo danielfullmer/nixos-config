@@ -38,7 +38,6 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    yuzu
   ];
 
   jovian.steam = {

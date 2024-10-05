@@ -3,6 +3,7 @@
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true; # Provides udev rules for controller, HTC vive, and Valve Index
 
+  hardware.graphics.enable32Bit = true; # Needed for steam
   hardware.opengl.driSupport32Bit = true; # Needed for steam
   hardware.pulseaudio.support32Bit = true;
 

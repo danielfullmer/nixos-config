@@ -48,23 +48,23 @@
       astroid.sendMailCommand = "sendmail -i -t";
     };
 
-    accounts.dfullmer-aht = {
-      address = "dfullmer@aht.ai";
-      realName = "Daniel Fullmer";
-
-      flavor = "gmail.com";
-      passwordCommand = "pass google.com/dfullmer@aht.ai-gmail";
-
-      notmuch.enable = true;
-      lieer = {
-        enable = true;
-        sync.enable = true;
-        sync.frequency = "*:0/3"; # Every 3 minutes
-      };
-
-      astroid.enable = true;
-      astroid.sendMailCommand = "gmi send -t -C ${config.accounts.email.accounts.dfullmer-aht.maildir.absPath}";
-    };
+#    accounts.dfullmer-aht = {
+#      address = "dfullmer@aht.ai";
+#      realName = "Daniel Fullmer";
+#
+#      flavor = "gmail.com";
+#      passwordCommand = "pass google.com/dfullmer@aht.ai-gmail";
+#
+#      notmuch.enable = true;
+#      lieer = {
+#        enable = true;
+#        sync.enable = true;
+#        sync.frequency = "*:0/3"; # Every 3 minutes
+#      };
+#
+#      astroid.enable = true;
+#      astroid.sendMailCommand = "gmi send -t -C ${config.accounts.email.accounts.dfullmer-aht.maildir.absPath}";
+#    };
   };
 
   programs = {

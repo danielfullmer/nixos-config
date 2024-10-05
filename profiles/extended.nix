@@ -16,7 +16,7 @@
     #bandwhich
     iotop
 
-    youtube-dl
+    yt-dlp
 
     jq
     tig

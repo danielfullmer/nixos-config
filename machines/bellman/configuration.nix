@@ -407,9 +407,20 @@
 
   services.invidious = {
     enable = true;
+    #package = pkgs.invidious.overrideAttrs (_: {
+    #  version = "2.20240427";
+    #  src = pkgs.fetchFromGitHub {
+    #    owner = "iv-org";
+    #    repo = "invidious";
+    #    rev = "v2.20240427";
+    #    hash = "sha256-P4Tz7spHfAopRmbw27x+7UAn2d9o7QWzBdFXYsnwIoQ=";
+    #  };
+    #  doCheck = false;
+    #});
     domain = "invidious.daniel.fullmer.me";
     nginx.enable = true;
     settings.db.user = "invidious";
+    sig-helper.enable = true;
   };
 
   programs.hyprland.enable = true;
