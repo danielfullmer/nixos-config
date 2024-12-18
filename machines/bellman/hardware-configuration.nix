@@ -186,14 +186,17 @@ with lib;
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   # EDID file made by adding 110hz mode using CRU.exe
-  boot.kernelParams = [ "drm.edid_firmware=DP-3:edid_110.bin" ];
+
+  hardware.display.outputs.DP-3.edid = "edid_110.bin";
+  hardware.display.edid.packages = [
+    (pkgs.runCommand "custom-edid" {} ''
+      mkdir -p $out/lib/firmware/edid
+      cp ${./edid_110.bin} $out/lib/firmware/edid/edid_110.bin
+    '')
+  ];
 
   hardware.firmware = [
     pkgs.wireless-regdb
-    (pkgs.runCommand "custom-edid" {} ''
-      mkdir -p $out/lib/firmware
-      cp ${./edid_110.bin} $out/lib/firmware/edid_110.bin
-    '')
   ];
   hardware.enableRedistributableFirmware = true;
   boot.extraModprobeConfig = ''
