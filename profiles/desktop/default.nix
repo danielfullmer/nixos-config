@@ -222,7 +222,7 @@ with lib;
   environment.variables.MPV_HOME = "/etc/mpv";
   environment.etc."mpv/mpv.conf".text = ''
     hwdec=auto-safe
-    vo=gpu
+    vo=gpu-next
     profile=gpu-hq
   '';
 
