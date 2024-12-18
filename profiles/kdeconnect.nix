@@ -1,10 +1,13 @@
 { config, pkgs, lib, ... }:
+let
+  inherit (pkgs.plasma5Packages) kdeconnect-kde;
+in
 {
-  environment.systemPackages = with pkgs; [ kdeconnect ];
+  environment.systemPackages =  [ kdeconnect-kde ];
 
   systemd.user.services = {
     kdeconnect-indicator = {
-      serviceConfig.ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
+      serviceConfig.ExecStart = "${kdeconnect-kde}/bin/kdeconnect-indicator";
       wantedBy = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
     };

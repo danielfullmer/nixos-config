@@ -27,7 +27,7 @@
     fzfWrapper
 
     # Code Completion / Navigation
-    nvim-compe
+    nvim-cmp
     # ultisnips
     # vim-snippets
     nerdtree

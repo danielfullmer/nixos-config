@@ -160,8 +160,8 @@ with lib;
     pulseaudio
     pavucontrol
 
-    gnome.gnome-themes-extra
-    gnome.adwaita-icon-theme
+    gnome-themes-extra
+    adwaita-icon-theme
 
     orchis-theme
 
