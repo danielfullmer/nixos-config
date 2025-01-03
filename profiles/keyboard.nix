@@ -375,8 +375,6 @@
     nmap s <Plug>(easymotion-s)
     nmap S <Plug>(easymotion-s2)
 
-    " ncm2 (neovim-completion-manager-2)
-    au InsertEnter * call ncm2#enable_for_buffer()
     set completeopt=noinsert,menuone,noselect
 
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
