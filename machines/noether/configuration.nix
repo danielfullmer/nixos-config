@@ -55,9 +55,7 @@ in
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.bluetooth.enable = true;
 
   environment.systemPackages = with pkgs; [ wget git ];
 
