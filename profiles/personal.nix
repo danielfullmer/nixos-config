@@ -3,6 +3,7 @@
 
 let
   ssh-yubikey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMTGWu4gkXsWewBZg5if04qt5lyEAKwhi12wmn5e2hKvVLlTlIq8gGBF7d/Xv8G2NlHRsNkugeYyBtB2qfkPWtcDnd1+ws78UTUbYDPpZJzRnIjUEzAg8Q5DzgD9feGHmpONmsr6K71ZGJFwQH2Vf8RHzYIzAYPY85raQiV2Akpw9QtWjp48sNUKoJ75ZWZWzQdJtouJYZRnrK+gweKVWFB0cv7qrIgSOFHAjGJLON+cMXN+T/VIDSZITCRcVLBMlYYGv5NZecspRPO1UV0bgWNHZ3dZwJOEk6cPYUdyA/761zhCWCUc7MJH5xEz3sxcqBSmxtwFYvDFDWkWYcD1gh yubikey";
+  ssh-yubikey2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG43uYxPOPoN1mAD16DDsB3dp0r6C0X40CGssBTeft33 yubikey2";
 in
 {
   imports = [ ../machines ];
@@ -53,9 +54,9 @@ in
           "libvirtd" "systemd-journal" "input"
         ];
         initialPassword = "changeme";
-        openssh.authorizedKeys.keys = [ ssh-yubikey ];
+        openssh.authorizedKeys.keys = [ ssh-yubikey ssh-yubikey2 ];
       };
-      root.openssh.authorizedKeys.keys = [ ssh-yubikey ];
+      root.openssh.authorizedKeys.keys = [ ssh-yubikey ssh-yubikey2 ];
     };
   };
 
