@@ -141,22 +141,22 @@ with lib;
 
   # Nvidia 1080ti
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = false; # The onen driver only works on Turing (2xxx) and later cards
+  hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
-  services.xserver.screenSection = ''
-    Option         "Stereo" "0"
-    #Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
-
-    Option          "ModeValidation" "AllowNonEdidModes, NoHorizSyncCheck, NoVertRefreshCheck"
-
-    Option         "SLI" "Off"
-    Option         "MultiGPU" "Off"
-    Option         "BaseMosaic" "off"
-    Option         "AllowIndirectGLXProtocol" "off"
-    Option         "TripleBuffer" "on"
-    Option     "RegistryDwords"  "RMUseSwI2c=0x01; RMI2cSpeed=100"
-  '';
+#  services.xserver.screenSection = ''
+#    Option         "Stereo" "0"
+#    #Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
+#
+#    Option          "ModeValidation" "AllowNonEdidModes, NoHorizSyncCheck, NoVertRefreshCheck"
+#
+#    Option         "SLI" "Off"
+#    Option         "MultiGPU" "Off"
+#    Option         "BaseMosaic" "off"
+#    Option         "AllowIndirectGLXProtocol" "off"
+#    Option         "TripleBuffer" "on"
+#    Option     "RegistryDwords"  "RMUseSwI2c=0x01; RMI2cSpeed=100"
+#  '';
   # NVIDIA 1080ti (Pascal) does not support Display Stream Compression (DSC).
   # So we have to use a custom modeline to have it fit into DisplayPort HBR3
   # https://tomverbeure.github.io/video_timings_calculator
@@ -169,7 +169,6 @@ with lib;
 #  services.xserver.monitorSection = ''
 #    Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
 #  '';
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production; # v515.x works with my custom modeline, but 520.56 didn't...
   #services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
 
 #  services.xserver.xrandrHeads = [
@@ -183,17 +182,17 @@ with lib;
 #    }
 #  ];
 
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   # EDID file made by adding 110hz mode using CRU.exe
 
-  hardware.display.outputs.DP-3.edid = "edid_110.bin";
-  hardware.display.edid.packages = [
-    (pkgs.runCommand "custom-edid" {} ''
-      mkdir -p $out/lib/firmware/edid
-      cp ${./edid_110.bin} $out/lib/firmware/edid/edid_110.bin
-    '')
-  ];
+#  hardware.display.outputs.DP-3.edid = "edid_110.bin";
+#  hardware.display.edid.packages = [
+#    (pkgs.runCommand "custom-edid" {} ''
+#      mkdir -p $out/lib/firmware/edid
+#      cp ${./edid_110.bin} $out/lib/firmware/edid/edid_110.bin
+#    '')
+#  ];
 
   hardware.firmware = [
     pkgs.wireless-regdb
