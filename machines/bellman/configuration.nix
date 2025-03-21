@@ -103,7 +103,7 @@
   };
 
   services.hydra = {
-    enable = true;
+    enable =  false; # TODO: Broken
     listenHost = "localhost";
     port = 5001;
     hydraURL = "https://hydra.daniel.fullmer.me/";
@@ -123,10 +123,10 @@
 
   #boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
-  sops.secrets.noether-nixbuilder = {
-    owner = config.users.users.hydra-queue-runner.name;
-  };
-  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+#  sops.secrets.noether-nixbuilder = {
+#    owner = config.users.users.hydra-queue-runner.name;
+#  };
+#  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''

@@ -44,7 +44,7 @@
         sync.frequency = "*:0/3"; # Every 3 minutes
       };
 
-      astroid.enable = true;
+      astroid.enable = false;  # TODO: Marked broken upstream
       astroid.sendMailCommand = "sendmail -i -t";
     };
 
@@ -89,7 +89,7 @@
     };
     lieer.enable = true;
     astroid = {
-      enable = true;
+      enable = false;  # TODO: Marked broken upstream
       pollScript =
         lib.concatStringsSep "\n"
           (lib.mapAttrsToList (name: account: "systemctl --user start lieer-${account.name}")
