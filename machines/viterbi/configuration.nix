@@ -82,6 +82,8 @@
   # eth1 connected to upstream internet provider 1
   # lan4 connected directly to bellman
   # wan connected to internet provider 2
+  # lan0 connected to garage opener
+  # lan1 connected to wrench/downstairs
   # lan2 connected to printer
   # lan3 connected to cameras
 
@@ -103,6 +105,10 @@
   networking.bridges.br0.interfaces = [ "lan0" "lan1" "lan2" "lan4" ];
   networking.interfaces.br0.ipv4.addresses = [ { address = "192.168.1.1"; prefixLength = 24; } ];
   networking.firewall.interfaces.br0.allowedTCPPorts = [ 22 ];
+  services.dnsmasq.settings = {
+    interface = "br0";
+    dhcp-range = "interface:br0,192.168.1.100,192.168.1.199";
+  };
 
   networking.firewall.interfaces.wlan1.allowedTCPPorts = [ 22 ];
 
