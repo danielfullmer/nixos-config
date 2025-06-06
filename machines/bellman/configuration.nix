@@ -96,6 +96,7 @@
 
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
+  services.nginx.clientMaxBodySize = "1024m";
   services.nginx.virtualHosts."daniel.fullmer.me" = {
     default = true;
     public = true;
