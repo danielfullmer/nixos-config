@@ -58,6 +58,8 @@ with lib;
     vSync = true;
   };
 
+  security.pam.services.i3lock.enable = true;
+
   systemd.user.services = mkMerge [
     (mapAttrs (n: v: v // { wantedBy = [ "graphical-session.target" ]; partOf = [ "graphical-session.target" ]; }) {
     xrdb.serviceConfig.ExecStart = let

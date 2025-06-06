@@ -3,11 +3,13 @@
 let
   hooks = pkgs.linkFarm "taskwarrior-hooks" [
     { name = "on-modify.timewarrior";
-      path = pkgs.substituteAll {
+      path = pkgs.replaceVarsWith {
         src = ./on-modify.timewarrior;
         isExecutable = true;
-        python3 = pkgs.python3.interpreter;
-        timewarrior = pkgs.timewarrior;
+        replacements = {
+          python3 = pkgs.python3.interpreter;
+          timewarrior = pkgs.timewarrior;
+        };
       };
     }
   ];
