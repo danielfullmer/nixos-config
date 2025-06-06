@@ -157,52 +157,13 @@ with lib;
 #    Option         "TripleBuffer" "on"
 #    Option     "RegistryDwords"  "RMUseSwI2c=0x01; RMI2cSpeed=100"
 #  '';
-  # NVIDIA 1080ti (Pascal) does not support Display Stream Compression (DSC).
-  # So we have to use a custom modeline to have it fit into DisplayPort HBR3
-  # https://tomverbeure.github.io/video_timings_calculator
-  # CVT-RBv2 (reduced blanking) timings don't seem to work, but CVT-RB does.
-  # 117Hz is the fastest CVT-RB can do while still staying below the bandwidth limit of HBR3
-  #
-  # To manually switch into this mode, use: xrandr --output DP-0 --mode "3840x2160" -r 116.98
-  #
-  # See also: https://www.reddit.com/r/OLED_Gaming/comments/mbpiwy/lg_oled_gamingpc_monitor_recommended_settings/
-#  services.xserver.monitorSection = ''
-#    Modeline "4k117hz_rb" 1068.25 3840 3888 3920 4000 2160 2163 2168 2283 +HSync -VSync
-#  '';
-  #services.xserver.displayManager.xserverArgs = [ "-logverbose 7" ];
-
-#  services.xserver.xrandrHeads = [
-#    { output = "DP-0"; primary = true; }
-#    { output = "DP-4"; }
-#    { output = "DP-5"; }
-#    { output = "DVI-D-0";
-#      monitorConfig = ''
-#        Option "Rotate" "Left"
-#      '';
-#    }
-#  ];
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-  # EDID file made by adding 110hz mode using CRU.exe
-
-#  hardware.display.outputs.DP-3.edid = "edid_110.bin";
-#  hardware.display.edid.packages = [
-#    (pkgs.runCommand "custom-edid" {} ''
-#      mkdir -p $out/lib/firmware/edid
-#      cp ${./edid_110.bin} $out/lib/firmware/edid/edid_110.bin
-#    '')
-#  ];
 
   hardware.firmware = [
     pkgs.wireless-regdb
   ];
   hardware.enableRedistributableFirmware = true;
-  boot.extraModprobeConfig = ''
-    options cfg80211 ieee80211_regdom="US"
-    options nvidia NVreg_RegistryDwords=RMUseSwI2c=0x01;RMI2cSpeed=100
-  '';
-  # nvidia options are for DDC/CI support
 
   services.xserver.windowManager.i3.status = {
     config = ''
