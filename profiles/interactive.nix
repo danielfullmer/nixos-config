@@ -62,9 +62,7 @@ in
     FZF_ALT_C_OPTS="--preview '${pkgs.tree}/bin/tree -C {} | head -200'";
   };
 
-  programs.bash = {
-    enableCompletion = true;
-  };
+  programs.bash.completion.enable = true;
 
   programs.zsh = {
     enable = true;

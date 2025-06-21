@@ -143,7 +143,7 @@ with lib;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
-  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
+  hardware.graphics.extraPackages = with pkgs; [ vaapiVdpau ];
 #  services.xserver.screenSection = ''
 #    Option         "Stereo" "0"
 #    #Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"
@@ -175,9 +175,9 @@ with lib;
     order = mkBefore [ "cpu_temperature 0" ];
   };
 
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  hardware.pulseaudio.zeroconf.discovery.enable = true;
-  hardware.pulseaudio.daemon.config = {
+  services.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.zeroconf.discovery.enable = true;
+  services.pulseaudio.daemon.config = {
     default-sample-channels = 6; # 5.1 surround: https://help.ubuntu.com/community/SurroundSound
   };
 

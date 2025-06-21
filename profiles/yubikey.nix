@@ -16,8 +16,8 @@ in
   security.pam.u2f = {
     enable = true;
     # XXX: Hack to allow me to pass in another parameter to pam module. I should just add origin support in nixpkgs.
-    authFile = "${u2f_file} origin=pam://controlnet";
-    cue = true;
+    settings.authFile = "${u2f_file} origin=pam://controlnet";
+    settings.cue = true;
   };
   security.pam.services."sshd".u2fAuth = false;
   security.pam.services."sudo".u2fAuth = false;

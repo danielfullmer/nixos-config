@@ -3,12 +3,14 @@
 with lib;
 
 {
+  services.libinput.touchpad.naturalScrolling = true;
+
+  services.displayManager.defaultSession = "none+i3";
+
   services.xserver = {
     enable = true;
     xkb.options = "compose:ralt";
-    libinput.touchpad.naturalScrolling = true;
 
-    displayManager.defaultSession = "none+i3";
     displayManager.lightdm = {
       enable = true;
       background = toString config.theme.background;

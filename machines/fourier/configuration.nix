@@ -58,7 +58,7 @@ in
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
 
   # Kodi
   networking.firewall.allowedTCPPorts = [ 8080 ];

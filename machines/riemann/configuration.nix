@@ -52,7 +52,7 @@
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
 
   programs.captive-browser.enable = true;
   programs.captive-browser.interface = "wlp1s0";
