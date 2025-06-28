@@ -27,6 +27,5 @@ in
     yubikey-personalization
   ] ++ lib.optionals (config.services.xserver.enable) [
     yubioath-flutter
-    yubikey-personalization-gui
   ];
 }

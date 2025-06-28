@@ -17,7 +17,7 @@ with lib;
   networking.hostId = "394ac2e1";
   networking.nameservers = [ "8.8.8.8" ];
 
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 
   documentation.enable = false;
 
