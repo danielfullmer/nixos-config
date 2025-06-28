@@ -104,7 +104,7 @@
   };
 
   services.hydra = {
-    enable =  false; # TODO: Broken
+    enable = true;
     listenHost = "localhost";
     port = 5001;
     hydraURL = "https://hydra.daniel.fullmer.me/";
@@ -114,9 +114,6 @@
     #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = ${config.sops.secrets.nix-key.path}";
-
-    # Patch to allow builtins.fetchTarball
-    package = pkgs.hydra.overrideAttrs (attrs: { patches = (if attrs ? patches then attrs.patches else []) ++ [ ../../pkgs/hydra/no-restrict-eval.patch ]; });
   };
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
