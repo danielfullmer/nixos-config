@@ -104,7 +104,8 @@
   # Bridge lan0 - lan4
   networking.bridges.br0.interfaces = [ "lan0" "lan1" "lan2" "lan4" ];
   networking.interfaces.br0.ipv4.addresses = [ { address = "192.168.1.1"; prefixLength = 24; } ];
-  networking.firewall.interfaces.br0.allowedTCPPorts = [ 22 ];
+  networking.firewall.interfaces.br0.allowedTCPPorts = [ 22 ]; # SSH
+  networking.firewall.interfaces.br0.allowedUDPPorts = [ 53 67 ]; # DNS, and DHCP
   services.dnsmasq.settings = {
     interface = "br0";
     dhcp-range = "interface:br0,192.168.1.100,192.168.1.199";
@@ -113,7 +114,7 @@
   networking.firewall.interfaces.wlan1.allowedTCPPorts = [ 22 ];
 
   networking.nat.externalInterface = "wan";
-  networking.nat.internalInterfaces = [ "br0" "lan4" ];
+  networking.nat.internalInterfaces = [ "br0" ];
 
   # TODO: Multihomed routing. Two Internet connections.
   # Naively, we just get two default routes, one with a higher metric. This works fine for outgoing packets if you specify the interface.
