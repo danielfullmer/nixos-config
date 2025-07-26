@@ -58,7 +58,7 @@
       banach = mkSystem "banach" "aarch64-linux" {};
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
-      # Xavier AGX devkit
+      # Orin AGX devkit
       noether = mkSystem "noether" "aarch64-linux" {};
       # Banana Pi R3 wifi router
       viterbi = mkSystem "viterbi" "aarch64-linux" {};
