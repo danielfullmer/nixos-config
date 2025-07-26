@@ -43,8 +43,6 @@ in with super; {
 
   playmaker = python3Packages.callPackage ./playmaker {};
 
-  rivalcfg = python3Packages.callPackage ./rivalcfg {};
-
   st = (st.override {
     conf = (callPackage st/config.h.nix { theme=config.theme; });
   });

@@ -125,7 +125,7 @@ with lib;
 
   services.udev.packages = with pkgs; [
     #openrgb
-    #rivalcfg # Current udev rules are too permissive
+    rivalcfg # Current udev rules are too permissive
   ];
 
   powerManagement.cpuFreqGovernor = "conservative"; # Let's save some temperature and electricity
