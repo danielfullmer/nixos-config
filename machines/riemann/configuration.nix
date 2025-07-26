@@ -74,4 +74,12 @@
       SUBSYSTEM=="i2c-dev", DRIVERS=="amdgpu", TAG+="uaccess"
     '';
   });
+
+  programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = true;
+  programs.xwayland.enable = true;
+
+  #programs.sway.enable = true;
+
+  programs.niri.enable = true;
 }
