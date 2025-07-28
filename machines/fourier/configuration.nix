@@ -53,7 +53,7 @@ in
     LIBVA_DRIVER_NAME="iHD";
   };
 
-  nixpkgs.config.chromium.commandLineArgs = "--enable-features=VaapiVideoDecoder --use-gl=egl";
+  nixpkgs.config.chromium.commandLineArgs = "--enable-features=AcceleratedVideoDecodeLinuxGL";
 
   # Bluetooth
   hardware.bluetooth.enable = true;

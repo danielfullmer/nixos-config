@@ -47,7 +47,7 @@
     LIBVA_DRIVER_NAME="radeonsi";
   };
 
-  nixpkgs.config.chromium.commandLineArgs = "--enable-features=VaapiVideoDecoder";
+  nixpkgs.config.chromium.commandLineArgs = "--enable-features=AcceleratedVideoDecodeLinuxGL";
 
   # Bluetooth
   hardware.bluetooth.enable = true;
