@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (pkgs.plasma5Packages) kdeconnect-kde;
+  inherit (pkgs.kdePackages) kdeconnect-kde;
 in
 {
   environment.systemPackages =  [ kdeconnect-kde ];

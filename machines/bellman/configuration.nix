@@ -341,8 +341,6 @@
     };
   };
 
-  systemd.enableCgroupAccounting = true;
-
   # Listens for HTTPS on port 8443
   #services.unifi = {
   #  enable = true;
