@@ -31,7 +31,7 @@ in
 
   services.fwupd.enable = true; # Firmware updates
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   theme.fontSize = 14;
 
@@ -39,7 +39,7 @@ in
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD

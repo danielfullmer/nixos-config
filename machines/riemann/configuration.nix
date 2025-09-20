@@ -30,12 +30,12 @@
   services.fprintd.enable = true; # Fingerprint support
   services.fwupd.enable = true; # Firmware updates
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   theme.fontSize = 16;
 
   # HW Accelerated video decoding
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiVdpau
