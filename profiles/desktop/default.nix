@@ -228,6 +228,7 @@ with lib;
     hwdec=auto-safe
     vo=gpu-next
     profile=gpu-hq
+    target-colorspace-hint
   '';
 
   # TODO
