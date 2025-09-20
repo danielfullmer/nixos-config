@@ -11,7 +11,7 @@ let
     { patch = ./disable-hsr-defconfig.patch; }
   ];
 
-  linux_bpir3 = pkgs.linux_6_15.override {
+  linux_bpir3 = pkgs.linux_6_16.override {
     inherit kernelPatches;
 
     #autoModules = false;
