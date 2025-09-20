@@ -55,7 +55,7 @@
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3
-      banach = mkSystem "banach" "aarch64-linux" {};
+      #banach = mkSystem "banach" "aarch64-linux" {};
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
       # Orin AGX devkit
