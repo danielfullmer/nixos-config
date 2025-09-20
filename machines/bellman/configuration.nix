@@ -114,6 +114,13 @@
     #buildMachinesFiles = [ ../profiles/hydra-remote-machines ];
     # This is a deprecated option, but it's still used by NARInfo.pm
     extraConfig = "binary_cache_secret_key_file = ${config.sops.secrets.nix-key.path}";
+
+    buildMachinesFiles = [
+      "/etc/nix/machines"
+      (pkgs.writeText "machines" ''
+        localhost x86_64-linux,i686-linux - 8 1 kvm
+      '')
+    ];
   };
   services.nginx.virtualHosts."hydra.daniel.fullmer.me" = {
     locations."/".proxyPass = "http://127.0.0.1:5001/";
@@ -121,10 +128,10 @@
 
   #boot.binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
 
-#  sops.secrets.noether-nixbuilder = {
-#    owner = config.users.users.hydra-queue-runner.name;
-#  };
-#  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+  sops.secrets.noether-nixbuilder = {
+    owner = config.users.users.hydra-queue-runner.name;
+  };
+  systemd.services.hydra-queue-runner.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 
   # Remote hosts often have better connection to cache than direct to this host
   nix.extraOptions = ''
