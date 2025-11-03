@@ -11,8 +11,6 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    robotnix.url = "github:danielfullmer/robotnix";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -26,7 +24,7 @@
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
-  outputs = { self, nixpkgs, sops-nix, robotnix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
+  outputs = { self, nixpkgs, sops-nix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
@@ -79,7 +77,6 @@
       base = {
         imports = [
           sops-nix.nixosModules.sops
-          robotnix.nixosModules.attestation-server
           home-manager.nixosModules.home-manager
           nvidia-vgpu.nixosModules.nvidia-vgpu
           jetpack-nixos.nixosModules.default

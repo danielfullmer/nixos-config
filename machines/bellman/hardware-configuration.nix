@@ -143,7 +143,7 @@ with lib;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
-  hardware.graphics.extraPackages = with pkgs; [ vaapiVdpau ];
+  hardware.graphics.extraPackages = with pkgs; [ libva-vdpau-driver ];
 #  services.xserver.screenSection = ''
 #    Option         "Stereo" "0"
 #    #Option         "metamodes" "DP-0: 4k117hz_rb +0+650 {ForceCompositionPipeline=On}, DP-4: nvidia-auto-select +3840+0 {rotation=right, ForceCompositionPipeline=On}"

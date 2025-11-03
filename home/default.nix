@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./taskwarrior.nix
+    #./taskwarrior.nix
     #./bugwarrior.nix
   ];
 
@@ -10,13 +10,12 @@
 
   programs.git = {
     enable = true;
-    userName = "Daniel Fullmer";
-    userEmail = "danielrf12@gmail.com";
-    signing.key = "EF6B0CB0";
 
-    delta.enable = true;
+    settings = {
+      user.name = "Daniel Fullmer";
+      user.email = "danielrf12@gmail.com";
+      signing.key = "EF6B0CB0";
 
-    extraConfig = {
       init.defaultBranch = "master";
       color.ui = "auto";
       push.default = "simple";
@@ -27,6 +26,8 @@
       github.user = "danielfullmer";
     };
   };
+
+  programs.delta.enable = true;
 
   accounts.email = {
     accounts.cgibreak-gmail = {

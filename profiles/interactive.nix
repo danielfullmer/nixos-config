@@ -37,8 +37,8 @@ in
     #]))
     # haskell-language-server # Too Heavy
 
-    taskwarrior
-    taskwarrior-tui
+    #taskwarrior
+    #taskwarrior-tui
     timewarrior
     vit
 

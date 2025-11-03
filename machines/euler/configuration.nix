@@ -59,7 +59,7 @@
   services.redshift.enable = true;
 
   # Intel VAAPI support for hardware accelerated video playback
-  hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
+  hardware.opengl.extraPackages = [ pkgs.intel-vaapi-driver ];
   nixpkgs.config.mpv.vaapiSupport = true;
 
   environment.systemPackages = with pkgs; [ xorg.xbacklight ];

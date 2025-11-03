@@ -29,9 +29,6 @@ in
   hardware.nvidia-jetpack.firmware.autoUpdate = true;
   services.nvpmodel.profileNumber = 0;
 
-  # Avoid kernel crashes
-  boot.kernelParams = [ "initcall_blacklist=tegra_se_module_init" ];
-
   hardware.opengl.enable = true;
 
   # Use the systemd-boot EFI boot loader.
@@ -42,7 +39,7 @@ in
   networking.hostId = "548a95e6";
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  #networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
