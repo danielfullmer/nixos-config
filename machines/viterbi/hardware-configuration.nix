@@ -8,10 +8,10 @@ let
     # disable HSR below since it forces us to have CONFIG_DSA=m as well (and
     # therefore others). Apparently using structuredExtraConfig doesn't
     # properly override settings in defconfig... ?
-    { patch = ./disable-hsr-defconfig.patch; }
+    { name = "disable-hsr"; patch = ./disable-hsr-defconfig.patch; }
   ];
 
-  linux_bpir3 = pkgs.linux_6_16.override {
+  linux_bpir3 = pkgs.linux_6_17.override {
     inherit kernelPatches;
 
     #autoModules = false;

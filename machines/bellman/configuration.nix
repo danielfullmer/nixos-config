@@ -38,7 +38,7 @@
   networking.hostId = "f6bb12be";
 
   system.stateVersion = "18.03";
-  services.postgresql.package = pkgs.postgresql_13; # Override outdated one from stateVersion
+  services.postgresql.package = pkgs.postgresql_17; # Override outdated one from stateVersion
 
   #networking.wireless.enable = true;
   #networking.networkmanager.enable = true;
