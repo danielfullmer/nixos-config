@@ -41,6 +41,13 @@ in with super; {
     };
   };
 
+  # Enabling cuda support via "config.cudaSupport = true;" causes Nix itself to be rebuilt since it depends on onetbb, which depends on hwloc, which 
+  onetbb = super.onetbb.override {
+    hwloc = super.hwloc.override {
+      enableCuda = false;
+    };
+  };
+
   playmaker = python3Packages.callPackage ./playmaker {};
 
   st = (st.override {

@@ -67,11 +67,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1764554192,
-        "narHash": "sha256-IEnUI0QooAYPJrKhL/KMwn6dJ3OfoiyhJAgZuuWNbuE=",
+        "lastModified": 1766525629,
+        "narHash": "sha256-Efr78fDYtkLzfaL2ZhB/lD42UikyP9Sk6mIPEoZrtiM=",
         "owner": "anduril",
         "repo": "jetpack-nixos",
-        "rev": "66fa042f23567ca5e2e8b62d9aa0eb2ed228a844",
+        "rev": "ba4155ae5df343ea91305f64281b9b5b2f803dea",
         "type": "github"
       },
       "original": {
@@ -155,11 +155,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1765779637,
-        "narHash": "sha256-KJ2wa/BLSrTqDjbfyNx70ov/HdgNBCBBSQP3BIzKnv4=",
+        "lastModified": 1767116409,
+        "narHash": "sha256-5vKw92l1GyTnjoLzEagJy5V5mDFck72LiQWZSOnSicw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1306659b587dc277866c7b69eb97e5f07864d8c4",
+        "rev": "cad22e7d996aea55ecab064e84834289143e44a0",
         "type": "github"
       },
       "original": {
