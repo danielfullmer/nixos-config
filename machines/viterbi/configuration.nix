@@ -8,6 +8,7 @@
     ../../profiles/zerotier.nix
 
     ../../profiles/cameras.nix
+    ./wlan0.nix
   ];
 
   networking.hostName = "viterbi";
@@ -36,7 +37,6 @@
 
   services.hostapd = {
     radios = {
-      # TODO: Add 2.4Ghz AP, wlan0
       wlan1 = {
         band = "5g";
         channel = 36;
@@ -79,12 +79,12 @@
   # wan and lan0 - lan3 are all 1000BaseT connected to internal switch (MT7531AE)
   #
   # External connections:
-  # eth1 connected to upstream internet provider 1
+  # eth1 connected to internet provider 1 (currently empty)
   # lan4 connected directly to bellman
   # wan connected to internet provider 2
   # lan0 connected to garage opener
   # lan1 connected to wrench/downstairs
-  # lan2 connected to printer
+  # lan2 connected to dumb switch, connected to printer and garage door
   # lan3 connected to cameras
 
   networking.useDHCP = false;
@@ -93,7 +93,7 @@
   # Connected to Cable modem (Internet)
   networking.interfaces.eth1 = {
     useDHCP = true;
-    macAddress = "b4:2e:99:a7:0b:e8";
+    #macAddress = "b4:2e:99:a7:0b:e8"; # Original MAC address
   };
   networking.firewall.interfaces.eth1.allowedUDPPorts = [ 68 ]; # DHCP Client
 
