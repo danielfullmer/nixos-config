@@ -115,7 +115,7 @@ lib.mkMerge [
       dhcp-host = [
         "24:52:6a:2d:f0:bc,192.168.5.2,gym-cam"
         "6c:1c:71:93:a1:a7,192.168.5.3,garage-cam"
-        "6c:1c:71:93:a1:d0,192.168.5.4,stair-cam"
+        "6c:1c:71:93:a1:d0,192.168.5.4,stairs-cam"
       ];
     };
   };
@@ -126,7 +126,7 @@ lib.mkMerge [
       paths = {
         gym-cam.source = "rtsp://anon:insecure1@192.168.5.2:554/cam/realmonitor?channel=1&subtype=0";
         garage-cam.source = "rtsp://anon:insecure1@192.168.5.3:554/cam/realmonitor?channel=1&subtype=0";
-        stair-cam.source = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=0";
+        stairs-cam.source = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=0";
       };
     };
   };

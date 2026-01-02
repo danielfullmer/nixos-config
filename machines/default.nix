@@ -49,6 +49,7 @@ in
         gauss = [ "searx.daniel.fullmer.me" ];
         banach = [ "printer.daniel.fullmer.me" ];
         wrench = [ "wrench.fullmer.me" ];
+        noether = [ "frigate.daniel.fullmer.me" ];
       };
 
       publicVirtualHosts = [ "daniel.fullmer.me" ];
