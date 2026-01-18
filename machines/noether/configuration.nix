@@ -138,53 +138,73 @@ in
 
   hardware.graphics.enable32Bit = lib.mkForce false;
 
-  nixpkgs.overlays = [ 
+  nixpkgs.overlays = [
     (final: prev: {
-      tensorflow-bin = prev.tensorflow-bin.override {
-        # Currently doesn't work with python 3.13. Plus, we don't need frigate for its cuda tensorflow capabilities
-        cudaSupport = false;
-      };
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (python-final: python-prev: {
+          tensorflow-bin = python-prev.tensorflow-bin.override {
+            # Currently doesn't work with the default python version 3.13. Plus, we don't need frigate for its cuda tensorflow capabilities
+            cudaSupport = false;
+          };
+        })
+      ];
     })
   ];
 
+  systemd.services.frigate.serviceConfig.SupplementaryGroups = [ "video" ]; # For CUDA access
   services.frigate = {
     enable = true;
     hostname = "frigate.daniel.fullmer.me";
 
     settings = {
+      ffmpeg = {
+        path = pkgs.jetson-ffmpeg-patcher pkgs.ffmpeg-headless;
+        hwaccel_args = "preset-jetson-h264";
+      };
+
       mqtt.enabled = false;
 
-#      detectors.onnx.type = "onnx";
-#
-#      model = {
-#        model_type = "yolonas";
-#        width = 320;
-#        height = 320;
-#      };
+      detectors.onnx.type = "onnx";
+
+      model = {
+        model_type = "rfdetr";
+        width = 320;
+        height = 320;
+        input_tensor = "nchw";
+        input_dtype = "float";
+        path = "/var/cache/frigate/model_cache/rfdetr-Nano.onnx";
+      };
 
           #input_args = "-fflags nobuffer -strict experimental -fflags +genpts+discardcorrupt -r 10 -use_wallclock_as_timestamps 1";
       cameras = {
         gym = {
           ffmpeg.inputs = [
             { path = "rtsp://anon:insecure1@192.168.5.2:554/cam/realmonitor?channel=1&subtype=0"; roles = [ "record" ]; }
-            { path = "rtsp://anon:insecure1@192.168.5.2:554/cam/realmonitor?channel=1&subtype=1"; roles = [ "detect" ]; }
+            { path = "rtsp://anon:insecure1@192.168.5.2:554/cam/realmonitor?channel=1&subtype=2"; roles = [ "detect" ]; }
           ];
           notifications.enabled = true;
         };
         garage = {
           ffmpeg.inputs = [
             { path = "rtsp://anon:insecure1@192.168.5.3:554/cam/realmonitor?channel=1&subtype=0"; roles = [ "record" ]; }
-            { path = "rtsp://anon:insecure1@192.168.5.3:554/cam/realmonitor?channel=1&subtype=1"; roles = [ "detect" ]; }
+            { path = "rtsp://anon:insecure1@192.168.5.3:554/cam/realmonitor?channel=1&subtype=2"; roles = [ "detect" ]; }
           ];
           notifications.enabled = true;
         };
         stairs = {
           ffmpeg.inputs = [
             { path = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=0"; roles = [ "record" ]; }
-            { path = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=1"; roles = [ "detect" ]; }
+            { path = "rtsp://anon:insecure1@192.168.5.4:554/cam/realmonitor?channel=1&subtype=2"; roles = [ "detect" ]; }
           ];
           notifications.enabled = true;
         };
+      };
+
+      face_recognition.enabled = true;
+
+      birdseye = {
+        enabled = true;
+        mode = "continuous";
       };
 
       record = {

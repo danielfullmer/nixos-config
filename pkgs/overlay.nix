@@ -83,6 +83,20 @@ in with super; {
 #    patches = [ ./libfuse/0001-Add-bcachefs-to-mountpoint-file-system-whitelist.patch ];
 #  });
 
+  ### jetson-ffmpegA
+  jetson-ffmpeg-src = fetchFromGitHub {
+    owner = "Keylost";
+    repo = "jetson-ffmpeg";
+    rev = "f0a52dfae54bdb2d42b72064d8be3e6b2f66244b";
+    hash = "sha256-GACg3Ul2B9Z9ehd9W9nIuc4JyB2QdfvaC+4cfasH2Wo=";
+  };
+  libnvmpi = callPackage ./jetson-ffmpeg/libnvmpi.nix {};
+  jetson-ffmpeg-patcher = import ./jetson-ffmpeg/ffmpeg-patcher.nix {
+    inherit (self) jetson-ffmpeg-src libnvmpi;
+    inherit (self.nvidia-jetpack) l4t-multimedia;
+  };
+  jetson-ffmpeg-6 = self.jetson-ffmpeg-patcher ffmpeg_6-headless;
+
   #### Environments ####
 
   pythonEnv = (python3.buildEnv.override {
