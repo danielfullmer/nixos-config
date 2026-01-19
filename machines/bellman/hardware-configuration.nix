@@ -138,6 +138,13 @@ with lib;
 #    DisplaySize 698 393
 #  '';
 
+  # LG 55 inch is connected via DP->HDMI 2.1 adapater. It doesn't pass the
+  # correct EDID through unfortunately, so need to override it here.
+  hardware.display.outputs.DP-1.edid = "lg_oled55cxpua.edid"; # TODO: fix type
+  hardware.display.edid.packages = lib.singleton (pkgs.buildPackages.runCommand "edid-custom" {} ''
+    mkdir -p $out/lib/firmware/edid
+    cp ${./lg_oled55cxpua.edid} $out/lib/firmware/edid/lg_oled55cxpua.edid
+  '');
 
   # Nvidia 1080ti
   services.xserver.videoDrivers = [ "nvidia" ];
