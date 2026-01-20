@@ -90,10 +90,6 @@
     '';
   });
 
-  # For flashing android stuff
-  programs.adb.enable = true;
-  users.users.danielrf.extraGroups = [ "adbusers" ];
-
   services.nginx.enable = true;
   services.nginx.recommendedProxySettings = true;
   services.nginx.clientMaxBodySize = "1024m";
