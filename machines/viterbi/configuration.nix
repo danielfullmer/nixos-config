@@ -116,6 +116,10 @@
   networking.nat.externalInterface = "wan";
   networking.nat.internalInterfaces = [ "br0" ];
 
+  networking.nat.forwardPorts = [
+    { sourcePort = 32400; destination = "192.168.1.201:32400"; }  # Passthru to wrench
+  ];
+
   # TODO: Multihomed routing. Two Internet connections.
   # Naively, we just get two default routes, one with a higher metric. This works fine for outgoing packets if you specify the interface.
 
