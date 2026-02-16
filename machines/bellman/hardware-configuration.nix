@@ -116,6 +116,12 @@ with lib;
     }
   ];
 
+  # 30 minute autosuspend for keyboard/mouse
+  services.udev.extraRules = ''
+    ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c338", ATTR{power/autosuspend_delay_ms}="1800000"
+    ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c08f", ATTR{power/autosuspend_delay_ms}="1800000"
+  '';
+
   environment.systemPackages = with pkgs; [
     lm_sensors
     krakenx # For NZXT X62 AIO cooler
