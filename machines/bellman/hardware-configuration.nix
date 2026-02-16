@@ -146,10 +146,11 @@ with lib;
     cp ${./lg_oled55cxpua.edid} $out/lib/firmware/edid/lg_oled55cxpua.edid
   '');
 
-  # Nvidia 1080ti
+  # Nvidia 5090ti
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
   hardware.graphics.extraPackages = with pkgs; [ libva-vdpau-driver ];
 #  services.xserver.screenSection = ''
 #    Option         "Stereo" "0"
