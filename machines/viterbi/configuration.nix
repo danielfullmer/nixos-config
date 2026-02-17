@@ -26,7 +26,7 @@
     fsType = "vfat";
   };
 
-  environment.systemPackages = with pkgs; [ lm_sensors ethtool ];
+  environment.systemPackages = with pkgs; [ lm_sensors ethtool wol ];
 
   controlnet.ap = {
     enable = true;
