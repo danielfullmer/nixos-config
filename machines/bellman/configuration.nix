@@ -385,8 +385,8 @@
 
   # Switch LG TV based on if CM storm keyboard is added/removed
   services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="2516", ATTRS{idProduct}=="0017", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/cmstorm"
-    ACTION=="remove", SUBSYSTEM=="usb", ATTRS{idVendor}=="2516", ATTRS{idProduct}=="0017", TAG+="systemd"
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c338", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/logitechkeyboard"
+    ACTION=="remove", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c338", TAG+="systemd"
   '';
   sops.secrets.lgtv = {
     format = "binary";
@@ -399,8 +399,8 @@
       wrapProgram $out/bin/lgtv --prefix PATH : ${lib.makeBinPath [ pkgs.websocat ]}
     '';
   in {
-    wantedBy = [ "sys-devices-cmstorm.device" ];
-    bindsTo = [ "sys-devices-cmstorm.device" ];
+    wantedBy = [ "sys-devices-logitechkeyboard.device" ];
+    bindsTo = [ "sys-devices-logitechkeyboard.device" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
