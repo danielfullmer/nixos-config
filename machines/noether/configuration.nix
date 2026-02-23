@@ -33,7 +33,7 @@ in
 
   services.nvpmodel.profileNumber = 0;
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -157,10 +157,10 @@ in
     hostname = "frigate.daniel.fullmer.me";
 
     settings = {
-      ffmpeg = {
-        path = pkgs.jetson-ffmpeg-patcher pkgs.ffmpeg-headless;
-        hwaccel_args = "preset-jetson-h264";
-      };
+      #ffmpeg = {
+      #  path = pkgs.jetson-ffmpeg-patcher pkgs.ffmpeg-headless;
+      #  hwaccel_args = "preset-jetson-h264";
+      #};
 
       mqtt.enabled = false;
 

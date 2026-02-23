@@ -76,7 +76,7 @@ with lib;
     xsetroot.serviceConfig.ExecStart = "${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr";
     xsetroot.serviceConfig.Type = "oneshot";
 
-    xss-lock.serviceConfig.ExecStart = "${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
+    xss-lock.serviceConfig.ExecStart = "${pkgs.xss-lock}/bin/xss-lock -- ${pkgs.i3lock}/bin/i3lock";
 
     feh.serviceConfig.ExecStart = "${pkgs.feh}/bin/feh --bg-fill ${config.theme.background}";
     feh.serviceConfig.Type = "oneshot";
@@ -233,7 +233,7 @@ with lib;
 
   # TODO
   # This is a user-specific hack since it is not trivial to replace the
-  # internal Compose file under ${xorg.libX11}/share/X11/locale/*/Compose
+  # internal Compose file under ${libx11}/share/X11/locale/*/Compose
   # without rebuilding lots of stuff
 #  system.activationScripts = {
 #    xcompose = let

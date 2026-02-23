@@ -227,7 +227,7 @@
     bindsym XF86AudioPrev exec --no-startup-id playerctl previous && $refresh_i3status
 
     # Lock screen
-    bindsym $mod+Control+l exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled
+    bindsym $mod+Control+l exec ${pkgs.i3lock}/bin/i3lock
 
     bindsym XF86MonBrightnessUp   exec light -T 1.3
     bindsym XF86MonBrightnessDown exec light -T 0.77

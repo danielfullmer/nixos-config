@@ -233,6 +233,7 @@
 
   services.grafana.enable = true;
   services.grafana.settings.server.http_port = 3030;
+  services.grafana.settings.security.secret_key = "SW2YcwTIb9zpOOhoPsMm"; # Not-so-secret value that was the default in nixpkgs until recently
   services.prometheus = {
     enable = true;
     retentionTime = "365d";
@@ -242,6 +243,10 @@
         job_name = "node";
         static_configs = [ { targets = [ "localhost:9100" ]; } ];
       }
+      #{
+      #  job_name = "esphome";
+      #  static_configs = [ { targets = [ "192.168.4.133" ]; } ];
+      #}
 #      {
 #        job_name = "systemd";
 #        static_configs = [ { targets = [ "localhost:9558" ]; } ];
