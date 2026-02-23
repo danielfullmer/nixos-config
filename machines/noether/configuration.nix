@@ -223,5 +223,20 @@ in
       };
     };
   };
-}
 
+  services.grafana.enable = true;
+  services.grafana.settings.server.http_addr = "0.0.0.0";
+  services.grafana.settings.server.http_port = 3000;
+  services.grafana.settings.security.secret_key = "SW2YcwTIb9zpOOhoPsMm"; # Not-so-secret value that was the default in nixpkgs until recently
+  services.prometheus = {
+    enable = true;
+    retentionTime = "365d";
+    globalConfig.scrape_interval = "15s";
+    scrapeConfigs = [
+      {
+        job_name = "esphome";
+        static_configs = [ { targets = [ "192.168.4.133" ]; } ];
+      }
+    ];
+  };
+}
