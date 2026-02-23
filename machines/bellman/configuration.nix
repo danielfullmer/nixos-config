@@ -81,6 +81,11 @@
 
   services.redshift.enable = true;
 
+  services.logind.settings.Login = {
+    IdleAction = "suspend";
+    IdleActionSec = "1800"; # 30 min
+  };
+
   # For serial interface to reflash x39 monitor firmware
   services.udev.packages = lib.singleton (pkgs.writeTextFile {
     name = "uart-udev-rules";
