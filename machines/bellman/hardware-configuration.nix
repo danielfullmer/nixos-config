@@ -57,10 +57,6 @@ with lib;
     sopsFile = ./secrets/zfs.key;
   };
   boot.initrd.secrets."/zfs.key" = config.sops.secrets.zfs-key.path;
-  boot.initrd.postResumeCommands = mkAfter ''
-    zfs load-key pool/root < /zfs.key
-    zfs load-key pool/home < /zfs.key
-  '';
 
   services.sanoid = let
     common = {

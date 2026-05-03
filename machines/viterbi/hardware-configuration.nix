@@ -117,16 +117,16 @@ in
     }
   ];
 
-  boot.initrd.preDeviceCommands = ''
-    if [ ! -d /sys/bus/pci/devices/0000:01:00.0 ]; then
-      if [ -d /sys/bus/pci/devices/0000:00:00.0 ]; then
-        # Remove PCI bridge, then rescan.  NVMe init crashes if PCI bridge not removed first
-        echo 1 > /sys/bus/pci/devices/0000:00:00.0/remove
-        # Rescan brings PCI root back and brings the NVMe device in.
-        echo 1 > /sys/bus/pci/rescan
-      else
-        info "PCIe bridge missing"
-      fi
-    fi
-  '';
+#  boot.initrd.preDeviceCommands = ''
+#    if [ ! -d /sys/bus/pci/devices/0000:01:00.0 ]; then
+#      if [ -d /sys/bus/pci/devices/0000:00:00.0 ]; then
+#        # Remove PCI bridge, then rescan.  NVMe init crashes if PCI bridge not removed first
+#        echo 1 > /sys/bus/pci/devices/0000:00:00.0/remove
+#        # Rescan brings PCI root back and brings the NVMe device in.
+#        echo 1 > /sys/bus/pci/rescan
+#      else
+#        info "PCIe bridge missing"
+#      fi
+#    fi
+#  '';
 } 
