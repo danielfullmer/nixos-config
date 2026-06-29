@@ -155,7 +155,7 @@ with lib;
     stalonetray
     dunst
 
-    termite
+    kitty
     st
 
     mpv

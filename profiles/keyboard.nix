@@ -197,19 +197,19 @@
     floating_modifier $mod
 
     # start a terminal
-    bindsym $mod+Return exec ${pkgs.termite}/bin/termite
+    bindsym $mod+Return exec ${pkgs.kitty}/bin/kitty
 
     # kill focused window
     bindsym $mod+Shift+q kill
 
-    bindsym $mod+p exec --no-startup-id ${pkgs.termite}/bin/termite -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
+    bindsym $mod+p exec --no-startup-id ${pkgs.kitty}/bin/kitty -t 'fzf-menu' -e 'i3-dmenu-desktop --dmenu=fzf'
     for_window [title="fzf-menu"] floating enable
 
     bindsym $mod+Shift+p exec passmenu -fn "${config.theme.fontName}-${toString config.theme.titleFontSize}"
     bindsym $mod+m exec astroid
 
     # For reference, a quick way to view this file!
-    bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.termite}/bin/termite -t 'help-screen' -e 'vim ${./keyboard.nix}'
+    bindsym $mod+Shift+slash exec --no-startup-id ${pkgs.kitty}/bin/kitty -t 'help-screen' -e 'vim ${./keyboard.nix}'
     for_window [title="help-screen"] fullscreen enable
 
     # Use pactl to adjust volume in PulseAudio.
