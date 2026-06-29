@@ -6,7 +6,7 @@
 
 {
   imports = [
-    #<nixpkgs/nixos/modules/installer/cd-dvd/sd-image.nix>
+    #"${pkgs.path}/nixos/modules/installer/cd-dvd/sd-image.nix"
   ];
 
   nixpkgs.localSystem = { system = "aarch64-linux"; config = "aarch64-unknown-linux-gnu"; };
@@ -25,7 +25,7 @@
     # ffmpeg -f video4linux2 -input_format h264 -video_size 1024x768 -framerate 30 -i /dev/video0 -vcodec copy test.mkv
 
     #kernelPackages = pkgs.linuxPackages_rpi3;
-    kernelPackages = pkgs.linuxPackages_4_19; # 5.4 doesn't seem to work with camera
+    #kernelPackages = pkgs.linuxPackages_4_19; # 5.4 doesn't seem to work with camera
 
     initrd.availableKernelModules = [
       # Allows early (earlier) modesetting for the Raspberry Pi
@@ -36,37 +36,37 @@
 
     kernelParams = [ "cma=32M" "console=ttyS0,115200n8" "console=tty0" ];
 
-    loader.grub.enable = false;
-    loader.raspberryPi = {
-      enable = true;
-      version = 3;
-      uboot.enable = true;
-      # Camera config, needs to be in config.txt
-      firmwareConfig = ''
-        start_x=1
-        gpu_mem=256
-      '';
-    };
+#    loader.grub.enable = false;
+#    loader.raspberryPi = {
+#      enable = true;
+#      version = 3;
+#      uboot.enable = true;
+#      # Camera config, needs to be in config.txt
+#      firmwareConfig = ''
+#        start_x=1
+#        gpu_mem=256
+#      '';
+#    };
 
     consoleLogLevel = lib.mkDefault 7;
   };
 
 
-  hardware.firmware = with pkgs; [ raspberrypiWirelessFirmware raspberrypifw ];
+  #hardware.firmware = with pkgs; [ raspberrypiWirelessFirmware raspberrypifw ];
 
   nix.settings.max-jobs = 2;
   nix.settings.cores = 4;
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/2178-694E";
-      fsType = "vfat";
-      options = [ "nofail" "noauto" ];
-    };
-  };
+#  fileSystems = {
+#    "/" = {
+#      device = "/dev/disk/by-label/NIXOS_SD";
+#      fsType = "ext4";
+#    };
+#
+#    "/boot" = {
+#      device = "/dev/disk/by-uuid/2178-694E";
+#      fsType = "vfat";
+#      options = [ "nofail" "noauto" ];
+#    };
+#  };
 }

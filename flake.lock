@@ -121,6 +121,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1778143761,
+        "narHash": "sha256-lkesY6x2X2qxlqLM7CT2iM/0rP2JB7fruPN3h8POXmI=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "3bcaa367d4c550d687a17ac792fd5cda214ee871",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1768773494,
@@ -206,6 +221,7 @@
         "home-manager": "home-manager",
         "jetpack-nixos": "jetpack-nixos",
         "jovian-nixos": "jovian-nixos",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nvidia-vgpu": "nvidia-vgpu",
         "pinebook-pro": "pinebook-pro",

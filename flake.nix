@@ -22,6 +22,8 @@
     jetpack-nixos.url = "github:anduril/jetpack-nixos";
 
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+
+    nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 
   outputs = { self, nixpkgs, sops-nix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
@@ -53,7 +55,12 @@
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3
-      #banach = mkSystem "banach" "aarch64-linux" {};
+      banach = mkSystem "banach" "aarch64-linux" {
+        imports = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix"
+          "${inputs.nixos-hardware}/raspberry-pi/3"
+        ];
+      };
       # RPI 1
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
       # Orin AGX devkit
