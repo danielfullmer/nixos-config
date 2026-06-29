@@ -58,6 +58,8 @@
       #tarski = nixpkgs.lib.nixosSystem { system = "armv6l-linux"; modules = [ ./machines/tarski ]; };
       # Orin AGX devkit
       noether = mkSystem "noether" "aarch64-linux" {};
+      # Thor AGX devkit
+      hilbert = mkSystem "hilbert" "aarch64-linux" {};
       # Banana Pi R3 wifi router
       viterbi = mkSystem "viterbi" "aarch64-linux" {};
 
