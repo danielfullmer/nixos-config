@@ -53,6 +53,7 @@ in
     userBin
   ]);
 
+  programs.fuse.enable = true;
   programs.fuse.userAllowOther = true;
 
   environment.variables = {
