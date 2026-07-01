@@ -23,7 +23,6 @@ in
     libarchive # Provides bsdtar, for unzipping stuff
 
     tmux
-    silver-searcher
     ripgrep
     fzf
     gh
@@ -49,8 +48,12 @@ in
     #pass
     (pass.withExtensions (p: with p; [ pass-audit pass-otp ]))
 
+    sshfs
+
     userBin
   ]);
+
+  programs.fuse.userAllowOther = true;
 
   environment.variables = {
     EDITOR = "${pkgs.neovim}/bin/vim";
@@ -79,10 +82,6 @@ in
   programs.command-not-found.enable = true;
 
   environment.etc."tmux.conf".text = config.programs.tmux.config;
-
-  environment.interactiveShellInit = ''
-    eval $(${pkgs.coreutils}/bin/dircolors "${./dircolors}")
-  '';
 
   programs.bash.interactiveShellInit = ''
     eval "$(direnv hook bash)"

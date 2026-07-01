@@ -27,6 +27,7 @@ in
     enable = true;
     som = "orin-agx";
     carrierBoard = "devkit";
+    majorVersion = "7";
     firmware.autoUpdate = true;
     configureCuda = true;
   };

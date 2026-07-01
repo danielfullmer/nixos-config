@@ -16,11 +16,6 @@ with lib;
         default = {};
       };
 
-      termite.config = mkOption {
-        type = types.lines;
-        default = "";
-      };
-
       tmux.config = mkOption {
         type = types.lines;
         default = "";

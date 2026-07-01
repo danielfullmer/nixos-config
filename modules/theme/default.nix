@@ -87,11 +87,6 @@ in with lib;
         };
       } // template "dunst";
 
-    programs.termite.config = ''
-      [options]
-        font = ${termFontName} ${toString fontSize}
-      '' + template "termite";
-
     programs.vim.packages = [
       # Airline theme can't be directly sourced anymore. Needs to be in under <rtp>/autoload/airline/themes/
       (pkgs.vimUtils.buildVimPlugin {

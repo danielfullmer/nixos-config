@@ -54,9 +54,6 @@ in with super; {
     conf = (callPackage st/config.h.nix { theme=config.theme; });
   });
 
-  termite = (termite.override {
-    configFile = writeText "termite-config" config.programs.termite.config;
-  });
 
   my_qemu = qemu_kvm.overrideAttrs (attrs: {
     patches = [
