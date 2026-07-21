@@ -57,7 +57,7 @@
       # RPI 3
       banach = mkSystem "banach" "aarch64-linux" {
         imports = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix"
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           "${inputs.nixos-hardware}/raspberry-pi/3"
         ];
       };
