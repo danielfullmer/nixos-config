@@ -7,8 +7,12 @@
     channel = 11;
     countryCode = "US";
 
+    wifi4.enable = true;
+    wifi5.enable = true;
+    wifi6.enable = true;
+
     networks.wlan0 = {
-      ssid = "controlnet26ghz_nomap";
+      ssid = "controlnet24ghz_nomap";
       authentication = {
         mode = "wpa2-sha256";
         #mode = "wpa3-sae-transition"; # TODO: Switch to wpa3-sae entirely, remove WPA-PSK. 8sleep doesn't support WPA3
