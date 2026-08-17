@@ -1,9 +1,8 @@
 { system ? builtins.currentSystem
-, config ? { allowUnfree = true; }
-, pkgs ? import <nixpkgs> { inherit system config; }
+, pkgs ? import <nixpkgs> { inherit system; config = { allowUnfree = true; }; }
 }:
 
-with import <nixpkgs/nixos/lib/testing-python.nix> {
+with import (pkgs.path + "/nixos/lib/testing-python.nix") {
   inherit system pkgs;
 };
 with pkgs.lib;
@@ -181,4 +180,7 @@ let
 
 in mapAttrs (const: (attrs: makeTest (attrs // {
   skipLint = true;
+  # The test script assigns dynamic attributes to machines
+  # (e.g. m.ZTIPAddress), which the static type checker rejects.
+  skipTypeCheck = true;
 }))) testCases

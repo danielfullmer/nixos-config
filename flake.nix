@@ -108,20 +108,25 @@
     };
 
     hydraJobs = let
+      controlnetModules = [
+        sops-nix.nixosModules.sops
+      ];
       mkTest = system: path:
         nixpkgs.lib.hydraJob
           (import (nixpkgs.legacyPackages.${system}.path + "/nixos/tests/make-test-python.nix")
             (import path)
-            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; }
+            { inherit system; pkgs = nixpkgs.legacyPackages.${system}; inherit controlnetModules; }
           );
+      zerotier = import ./tests/zerotier { system = "x86_64-linux"; pkgs = nixpkgs.legacyPackages.x86_64-linux; };
     in {
       desktop.x86_64-linux = mkTest "x86_64-linux" ./tests/desktop.nix;
       gpg-agent.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent.nix;
-      #gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
+      gpg-agent-x11.x86_64-linux = mkTest "x86_64-linux" ./tests/gpg-agent-x11.nix;
       latex-pdf.x86_64-linux = mkTest "x86_64-linux" ./tests/latex-pdf.nix;
-      #vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
-      #zerotier-simple.x86_64-linux = (import ./tests/zerotier {}).simple;
-      #zerotier-doubleNat.x86_64-linux = (import ./tests/zerotier {}).doubleNat;
+      vim.x86_64-linux = mkTest "x86_64-linux" ./tests/vim.nix;
+      vim-checkhealth.x86_64-linux = nixpkgs.lib.hydraJob (import ./tests/vim-checkhealth.nix { pkgs = nixpkgs.legacyPackages.x86_64-linux; });
+      zerotier-simple.x86_64-linux = nixpkgs.lib.hydraJob zerotier.simple;
+      zerotier-doubleNat.x86_64-linux = nixpkgs.lib.hydraJob zerotier.doubleNat;
     } // nixpkgs.lib.mapAttrs (n: v: { "${v.config.nixpkgs.system}" = v.config.system.build.toplevel; }) self.nixosConfigurations;
   };
 }

@@ -10,7 +10,7 @@
       programs.gnupg.agent = {
         enable = true;
         enableSSHSupport = true;
-        pinentryFlavor = "curses";
+        pinentryPackage = pkgs.pinentry-curses;
       };
 
       environment.systemPackages = [ pkgs.gnupg ];

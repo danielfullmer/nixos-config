@@ -1,6 +1,6 @@
 $print_type     = 'pdf';
 $pdflatex       = 'xelatex --shell-escape';
-$pdf_previewer  = 'start zathura %O %S';
+$pdf_previewer  = 'zathura %O %S';
 $pdf_mode       = 1;
 
 $cleanup_mode   = 2;            # everything but dvi/ps/pdf

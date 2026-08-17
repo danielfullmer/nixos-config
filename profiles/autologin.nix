@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 {
-  services.xserver.displayManager.autoLogin = {
+  services.displayManager.autoLogin = {
     enable = true;
     user = "danielrf";
   };
