@@ -27,7 +27,10 @@
     fzfWrapper
 
     # Code Completion / Navigation
-    #nvim-cmp
+    nvim-cmp
+    cmp-nvim-lsp
+    cmp-buffer
+    cmp-path
     # ultisnips
     # vim-snippets
     nerdtree
@@ -36,7 +39,6 @@
     nvim-treesitter.withAllGrammars
     rainbow-delimiters-nvim
     nvim-lspconfig
-    completion-nvim
     # telescope.nvim
     # lualine.nvim (replace tmuxline?)
 
@@ -203,9 +205,28 @@ EOF
 
 
 lua << EOF
-vim.lsp.enable('pylsp')
-vim.lsp.enable('nil_ls')
-vim.lsp.enable('hls')
+-- Completion: nvim-cmp (LSP, buffer and path sources)
+local cmp = require('cmp')
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
+
+cmp.setup({
+  sources = {
+    { name = 'lsp' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    -- Fall back to plain insertion when no completion window is open.
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then cmp.select_next_item() else fallback() end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then cmp.select_prev_item() else fallback() end
+    end, { 'i', 's' }),
+  }),
+})
 EOF
   '';
 }
