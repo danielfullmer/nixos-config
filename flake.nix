@@ -16,9 +16,6 @@
 
     nvidia-vgpu.url = "github:danielfullmer/nixos-nvidia-vgpu";
 
-    pinebook-pro.url = "github:samueldr/wip-pinebook-pro";
-    pinebook-pro.flake = false;
-
     jetpack-nixos.url = "github:anduril/jetpack-nixos";
 
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
@@ -26,7 +23,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, nvidia-vgpu, pinebook-pro, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
+  outputs = { self, nixpkgs, sops-nix, home-manager, nvidia-vgpu, flake-compat, jetpack-nixos, jovian-nixos, ... }@inputs: let
     mkSystem = name: system: extraConfig: nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
@@ -48,10 +45,6 @@
       kelvin = mkSystem "kelvin" "x86_64-linux" {
         imports = [ jovian-nixos.nixosModules.default ];
       };
-      # Laptop (pinebook pro)
-      #laplace = mkSystem "laplace" "aarch64-linux" ({ config, lib, pkgs, ... }: {
-      #  imports = [ "${pinebook-pro}/pinebook_pro.nix" ];
-      #});
       # Cloud-hosted instance
       gauss = mkSystem "gauss" "x86_64-linux" {};
       # RPI 3
