@@ -3,7 +3,8 @@
   programs.tmux.config = ''
     set-option -g set-titles on
     set-option -g set-titles-string '#{pane_title}'
-    set-option -g default-terminal "screen-256color"
+    set-option -g default-terminal "tmux-256color"
+    set-option -ga terminal-overrides ",*256col*:Tc"
 
     set-option -g base-index 1
     set-option -g repeat-time 750
