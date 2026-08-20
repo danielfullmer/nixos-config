@@ -41,6 +41,8 @@ in with super; {
     };
   };
 
+  nix = nix.appendPatches [ ./nix/store-permissions.patch ];
+
   # Enabling cuda support via "config.cudaSupport = true;" causes Nix itself to be rebuilt since it depends on onetbb, which depends on hwloc, which 
   onetbb = super.onetbb.override {
     hwloc = super.hwloc.override {

@@ -1,0 +1,13 @@
+diff --git a/src/libstore/local-store.cc b/src/libstore/local-store.cc
+index ec4c2f1fc5..75d4456631 100644
+--- a/src/libstore/local-store.cc
++++ b/src/libstore/local-store.cc
+@@ -169,7 +169,7 @@ LocalStore::LocalStore(ref<const Config> config)
+     /* Optionally, create directories and set permissions for a
+        multi-user install. */
+     if (isRootUser() && localSettings.buildUsersGroup != "") {
+-        mode_t perm = 01775;
++        mode_t perm = 01771;
+ 
+         struct group * gr = getgrnam(localSettings.buildUsersGroup.get().c_str());
+         if (!gr)
