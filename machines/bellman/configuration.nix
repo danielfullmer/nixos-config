@@ -119,7 +119,7 @@
     buildMachinesFiles = [
       "/etc/nix/machines"
       (pkgs.writeText "machines" ''
-        localhost x86_64-linux,i686-linux - 8 1 kvm
+        localhost x86_64-linux,i686-linux - 8 1 kvm,nixos-test
       '')
     ];
   };
