@@ -9,6 +9,16 @@ let
     # therefore others). Apparently using structuredExtraConfig doesn't
     # properly override settings in defconfig... ?
     { name = "disable-hsr"; patch = ./disable-hsr-defconfig.patch; }
+
+    # Backport of https://github.com/frank-w/BPI-Router-Linux/pull/197:
+    # fix a use-after-free in the QDMA TX path that silently corrupts
+    # forwarded traffic - the skb's fragment pages were freed as soon as
+    # the engine consumed the first descriptor, while remaining buffers of
+    # the job were still queued for fetch. The PR's other two hunks are not
+    # applicable against upstream 6.18: the short-frame padding it fixes is
+    # a vendor-only addition, and the QDMA ownership-check ordering is
+    # already in place.
+    { name = "mtk-eth-qdma-skb-uaf"; patch = ./mtk-eth-qdma-skb-uaf.patch; }
   ];
 
   linux_bpir3 = pkgs.linux_6_18.override {
