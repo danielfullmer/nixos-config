@@ -31,9 +31,12 @@ in
     neovim
     #nodePackages.typescript-language-server
     nil nixpkgs-fmt
-    #(python38.withPackages (p: with p; [
-    #  python-language-server pyls-mypy pyls-isort pyls-flake8
-    #]))
+    (python3.withPackages (p: with p; [
+      python-lsp-server
+      #pylsp-mypy
+      pyls-isort
+      pyls-flake8
+    ]))
     # haskell-language-server # Too Heavy
 
     #taskwarrior

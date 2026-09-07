@@ -385,8 +385,8 @@
 
   # Switch LG TV based on if CM storm keyboard is added/removed
   services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c338", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/logitechkeyboard"
-    ACTION=="remove", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c338", TAG+="systemd"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c338", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/devices/logitechkeyboard"
+    ACTION=="remove", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c338", TAG+="systemd"
   '';
   sops.secrets.lgtv = {
     format = "binary";
