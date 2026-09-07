@@ -259,6 +259,8 @@
       {
         job_name = "apcupsd";
         static_configs = [ { targets = [ "localhost:${builtins.toString config.services.prometheus.exporters.apcupsd.port}" ]; } ];
+        # Default is 10s, but sometimes apcupsd takes longer than that to communicate
+        scrape_timeout = "15s";
       }
     ];
     exporters = {
